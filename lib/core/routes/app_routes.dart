@@ -1,0 +1,183 @@
+import 'package:flutter/material.dart';
+import '../../data/models/resource_model.dart';
+import '../../presentation/screens/splash/splash_screen.dart';
+import '../../presentation/screens/home/home_screen.dart';
+import '../../presentation/screens/semesters/semester_screen.dart';
+import '../../presentation/screens/subjects/subject_screen.dart';
+import '../../presentation/screens/resources/resource_screen.dart';
+import '../../presentation/screens/pdf_viewer/pdf_viewer_screen.dart';
+import '../../presentation/screens/search/search_screen.dart';
+import '../../presentation/screens/bookmarks/bookmarks_screen.dart';
+import '../../presentation/screens/downloads/downloads_screen.dart';
+import '../../presentation/screens/profile/profile_screen.dart';
+import '../../presentation/screens/settings/settings_screen.dart';
+import '../../presentation/screens/legal/privacy_policy_screen.dart';
+import '../../presentation/screens/legal/about_screen.dart';
+import '../../presentation/screens/legal/contact_screen.dart';
+import '../../presentation/screens/admin/admin_upload_screen.dart';
+import '../../presentation/screens/admin/admin_dashboard_screen.dart';
+import '../../presentation/screens/career/career_hub_screen.dart';
+import '../../presentation/screens/coding/coding_hub_screen.dart';
+import '../../presentation/screens/placement/placement_hub_screen.dart';
+import '../../presentation/screens/projects/project_hub_screen.dart';
+
+import '../../presentation/screens/admin/admin_login_screen.dart';
+import '../../presentation/widgets/admin_auth_guard.dart';
+
+class AppRoutes {
+  AppRoutes._();
+
+  static const String splash = '/';
+  static const String home = '/home';
+  static const String semesters = '/semesters';
+  static const String subjects = '/subjects';
+  static const String resources = '/resources';
+  static const String pdfViewer = '/pdf_viewer';
+  static const String search = '/search';
+  static const String bookmarks = '/bookmarks';
+  static const String downloads = '/downloads';
+  static const String profile = '/profile';
+  static const String settings = '/settings';
+  static const String privacyPolicy = '/privacy_policy';
+  static const String about = '/about';
+  static const String contact = '/contact';
+  static const String adminLogin = '/admin-login';
+  static const String adminDashboard = '/admin-dashboard';
+  static const String adminUpload = '/admin-upload';
+  static const String careerHub = '/career';
+  static const String codingHub = '/coding';
+  static const String placementHub = '/placement';
+  static const String projectHub = '/projects';
+  static const String higherEducationHub = '/higher-education';
+  static const String examDetail = '/exam-detail';
+
+  static Route<dynamic> generateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
+      case splash:
+        return _buildPageRoute(const SplashScreen(), routeSettings);
+
+      case home:
+        return _buildPageRoute(const HomeScreen(), routeSettings);
+
+      case semesters:
+        final args = routeSettings.arguments as Map<String, dynamic>? ?? {};
+        return _buildPageRoute(
+          SemesterScreen(
+            yearId: args['yearId'] ?? 'year_1',
+            yearTitle: args['yearTitle'] ?? '1st Year',
+          ),
+          routeSettings,
+        );
+
+      case subjects:
+        final args = routeSettings.arguments as Map<String, dynamic>? ?? {};
+        return _buildPageRoute(
+          SubjectScreen(
+            semesterId: args['semesterId'] ?? 'sem_1',
+            semesterTitle: args['semesterTitle'] ?? '1-1 Semester',
+          ),
+          routeSettings,
+        );
+
+      case resources:
+        final args = routeSettings.arguments as Map<String, dynamic>? ?? {};
+        return _buildPageRoute(
+          ResourceScreen(
+            subjectId: args['subjectId'] ?? '',
+            subjectName: args['subjectName'] ?? 'Subject',
+          ),
+          routeSettings,
+        );
+
+      case pdfViewer:
+        final resource = routeSettings.arguments as ResourceModel;
+        return _buildPageRoute(PdfViewerScreen(resource: resource), routeSettings);
+
+      case search:
+        return _buildPageRoute(const SearchScreen(), routeSettings);
+
+      case bookmarks:
+        return _buildPageRoute(const BookmarksScreen(), routeSettings);
+
+      case downloads:
+        return _buildPageRoute(const DownloadsScreen(), routeSettings);
+
+      case profile:
+        return _buildPageRoute(const ProfileScreen(), routeSettings);
+
+      case settings:
+        return _buildPageRoute(const SettingsScreen(), routeSettings);
+
+      case privacyPolicy:
+        return _buildPageRoute(const PrivacyPolicyScreen(), routeSettings);
+
+      case about:
+        return _buildPageRoute(const AboutScreen(), routeSettings);
+
+      case contact:
+        return _buildPageRoute(const ContactScreen(), routeSettings);
+
+      case adminLogin:
+        return _buildPageRoute(const AdminLoginScreen(), routeSettings);
+
+      case adminDashboard:
+        return _buildPageRoute(
+          const AdminAuthGuard(child: AdminDashboardScreen()),
+          routeSettings,
+        );
+
+      case adminUpload:
+        return _buildPageRoute(
+          const AdminAuthGuard(child: AdminUploadScreen()),
+          routeSettings,
+        );
+
+
+      case careerHub:
+        return _buildPageRoute(const CareerHubScreen(), routeSettings);
+
+      case codingHub:
+        return _buildPageRoute(const CodingHubScreen(), routeSettings);
+
+      case placementHub:
+        return _buildPageRoute(const PlacementHubScreen(), routeSettings);
+
+      case projectHub:
+        return _buildPageRoute(const ProjectHubScreen(), routeSettings);
+
+      default:
+        return _buildPageRoute(
+          Scaffold(
+            body: Center(
+              child: Text('No route defined for ${routeSettings.name}'),
+            ),
+          ),
+          routeSettings,
+        );
+    }
+  }
+
+  static PageRouteBuilder _buildPageRoute(Widget page, RouteSettings settings) {
+    return PageRouteBuilder(
+      settings: settings,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.05, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeOutCubic;
+
+        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final fadeTween = Tween<double>(begin: 0.0, end: 1.0).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: FadeTransition(
+            opacity: animation.drive(fadeTween),
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 250),
+    );
+  }
+}

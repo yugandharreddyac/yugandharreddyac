@@ -1,0 +1,25 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check admin role from Firestore
+    function isAdmin() {
+      return request.auth != null && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Academic Resources storage folder: StudyHub/{year}/{semester}/{subject}/{resourceType}/{filename}
+    match /StudyHub/{allPaths=**} {
+      // Public read access so students can view/download resources
+      allow read: if true;
+      // Writes (upload, replace, delete) restricted strictly to Admins
+      allow write: if isAdmin();
+    }
+    
+    // Fallback for user avatars or root storage
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}

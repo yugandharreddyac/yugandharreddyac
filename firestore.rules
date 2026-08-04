@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Academic Structure & Resources: Publicly readable; Write operations restricted to Admins only
+    match /years/{yearId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /semesters/{semesterId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /subjects/{subjectId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /resources/{resourceId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Platform Modules: Career, Coding, Placements & Projects
+    match /career/{careerId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /coding/{codingId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /placements/{placementId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /higher_education/{educationId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // User Profile, Sync Bookmarks & Sync Downloads
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) || isAdmin();
+      
+      match /bookmarks/{bookmarkId} {
+        allow read, write: if isOwner(userId);
+      }
+      
+      match /downloads/{downloadId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}
