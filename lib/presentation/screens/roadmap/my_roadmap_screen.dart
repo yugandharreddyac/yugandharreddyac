@@ -314,31 +314,45 @@ class MyRoadmapScreen extends StatelessWidget {
                         children: stage.topicIds.map((tId) {
                           final match = NonAcademicData.findTopicById(tId);
                           final title = match?.topic.title ?? tId;
+                          final progress = roadmapProvider.getProgressForTopic(tId);
+                          final isDone = progress.isFullyCompleted;
+
                           return InkWell(
                             onTap: () => _navigateToTopic(context, tId),
                             borderRadius: BorderRadius.circular(8),
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
-                                color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
+                                color: isDone
+                                    ? emeraldGreen.withAlpha(20)
+                                    : (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+                                  color: isDone
+                                      ? emeraldGreen
+                                      : (isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1)),
+                                  width: isDone ? 1.5 : 1.0,
                                 ),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  if (isDone) ...[
+                                    const Icon(Icons.check_circle_rounded, size: 13, color: emeraldGreen),
+                                    const SizedBox(width: 4),
+                                  ],
                                   Text(
                                     title,
                                     style: GoogleFonts.inter(
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: textPrimary,
+                                      fontWeight: isDone ? FontWeight.bold : FontWeight.w600,
+                                      color: isDone ? emeraldGreen : textPrimary,
                                     ),
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Icon(Icons.arrow_forward_rounded, size: 12, color: royalBlue),
+                                  if (!isDone) ...[
+                                    const SizedBox(width: 4),
+                                    const Icon(Icons.arrow_forward_rounded, size: 12, color: royalBlue),
+                                  ],
                                 ],
                               ),
                             ),

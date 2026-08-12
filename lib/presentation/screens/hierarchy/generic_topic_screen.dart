@@ -171,6 +171,53 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                           height: 1.4,
                         ),
                       ),
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: royalBlue.withAlpha(isDark ? 30 : 15),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: royalBlue.withAlpha(isDark ? 80 : 40),
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.lightbulb_outline_rounded,
+                              color: royalBlue,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'WHY THIS MATTERS',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: royalBlue,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    'Mastering ${widget.topic.title} builds core engineering intuition required for technical coding interviews, software architecture design, and competitive CS assessments.',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: textPrimary,
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ).animate().fadeIn().slideY(begin: -0.04, end: 0),

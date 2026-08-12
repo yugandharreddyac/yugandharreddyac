@@ -9,6 +9,9 @@ import '../../../core/utils/formatters.dart';
 import '../../providers/study_provider.dart';
 import '../../providers/recent_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../providers/roadmap_provider.dart';
+import '../../../data/datasources/non_academic_data.dart';
+import '../hierarchy/generic_topic_screen.dart';
 import '../downloads/downloads_screen.dart';
 import '../profile/profile_screen.dart';
 import '../pdf_viewer/pdf_viewer_screen.dart';
@@ -458,6 +461,13 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         ],
                       ),
                     ).animate().fadeIn(delay: 150.ms).slideY(begin: 0.05, end: 0),
+
+                    const SizedBox(height: 24),
+
+                    // ==========================================
+                    // TODAY'S ACTION PLAN QUICK SECTION
+                    // ==========================================
+                    _buildHomeTodaysPlan(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
 
                     const SizedBox(height: 24),
 
@@ -1067,6 +1077,149 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildHomeTodaysPlan(
+    BuildContext context,
+    bool isDark,
+    Color textPrimary,
+    Color textSubtitle,
+    Color royalBlue,
+    Color whiteCardColor,
+    Color borderColor,
+  ) {
+    RoadmapProvider? roadmapProvider;
+    try {
+      roadmapProvider = context.watch<RoadmapProvider>();
+    } catch (_) {}
+
+    final todaysPlan = roadmapProvider?.getTodaysPlan() ?? [];
+    if (todaysPlan.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Today\'s Recommended Plan',
+              style: GoogleFonts.inter(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: textPrimary,
+                letterSpacing: -0.3,
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.roadmap),
+              child: Text(
+                'View All',
+                style: GoogleFonts.inter(
+                  color: royalBlue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Column(
+          children: todaysPlan.take(3).map((task) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              child: InkWell(
+                onTap: () {
+                  final match = NonAcademicData.findTopicById(task.topicId);
+                  if (match != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => GenericTopicScreen(
+                          hub: match.hub,
+                          category: match.category,
+                          topic: match.topic,
+                          breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+                        ),
+                      ),
+                    );
+                  }
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: whiteCardColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: borderColor),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(isDark ? 25 : 6),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: royalBlue.withAlpha(20),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.play_arrow_rounded, color: royalBlue, size: 20),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              task.topicTitle,
+                              style: GoogleFonts.inter(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              task.actionTitle,
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                color: textSubtitle,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          '${task.estimatedMinutes}m',
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: textSubtitle,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }
