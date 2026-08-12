@@ -268,6 +268,55 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                 ),
 
                 const SizedBox(height: 24),
+                
+                Consumer<RoadmapProvider>(
+                  builder: (context, provider, child) {
+                    final skills = provider.getSkillsForTopic(widget.topic.id);
+                    if (skills.isEmpty) return const SizedBox.shrink();
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Skill Evidence',
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        ...skills.map((s) => Container(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          decoration: BoxDecoration(
+                            color: cardBg,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: borderColor),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(s.skillName, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: textPrimary)),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: royalBlue.withAlpha(isDark ? 30 : 15),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  s.level.name.toUpperCase(),
+                                  style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: royalBlue),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                        const SizedBox(height: 24),
+                      ],
+                    );
+                  },
+                ),
 
                 // IF TOPIC HAS SUBTOPICS: Render Subtopics List
                 if (widget.topic.hasSubtopics) ...[

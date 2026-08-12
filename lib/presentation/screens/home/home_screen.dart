@@ -1155,6 +1155,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               margin: const EdgeInsets.only(bottom: 10),
               child: InkWell(
                 onTap: () {
+                  if (task.actionRoute != null) {
+                     Navigator.pushNamed(context, task.actionRoute!, arguments: task.actionArguments);
+                     return;
+                  }
                   final match = NonAcademicData.findTopicById(task.topicId);
                   if (match != null) {
                     Navigator.push(
@@ -1314,22 +1318,27 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           ),
         ),
         const SizedBox(height: 12),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: whiteCardColor,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: borderColor),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(isDark ? 25 : 6),
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Column(
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.careerDashboard);
+          },
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: whiteCardColor,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: borderColor),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(isDark ? 25 : 6),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('CURRENT GOAL', style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: textSubtitle, letterSpacing: 0.5)),
@@ -1352,6 +1361,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               ),
             ],
           ),
+        ),
         ),
       ],
     );

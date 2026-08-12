@@ -30,6 +30,10 @@ import '../../presentation/screens/roadmap/roadmap_onboarding_screen.dart';
 
 import '../../presentation/screens/saved/saved_topics_screen.dart';
 import '../../presentation/screens/insights/student_insights_screen.dart';
+import '../../presentation/screens/career/career_dashboard_screen.dart';
+import '../../presentation/screens/career/career_skills_screen.dart';
+import '../../presentation/screens/career/project_portfolio_screen.dart';
+import '../../presentation/screens/career/resume_readiness_screen.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -64,6 +68,12 @@ class AppRoutes {
   static const String insights = '/insights';
   static const String examDetail = '/exam-detail';
   static const String topicDetail = '/topic_detail';
+
+  // Phase 5 Career Routes
+  static const String careerDashboard = '/career-dashboard';
+  static const String careerSkills = '/career-skills';
+  static const String projectPortfolio = '/project-portfolio';
+  static const String resumeReadiness = '/resume-readiness';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -195,6 +205,19 @@ class AppRoutes {
 
       case insights:
         return _buildPageRoute(const StudentInsightsScreen(), routeSettings);
+
+      // Phase 5 Career Screens
+      case careerDashboard:
+        return _buildPageRoute(const CareerDashboardScreen(), routeSettings);
+        
+      case careerSkills:
+        return _buildPageRoute(const CareerSkillsScreen(), routeSettings);
+        
+      case projectPortfolio:
+        return _buildPageRoute(const ProjectPortfolioScreen(), routeSettings);
+        
+      case resumeReadiness:
+        return _buildPageRoute(const ResumeReadinessScreen(), routeSettings);
 
       default:
         return _buildPageRoute(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../data/models/user_goal_model.dart';
-import '../../data/repositories/roadmap_repository.dart';
+import '../../data/models/career_models.dart';
+import '../../data/datasources/career_data_mapper.dart';
 import '../../data/datasources/non_academic_data.dart';
+import '../../data/repositories/roadmap_repository.dart';
 
 class DailyTaskModel {
   final String topicId;
@@ -12,6 +14,8 @@ class DailyTaskModel {
   final int estimatedMinutes;
   final String? progressText;
   final String? reason;
+  final String? actionRoute;
+  final dynamic actionArguments;
 
   const DailyTaskModel({
     required this.topicId,
@@ -19,9 +23,11 @@ class DailyTaskModel {
     required this.actionTitle,
     required this.type,
     required this.categoryTitle,
-    this.estimatedMinutes = 25,
+    this.estimatedMinutes = 15,
     this.progressText,
     this.reason,
+    this.actionRoute,
+    this.actionArguments,
   });
 }
 
@@ -65,6 +71,7 @@ class RoadmapProvider extends ChangeNotifier {
   String? _lastOpenedTopicId;
   List<String> _recentTopicIds = [];
   List<String> _bookmarkedTopicIds = [];
+  ResumeReadinessModel _resumeChecklist = const ResumeReadinessModel();
   bool _isLoading = true;
 
   UserGoalProfile? get profile => _profile;
@@ -74,6 +81,7 @@ class RoadmapProvider extends ChangeNotifier {
   String? get lastOpenedTopicId => _lastOpenedTopicId;
   List<String> get recentTopicIds => List.unmodifiable(_recentTopicIds);
   List<String> get bookmarkedTopicIds => List.unmodifiable(_bookmarkedTopicIds);
+  ResumeReadinessModel get resumeChecklist => _resumeChecklist;
 
   RoadmapProvider() {
     _init();
@@ -85,6 +93,7 @@ class RoadmapProvider extends ChangeNotifier {
     _lastOpenedTopicId = await _repository.loadLastOpenedTopicId();
     _recentTopicIds = await _repository.loadRecentTopicIds();
     _bookmarkedTopicIds = await _repository.loadBookmarkedTopicIds();
+    _resumeChecklist = await _repository.loadResumeChecklist();
     _isLoading = false;
     notifyListeners();
   }
@@ -310,7 +319,27 @@ class RoadmapProvider extends ChangeNotifier {
       }
     }
 
-    // 2. Earliest incomplete prerequisite/roadmap topic
+    // 2. Career Gaps (Phase 5)
+    final gaps = getCareerGaps();
+    for (final gap in gaps) {
+      if (!addedTopics.contains(gap.actionArguments?['topicId'] ?? gap.actionRoute)) {
+        tasks.add(DailyTaskModel(
+          topicId: gap.actionArguments?['topicId'] ?? 'gap_task',
+          topicTitle: gap.title,
+          actionTitle: gap.actionLabel,
+          type: ActivityType.learn, // Default visual type
+          categoryTitle: 'Career Action',
+          estimatedMinutes: 20,
+          reason: gap.description,
+          actionRoute: gap.actionRoute,
+          actionArguments: gap.actionArguments,
+        ));
+        addedTopics.add(gap.actionArguments?['topicId'] ?? gap.actionRoute);
+        if (tasks.length >= 3) return tasks;
+      }
+    }
+
+    // 3. Earliest incomplete prerequisite/roadmap topic
     for (final stage in stages) {
       for (final topicId in stage.topicIds) {
         if (addedTopics.contains(topicId)) continue;
@@ -415,5 +444,131 @@ class RoadmapProvider extends ChangeNotifier {
       return match.topic.title;
     }
     return topicId;
+  }
+
+  // ==========================================
+  // PHASE 5: CAREER READINESS & EXECUTION
+  // ==========================================
+
+  Future<void> toggleResumeItem(String key) async {
+    bool currentVal = false;
+    switch (key) {
+      case 'technicalSkillsIdentified':
+        currentVal = _resumeChecklist.technicalSkillsIdentified;
+        _resumeChecklist = _resumeChecklist.copyWith(technicalSkillsIdentified: !currentVal);
+        break;
+      case 'oneCompletedProject':
+        currentVal = _resumeChecklist.oneCompletedProject;
+        _resumeChecklist = _resumeChecklist.copyWith(oneCompletedProject: !currentVal);
+        break;
+      case 'projectDescriptionsPrepared':
+        currentVal = _resumeChecklist.projectDescriptionsPrepared;
+        _resumeChecklist = _resumeChecklist.copyWith(projectDescriptionsPrepared: !currentVal);
+        break;
+      case 'evidenceAvailable':
+        currentVal = _resumeChecklist.evidenceAvailable;
+        _resumeChecklist = _resumeChecklist.copyWith(evidenceAvailable: !currentVal);
+        break;
+      case 'educationPrepared':
+        currentVal = _resumeChecklist.educationPrepared;
+        _resumeChecklist = _resumeChecklist.copyWith(educationPrepared: !currentVal);
+        break;
+      case 'careerObjectivePrepared':
+        currentVal = _resumeChecklist.careerObjectivePrepared;
+        _resumeChecklist = _resumeChecklist.copyWith(careerObjectivePrepared: !currentVal);
+        break;
+      case 'resumeReviewed':
+        currentVal = _resumeChecklist.resumeReviewed;
+        _resumeChecklist = _resumeChecklist.copyWith(resumeReviewed: !currentVal);
+        break;
+    }
+    notifyListeners();
+    await _repository.saveResumeChecklist(_resumeChecklist);
+  }
+
+  List<CareerDimensionProgress> getCareerReadiness() {
+    if (_profile == null) return [];
+    
+    final dimensions = CareerDataMapper.getDimensionsForGoal(_profile!.goal);
+    List<CareerDimensionProgress> progress = [];
+
+    dimensions.forEach((dimName, topicIds) {
+      int total = topicIds.length * 4; // 4 activities per topic
+      int completed = 0;
+      for (final tid in topicIds) {
+        completed += getProgressForTopic(tid).completedCount;
+      }
+      progress.add(CareerDimensionProgress(dimensionName: dimName, completed: completed, total: total));
+    });
+
+    return progress;
+  }
+
+  List<SkillEvidenceModel> getSkillMatrix() {
+    return CareerDataMapper.getAllSkills(_progressMap);
+  }
+
+  List<SkillEvidenceModel> getSkillsForTopic(String topicId) {
+    return CareerDataMapper.getSkillsForTopic(topicId, _progressMap);
+  }
+
+  List<ProjectPortfolioModel> getProjectPortfolio() {
+    return CareerDataMapper.getProjects(_progressMap);
+  }
+
+  List<CareerGapModel> getCareerGaps() {
+    List<CareerGapModel> gaps = [];
+    if (_profile == null) return gaps;
+
+    // 1. Missing Foundation Prerequisite
+    final stages = getRoadmapStages();
+    if (stages.isNotEmpty) {
+      final foundationStage = stages.first;
+      for (final tid in foundationStage.topicIds) {
+        if (!getProgressForTopic(tid).isFullyCompleted) {
+          gaps.add(CareerGapModel(
+            title: 'Foundation Incomplete',
+            description: 'Complete ${_formatTopicTitle(tid)} to build your foundation.',
+            actionRoute: '/topic_detail',
+            actionArguments: {'topicId': tid},
+            actionLabel: 'LEARN',
+            priority: 1,
+          ));
+          break; // Only show first missing foundation
+        }
+      }
+    }
+
+    // 2. Missing Project Evidence
+    final projects = getProjectPortfolio();
+    final completedProjects = projects.where((p) => p.state == ProjectState.completed).toList();
+    if (completedProjects.isEmpty) {
+      final firstNotStarted = projects.firstWhere(
+        (p) => p.state == ProjectState.notStarted,
+        orElse: () => projects.first,
+      );
+      gaps.add(CareerGapModel(
+        title: 'Portfolio Project',
+        description: 'You need project evidence for your career profile.',
+        actionRoute: '/topic_detail',
+        actionArguments: {'topicId': firstNotStarted.topicId},
+        actionLabel: 'BUILD',
+        priority: 2,
+      ));
+    }
+
+    // 3. Resume Readiness
+    if (_resumeChecklist.percentage < 100.0) {
+      gaps.add(const CareerGapModel(
+        title: 'Resume Readiness',
+        description: 'Your career profile and resume checklist is incomplete.',
+        actionRoute: '/resume-readiness',
+        actionLabel: 'PREPARE',
+        priority: 3,
+      ));
+    }
+
+    gaps.sort((a, b) => a.priority.compareTo(b.priority));
+    return gaps.take(3).toList();
   }
 }
