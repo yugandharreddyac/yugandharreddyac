@@ -38,6 +38,7 @@ import 'package:csse_study_hub/data/repositories/admin_repository.dart';
 import 'package:csse_study_hub/presentation/providers/admin_provider.dart';
 import 'package:csse_study_hub/data/repositories/non_academic_repository.dart';
 import 'package:csse_study_hub/presentation/providers/hierarchy_provider.dart';
+import 'package:csse_study_hub/presentation/providers/roadmap_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -178,6 +179,9 @@ class CSSEStudyHubApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => HierarchyProvider(NonAcademicRepository()),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RoadmapProvider(),
         ),
       ],
       child: Consumer<ThemeProvider>(

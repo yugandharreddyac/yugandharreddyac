@@ -21,7 +21,9 @@ class EmergingTechRepository {
     return _getFallbackData();
   }
 
-  List<EmergingTechDetailModel> _getFallbackData() {
+  static List<EmergingTechDetailModel> get fallbackEmergingTechs => _getFallbackData();
+
+  static List<EmergingTechDetailModel> _getFallbackData() {
     return const [
       EmergingTechDetailModel(
         id: 'genai',

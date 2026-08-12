@@ -9,6 +9,8 @@ import '../../../data/models/hierarchy_node_model.dart';
 import '../../../data/models/resource_model.dart';
 import '../../providers/bookmark_provider.dart';
 import '../../providers/recent_provider.dart';
+import '../../providers/roadmap_provider.dart';
+import '../../../data/models/user_goal_model.dart';
 import '../../widgets/hierarchy/breadcrumb_bar.dart';
 
 class GenericTopicScreen extends StatefulWidget {
@@ -172,6 +174,22 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                     ],
                   ),
                 ).animate().fadeIn().slideY(begin: -0.04, end: 0),
+
+                const SizedBox(height: 20),
+
+                // ==========================================
+                // REAL TOPIC PROGRESS & ACTIVITY CHECKLIST
+                // ==========================================
+                _buildActivityChecklistCard(
+                  context,
+                  topicId: widget.topic.id,
+                  cardBg: cardBg,
+                  borderColor: borderColor,
+                  textPrimary: textPrimary,
+                  textSubtitle: textSubtitle,
+                  royalBlue: royalBlue,
+                  isDark: isDark,
+                ),
 
                 const SizedBox(height: 24),
 
@@ -503,7 +521,7 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                 size: 18,
               ),
               label: Text(
-                'LEARN ONLINE →',
+                _getActionTextForResource(resource),
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w800,
                   fontSize: 14,
@@ -521,6 +539,207 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  String _getActionTextForResource(HierarchyResourceModel resource) {
+    final url = resource.url.toLowerCase();
+    if (url.contains('leetcode.com')) return 'PRACTICE ON LEETCODE →';
+    if (url.contains('geeksforgeeks.org') && resource.type == HierarchyResourceType.practice) return 'PRACTICE ON GEEKSFORGEEKS →';
+    if (url.contains('github.com')) return 'VIEW GITHUB REPOSITORY →';
+    if (resource.type == HierarchyResourceType.notes) return 'OPEN CONCEPT DOCS →';
+    if (resource.type == HierarchyResourceType.video) return 'WATCH VIDEO TUTORIAL →';
+    return 'LEARN ONLINE →';
+  }
+
+  Widget _buildActivityChecklistCard(
+    BuildContext context, {
+    required String topicId,
+    required Color cardBg,
+    required Color borderColor,
+    required Color textPrimary,
+    required Color textSubtitle,
+    required Color royalBlue,
+    required bool isDark,
+  }) {
+    RoadmapProvider? roadmapProvider;
+    try {
+      roadmapProvider = context.watch<RoadmapProvider>();
+    } catch (_) {}
+
+    if (roadmapProvider == null) return const SizedBox.shrink();
+
+    final progress = roadmapProvider.getProgressForTopic(topicId);
+    const emeraldGreen = Color(0xFF059669);
+
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: progress.isFullyCompleted
+              ? emeraldGreen.withAlpha(150)
+              : borderColor,
+          width: progress.isFullyCompleted ? 2 : 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(isDark ? 20 : 5),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    progress.isFullyCompleted
+                        ? Icons.check_circle_rounded
+                        : Icons.fact_check_rounded,
+                    color: progress.isFullyCompleted ? emeraldGreen : royalBlue,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Topic Activity Checklist',
+                    style: GoogleFonts.inter(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: textPrimary,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: (progress.isFullyCompleted ? emeraldGreen : royalBlue).withAlpha(20),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${progress.completedCount} / 4 (${progress.percentage.toStringAsFixed(0)}%)',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: progress.isFullyCompleted ? emeraldGreen : royalBlue,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: LinearProgressIndicator(
+              value: progress.percentage / 100.0,
+              minHeight: 6,
+              backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFE2E8F0),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                progress.isFullyCompleted ? emeraldGreen : royalBlue,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          // Checkbox List
+          _buildCheckTile(
+            context,
+            label: '1. Read concept & understand theory',
+            value: progress.learnCompleted,
+            onChanged: (_) => roadmapProvider?.toggleActivity(
+              topicId: topicId,
+              type: ActivityType.learn,
+            ),
+            textPrimary: textPrimary,
+            activeColor: royalBlue,
+          ),
+          _buildCheckTile(
+            context,
+            label: '2. Complete practice problems / exercises',
+            value: progress.practiceCompleted,
+            onChanged: (_) => roadmapProvider?.toggleActivity(
+              topicId: topicId,
+              type: ActivityType.practice,
+            ),
+            textPrimary: textPrimary,
+            activeColor: royalBlue,
+          ),
+          _buildCheckTile(
+            context,
+            label: '3. Build code mini-project / application',
+            value: progress.buildCompleted,
+            onChanged: (_) => roadmapProvider?.toggleActivity(
+              topicId: topicId,
+              type: ActivityType.build,
+            ),
+            textPrimary: textPrimary,
+            activeColor: royalBlue,
+          ),
+          _buildCheckTile(
+            context,
+            label: '4. Review & self-assess knowledge',
+            value: progress.reviewCompleted,
+            onChanged: (_) => roadmapProvider?.toggleActivity(
+              topicId: topicId,
+              type: ActivityType.review,
+            ),
+            textPrimary: textPrimary,
+            activeColor: royalBlue,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCheckTile(
+    BuildContext context, {
+    required String label,
+    required bool value,
+    required ValueChanged<bool?> onChanged,
+    required Color textPrimary,
+    required Color activeColor,
+  }) {
+    return InkWell(
+      onTap: () => onChanged(!value),
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            SizedBox(
+              height: 24,
+              width: 24,
+              child: Checkbox(
+                value: value,
+                onChanged: onChanged,
+                activeColor: activeColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: value ? FontWeight.bold : FontWeight.w500,
+                  color: value ? activeColor : textPrimary,
+                  decoration: value ? TextDecoration.lineThrough : null,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

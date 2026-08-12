@@ -25,6 +25,9 @@ import '../../presentation/widgets/admin_auth_guard.dart';
 import '../../data/datasources/non_academic_data.dart';
 import '../../presentation/screens/hierarchy/generic_hub_screen.dart';
 
+import '../../presentation/screens/roadmap/my_roadmap_screen.dart';
+import '../../presentation/screens/roadmap/roadmap_onboarding_screen.dart';
+
 class AppRoutes {
   AppRoutes._();
 
@@ -52,6 +55,8 @@ class AppRoutes {
   static const String projectHub = '/projects';
   static const String higherEducationHub = '/higher-education';
   static const String entrepreneurshipHub = '/entrepreneurship';
+  static const String roadmap = '/roadmap';
+  static const String roadmapOnboarding = '/roadmap-onboarding';
   static const String examDetail = '/exam-detail';
   static const String topicDetail = '/topic_detail';
 
@@ -173,6 +178,12 @@ class AppRoutes {
           ),
           routeSettings,
         );
+
+      case roadmap:
+        return _buildPageRoute(const MyRoadmapScreen(), routeSettings);
+
+      case roadmapOnboarding:
+        return _buildPageRoute(const RoadmapOnboardingScreen(), routeSettings);
 
       default:
         return _buildPageRoute(

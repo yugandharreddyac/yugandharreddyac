@@ -12,6 +12,12 @@ import '../models/higher_education_model.dart';
 import '../models/hierarchy_node_model.dart';
 import 'non_academic_data.dart';
 import 'textbook_mock_data.dart';
+import '../repositories/career_repository.dart';
+import '../repositories/coding_repository.dart';
+import '../repositories/project_repository.dart';
+import '../repositories/placement_repository.dart';
+import '../repositories/higher_education_repository.dart';
+import '../repositories/emerging_tech_repository.dart';
 
 /// High-performance Global Search Index Engine that pre-indexes all
 /// subjects, course overviews, textbook chapters, sections, topics, resources, and PYQs.
@@ -285,161 +291,153 @@ class SearchIndexEngine {
     }
 
     // 3. Index Career Roles & Technologies
-    if (careerTechs != null) {
-      for (final car in careerTechs) {
-        items.add(
-          SearchableItem(
-            id: 'idx_car_${car.id}',
-            category: 'Career Path',
-            title: car.name,
-            subtitle: '${car.category} • Career & Skill Path',
-            subjectName: car.name,
-            subjectCode: car.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [
-              car.name,
-              car.category,
-              car.introduction,
-              car.whyLearn,
-              ...car.requiredSkills,
-              ...car.careerOpportunities,
-              ...car.learningRoadmap,
-              ...car.interviewPrepTopics,
-            ],
-            careerTech: car,
-          ),
-        );
-      }
+    final careerList = careerTechs ?? CareerRepository.fallbackCareerTechnologies;
+    for (final car in careerList) {
+      items.add(
+        SearchableItem(
+          id: 'idx_car_${car.id}',
+          category: 'Career Path',
+          title: car.name,
+          subtitle: '${car.category} • Career & Skill Path',
+          subjectName: car.name,
+          subjectCode: car.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [
+            car.name,
+            car.category,
+            car.introduction,
+            car.whyLearn,
+            ...car.requiredSkills,
+            ...car.careerOpportunities,
+            ...car.learningRoadmap,
+            ...car.interviewPrepTopics,
+          ],
+          careerTech: car,
+        ),
+      );
     }
 
     // 4. Index Coding Languages, DSA Topics & Projects
-    if (codingLangs != null) {
-      for (final lang in codingLangs) {
-        items.add(
-          SearchableItem(
-            id: 'idx_lang_${lang.id}',
-            category: 'Coding Language',
-            title: lang.name,
-            subtitle: 'Programming Language • ${lang.whyLearn}',
-            subjectName: lang.name,
-            subjectCode: lang.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [lang.name, lang.introduction, lang.syntaxFundamentals, ...lang.practiceProblems, ...lang.interviewQuestions],
-          ),
-        );
-      }
+    final codingLangsList = codingLangs ?? CodingRepository.fallbackCodingLanguages;
+    for (final lang in codingLangsList) {
+      items.add(
+        SearchableItem(
+          id: 'idx_lang_${lang.id}',
+          category: 'Coding Language',
+          title: lang.name,
+          subtitle: 'Programming Language • ${lang.whyLearn}',
+          subjectName: lang.name,
+          subjectCode: lang.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [lang.name, lang.introduction, lang.syntaxFundamentals, ...lang.practiceProblems, ...lang.interviewQuestions],
+        ),
+      );
     }
 
-    if (dsaTopics != null) {
-      for (final dsa in dsaTopics) {
-        items.add(
-          SearchableItem(
-            id: 'idx_dsa_${dsa.id}',
-            category: 'DSA Topic',
-            title: dsa.topicName,
-            subtitle: 'Data Structures & Algorithms • ${dsa.category}',
-            subjectName: dsa.topicName,
-            subjectCode: dsa.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [dsa.topicName, dsa.category, dsa.definition, dsa.intuition, dsa.algorithm, ...dsa.practiceProblems, ...dsa.interviewQuestions],
-          ),
-        );
-      }
+    final dsaTopicsList = dsaTopics ?? CodingRepository.fallbackDsaTopics;
+    for (final dsa in dsaTopicsList) {
+      items.add(
+        SearchableItem(
+          id: 'idx_dsa_${dsa.id}',
+          category: 'DSA Topic',
+          title: dsa.topicName,
+          subtitle: 'Data Structures & Algorithms • ${dsa.category}',
+          subjectName: dsa.topicName,
+          subjectCode: dsa.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [dsa.topicName, dsa.category, dsa.definition, dsa.intuition, dsa.algorithm, ...dsa.practiceProblems, ...dsa.interviewQuestions],
+        ),
+      );
     }
 
-    if (codingProjects != null) {
-      for (final proj in codingProjects) {
-        items.add(
-          SearchableItem(
-            id: 'idx_proj_${proj.id}',
-            category: 'Coding Project',
-            title: proj.title,
-            subtitle: '${proj.difficulty} • ${proj.problemStatement}',
-            subjectName: proj.title,
-            subjectCode: proj.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [proj.title, proj.problemStatement, proj.architecture, ...proj.techStack, ...proj.requiredSkills],
-          ),
-        );
-      }
+    final codingProjectsList = codingProjects ?? CodingRepository.fallbackCodingProjects;
+    for (final proj in codingProjectsList) {
+      items.add(
+        SearchableItem(
+          id: 'idx_proj_${proj.id}',
+          category: 'Coding Project',
+          title: proj.title,
+          subtitle: '${proj.difficulty} • ${proj.problemStatement}',
+          subjectName: proj.title,
+          subjectCode: proj.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [proj.title, proj.problemStatement, proj.architecture, ...proj.techStack, ...proj.requiredSkills],
+        ),
+      );
     }
 
-    if (projects != null) {
-      for (final p in projects) {
-        items.add(
-          SearchableItem(
-            id: 'idx_hub_proj_${p.id}',
-            category: 'Industry Project Blueprint',
-            title: p.title,
-            subtitle: '${p.category} • ${p.difficulty} (${p.estimatedDuration})',
-            subjectName: p.title,
-            subjectCode: p.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [p.title, p.category, p.difficulty, p.description, p.problemStatement, p.systemArchitecture, p.resumeDescription, ...p.technologies, ...p.requiredSkills],
-          ),
-        );
-      }
+    final projectsList = projects ?? ProjectRepository.fallbackProjects;
+    for (final p in projectsList) {
+      items.add(
+        SearchableItem(
+          id: 'idx_hub_proj_${p.id}',
+          category: 'Industry Project Blueprint',
+          title: p.title,
+          subtitle: '${p.category} • ${p.difficulty} (${p.estimatedDuration})',
+          subjectName: p.title,
+          subjectCode: p.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [p.title, p.category, p.difficulty, p.description, p.problemStatement, p.systemArchitecture, p.resumeDescription, ...p.technologies, ...p.requiredSkills],
+        ),
+      );
     }
 
-    if (placements != null) {
-      for (final plc in placements) {
-        final qKeywords = plc.questionsAndAnswers.map((qa) => '${qa.question} ${qa.answer}').toList();
-        items.add(
-          SearchableItem(
-            id: 'idx_plc_${plc.id}',
-            category: 'Placement Prep',
-            title: plc.title,
-            subtitle: 'Placement Hub • ${plc.category}',
-            subjectName: plc.title,
-            subjectCode: plc.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [plc.title, plc.category, plc.description, plc.roadmap, ...plc.tips, ...qKeywords],
-          ),
-        );
-      }
+    final placementsList = placements ?? PlacementRepository.fallbackPlacementResources;
+    for (final plc in placementsList) {
+      final qKeywords = plc.questionsAndAnswers.map((qa) => '${qa.question} ${qa.answer}').toList();
+      items.add(
+        SearchableItem(
+          id: 'idx_plc_${plc.id}',
+          category: 'Placement Prep',
+          title: plc.title,
+          subtitle: 'Placement Hub • ${plc.category}',
+          subjectName: plc.title,
+          subjectCode: plc.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [plc.title, plc.category, plc.description, plc.roadmap, ...plc.tips, ...qKeywords],
+        ),
+      );
     }
 
-    if (higherEdItems != null) {
-      for (final ed in higherEdItems) {
-        final faqKeywords = ed.faqs.map((f) => '${f.question} ${f.answer}').toList();
-        items.add(
-          SearchableItem(
-            id: 'idx_hed_${ed.id}',
-            category: 'Higher Education',
-            title: ed.title,
-            subtitle: '${ed.category} • ${ed.subtitle}',
-            subjectName: ed.title,
-            subjectCode: ed.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [ed.title, ed.category, ed.subtitle, ed.overview, ed.eligibilityCriteria, ed.careerOpportunities, ...ed.syllabusTopics, ...ed.scholarships, ...faqKeywords],
-          ),
-        );
-      }
+    final higherEdList = higherEdItems ?? HigherEducationRepository.fallbackHigherEducationResources;
+    for (final ed in higherEdList) {
+      final faqKeywords = ed.faqs.map((f) => '${f.question} ${f.answer}').toList();
+      items.add(
+        SearchableItem(
+          id: 'idx_hed_${ed.id}',
+          category: 'Higher Education',
+          title: ed.title,
+          subtitle: '${ed.category} • ${ed.subtitle}',
+          subjectName: ed.title,
+          subjectCode: ed.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [ed.title, ed.category, ed.subtitle, ed.overview, ed.eligibilityCriteria, ed.careerOpportunities, ...ed.syllabusTopics, ...ed.scholarships, ...faqKeywords],
+        ),
+      );
     }
 
-    if (emergingTechs != null) {
-      for (final em in emergingTechs) {
-        items.add(
-          SearchableItem(
-            id: 'idx_em_${em.id}',
-            category: 'Emerging Technology',
-            title: em.title,
-            subtitle: '${em.category} • ${em.whyItMatters}',
-            subjectName: em.title,
-            subjectCode: em.id,
-            semester: 'N/A',
-            year: 'N/A',
-            keywords: [em.title, em.category, em.overview, em.whyItMatters, em.futureDirection, ...em.coreConcepts, ...em.tools, ...em.frameworks, ...em.prerequisites, ...em.careerRoles, ...em.projects],
-          ),
-        );
-      }
+    final emergingTechList = emergingTechs ?? EmergingTechRepository.fallbackEmergingTechs;
+    for (final em in emergingTechList) {
+      items.add(
+        SearchableItem(
+          id: 'idx_em_${em.id}',
+          category: 'Emerging Technology',
+          title: em.title,
+          subtitle: '${em.category} • ${em.whyItMatters}',
+          subjectName: em.title,
+          subjectCode: em.id,
+          semester: 'N/A',
+          year: 'N/A',
+          keywords: [em.title, em.category, em.overview, em.whyItMatters, em.futureDirection, ...em.coreConcepts, ...em.tools, ...em.frameworks, ...em.prerequisites, ...em.careerRoles, ...em.projects],
+        ),
+      );
     }
 
     // 5. Index New Non-Academic Hierarchy Hubs, Categories, Topics & Resources

@@ -1,5 +1,5 @@
 name: csse_study_hub
-description: "A new Flutter project."
+description: "UniDocs - 4-Year Computer Science Engineering Student Learning, Career & Higher-Education Companion."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

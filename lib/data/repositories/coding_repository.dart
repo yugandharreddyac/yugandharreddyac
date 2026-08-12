@@ -31,6 +31,10 @@ class CodingRepository {
     return _fallbackCodingProjects;
   }
 
+  static List<CodingLanguageModel> get fallbackCodingLanguages => _fallbackCodingLanguages;
+  static List<DsaTopicModel> get fallbackDsaTopics => _fallbackDsaTopics;
+  static List<IndustryProjectModel> get fallbackCodingProjects => _fallbackCodingProjects;
+
   // --- TRACK 1: CURATED PRACTICE SHEETS ---
   static const List<CodingResourceModel> _fallbackCodingResources = [
     CodingResourceModel(
