@@ -19,6 +19,8 @@ class CareerRepository {
     return _fallbackCareerTechnologies;
   }
 
+  static List<CareerModel> get fallbackCareerTechnologies => _fallbackCareerTechnologies;
+
   static const List<CareerModel> _fallbackCareerTechnologies = [
     // --- DOMAIN 1: EMERGING TECH & AI ---
     CareerModel(

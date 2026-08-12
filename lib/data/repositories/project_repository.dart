@@ -18,6 +18,8 @@ class ProjectRepository {
     return _fallbackProjects;
   }
 
+  static List<ProjectModel> get fallbackProjects => _fallbackProjects;
+
   static const List<ProjectModel> _fallbackProjects = [
     // --- TIER 1: BEGINNER ---
     ProjectModel(

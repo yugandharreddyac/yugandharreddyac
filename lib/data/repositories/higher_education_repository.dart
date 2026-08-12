@@ -18,6 +18,8 @@ class HigherEducationRepository {
     return _fallbackHigherEducationResources;
   }
 
+  static List<HigherEducationModel> get fallbackHigherEducationResources => _fallbackHigherEducationResources;
+
   static const List<HigherEducationModel> _fallbackHigherEducationResources = [
     // --- CATEGORY 1: HIGHER STUDIES IN INDIA ---
     HigherEducationModel(

@@ -18,6 +18,8 @@ class PlacementRepository {
     return _fallbackPlacementResources;
   }
 
+  static List<PlacementModel> get fallbackPlacementResources => _fallbackPlacementResources;
+
   static const List<PlacementModel> _fallbackPlacementResources = [
     // --- STAGE 1: QUANTITATIVE APTITUDE ---
     PlacementModel(

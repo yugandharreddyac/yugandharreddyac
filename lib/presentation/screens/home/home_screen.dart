@@ -322,6 +322,119 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // ==========================================
+                    // 4-YEAR CSE STUDENT ROADMAP & NAVIGATOR
+                    // ==========================================
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: isDark
+                              ? [const Color(0xFF1E1B4B), const Color(0xFF312E81)]
+                              : [const Color(0xFFEFF6FF), const Color(0xFFDBEAFE)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: const BoxDecoration(
+                                  color: royalBlue,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(Icons.explore_rounded, color: Colors.white, size: 20),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '4-Year B.Tech CSE Student Roadmap',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: textPrimary,
+                                      ),
+                                    ),
+                                    Text(
+                                      'LEARN → BUILD → PRACTICE → INTERN → GRADUATE',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        color: royalBlue,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 14),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildRoadmapPhaseChip(
+                                  context,
+                                  yearLabel: 'Year 1',
+                                  title: 'Programming & Logic',
+                                  color: const Color(0xFF2563EB),
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _buildRoadmapPhaseChip(
+                                  context,
+                                  yearLabel: 'Year 2',
+                                  title: 'DSA & Full-Stack',
+                                  color: const Color(0xFF059669),
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildRoadmapPhaseChip(
+                                  context,
+                                  yearLabel: 'Year 3',
+                                  title: 'AI/Cloud & Projects',
+                                  color: const Color(0xFFD97706),
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.projectHub),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _buildRoadmapPhaseChip(
+                                  context,
+                                  yearLabel: 'Year 4',
+                                  title: 'Placements & GATE',
+                                  color: const Color(0xFF7C3AED),
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.placementHub),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ).animate().fadeIn(delay: 150.ms).slideY(begin: 0.05, end: 0),
+
+                    const SizedBox(height: 24),
+
+                    // ==========================================
                     // 2. ACADEMIC CURRICULUM (4 ALTERNATING TINTED CARDS)
                     // ==========================================
                     Text(
@@ -645,6 +758,62 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
   }
 
 
+
+  // --- ROADMAP PHASE CHIP ---
+  Widget _buildRoadmapPhaseChip(
+    BuildContext context, {
+    required String yearLabel,
+    required String title,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: isDark ? color.withAlpha(40) : color.withAlpha(18),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withAlpha(60)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                yearLabel,
+                style: GoogleFonts.inter(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: GoogleFonts.inter(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   // --- EXPLORE HUB TINTED CARD ---
   Widget _buildTintedExploreHubCard(

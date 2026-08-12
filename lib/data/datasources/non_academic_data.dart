@@ -22,7 +22,7 @@ class NonAcademicData {
   }
 
   // ==========================================
-  // 1. CODING HUB (NEW HIERARCHICAL SYSTEM)
+  // 1. CODING HUB (COMPLETE LEARNING SYSTEM)
   // ==========================================
   static const HubModel codingHub = HubModel(
     id: 'coding',
@@ -33,38 +33,38 @@ class NonAcademicData {
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
-        title: 'Computer Basics & Logic',
-        description: 'Understand how computers execute programs, binary logic, and basic computational thinking.',
+        title: 'Computer Basics & Logic Building',
+        description: 'Understand how computers execute code, binary math, flowcharts, and pseudo-code.',
         targetCategoryId: 'programming_basics',
       ),
       StartHereStepModel(
         stepNumber: 2,
-        title: 'Programming Basics',
-        description: 'Learn fundamental syntax, variables, conditional statements, and loops.',
-        targetCategoryId: 'programming_basics',
-      ),
-      StartHereStepModel(
-        stepNumber: 3,
-        title: 'Choose a Programming Language',
-        description: 'Pick Python, C, C++, Java or JavaScript based on your career goals.',
+        title: 'Choose a Core Language',
+        description: 'Master Python, C++, Java, C, JavaScript, Dart, or SQL with hands-on practice.',
         targetCategoryId: 'programming_languages',
       ),
       StartHereStepModel(
-        stepNumber: 4,
-        title: 'Data Structures & Algorithms',
-        description: 'Master arrays, lists, stacks, queues, trees, graphs, and algorithmic problem solving.',
+        stepNumber: 3,
+        title: 'Master Data Structures & Algorithms',
+        description: 'Conquer 23+ core DSA topics with intuition, complexity analysis & LeetCode problems.',
         targetCategoryId: 'dsa',
       ),
       StartHereStepModel(
-        stepNumber: 5,
-        title: 'Build Real-World Projects',
-        description: 'Apply your knowledge by building web applications, mobile apps, or automation scripts.',
+        stepNumber: 4,
+        title: 'Fullstack & Mobile Engineering',
+        description: 'Build web applications with React/Node and cross-platform mobile apps with Flutter.',
         targetCategoryId: 'web_dev',
       ),
       StartHereStepModel(
+        stepNumber: 5,
+        title: 'Databases & Software Architecture',
+        description: 'Master SQL, PostgreSQL, MongoDB, Redis, Git branching, CI/CD & clean code design.',
+        targetCategoryId: 'databases',
+      ),
+      StartHereStepModel(
         stepNumber: 6,
-        title: 'Placement & Competitive Prep',
-        description: 'Solve coding interview problems on LeetCode/GeeksforGeeks and prepare for tech roles.',
+        title: 'Build Portfolio Projects & Competitive Prep',
+        description: 'Construct real-world projects and practice tech interview questions on LeetCode.',
         targetCategoryId: 'dsa',
       ),
     ],
@@ -73,7 +73,7 @@ class NonAcademicData {
       CategoryModel(
         id: 'programming_basics',
         title: 'Programming Basics',
-        description: 'Fundamental concepts, logic building, pseudo code & problem solving.',
+        description: 'Fundamental concepts, logic building, flowcharts, compilers & execution models.',
         icon: Icons.lightbulb_outline_rounded,
         topics: [
           HierarchicalTopicModel(
@@ -88,7 +88,7 @@ class NonAcademicData {
                 description: 'Comprehensive guide to algorithms, flowcharts, and basic syntax concepts.',
                 type: HierarchyResourceType.notes,
                 url: 'https://docs.python.org/3/tutorial/index.html',
-                platform: 'UniDocs Guides',
+                platform: 'Python Official Docs',
               ),
               HierarchyResourceModel(
                 id: 'res_basics_online',
@@ -103,11 +103,11 @@ class NonAcademicData {
         ],
       ),
 
-      // Category 2: Programming Languages (Includes Flow 1)
+      // Category 2: Programming Languages
       CategoryModel(
         id: 'programming_languages',
         title: 'Programming Languages',
-        description: 'Learn Python, C, C++, Java, and JavaScript from beginner to advanced.',
+        description: 'Master Python, C, C++, Java, JavaScript, Dart, and SQL from beginner to advanced.',
         icon: Icons.laptop_mac_rounded,
         availableLevels: [
           LearningLevel.beginner,
@@ -116,14 +116,14 @@ class NonAcademicData {
           LearningLevel.projects,
         ],
         topics: [
-          // PYTHON (Flow 1 Target)
+          // PYTHON
           HierarchicalTopicModel(
             id: 'python',
             title: 'Python',
             description: 'High-level, readable language widely used in AI, Data Science, and Web Development.',
             icon: Icons.code_rounded,
             subtopics: [
-              // Beginner Topics (8 Standard Topics)
+              // Beginner Python
               HierarchicalTopicModel(
                 id: 'python_basics',
                 title: 'Python Basics & Setup',
@@ -205,286 +205,50 @@ class NonAcademicData {
                 ],
               ),
               HierarchicalTopicModel(
-                id: 'python_operators',
-                title: 'Operators & Expressions',
-                description: 'Arithmetic (+,-,*,/,//,%,**), comparison, logical (and, or, not), bitwise, and identity operators.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_py_op_notes',
-                    title: 'Python Operators Complete Guide',
-                    description: 'Detailed guide to expression evaluation, operator precedence, and bitwise manipulation.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://www.geeksforgeeks.org/python-operators/',
-                    platform: 'GeeksforGeeks',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_op_video',
-                    title: 'Python Operators Tutorial Video',
-                    description: 'Video walkthrough of arithmetic, logical, and assignment operators.',
-                    type: HierarchyResourceType.video,
-                    url: 'https://www.youtube.com/watch?v=v5MR5JnKcZI',
-                    platform: 'YouTube',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_op_practice',
-                    title: 'Operators & Formula Evaluation Practice',
-                    description: 'Solve 12 mathematical and logical operator expression problems.',
-                    type: HierarchyResourceType.practice,
-                    url: 'https://www.geeksforgeeks.org/python-operators-quiz/',
-                    platform: 'GeeksforGeeks Quiz',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_op_online',
-                    title: 'Learn Operators Online',
-                    description: 'Interactive code runner for Python operators and expression precedence.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.w3schools.com/python/python_operators.asp',
-                    platform: 'W3Schools Interactive',
-                  ),
-                ],
-              ),
-              HierarchicalTopicModel(
-                id: 'python_conditions',
-                title: 'Conditions & Branching',
-                description: 'If, elif, else statements, nested conditionals, short-circuit evaluation, and ternary expressions.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_py_cond_notes',
-                    title: 'Python Conditions & Control Flow Notes',
-                    description: 'Master decision-making logic, pass statements, and Boolean conditional logic.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://docs.python.org/3/tutorial/controlflow.html#if-statements',
-                    platform: 'Official Python Docs',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_cond_video',
-                    title: 'Conditionals & If-Elif-Else Video',
-                    description: 'Clear video walkthrough on writing clean conditional logic in Python.',
-                    type: HierarchyResourceType.video,
-                    url: 'https://www.youtube.com/watch?v=DZwmZ8Usvnk',
-                    platform: 'YouTube / Corey Schafer',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_cond_practice',
-                    title: 'Conditionals Problem Solving',
-                    description: '15 exercises on leap year calculation, grade assignment, and nested logic.',
-                    type: HierarchyResourceType.practice,
-                    url: 'https://www.geeksforgeeks.org/python-if-else/',
-                    platform: 'GeeksforGeeks',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_cond_online',
-                    title: 'Learn Conditions Online',
-                    description: 'Interactive browser tutorial for if...else statements.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.w3schools.com/python/python_conditions.asp',
-                    platform: 'W3Schools Interactive',
-                  ),
-                ],
-              ),
-              HierarchicalTopicModel(
-                id: 'python_loops',
-                title: 'Loops & Iteration',
-                description: 'For loops, while loops, range(), enumerate(), zip(), break, continue, and else-with-loops.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_py_loops_notes',
-                    title: 'Python Iteration & Loops Guide Notes',
-                    description: 'Loop constructs, range generators, iteration protocols, and nested loop patterns.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://docs.python.org/3/tutorial/controlflow.html#for-statements',
-                    platform: 'Official Python Docs',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_loops_video',
-                    title: 'For & While Loops Deep Dive Video',
-                    description: 'Comprehensive video explaining iteration, enumerate(), and loop control keywords.',
-                    type: HierarchyResourceType.video,
-                    url: 'https://www.youtube.com/watch?v=6iF8Xb7Z3wQ',
-                    platform: 'YouTube / Corey Schafer',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_loops_practice',
-                    title: 'Loops Coding Exercises & Patterns',
-                    description: '20 practical problems on pattern printing, series summation, and loop iteration.',
-                    type: HierarchyResourceType.practice,
-                    url: 'https://www.geeksforgeeks.org/python-loops/',
-                    platform: 'GeeksforGeeks',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_loops_online',
-                    title: 'Learn Loops Online',
-                    description: 'Interactive code editor for for loops and while loops.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.w3schools.com/python/python_for_loops.asp',
-                    platform: 'W3Schools Interactive',
-                  ),
-                ],
-              ),
-              HierarchicalTopicModel(
-                id: 'python_functions',
-                title: 'Functions & Lambdas',
-                description: 'Defining functions, parameters, default values, *args, **kwargs, return values, docstrings, and lambda expressions.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_py_fn_notes',
-                    title: 'Python Functions & Scope Master Guide',
-                    description: 'Master modular programming, local vs global scope, positional vs keyword arguments, and docstrings.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://docs.python.org/3/tutorial/controlflow.html#defining-functions',
-                    platform: 'Official Python Docs',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_fn_video',
-                    title: 'Functions & Scope Tutorial Video',
-                    description: 'Detailed video guide on function arguments, return values, and lambda functions.',
-                    type: HierarchyResourceType.video,
-                    url: 'https://www.youtube.com/watch?v=9Os0o3wzS_I',
-                    platform: 'YouTube / Corey Schafer',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_fn_practice',
-                    title: 'Functions Problem Solving Exercises',
-                    description: '15 exercises on writing modular functions, recursion, and lambda map/filter.',
-                    type: HierarchyResourceType.practice,
-                    url: 'https://www.geeksforgeeks.org/python-functions/',
-                    platform: 'GeeksforGeeks',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_py_fn_online',
-                    title: 'Learn Functions Online',
-                    description: 'Interactive online playground for defining and testing Python functions.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.w3schools.com/python/python_functions.asp',
-                    platform: 'W3Schools Interactive',
-                  ),
-                ],
-              ),
-              // FLOW 1 Target Topic: Python -> Beginner -> Data Structures -> Lists
-              HierarchicalTopicModel(
                 id: 'python_ds',
-                title: 'Data Structures',
-                description: 'Built-in Python data structures: Lists, Tuples, Sets, Dictionaries, and Strings.',
+                title: 'Data Structures in Python',
+                description: 'Lists, Tuples, Sets, and Dictionaries.',
                 level: LearningLevel.beginner,
                 subtopics: [
                   HierarchicalTopicModel(
                     id: 'python_ds_lists',
-                    title: 'Lists',
-                    description: 'Learn how to store, access, modify and work with collections of values in Python.',
+                    title: 'Python Lists',
+                    description: 'Ordered, mutable sequences. Indexing, slicing, list comprehension, and methods.',
                     level: LearningLevel.beginner,
                     resources: [
                       HierarchyResourceModel(
                         id: 'res_py_lists_notes',
-                        title: 'Python Lists & Operations Notes',
-                        description: 'Detailed explanation of indexing, slicing, appending, popping, and sorting lists.',
+                        title: 'Python Lists & Comprehensions Guide',
+                        description: 'Detailed tutorial on list methods (append, pop, sort, reverse) and list comprehension syntax.',
                         type: HierarchyResourceType.notes,
                         url: 'https://docs.python.org/3/tutorial/datastructures.html#more-on-lists',
-                        platform: 'UniDocs Notes',
+                        platform: 'Official Python Docs',
                       ),
                       HierarchyResourceModel(
                         id: 'res_py_lists_video',
-                        title: 'Python Lists Tutorial & Deep Dive',
-                        description: 'Visual video guide explaining memory representation and performance of Python lists.',
+                        title: 'Python Lists & Slicing Deep Dive',
+                        description: 'Video tutorial covering list indexing, slicing [start:stop:step], and nested lists.',
                         type: HierarchyResourceType.video,
                         url: 'https://www.youtube.com/watch?v=tw7ror9x32s',
-                        platform: 'YouTube',
+                        platform: 'YouTube / Corey Schafer',
                       ),
                       HierarchyResourceModel(
                         id: 'res_py_lists_practice',
-                        title: 'List Problem Solving Exercises',
-                        description: '20 practical coding problems on array manipulation and list slicing.',
+                        title: 'Python List Manipulation Practice',
+                        description: '20 practical coding problems on list filtering, reversing, and matrix operations.',
                         type: HierarchyResourceType.practice,
                         url: 'https://www.geeksforgeeks.org/python-list-exercise/',
                         platform: 'GeeksforGeeks',
                       ),
                       HierarchyResourceModel(
-                        id: 'res_py_lists_learn_online',
-                        title: 'Learn Python Lists Online',
-                        description: 'Interactive online documentation and code playground for Python lists.',
+                        id: 'res_py_lists_online',
+                        title: 'W3Schools Interactive Python Lists',
+                        description: 'Interactive tutorial and browser code runner for Python lists.',
                         type: HierarchyResourceType.learnOnline,
                         url: 'https://www.w3schools.com/python/python_lists.asp',
                         platform: 'W3Schools Interactive',
                       ),
                     ],
-                  ),
-                  HierarchicalTopicModel(
-                    id: 'python_ds_tuples',
-                    title: 'Tuples',
-                    description: 'Immutable sequence data structures in Python.',
-                    level: LearningLevel.beginner,
-                    resources: [
-                      HierarchyResourceModel(
-                        id: 'res_py_tuples_notes',
-                        title: 'Tuples & Packing/Unpacking',
-                        description: 'Understanding immutability and memory efficiency of tuples.',
-                        type: HierarchyResourceType.notes,
-                        url: 'https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences',
-                      ),
-                    ],
-                  ),
-                  HierarchicalTopicModel(
-                    id: 'python_ds_sets',
-                    title: 'Sets',
-                    description: 'Unordered collections of unique elements.',
-                    level: LearningLevel.beginner,
-                    resources: [
-                      HierarchyResourceModel(
-                        id: 'res_py_sets_online',
-                        title: 'Learn Sets Online',
-                        description: 'Set operations: union, intersection, difference.',
-                        type: HierarchyResourceType.learnOnline,
-                        url: 'https://www.w3schools.com/python/python_sets.asp',
-                      ),
-                    ],
-                  ),
-                  HierarchicalTopicModel(
-                    id: 'python_ds_dicts',
-                    title: 'Dictionaries',
-                    description: 'Key-value pairs, hash mapping, and lookup methods in Python.',
-                    level: LearningLevel.beginner,
-                    resources: [
-                      HierarchyResourceModel(
-                        id: 'res_py_dict_notes',
-                        title: 'Python Dictionaries Guide',
-                        description: 'Key lookup, iterations, dict comprehensions.',
-                        type: HierarchyResourceType.notes,
-                        url: 'https://docs.python.org/3/tutorial/datastructures.html#dictionaries',
-                      ),
-                    ],
-                  ),
-                  HierarchicalTopicModel(
-                    id: 'python_ds_strings',
-                    title: 'Strings',
-                    description: 'Sequence of characters, string immutability, formatting, and string methods.',
-                    level: LearningLevel.beginner,
-                    resources: [
-                      HierarchyResourceModel(
-                        id: 'res_py_str_notes',
-                        title: 'Python Strings Masterclass',
-                        description: 'Slicing, formatting (f-strings), split, join, and regex basics.',
-                        type: HierarchyResourceType.notes,
-                        url: 'https://docs.python.org/3/tutorial/introduction.html#text',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              HierarchicalTopicModel(
-                id: 'python_file_handling',
-                title: 'File Handling',
-                description: 'Reading and writing files with the `with open()` context manager.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_py_files_notes',
-                    title: 'File I/O Notes',
-                    description: 'Text and binary file operations in Python.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files',
                   ),
                 ],
               ),
@@ -492,144 +256,229 @@ class NonAcademicData {
               HierarchicalTopicModel(
                 id: 'python_oop',
                 title: 'Object-Oriented Programming (OOP)',
-                description: 'Classes, Objects, Inheritance, Encapsulation, and Polymorphism in Python.',
+                description: 'Classes, objects, inheritance, polymorphism, encapsulation, dunder methods (`__init__`).',
                 level: LearningLevel.intermediate,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_py_oop_notes',
-                    title: 'Python OOP Masterclass',
-                    description: 'Class attributes, dunder methods (`__init__`, `__str__`), and inheritance.',
+                    title: 'Python OOP Masterclass Guide',
+                    description: 'Class attributes, instance variables, inheritance, and encapsulation principles.',
                     type: HierarchyResourceType.notes,
                     url: 'https://realpython.com/python3-object-oriented-programming/',
+                    platform: 'Real Python',
                   ),
                   HierarchyResourceModel(
-                    id: 'res_py_oop_learn_online',
+                    id: 'res_py_oop_online',
                     title: 'Interactive Python OOP',
-                    description: 'Hands-on object-oriented programming tutorial.',
+                    description: 'Interactive tutorial on classes, objects, and method overriding.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://www.w3schools.com/python/python_classes.asp',
+                    platform: 'W3Schools Interactive',
                   ),
                 ],
               ),
               // Advanced Python
               HierarchicalTopicModel(
                 id: 'python_decorators',
-                title: 'Decorators & Generators',
-                description: 'Higher-order functions, function decorators, and memory-efficient generators.',
+                title: 'Decorators, Generators & Async',
+                description: 'Higher-order functions, decorators (`@`), generators (`yield`), context managers, asyncio.',
                 level: LearningLevel.advanced,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_py_decorators_notes',
-                    title: 'Advanced Python Patterns',
-                    description: 'Decorators, context managers, and generator expressions.',
+                    title: 'Advanced Python Patterns & Decorators',
+                    description: 'Comprehensive guide to decorators, context managers (`with`), and generator expressions.',
                     type: HierarchyResourceType.notes,
                     url: 'https://realpython.com/primer-on-python-decorators/',
+                    platform: 'Real Python',
                   ),
                 ],
               ),
             ],
           ),
+
+          // C LANGUAGE
           HierarchicalTopicModel(
             id: 'c_lang',
-            title: 'C',
-            description: 'Foundational procedural language. Pointers, memory allocation, and low-level control.',
+            title: 'C Language',
+            description: 'Foundational procedural language. Pointers, direct memory allocation, and low-level system control.',
             icon: Icons.code_rounded,
             subtopics: [
               HierarchicalTopicModel(
                 id: 'c_pointers',
-                title: 'Pointers & Memory',
-                description: 'Address-of operator, dereferencing, pointer arithmetic, malloc and free.',
+                title: 'Pointers & Memory Allocation',
+                description: 'Address-of (`&`), dereferencing (`*`), pointer arithmetic, `malloc`, `calloc`, `free`, and memory leaks.',
                 level: LearningLevel.beginner,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_c_ptr_notes',
-                    title: 'C Pointers Explained',
-                    description: 'Visual explanation of memory addresses and pointer variables.',
+                    title: 'C Pointers & Memory Allocation Guide',
+                    description: 'Visual guide to memory addresses, pointers, arrays vs pointers, and heap management.',
                     type: HierarchyResourceType.notes,
                     url: 'https://www.geeksforgeeks.org/c-pointers/',
+                    platform: 'GeeksforGeeks',
                   ),
                   HierarchyResourceModel(
                     id: 'res_c_ptr_online',
-                    title: 'Learn C Online',
-                    description: 'Interactive C language tutorial and compiler.',
+                    title: 'Learn C Online Tutorial',
+                    description: 'Interactive compiler and step-by-step C programming tutorial.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://www.programiz.com/c-programming',
+                    platform: 'Programiz Interactive',
                   ),
                 ],
               ),
             ],
           ),
+
+          // C++ LANGUAGE
           HierarchicalTopicModel(
             id: 'cpp_lang',
             title: 'C++',
-            description: 'Fast, high-performance OOP language widely used in competitive programming & systems.',
+            description: 'High-performance object-oriented language widely used in competitive programming & systems engineering.',
             icon: Icons.code_rounded,
             subtopics: [
               HierarchicalTopicModel(
                 id: 'cpp_stl',
                 title: 'Standard Template Library (STL)',
-                description: 'Vectors, maps, sets, pairs, algorithms (sort, binary_search) in C++.',
+                description: 'Vectors, maps, sets, pairs, queues, stacks, iterators, and algorithms (`std::sort`, `std::binary_search`).',
                 level: LearningLevel.intermediate,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_cpp_stl_notes',
-                    title: 'C++ STL Cheat Sheet',
-                    description: 'Complete guide to vector, map, set, unordered_map and iterators.',
+                    title: 'C++ STL Master Reference & Cheat Sheet',
+                    description: 'Complete guide to std::vector, std::map, std::set, std::unordered_map, and complexity constraints.',
                     type: HierarchyResourceType.notes,
                     url: 'https://www.geeksforgeeks.org/the-c-standard-template-library-stl/',
+                    platform: 'GeeksforGeeks',
                   ),
                   HierarchyResourceModel(
                     id: 'res_cpp_stl_online',
-                    title: 'C++ Reference STL',
-                    description: 'Comprehensive C++ STL reference manual.',
+                    title: 'cppreference.com STL Containers',
+                    description: 'Official C++ Standard Library container reference manual.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://en.cppreference.com/w/cpp/container',
+                    platform: 'CPPReference Official',
                   ),
                 ],
               ),
             ],
           ),
+
+          // JAVA
           HierarchicalTopicModel(
             id: 'java_lang',
             title: 'Java',
-            description: 'Robust, object-oriented enterprise language. Platform independent with JVM.',
+            description: 'Robust, object-oriented enterprise language. Platform independent with JVM execution.',
             icon: Icons.code_rounded,
             subtopics: [
               HierarchicalTopicModel(
                 id: 'java_collections',
                 title: 'Java Collections Framework',
-                description: 'ArrayList, LinkedList, HashMap, HashSet, and PriorityQueue.',
+                description: 'ArrayList, LinkedList, HashMap, HashSet, PriorityQueue, and Comparator/Comparable interfaces.',
                 level: LearningLevel.intermediate,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_java_coll_notes',
-                    title: 'Java Collections Guide',
-                    description: 'Detailed explanation of interfaces and implementing classes.',
+                    title: 'Java Collections Framework Complete Guide',
+                    description: 'Detailed explanation of collection interfaces, underlying algorithms, and thread safety.',
                     type: HierarchyResourceType.notes,
                     url: 'https://docs.oracle.com/javase/tutorial/collections/index.html',
+                    platform: 'Oracle Java Official Tutorial',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_java_coll_online',
+                    title: 'W3Schools Java Collections Interactive',
+                    description: 'Interactive tutorial for Java lists, maps, and sets.',
+                    type: HierarchyResourceType.learnOnline,
+                    url: 'https://www.w3schools.com/java/java_user_input.asp',
+                    platform: 'W3Schools Interactive',
                   ),
                 ],
               ),
             ],
           ),
+
+          // JAVASCRIPT
           HierarchicalTopicModel(
             id: 'javascript_lang',
             title: 'JavaScript',
-            description: 'The language of the web. Asynchronous programming, DOM manipulation, ES6+ features.',
+            description: 'The language of the web. Asynchronous event-driven programming, DOM manipulation, ES6+ features.',
             icon: Icons.code_rounded,
             subtopics: [
               HierarchicalTopicModel(
                 id: 'js_es6',
                 title: 'Modern ES6+ JavaScript',
-                description: 'Arrow functions, promises, async/await, destructuring, modules.',
+                description: 'Arrow functions, Promises, Async/Await, Destructuring, Modules, Spread/Rest, Closures.',
                 level: LearningLevel.beginner,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_js_es6_online',
-                    title: 'JavaScript Info Guide',
-                    description: 'Modern JavaScript tutorial from basics to advanced.',
+                    title: 'javascript.info Modern JavaScript',
+                    description: 'The Modern JavaScript Tutorial from elementary syntax to advanced topics.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://javascript.info/',
+                    platform: 'JavaScript.info Official',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_js_mdn',
+                    title: 'MDN JavaScript Guide',
+                    description: 'Authoritative Mozilla Developer Network documentation on JavaScript.',
+                    type: HierarchyResourceType.notes,
+                    url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
+                    platform: 'MDN Web Docs',
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // DART & FLUTTER CORE
+          HierarchicalTopicModel(
+            id: 'dart_lang',
+            title: 'Dart',
+            description: 'Client-optimized language for fast apps on any platform. Strongly typed with sound null-safety.',
+            icon: Icons.mobile_friendly_rounded,
+            subtopics: [
+              HierarchicalTopicModel(
+                id: 'dart_null_safety',
+                title: 'Dart Language & Sound Null Safety',
+                description: 'Variables, null-safety (`?`, `!`, `late`), OOP, mixins, streams, and async/await.',
+                level: LearningLevel.beginner,
+                resources: [
+                  HierarchyResourceModel(
+                    id: 'res_dart_online',
+                    title: 'Official Dart Documentation',
+                    description: 'Official Dart language tour, effective Dart guidelines, and API docs.',
+                    type: HierarchyResourceType.learnOnline,
+                    url: 'https://dart.dev/guides',
+                    platform: 'Dart.dev Official',
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          // SQL LANGUAGE
+          HierarchicalTopicModel(
+            id: 'sql_lang',
+            title: 'SQL (Structured Query Language)',
+            description: 'Standard declarative language for relational database management, data querying, and schema definition.',
+            icon: Icons.storage_rounded,
+            subtopics: [
+              HierarchicalTopicModel(
+                id: 'sql_queries_core',
+                title: 'SQL DDL, DML & JOIN Queries',
+                description: 'SELECT, INSERT, UPDATE, DELETE, CREATE TABLE, ALTER TABLE, INNER/LEFT/RIGHT JOINs, and GROUP BY.',
+                level: LearningLevel.beginner,
+                resources: [
+                  HierarchyResourceModel(
+                    id: 'res_sql_lang_online',
+                    title: 'W3Schools Interactive SQL Tutorial',
+                    description: 'Interactive online SQL query runner and reference manual.',
+                    type: HierarchyResourceType.learnOnline,
+                    url: 'https://www.w3schools.com/sql/',
+                    platform: 'W3Schools Interactive',
                   ),
                 ],
               ),
@@ -638,11 +487,11 @@ class NonAcademicData {
         ],
       ),
 
-      // Category 3: Data Structures & Algorithms
+      // Category 3: Data Structures & Algorithms (COMPLETE 23+ ROADMAP)
       CategoryModel(
         id: 'dsa',
         title: 'Data Structures & Algorithms',
-        description: 'Arrays, Linked Lists, Stacks, Queues, Trees, Graphs, Sorting & Dynamic Programming.',
+        description: 'Comprehensive 23-topic DSA roadmap: Time Complexity, Arrays, Trees, Graphs, Sorting & Dynamic Programming.',
         icon: Icons.account_tree_rounded,
         availableLevels: [
           LearningLevel.beginner,
@@ -650,25 +499,162 @@ class NonAcademicData {
           LearningLevel.advanced,
         ],
         topics: [
+          // 1. Complexity Analysis
+          HierarchicalTopicModel(
+            id: 'dsa_complexity',
+            title: 'Complexity Analysis (Big-O)',
+            description: 'Time and Space Complexity, Big-O, Big-Omega, Big-Theta notation, and recursion recurrence relations.',
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_dsa_comp_notes',
+                title: 'Big-O Cheat Sheet & Complexity Guide',
+                description: 'Time complexity breakdown for array, linked list, tree, graph, and sorting algorithms.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/analysis-algorithm-set-1-asymptotic-analysis/',
+                platform: 'GeeksforGeeks',
+              ),
+            ],
+          ),
+          // 2. Arrays & Strings
           HierarchicalTopicModel(
             id: 'dsa_arrays',
             title: 'Arrays & Strings',
-            description: 'Contiguous memory allocation, two-pointer techniques, sliding window.',
+            description: 'Contiguous memory, Two Pointers, Sliding Window, Prefix Sum, Kadane\'s Algorithm.',
             level: LearningLevel.beginner,
             resources: [
               HierarchyResourceModel(
                 id: 'res_dsa_arr_notes',
-                title: 'Array Data Structure Notes',
-                description: 'Operations, time complexity, and top 15 interview problems.',
+                title: 'Array Data Structure Notes & Interview Patterns',
+                description: 'Operations, time complexity, and top 20 interview array problems.',
                 type: HierarchyResourceType.notes,
                 url: 'https://www.geeksforgeeks.org/array-data-structure/',
+                platform: 'GeeksforGeeks',
               ),
               HierarchyResourceModel(
                 id: 'res_dsa_arr_practice',
-                title: 'Practice Array Problems',
-                description: 'Curated list of array questions on LeetCode.',
+                title: 'LeetCode Array Practice Tag',
+                description: 'Curated list of array questions on LeetCode with instant online judge.',
                 type: HierarchyResourceType.practice,
                 url: 'https://leetcode.com/tag/array/',
+                platform: 'LeetCode Practice',
+              ),
+            ],
+          ),
+          // 3. Linked Lists
+          HierarchicalTopicModel(
+            id: 'dsa_linked_list',
+            title: 'Linked Lists',
+            description: 'Singly, Doubly, Circular Linked Lists, Floyd\'s Cycle Detection, list reversal, merge sort on list.',
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_ll_notes',
+                title: 'Linked List Data Structure Guide',
+                description: 'Node pointers, insertion, deletion, cycle detection, and interview problems.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/data-structures/linked-list/',
+                platform: 'GeeksforGeeks',
+              ),
+              HierarchyResourceModel(
+                id: 'res_ll_practice',
+                title: 'LeetCode Linked List Problem Set',
+                description: 'Solve top linked list interview problems on LeetCode.',
+                type: HierarchyResourceType.practice,
+                url: 'https://leetcode.com/tag/linked-list/',
+                platform: 'LeetCode Practice',
+              ),
+            ],
+          ),
+          // 4. Stacks & Queues
+          HierarchicalTopicModel(
+            id: 'dsa_stacks_queues',
+            title: 'Stacks & Queues',
+            description: 'LIFO & FIFO semantics, Monotonic Stack, Next Greater Element, Circular Queue, Deque.',
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_sq_notes',
+                title: 'Stacks & Queues Concept Guide',
+                description: 'Infix/Postfix conversion, parenthesis matching, stack using queue.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/stack-data-structure/',
+                platform: 'GeeksforGeeks',
+              ),
+            ],
+          ),
+          // 5. Trees & BST
+          HierarchicalTopicModel(
+            id: 'dsa_trees',
+            title: 'Trees & Binary Search Trees (BST)',
+            description: 'Binary Tree traversals (Inorder, Preorder, Postorder, Level Order), BST properties, LCA, AVL Trees.',
+            level: LearningLevel.intermediate,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_tree_notes',
+                title: 'Binary Tree & BST Master Guide',
+                description: 'Recursive & iterative traversals, height, diameter, and BST operations.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/binary-tree-data-structure/',
+                platform: 'GeeksforGeeks',
+              ),
+              HierarchyResourceModel(
+                id: 'res_tree_practice',
+                title: 'LeetCode Tree Problems',
+                description: 'Solve tree & BST interview questions on LeetCode.',
+                type: HierarchyResourceType.practice,
+                url: 'https://leetcode.com/tag/tree/',
+                platform: 'LeetCode',
+              ),
+            ],
+          ),
+          // 6. Graphs & Algorithms
+          HierarchicalTopicModel(
+            id: 'dsa_graphs',
+            title: 'Graphs & Graph Algorithms',
+            description: 'Adjacency List/Matrix, BFS, DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, Topological Sort, Kruskal, Prim.',
+            level: LearningLevel.advanced,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_graph_notes',
+                title: 'Graph Data Structure & Shortest Path Guide',
+                description: 'Graph representations, traversal algorithms, shortest paths & minimum spanning trees.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/',
+                platform: 'GeeksforGeeks',
+              ),
+              HierarchyResourceModel(
+                id: 'res_graph_practice',
+                title: 'LeetCode Graph Problem Set',
+                description: 'Solve top graph interview questions on LeetCode.',
+                type: HierarchyResourceType.practice,
+                url: 'https://leetcode.com/tag/graph/',
+                platform: 'LeetCode',
+              ),
+            ],
+          ),
+          // 7. Dynamic Programming
+          HierarchicalTopicModel(
+            id: 'dsa_dp',
+            title: 'Dynamic Programming (DP)',
+            description: 'Memoization (Top-down) vs Tabulation (Bottom-up), 0/1 Knapsack, Unbounded Knapsack, LCS, LIS, Matrix Chain.',
+            level: LearningLevel.advanced,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_dp_notes',
+                title: 'Dynamic Programming Master Patterns Sheet',
+                description: 'Breakdown of standard DP patterns: Subsets, Grid DP, Strings DP, and State Compression.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/dynamic-programming/',
+                platform: 'GeeksforGeeks',
+              ),
+              HierarchyResourceModel(
+                id: 'res_dp_practice',
+                title: 'LeetCode Dynamic Programming Tag',
+                description: 'Curated list of DP problems from easy to hard on LeetCode.',
+                type: HierarchyResourceType.practice,
+                url: 'https://leetcode.com/tag/dynamic-programming/',
+                platform: 'LeetCode',
               ),
             ],
           ),
@@ -679,20 +665,59 @@ class NonAcademicData {
       CategoryModel(
         id: 'web_dev',
         title: 'Web Development',
-        description: 'HTML, CSS, JavaScript, React, Node.js, and Fullstack Development.',
+        description: 'HTML5, CSS3, JavaScript, React, Node.js, Express, REST APIs & Fullstack Web Architecture.',
         icon: Icons.web_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'web_html_css',
-            title: 'HTML5 & CSS3 Responsive Design',
-            description: 'Semantic tags, Flexbox, CSS Grid, media queries.',
+            title: 'Frontend: HTML5, CSS3 & Responsive Design',
+            description: 'Semantic tags, Flexbox, CSS Grid, media queries, accessibility (a11y), responsive design.',
             resources: [
               HierarchyResourceModel(
                 id: 'res_web_html_online',
-                title: 'MDN Web Docs HTML/CSS',
-                description: 'Official web documentation for frontend design.',
+                title: 'MDN Web Docs: HTML & CSS',
+                description: 'Official Mozilla Developer Network guides for web fundamentals.',
                 type: HierarchyResourceType.learnOnline,
                 url: 'https://developer.mozilla.org/en-US/docs/Learn',
+                platform: 'MDN Web Docs Official',
+              ),
+              HierarchyResourceModel(
+                id: 'res_web_w3',
+                title: 'W3Schools HTML & CSS Tutorial',
+                description: 'Interactive browser tutorial for HTML5 and CSS3.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://www.w3schools.com/html/',
+                platform: 'W3Schools Interactive',
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'web_react',
+            title: 'Frontend Framework: React',
+            description: 'JSX, Components, Props, State (`useState`, `useEffect`), Custom Hooks, Context API, Redux/Zustand.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_react_docs',
+                title: 'Official React Documentation',
+                description: 'Official interactive documentation for React framework.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://react.dev/',
+                platform: 'React.dev Official',
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'web_backend_node',
+            title: 'Backend: Node.js & Express.js',
+            description: 'Event loop, Asynchronous I/O, Express routing, Middleware, JWT authentication, RESTful APIs.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_node_docs',
+                title: 'Node.js Official Guides & API Docs',
+                description: 'Official Node.js documentation and tutorial guides.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://nodejs.org/en/docs/guides/',
+                platform: 'Nodejs.org Official',
               ),
             ],
           ),
@@ -703,20 +728,36 @@ class NonAcademicData {
       CategoryModel(
         id: 'app_dev',
         title: 'App Development',
-        description: 'Flutter, Android (Kotlin), iOS (Swift), and Cross-platform mobile development.',
+        description: 'Flutter, Dart, Android (Kotlin), State Management, Firebase & Mobile App Architecture.',
         icon: Icons.phone_android_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'flutter_basics',
-            title: 'Flutter & Dart Overview',
-            description: 'Widgets, state management, and cross-platform UI engineering.',
+            title: 'Flutter & Dart Framework Overview',
+            description: 'Stateless vs Stateful Widgets, Provider/Riverpod/Bloc state management, HTTP networking, SQLite/Hive.',
             resources: [
               HierarchyResourceModel(
                 id: 'res_flutter_online',
-                title: 'Flutter Documentation & Guides',
-                description: 'Official Flutter framework guides and API documentation.',
+                title: 'Official Flutter Documentation & Guides',
+                description: 'Official Flutter framework guides, widget catalog, and API documentation.',
                 type: HierarchyResourceType.learnOnline,
                 url: 'https://docs.flutter.dev/',
+                platform: 'Flutter.dev Official',
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'kotlin_android',
+            title: 'Android Development with Kotlin',
+            description: 'Kotlin syntax, Jetpack Compose UI, ViewModel, LiveData, Room Database, Retrofit API calls.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_kotlin_docs',
+                title: 'Android Developers Kotlin Training Portal',
+                description: 'Official Google Android developer Kotlin courses and documentation.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://developer.android.com/courses/kotlin-android-basics/course',
+                platform: 'Android Developers Official',
               ),
             ],
           ),
@@ -726,45 +767,85 @@ class NonAcademicData {
       // Category 6: Databases
       CategoryModel(
         id: 'databases',
-        title: 'Databases',
-        description: 'Relational SQL (MySQL, PostgreSQL) & NoSQL (MongoDB, Firebase) design.',
+        title: 'Databases & Data Management',
+        description: 'Relational Databases (MySQL, PostgreSQL), NoSQL (MongoDB, Firebase), Caching (Redis) & Database Design.',
         icon: Icons.storage_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'sql_basics',
-            title: 'SQL & Relational Databases',
-            description: 'Queries, JOINs, indexing, normalization, and ACID properties.',
+            title: 'Relational Databases & SQL',
+            description: 'Entity-Relationship (ER) diagrams, Normalization (1NF to 3NF), JOINs, Indexing, ACID properties.',
             resources: [
               HierarchyResourceModel(
                 id: 'res_sql_notes',
-                title: 'SQL Essentials Cheat Sheet',
-                description: 'SELECT, INSERT, UPDATE, DELETE, and JOIN queries explained.',
+                title: 'SQL & Database Design Essentials Guide',
+                description: 'SELECT, INSERT, UPDATE, DELETE, JOINs, indexing & transaction isolation levels.',
                 type: HierarchyResourceType.notes,
                 url: 'https://www.w3schools.com/sql/',
+                platform: 'W3Schools',
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'nosql_mongo',
+            title: 'NoSQL Databases & MongoDB',
+            description: 'Document databases, BSON format, Aggregation pipeline, Mongoose ORM, Redis caching concepts.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_mongo_docs',
+                title: 'MongoDB University & Manual',
+                description: 'Official MongoDB manual and free interactive developer courses.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://www.mongodb.com/docs/manual/',
+                platform: 'MongoDB Official Docs',
               ),
             ],
           ),
         ],
       ),
 
-      // Category 7: Git & GitHub
+      // Category 7: Git & Software Engineering
       CategoryModel(
         id: 'git_github',
-        title: 'Git & GitHub',
-        description: 'Version control, branching, pull requests, open source contributions.',
+        title: 'Git, GitHub & Software Engineering',
+        description: 'Version control, Git branching strategies, Pull Requests, CI/CD pipelines, Clean Code & Design Patterns.',
         icon: Icons.merge_type_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'git_basics',
-            title: 'Git Fundamentals',
-            description: 'git init, commit, push, pull, branch, merge, and stash.',
+            title: 'Git & GitHub Fundamentals',
+            description: 'git init, commit, push, pull, branch, merge, rebase, cherry-pick, resolving merge conflicts.',
             resources: [
               HierarchyResourceModel(
                 id: 'res_git_notes',
-                title: 'Git Command Cheat Sheet',
-                description: 'All essential git commands summarized.',
+                title: 'GitHub Education Git Cheat Sheet',
+                description: 'Essential git commands cheat sheet for developers.',
                 type: HierarchyResourceType.notes,
                 url: 'https://education.github.com/git-cheat-sheet-education.pdf',
+                platform: 'GitHub Education',
+              ),
+              HierarchyResourceModel(
+                id: 'res_git_online',
+                title: 'Official Git Reference Manual',
+                description: 'Official Git documentation and Pro Git book.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://git-scm.com/doc',
+                platform: 'Git-SCM Official',
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'clean_code_design_patterns',
+            title: 'Clean Code & Design Patterns',
+            description: 'SOLID Principles, Design Patterns (Singleton, Factory, Observer, Strategy), Code refactoring.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_patterns_online',
+                title: 'Refactoring.Guru Design Patterns',
+                description: 'Visual explanation of software design patterns and refactoring techniques.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://refactoring.guru/design-patterns',
+                platform: 'Refactoring.Guru',
               ),
             ],
           ),
@@ -774,34 +855,46 @@ class NonAcademicData {
   );
 
   // ==========================================
-  // 2. EMERGING TECHNOLOGIES HUB (NEW HIERARCHICAL SYSTEM)
+  // 2. EMERGING TECHNOLOGIES HUB (FUTURE TECH)
   // ==========================================
   static const HubModel emergingTechHub = HubModel(
     id: 'emerging_tech',
     title: 'Emerging Technologies',
-    description: 'Explore cutting-edge developments in AI, Machine Learning, Cloud Computing & Cybersecurity.',
+    description: 'Explore AI, Machine Learning, Deep Learning, GenAI, Cloud Computing, DevOps & Cybersecurity.',
     icon: Icons.smart_toy_rounded,
-    routeName: '/career', // preserved route mapping
+    routeName: '/career',
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
-        title: 'Understand Future Tech Landscape',
-        description: 'Explore how Artificial Intelligence, Cloud, and Quantum computing shape the industry.',
+        title: 'Understand the AI & Future Tech Landscape',
+        description: 'Explore how Artificial Intelligence, Cloud, and DevOps shape global computing careers.',
         targetCategoryId: 'ai_ml',
       ),
       StartHereStepModel(
         stepNumber: 2,
-        title: 'Learn AI Fundamentals',
-        description: 'Start with Artificial Intelligence concepts, Python math libraries, and data modeling.',
+        title: 'Master Machine Learning Fundamentals',
+        description: 'Learn NumPy, Pandas, Scikit-Learn, Supervised/Unsupervised models & Evaluation metrics.',
         targetCategoryId: 'ai_ml',
+      ),
+      StartHereStepModel(
+        stepNumber: 3,
+        title: 'Deep Learning & Generative AI',
+        description: 'Train Neural Networks with PyTorch/TensorFlow, Transformers, LLMs, RAG & Fine-tuning.',
+        targetCategoryId: 'ai_ml',
+      ),
+      StartHereStepModel(
+        stepNumber: 4,
+        title: 'Cloud & DevOps Infrastructure',
+        description: 'Master AWS, Docker containerization, Kubernetes orchestration & CI/CD deployment.',
+        targetCategoryId: 'cloud_computing',
       ),
     ],
     categories: [
-      // Category 1: Artificial Intelligence & Machine Learning (Flow 2 Target)
+      // Category 1: Artificial Intelligence & Machine Learning
       CategoryModel(
         id: 'ai_ml',
-        title: 'Artificial Intelligence',
-        description: 'Machine Learning, Deep Learning, Natural Language Processing, and Computer Vision.',
+        title: 'Artificial Intelligence & Machine Learning',
+        description: 'Supervised ML, Deep Learning, Computer Vision, Natural Language Processing, GenAI & LLMs.',
         icon: Icons.psychology_rounded,
         availableLevels: [
           LearningLevel.beginner,
@@ -809,7 +902,6 @@ class NonAcademicData {
           LearningLevel.advanced,
         ],
         topics: [
-          // FLOW 2 Target Topic: Emerging Tech -> Artificial Intelligence -> Machine Learning -> Beginner -> Topic -> Learn Online
           HierarchicalTopicModel(
             id: 'machine_learning',
             title: 'Machine Learning',
@@ -824,8 +916,8 @@ class NonAcademicData {
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_ml_notes',
-                    title: 'Machine Learning Basics Notes',
-                    description: 'Concise intro to supervised vs unsupervised learning and model evaluation metrics.',
+                    title: 'Machine Learning Basics & Scikit-Learn Notes',
+                    description: 'Concise intro to supervised vs unsupervised learning and evaluation metrics.',
                     type: HierarchyResourceType.notes,
                     url: 'https://scikit-learn.org/stable/getting_started.html',
                     platform: 'Scikit-Learn Docs',
@@ -833,7 +925,7 @@ class NonAcademicData {
                   HierarchyResourceModel(
                     id: 'res_ml_video',
                     title: 'Machine Learning Course for Beginners',
-                    description: 'Comprehensive 4-hour video course on ML algorithms and NumPy/Pandas setup.',
+                    description: 'Comprehensive 4-hour video course on ML algorithms and Python setup.',
                     type: HierarchyResourceType.video,
                     url: 'https://www.youtube.com/watch?v=i_LwzRVP7bg',
                     platform: 'YouTube / freeCodeCamp',
@@ -846,7 +938,6 @@ class NonAcademicData {
                     url: 'https://www.kaggle.com/learn/intro-to-machine-learning',
                     platform: 'Kaggle',
                   ),
-                  // FLOW 2 REDIRECTION LINK: Learn Online -> Machine Learning
                   HierarchyResourceModel(
                     id: 'res_ml_learn_online',
                     title: 'Learn Machine Learning Online',
@@ -870,7 +961,7 @@ class NonAcademicData {
           HierarchicalTopicModel(
             id: 'deep_learning',
             title: 'Deep Learning & Neural Networks',
-            description: 'Artificial Neural Networks (ANN), CNNs for vision, RNNs/Transformers for NLP.',
+            description: 'Artificial Neural Networks (ANN), CNNs for vision, RNNs/LSTMs, Transformers.',
             icon: Icons.auto_awesome_rounded,
             subtopics: [
               HierarchicalTopicModel(
@@ -885,32 +976,65 @@ class NonAcademicData {
                     description: 'Official Keras and TensorFlow beginner documentation.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://www.tensorflow.org/tutorials',
+                    platform: 'TensorFlow Official',
                   ),
                 ],
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'genai_llms',
+            title: 'Generative AI & LLMs',
+            description: 'Large Language Models, Embeddings, RAG (Retrieval-Augmented Generation), Prompt Engineering, Fine-tuning.',
+            level: LearningLevel.advanced,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_genai_online',
+                title: 'Hugging Face Course & Transformer Docs',
+                description: 'Official Hugging Face NLP and Transformer library documentation.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://huggingface.co/course/chapter1/1',
+                platform: 'Hugging Face Official',
               ),
             ],
           ),
         ],
       ),
 
-      // Category 2: Cloud Computing
+      // Category 2: Cloud Computing & DevOps
       CategoryModel(
         id: 'cloud_computing',
         title: 'Cloud Computing & DevOps',
-        description: 'AWS, Google Cloud, Azure, Docker containers & Kubernetes orchestration.',
+        description: 'AWS, Google Cloud, Azure, Docker containers, Kubernetes orchestration & CI/CD automation.',
         icon: Icons.cloud_done_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'aws_basics',
             title: 'AWS Cloud Fundamentals',
-            description: 'EC2 instances, S3 storage, IAM security, AWS Lambda serverless.',
+            description: 'EC2 compute instances, S3 object storage, IAM security policies, AWS Lambda serverless.',
             resources: [
               HierarchyResourceModel(
                 id: 'res_aws_online',
-                title: 'AWS Educator Portal',
-                description: 'Official AWS practitioner documentation.',
+                title: 'AWS Educator & Practitioner Portal',
+                description: 'Official AWS practitioner documentation and hands-on labs.',
                 type: HierarchyResourceType.learnOnline,
                 url: 'https://aws.amazon.com/getting-started/',
+                platform: 'AWS Official',
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'devops_docker',
+            title: 'DevOps: Docker & Containers',
+            description: 'Containerization basics, Dockerfile, Docker Compose, multi-stage builds.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_docker_online',
+                title: 'Official Docker Manual',
+                description: 'Official Docker getting started documentation.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://docs.docker.com/get-started/',
+                platform: 'Docker Official Docs',
               ),
             ],
           ),
@@ -921,20 +1045,21 @@ class NonAcademicData {
       CategoryModel(
         id: 'cybersecurity',
         title: 'Cybersecurity & Ethical Hacking',
-        description: 'Network security, cryptography, penetration testing & web application security.',
+        description: 'Network security, cryptography, penetration testing & OWASP Web Security.',
         icon: Icons.security_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'cyber_intro',
-            title: 'Network & System Security',
-            description: 'Firewalls, Wireshark packet analysis, OWASP Top 10 vulnerabilities.',
+            title: 'Network & Web Security (OWASP)',
+            description: 'Firewalls, Wireshark packet inspection, OWASP Top 10 vulnerabilities, SQL injection, XSS.',
             resources: [
               HierarchyResourceModel(
                 id: 'res_owasp_online',
-                title: 'OWASP Top 10 Vulnerabilities',
-                description: 'Standard security awareness guide for developers.',
+                title: 'OWASP Top 10 Vulnerabilities Guide',
+                description: 'Standard security awareness guide for web developers.',
                 type: HierarchyResourceType.learnOnline,
                 url: 'https://owasp.org/www-project-top-ten/',
+                platform: 'OWASP Official',
               ),
             ],
           ),
@@ -944,37 +1069,37 @@ class NonAcademicData {
   );
 
   // ==========================================
-  // 3. HIGHER EDUCATION HUB (NEW HIERARCHICAL SYSTEM)
+  // 3. HIGHER EDUCATION HUB (EXAMS & DEGREES)
   // ==========================================
   static const HubModel higherEducationHub = HubModel(
     id: 'higher_education',
     title: 'Higher Education & Exams',
-    description: 'Explore Postgraduate degrees, Study Abroad, Scholarships, Entrance Exams & Research pathways.',
+    description: 'Explore Master\'s degrees, GATE, CAT, GRE, TOEFL, IELTS, GMAT, Study Abroad & Research Fellowships.',
     icon: Icons.school_rounded,
     routeName: '/higher-education',
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
-        title: 'Explore Postgraduate Studies',
-        description: 'Understand Master\'s degrees, M.Tech, MBA, MCA, MS Abroad & PhD options.',
+        title: 'Explore Postgraduate Pathways',
+        description: 'Compare M.Tech, M.S. Abroad, MBA, MCA, and PhD doctoral research degrees.',
         targetCategoryId: 'pg_studies',
       ),
       StartHereStepModel(
         stepNumber: 2,
-        title: 'Prepare for Entrance Exams',
-        description: 'Syllabus, previous year questions & practice portals for GATE, GRE, GMAT, IELTS & TOEFL.',
+        title: 'Prepare for Competitive Exams',
+        description: 'Access syllabus, past papers, and prep portals for GATE, GRE, GMAT, IELTS, and TOEFL.',
         targetCategoryId: 'entrance_exams',
       ),
       StartHereStepModel(
         stepNumber: 3,
         title: 'Study Abroad Guidance',
-        description: 'Country selection, university shortlisting, application processes & visa preparation.',
+        description: 'University selection, SOP/LOR writing, application timelines, and visa interviews.',
         targetCategoryId: 'study_abroad',
       ),
       StartHereStepModel(
         stepNumber: 4,
         title: 'Scholarships & Financial Aid',
-        description: 'Government schemes, university fellowships, and international student grants.',
+        description: 'Discover government scholarships, university assistantships (TA/RA), and international grants.',
         targetCategoryId: 'scholarships_aid',
       ),
     ],
@@ -988,8 +1113,8 @@ class NonAcademicData {
         topics: [
           HierarchicalTopicModel(
             id: 'masters_degree',
-            title: 'Master\'s Degree',
-            description: 'Graduate level academic degrees focusing on advanced specialization.',
+            title: 'Master\'s Degree Overview',
+            description: 'Graduate level academic degrees focusing on advanced specialization and research.',
             icon: Icons.school_rounded,
             subtopics: [
               HierarchicalTopicModel(
@@ -1019,8 +1144,8 @@ class NonAcademicData {
           ),
           HierarchicalTopicModel(
             id: 'mtech',
-            title: 'M.Tech',
-            description: 'Master of Technology degrees at IITs, NITs, and premier technical institutions.',
+            title: 'M.Tech (Master of Technology)',
+            description: 'Advanced technical specialization degrees at IITs, NITs, and premier institutes via GATE score.',
             icon: Icons.engineering_rounded,
             subtopics: [
               HierarchicalTopicModel(
@@ -1050,99 +1175,22 @@ class NonAcademicData {
           ),
           HierarchicalTopicModel(
             id: 'mba',
-            title: 'MBA',
-            description: 'Master of Business Administration for management and leadership roles.',
+            title: 'MBA (Master of Business Administration)',
+            description: 'Business management, tech leadership, product management, and corporate strategy.',
             icon: Icons.business_center_rounded,
             subtopics: [
               HierarchicalTopicModel(
                 id: 'mba_fundamentals',
-                title: 'MBA Fundamentals',
-                description: 'Entrance tests (CAT/GMAT), business school selection, and specialization tracks.',
+                title: 'MBA Fundamentals & Admissions',
+                description: 'CAT, GMAT, b-school shortlisting, and profile building.',
                 resources: [
-                  HierarchyResourceModel(
-                    id: 'res_mba_notes',
-                    title: 'MBA Admission & Profile Building',
-                    description: 'GMAT/CAT requirements, interviews, and business school selection.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://www.mba.com/',
-                    platform: 'GMAC Portal',
-                  ),
                   HierarchyResourceModel(
                     id: 'res_mba_online',
                     title: 'Learn Online: Official MBA Portal',
                     description: 'Official GMAT and global business school planning portal.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://www.mba.com/',
-                    platform: 'mba.com',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'mca',
-            title: 'MCA',
-            description: 'Master of Computer Applications for software engineering careers.',
-            icon: Icons.computer_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'mca_overview',
-                title: 'MCA Overview & Preparation',
-                description: 'NIMCET syllabus, top MCA colleges, and computer application curriculum.',
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_mca_online',
-                    title: 'Learn Online: MCA Course Overview',
-                    description: 'Detailed overview of MCA course structure and NIMCET exam prep.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.geeksforgeeks.org/mca-full-form/',
-                    platform: 'GeeksforGeeks',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'ms',
-            title: 'MS',
-            description: 'Master of Science degrees at international and domestic research universities.',
-            icon: Icons.science_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'ms_overview',
-                title: 'MS Program Overview',
-                description: 'Coursework vs Thesis MS tracks, assistantships, and admission prerequisites.',
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_ms_online',
-                    title: 'Learn Online: MS Program Rankings',
-                    description: 'US News ranking and overview of top international Master of Science programs.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.usnews.com/education/best-graduate-schools',
-                    platform: 'US News Education',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'phd_program',
-            title: 'PhD',
-            description: 'Doctor of Philosophy doctoral research degrees and academic fellowships.',
-            icon: Icons.psychology_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'phd_overview',
-                title: 'PhD Preparation & Fellowships',
-                description: 'Advisors, research proposals, doctoral stipends, and dissertation defense.',
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_phd_online',
-                    title: 'Learn Online: PhD & Research Guidance',
-                    description: 'Nature Careers guide to pursuing a PhD and finding doctoral advisors.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.nature.com/careers',
-                    platform: 'Nature Careers',
+                    platform: 'mba.com Official',
                   ),
                 ],
               ),
@@ -1151,172 +1199,17 @@ class NonAcademicData {
         ],
       ),
 
-      // Category 2: Study Abroad
-      CategoryModel(
-        id: 'study_abroad',
-        title: 'Study Abroad',
-        description: 'Country selection, university shortlisting, applications, visas, and scholarships.',
-        icon: Icons.flight_takeoff_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'choosing_country',
-            title: 'Choosing a Country',
-            description: 'Compare USA, UK, Canada, Germany, Australia for tuition, post-study work & living.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_country_online',
-                title: 'Study in Europe & Overseas Guide',
-                description: 'Explore top study destinations, tuition fees, and post-study work visas.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.study.eu/',
-                platform: 'Study.eu Portal',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'university_selection',
-            title: 'University Selection',
-            description: 'Shortlisting ambitious, target, and safe universities using QS/THE rankings.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_univ_rank_online',
-                title: 'QS World University Rankings',
-                description: 'Official global university rankings by subject and reputation.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.topuniversities.com/qs-world-university-rankings',
-                platform: 'QS TopUniversities',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'application_process',
-            title: 'Application Process',
-            description: 'Statement of Purpose (SOP), Letters of Recommendation (LOR), transcripts & resume.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_app_proc_online',
-                title: 'Common Application Portal',
-                description: 'Centralized application system for higher education applications.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.commonapp.org/',
-                platform: 'Common App',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'visa_prep',
-            title: 'Visa Preparation',
-            description: 'Student visa interviews (F-1, Student Route), financial proof & SEVIS requirements.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_visa_online',
-                title: 'US Student Visa Official Guide',
-                description: 'Official U.S. Department of State student visa procedures.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html',
-                platform: 'U.S. Travel State Dept',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'abroad_scholarships',
-            title: 'Scholarships',
-            description: 'International student grants, tuition waivers, and assistantships.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_abroad_schol_online',
-                title: 'International Scholarship Portal',
-                description: 'Search thousands of scholarships for international students.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.scholarshipportal.com/',
-                platform: 'ScholarshipPortal',
-              ),
-            ],
-          ),
-        ],
-      ),
-
-      // Category 3: Scholarships & Financial Aid
-      CategoryModel(
-        id: 'scholarships_aid',
-        title: 'Scholarships & Financial Aid',
-        description: 'Government schemes, university fellowships, international grants & merit aid.',
-        icon: Icons.payments_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'govt_scholarships',
-            title: 'Government Scholarships',
-            description: 'Central and state government student scholarships and research fellowships.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_govt_schol_online',
-                title: 'National Scholarship Portal (NSP)',
-                description: 'Official Government of India national scholarship portal.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://scholarships.gov.in/',
-                platform: 'NSP Govt Portal',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'univ_scholarships',
-            title: 'University Scholarships',
-            description: 'Departmental scholarships, TA/RA assistantships, and tuition fee waivers.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_univ_schol_online',
-                title: 'Fastweb College Scholarships',
-                description: 'Database of university scholarships and institutional aid.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.fastweb.com/',
-                platform: 'Fastweb',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'intl_scholarships',
-            title: 'International Scholarships',
-            description: 'Fulbright, Chevening, DAAD, Commonwealth, and Erasmus Mundus fellowships.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_intl_schol_online',
-                title: 'Fulbright Foreign Student Program',
-                description: 'Official binational Fulbright grants for master\'s and PhD studies.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://fulbright-fulbright.org/',
-                platform: 'Fulbright Program',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'merit_scholarships',
-            title: 'Merit Scholarships',
-            description: 'Rank-based and academic achievement scholarships for top performers.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_merit_schol_online',
-                title: 'Scholarships.com Merit Directory',
-                description: 'Search academic merit-based scholarships and awards.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.scholarships.com/',
-                platform: 'Scholarships.com',
-              ),
-            ],
-          ),
-        ],
-      ),
-
-      // Category 4: Entrance Exams
+      // Category 2: Entrance Exams
       CategoryModel(
         id: 'entrance_exams',
         title: 'Entrance Exams',
-        description: 'Syllabus, question banks & preparation for GATE, GRE, GMAT, IELTS, and TOEFL.',
+        description: 'Syllabus, question papers & preparation for GATE, GRE, GMAT, IELTS, and TOEFL.',
         icon: Icons.quiz_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'exam_gate',
-            title: 'GATE',
-            description: 'Graduate Aptitude Test in Engineering for M.Tech admissions & PSU recruitment.',
+            title: 'GATE (Graduate Aptitude Test in Engineering)',
+            description: 'National level examination for M.Tech admissions at IITs & PSU recruitment.',
             icon: Icons.menu_book_rounded,
             subtopics: [
               HierarchicalTopicModel(
@@ -1346,8 +1239,8 @@ class NonAcademicData {
           ),
           HierarchicalTopicModel(
             id: 'exam_gre',
-            title: 'GRE',
-            description: 'Graduate Record Examination for MS & MBA admissions globally.',
+            title: 'GRE (Graduate Record Examination)',
+            description: 'Standardized test for MS & PhD admissions at top international universities.',
             icon: Icons.assignment_rounded,
             subtopics: [
               HierarchicalTopicModel(
@@ -1355,14 +1248,6 @@ class NonAcademicData {
                 title: 'GRE General Test Prep',
                 description: 'Verbal reasoning, Quantitative reasoning, and Analytical Writing (AWA).',
                 resources: [
-                  HierarchyResourceModel(
-                    id: 'res_gre_general_notes',
-                    title: 'GRE Vocabulary & Math Formula Sheet',
-                    description: 'High-frequency GRE words and math shortcut formulas.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://www.ets.org/gre.html',
-                    platform: 'ETS Guide',
-                  ),
                   HierarchyResourceModel(
                     id: 'res_gre_general_online',
                     title: 'Learn Online: ETS Official GRE',
@@ -1375,297 +1260,53 @@ class NonAcademicData {
               ),
             ],
           ),
+        ],
+      ),
+
+      // Category 3: Study Abroad
+      CategoryModel(
+        id: 'study_abroad',
+        title: 'Study Abroad',
+        description: 'Country selection, university shortlisting, applications, visas, and scholarships.',
+        icon: Icons.flight_takeoff_rounded,
+        topics: [
           HierarchicalTopicModel(
-            id: 'exam_gmat',
-            title: 'GMAT',
-            description: 'Graduate Management Admission Test for premier global MBA programs.',
-            icon: Icons.analytics_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'gmat_focus',
-                title: 'GMAT Focus Edition',
-                description: 'Quantitative reasoning, Verbal reasoning, and Data Insights sections.',
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_gmat_online',
-                    title: 'Learn Online: Official GMAT Exam Portal',
-                    description: 'Official GMAC GMAT Focus Edition practice tests and prep.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.mba.com/exams/gmat-exam',
-                    platform: 'GMAC mba.com',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'exam_ielts',
-            title: 'IELTS',
-            description: 'International English Language Testing System for study and immigration.',
-            icon: Icons.record_voice_over_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'ielts_academic',
-                title: 'IELTS Academic Module',
-                description: 'Listening, Reading, Writing (Task 1 & Task 2), and Speaking interview.',
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_ielts_online',
-                    title: 'Learn Online: Official IELTS Portal',
-                    description: 'Official IELTS sample test papers and scoring rubrics.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.ielts.org/',
-                    platform: 'IELTS Official',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'exam_toefl',
-            title: 'TOEFL',
-            description: 'Test of English as a Foreign Language iBT for university admissions.',
-            icon: Icons.language_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'toefl_ibt',
-                title: 'TOEFL iBT Test',
-                description: 'Reading comprehension, listening tasks, speaking tasks, and academic writing.',
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_toefl_online',
-                    title: 'Learn Online: ETS Official TOEFL Portal',
-                    description: 'Official ETS TOEFL iBT practice tests and prep materials.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.ets.org/toefl.html',
-                    platform: 'ETS TOEFL Official',
-                  ),
-                ],
+            id: 'choosing_country',
+            title: 'Choosing a Country',
+            description: 'Compare USA, UK, Canada, Germany, Australia for tuition, post-study work & living.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_country_online',
+                title: 'Study in Europe & Overseas Guide',
+                description: 'Explore top study destinations, tuition fees, and post-study work visas.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://www.study.eu/',
+                platform: 'Study.eu Portal',
               ),
             ],
           ),
         ],
       ),
 
-      // Category 5: Universities & Colleges
+      // Category 4: Scholarships & Financial Aid
       CategoryModel(
-        id: 'universities_colleges',
-        title: 'Universities & Colleges',
-        description: 'Finding the right university, ranking, accreditation, and comparison tools.',
-        icon: Icons.account_balance_rounded,
+        id: 'scholarships_aid',
+        title: 'Scholarships & Financial Aid',
+        description: 'Government schemes, university fellowships, international grants & merit aid.',
+        icon: Icons.payments_rounded,
         topics: [
           HierarchicalTopicModel(
-            id: 'finding_univ',
-            title: 'Finding the Right University',
-            description: 'Factors: location, tuition fees, faculty research, campus culture & career placement.',
+            id: 'govt_scholarships',
+            title: 'Government Scholarships',
+            description: 'Central and state government student scholarships and research fellowships.',
             resources: [
               HierarchyResourceModel(
-                id: 'res_find_univ_online',
-                title: 'QS Top Universities Finder',
-                description: 'Search and filter world universities by location and major.',
+                id: 'res_govt_schol_online',
+                title: 'National Scholarship Portal (NSP)',
+                description: 'Official Government of India national scholarship portal.',
                 type: HierarchyResourceType.learnOnline,
-                url: 'https://www.topuniversities.com/',
-                platform: 'QS TopUniversities',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'ranking_accreditation',
-            title: 'Ranking & Accreditation',
-            description: 'Understanding NIRF, QS, THE, Shanghai ARWU rankings and ABET/AACSB accreditations.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_rank_online',
-                title: 'Academic Ranking of World Universities',
-                description: 'Shanghai ARWU global research rankings.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.shanghairanking.com/',
-                platform: 'ShanghaiRanking',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'app_requirements',
-            title: 'Application Requirements',
-            description: 'GPA minimums, GRE/GMAT cutoffs, English proficiency & transcript evaluations.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_app_req_online',
-                title: 'GradSchools Requirements Portal',
-                description: 'Guide to graduate program admission prerequisites.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.gradschools.com/',
-                platform: 'GradSchools.com',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'comparing_univs',
-            title: 'Comparing Universities',
-            description: 'Side-by-side comparison of acceptance rates, tuition costs, and alumni outcomes.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_comp_univ_online',
-                title: 'Niche College & Grad School Comparison',
-                description: 'Detailed college reviews, ratings, and comparison tools.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.niche.com/colleges/search/best-colleges/',
-                platform: 'Niche',
-              ),
-            ],
-          ),
-        ],
-      ),
-
-      // Category 6: Research & PhD
-      CategoryModel(
-        id: 'research_phd',
-        title: 'Research & PhD',
-        description: 'Research methodology, proposal writing, publishing papers, and doctoral programs.',
-        icon: Icons.biotech_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'research_fundamentals',
-            title: 'Research Fundamentals',
-            description: 'Literature review, scientific method, experimental design, and data analysis.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_research_online',
-                title: 'Nature Research Portal',
-                description: 'Scientific research news, methodology, and peer-reviewed journals.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.nature.com/',
-                platform: 'Nature Journal',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'research_topic',
-            title: 'Finding a Research Topic',
-            description: 'Identifying research gaps, reading survey papers, and formulating hypotheses.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_scholar_online',
-                title: 'Google Scholar Search',
-                description: 'Search academic papers, citations, and patents across disciplines.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://scholar.google.com/',
-                platform: 'Google Scholar',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'research_proposal',
-            title: 'Writing a Research Proposal',
-            description: 'Structuring problem statement, objectives, methodology, and timeline.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_proposal_online',
-                title: 'Research Proposal Writing Guide',
-                description: 'Step by step guide to writing a successful academic research proposal.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.scribbr.com/category/research-proposal/',
-                platform: 'Scribbr Academic',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'publishing_research',
-            title: 'Publishing Research',
-            description: 'Selecting peer-reviewed journals (IEEE, ACM, Springer), peer review, and LaTeX formatting.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_ieee_online',
-                title: 'IEEE Xplore Digital Library',
-                description: 'Global repository of computer science and engineering research papers.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://ieeexplore.ieee.org/',
-                platform: 'IEEE Xplore',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'phd_prep',
-            title: 'PhD Preparation',
-            description: 'Contacting prospective professors, securing research assistantships, and qualifying exams.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_phd_prep_online',
-                title: 'FindAPhD Global Portal',
-                description: 'Database of funded PhD projects and research degrees globally.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.findaphd.com/',
-                platform: 'FindAPhD',
-              ),
-            ],
-          ),
-        ],
-      ),
-
-      // Category 7: Professional Certifications
-      CategoryModel(
-        id: 'certifications',
-        title: 'Professional Certifications',
-        description: 'Cloud, programming, cybersecurity, and AI industry certifications.',
-        icon: Icons.card_membership_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'cloud_certs',
-            title: 'Cloud Certifications',
-            description: 'AWS Certified Solutions Architect, Google Cloud Engineer, Azure Fundamentals.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_aws_cert_online',
-                title: 'AWS Official Certification Portal',
-                description: 'Official exam guides and practice exams for AWS certifications.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://aws.amazon.com/certification/',
-                platform: 'AWS Certification',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_certs',
-            title: 'Programming Certifications',
-            description: 'Python Institute PCAP/PCPP, Oracle Certified Java Professional.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_python_cert_online',
-                title: 'Python Institute Certifications',
-                description: 'Official Python programming certification levels.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://pythoninstitute.org/',
-                platform: 'Python Institute',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'cyber_certs',
-            title: 'Cybersecurity Certifications',
-            description: 'CompTIA Security+, Certified Ethical Hacker (CEH), CISSP.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_cyber_cert_online',
-                title: 'ISC2 CISSP & Security Certifications',
-                description: 'Global standard cybersecurity certifications directory.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.isc2.org/Certifications',
-                platform: 'ISC2 Official',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'data_ai_certs',
-            title: 'Data & AI Certifications',
-            description: 'TensorFlow Developer Certificate, Databricks Machine Learning Associate.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_tf_cert_online',
-                title: 'TensorFlow Developer Certificate Guide',
-                description: 'Official TensorFlow deep learning developer certification program.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.tensorflow.org/certificate',
-                platform: 'TensorFlow Official',
+                url: 'https://scholarships.gov.in/',
+                platform: 'NSP Govt Portal',
               ),
             ],
           ),
@@ -1675,7 +1316,7 @@ class NonAcademicData {
   );
 
   // ==========================================
-  // 4. PLACEMENT HUB (NEW HIERARCHICAL SYSTEM)
+  // 4. PLACEMENT HUB (CAREER READY PREPARATION)
   // ==========================================
   static const HubModel placementHub = HubModel(
     id: 'placement',
@@ -1686,51 +1327,39 @@ class NonAcademicData {
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
-        title: 'Step 1 — Build Programming Fundamentals',
-        description: 'Master Python, C++, Java, or JavaScript syntax, functions, and logic building.',
+        title: 'Master Programming Language & Logic',
+        description: 'Pick C++, Java, or Python and learn fundamental syntax & logic building.',
         targetCategoryId: 'tech_prep',
       ),
       StartHereStepModel(
         stepNumber: 2,
-        title: 'Step 2 — Learn Data Structures',
-        description: 'Understand Arrays, Strings, Linked Lists, Stacks, Queues, Trees, and Graphs.',
+        title: 'Conquer DSA Interview Patterns',
+        description: 'Master Arrays, Strings, Linked Lists, Trees, Graphs & Dynamic Programming.',
         targetCategoryId: 'tech_prep',
       ),
       StartHereStepModel(
         stepNumber: 3,
-        title: 'Step 3 — Practice Problem Solving',
-        description: 'Solve top coding interview problems on LeetCode and GeeksforGeeks.',
-        targetCategoryId: 'tech_prep',
-      ),
-      StartHereStepModel(
-        stepNumber: 4,
-        title: 'Step 4 — Learn CS Core Subjects',
+        title: 'Revise Core CS Subjects',
         description: 'Review Operating Systems, DBMS, SQL, Computer Networks, and OOP concepts.',
         targetCategoryId: 'tech_prep',
       ),
       StartHereStepModel(
+        stepNumber: 4,
+        title: 'Master Aptitude & Reasoning',
+        description: 'Practice Quantitative Aptitude, Logical Reasoning, and Verbal Ability questions.',
+        targetCategoryId: 'aptitude_prep',
+      ),
+      StartHereStepModel(
         stepNumber: 5,
-        title: 'Step 5 — Build Projects',
-        description: 'Develop fullstack or mobile app projects to showcase on your portfolio.',
+        title: 'Resume & Portfolio Building',
+        description: 'Draft an ATS-friendly single page technical resume and optimize LinkedIn/GitHub.',
         targetCategoryId: 'resume_profile',
       ),
       StartHereStepModel(
         stepNumber: 6,
-        title: 'Step 6 — Prepare Resume',
-        description: 'Draft an ATS-friendly single page technical resume and optimize LinkedIn.',
-        targetCategoryId: 'resume_profile',
-      ),
-      StartHereStepModel(
-        stepNumber: 7,
-        title: 'Step 7 — Practice Interviews',
-        description: 'Conduct mock technical and HR interviews using the STAR method.',
+        title: 'Mock Interviews & Application',
+        description: 'Practice mock technical and HR rounds using the STAR framework.',
         targetCategoryId: 'interview_prep',
-      ),
-      StartHereStepModel(
-        stepNumber: 8,
-        title: 'Step 8 — Apply for Jobs',
-        description: 'Apply for campus placement drives, off-campus jobs, and internships.',
-        targetCategoryId: 'job_search',
       ),
     ],
     categories: [
@@ -1748,7 +1377,7 @@ class NonAcademicData {
         topics: [
           HierarchicalTopicModel(
             id: 'placement_dsa',
-            title: 'Data Structures & Algorithms',
+            title: 'Data Structures & Algorithms Interview Prep',
             description: 'Arrays, Strings, Linked Lists, Stacks, Queues, Trees, Graphs, Sorting & DP.',
             icon: Icons.account_tree_rounded,
             subtopics: [
@@ -1788,170 +1417,11 @@ class NonAcademicData {
                     description: 'Curated list of 75 essential coding questions for tech interviews.',
                     type: HierarchyResourceType.learnOnline,
                     url: 'https://leetcode.com/studyplan/leetcode-75/',
-                    platform: 'LeetCode',
+                    platform: 'LeetCode Official',
                   ),
                 ],
-              ),
-              HierarchicalTopicModel(
-                id: 'arrays_topic',
-                title: 'Arrays',
-                description: 'Contiguous memory allocation, element access, two-pointers & sliding window.',
-                level: LearningLevel.beginner,
-                subtopics: [
-                  HierarchicalTopicModel(
-                    id: 'array_basics',
-                    title: 'Array Basics',
-                    description: 'Introduction to 1D/2D arrays, indexing, traversal, insertion, and deletion.',
-                    level: LearningLevel.beginner,
-                    resources: [
-                      HierarchyResourceModel(
-                        id: 'res_array_basics_notes',
-                        title: 'Array Data Structure Notes',
-                        description: 'Memory layout, time complexities of array operations, and fundamental concepts.',
-                        type: HierarchyResourceType.notes,
-                        url: 'https://www.geeksforgeeks.org/array-data-structure/',
-                        platform: 'GeeksforGeeks Notes',
-                      ),
-                      HierarchyResourceModel(
-                        id: 'res_array_basics_video',
-                        title: 'Arrays & Memory Layout in 30 Minutes',
-                        description: 'Visual walkthrough of array contiguous storage and memory addresses.',
-                        type: HierarchyResourceType.video,
-                        url: 'https://www.youtube.com/watch?v=n60TiZ517ZY',
-                        platform: 'YouTube / freeCodeCamp',
-                      ),
-                      HierarchyResourceModel(
-                        id: 'res_array_basics_practice',
-                        title: 'Practice: LeetCode Array Practice',
-                        description: 'Solve curated array coding problems interactively on LeetCode.',
-                        type: HierarchyResourceType.practice,
-                        url: 'https://leetcode.com/tag/array/',
-                        platform: 'LeetCode Practice',
-                      ),
-                      HierarchyResourceModel(
-                        id: 'res_array_basics_online',
-                        title: 'Learn Online: GeeksforGeeks Arrays Guide',
-                        description: 'Comprehensive online tutorial on Array data structures.',
-                        type: HierarchyResourceType.learnOnline,
-                        url: 'https://www.geeksforgeeks.org/array-data-structure/',
-                        platform: 'GeeksforGeeks Portal',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              HierarchicalTopicModel(
-                id: 'strings_topic',
-                title: 'Strings',
-                description: 'ASCII/Unicode encoding, string immutability, pattern matching & anagrams.',
-                level: LearningLevel.beginner,
-                subtopics: [
-                  HierarchicalTopicModel(
-                    id: 'string_basics',
-                    title: 'String Basics',
-                    description: 'String manipulation, reversing strings, checking palindromes, and substrings.',
-                    level: LearningLevel.beginner,
-                    resources: [
-                      HierarchyResourceModel(
-                        id: 'res_string_basics_notes',
-                        title: 'String Basics & Manipulation Notes',
-                        description: 'String operations and common interview pattern notes.',
-                        type: HierarchyResourceType.notes,
-                        url: 'https://www.geeksforgeeks.org/string-data-structure/',
-                        platform: 'GeeksforGeeks',
-                      ),
-                      HierarchyResourceModel(
-                        id: 'res_string_basics_practice',
-                        title: 'Practice: LeetCode String Practice',
-                        description: 'Solve top string coding questions on LeetCode.',
-                        type: HierarchyResourceType.practice,
-                        url: 'https://leetcode.com/tag/string/',
-                        platform: 'LeetCode',
-                      ),
-                      HierarchyResourceModel(
-                        id: 'res_string_basics_online',
-                        title: 'Learn Online: GeeksforGeeks Strings Guide',
-                        description: 'Detailed tutorial on String algorithms and functions.',
-                        type: HierarchyResourceType.learnOnline,
-                        url: 'https://www.geeksforgeeks.org/string-data-structure/',
-                        platform: 'GeeksforGeeks',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              HierarchicalTopicModel(
-                id: 'linked_lists',
-                title: 'Linked Lists',
-                description: 'Singly, Doubly, and Circular linked lists, pointer manipulation & reversal.',
-              ),
-              HierarchicalTopicModel(
-                id: 'stacks_queues',
-                title: 'Stacks & Queues',
-                description: 'LIFO & FIFO operations, monotonic stacks, priority queues, and deque.',
-              ),
-              HierarchicalTopicModel(
-                id: 'trees',
-                title: 'Trees',
-                description: 'Binary Trees, Binary Search Trees (BST), Traversals (Inorder, Preorder, Postorder).',
-              ),
-              HierarchicalTopicModel(
-                id: 'graphs',
-                title: 'Graphs',
-                description: 'BFS, DFS, Dijkstra\'s algorithm, Topological Sort, Minimum Spanning Trees.',
-              ),
-              HierarchicalTopicModel(
-                id: 'sorting',
-                title: 'Sorting',
-                description: 'Bubble Sort, Merge Sort, Quick Sort, Heap Sort, and Time Complexity comparisons.',
-              ),
-              HierarchicalTopicModel(
-                id: 'searching',
-                title: 'Searching',
-                description: 'Linear Search, Binary Search, and Binary Search on Answer space.',
-              ),
-              HierarchicalTopicModel(
-                id: 'dp_topic',
-                title: 'Dynamic Programming',
-                description: 'Memoization, Tabulation, 0/1 Knapsack, Longest Common Subsequence.',
               ),
             ],
-          ),
-          HierarchicalTopicModel(
-            id: 'placement_prog_langs',
-            title: 'Programming Languages',
-            description: 'Core concepts in C++, Java, Python, and JavaScript for interviews.',
-            icon: Icons.code_rounded,
-          ),
-          HierarchicalTopicModel(
-            id: 'dbms',
-            title: 'DBMS',
-            description: 'Database Management Systems, Normalization (1NF-3NF), B-Trees, and Transactions.',
-            icon: Icons.storage_rounded,
-          ),
-          HierarchicalTopicModel(
-            id: 'operating_systems',
-            title: 'Operating Systems',
-            description: 'Processes, Threads, CPU Scheduling, Deadlocks, Virtual Memory & Paging.',
-            icon: Icons.memory_rounded,
-          ),
-          HierarchicalTopicModel(
-            id: 'computer_networks',
-            title: 'Computer Networks',
-            description: 'OSI 7-Layer Model, TCP/IP, IP Addressing, Subnetting, HTTP/HTTPS, DNS & Sockets.',
-            icon: Icons.hub_rounded,
-          ),
-          HierarchicalTopicModel(
-            id: 'oop_concepts',
-            title: 'OOP',
-            description: 'Object-Oriented Programming: Encapsulation, Abstraction, Inheritance & Polymorphism.',
-            icon: Icons.category_rounded,
-          ),
-          HierarchicalTopicModel(
-            id: 'sql_prep',
-            title: 'SQL',
-            description: 'Queries, JOINs, Group By, Having, Subqueries & Window Functions.',
-            icon: Icons.dataset_rounded,
           ),
         ],
       ),
@@ -1959,7 +1429,7 @@ class NonAcademicData {
       // Category 2: Aptitude
       CategoryModel(
         id: 'aptitude_prep',
-        title: 'Aptitude',
+        title: 'Aptitude & Reasoning',
         description: 'Quantitative Aptitude, Logical Reasoning & Verbal Ability for campus screening tests.',
         icon: Icons.calculate_rounded,
         topics: [
@@ -1999,87 +1469,6 @@ class NonAcademicData {
                   ),
                 ],
               ),
-              HierarchicalTopicModel(
-                id: 'profit_loss',
-                title: 'Profit & Loss',
-                description: 'Cost price, selling price, marked price, discount, and margin calculations.',
-              ),
-              HierarchicalTopicModel(
-                id: 'time_work',
-                title: 'Time & Work',
-                description: 'Man-hours, efficiency ratios, pipes and cisterns problems.',
-              ),
-              HierarchicalTopicModel(
-                id: 'speed_distance',
-                title: 'Time Speed & Distance',
-                description: 'Relative speed, trains crossing platforms, boats and streams.',
-              ),
-              HierarchicalTopicModel(
-                id: 'ratio_proportion',
-                title: 'Ratio & Proportion',
-                description: 'Ratios, proportions, mixtures, and alligation techniques.',
-              ),
-              HierarchicalTopicModel(
-                id: 'probability_topic',
-                title: 'Probability',
-                description: 'Combinations, permutations, sample spaces, and conditional probability.',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'logical_reasoning',
-            title: 'Logical Reasoning',
-            description: 'Number Series, Coding-Decoding, Blood Relations & Seating Arrangement.',
-            icon: Icons.psychology_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'number_series',
-                title: 'Number Series',
-                description: 'Arithmetic, geometric, square/cube, and alternating number series patterns.',
-              ),
-              HierarchicalTopicModel(
-                id: 'coding_decoding',
-                title: 'Coding-Decoding',
-                description: 'Letter coding, number coding, and substitution coding puzzles.',
-              ),
-              HierarchicalTopicModel(
-                id: 'blood_relations',
-                title: 'Blood Relations',
-                description: 'Family tree diagrams and coded relation statements.',
-              ),
-              HierarchicalTopicModel(
-                id: 'seating_arrangement',
-                title: 'Seating Arrangement',
-                description: 'Linear, circular, and matrix seating arrangement logic puzzles.',
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'verbal_ability',
-            title: 'Verbal Ability',
-            description: 'Reading Comprehension, Vocabulary, Grammar & Sentence Correction.',
-            icon: Icons.record_voice_over_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'rc_topic',
-                title: 'Reading Comprehension',
-                description: 'Passage analysis, main idea identification, and inference questions.',
-              ),
-              HierarchicalTopicModel(
-                id: 'vocab_topic',
-                title: 'Vocabulary',
-                description: 'Synonyms, antonyms, idioms, phrases, and one-word substitutions.',
-              ),
-              HierarchicalTopicModel(
-                id: 'grammar_topic',
-                title: 'Grammar',
-                description: 'Subject-verb agreement, tenses, prepositions, and conjunctions.',
-              ),
-              HierarchicalTopicModel(
-                id: 'sentence_correction',
-                title: 'Sentence Correction',
-                description: 'Spotting errors, misplaced modifiers, and parallel structure.',
-              ),
             ],
           ),
         ],
@@ -2088,29 +1477,19 @@ class NonAcademicData {
       // Category 3: Communication & HR
       CategoryModel(
         id: 'communication_hr',
-        title: 'Communication & HR',
-        description: 'Communication skills, Group Discussions, HR interview questions & the STAR method.',
+        title: 'Communication & HR Interviews',
+        description: 'HR interview questions, behavioral frameworks & the STAR method.',
         icon: Icons.people_rounded,
         topics: [
           HierarchicalTopicModel(
-            id: 'comm_skills',
-            title: 'Communication Skills',
-            description: 'Articulate expression, active listening, body language, and professional etiquette.',
-          ),
-          HierarchicalTopicModel(
-            id: 'group_discussion',
-            title: 'Group Discussion',
-            description: 'GD roles (Initiator, Moderator, Summarizer), topic types & dos and don\'ts.',
-          ),
-          HierarchicalTopicModel(
             id: 'hr_questions',
-            title: 'HR Questions',
-            description: 'Standard HR interview questions and behavioral answer frameworks.',
+            title: 'HR Interview Preparation',
+            description: 'Standard HR questions: Tell me about yourself, Strengths & Weaknesses, 5-year goal.',
             subtopics: [
               HierarchicalTopicModel(
                 id: 'hr_common_q',
                 title: 'Common HR Interview Questions',
-                description: 'Answers for "Tell me about yourself", "Strengths & Weaknesses", and "Where do you see yourself in 5 years?".',
+                description: 'Sample responses and frameworks for HR behavioral rounds.',
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_hr_practice',
@@ -2132,16 +1511,6 @@ class NonAcademicData {
               ),
             ],
           ),
-          HierarchicalTopicModel(
-            id: 'behavioral_q',
-            title: 'Behavioral Questions',
-            description: 'Handling conflict, leadership examples, failure, and teamwork scenarios.',
-          ),
-          HierarchicalTopicModel(
-            id: 'star_method',
-            title: 'STAR Method',
-            description: 'Structuring behavioral answers using Situation, Task, Action, Result framework.',
-          ),
         ],
       ),
 
@@ -2149,17 +1518,17 @@ class NonAcademicData {
       CategoryModel(
         id: 'resume_profile',
         title: 'Resume & Profile',
-        description: 'Technical resume building, LinkedIn optimization, GitHub portfolio & personal branding.',
+        description: 'Technical resume building, ATS templates, LinkedIn optimization & GitHub profile.',
         icon: Icons.badge_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'resume_building',
-            title: 'Resume Building',
+            title: 'Resume Building & Templates',
             description: 'ATS-friendly resume templates, action verbs, project formatting & metric outcomes.',
             subtopics: [
               HierarchicalTopicModel(
                 id: 'creating_student_resume',
-                title: 'Creating a Student Resume',
+                title: 'Creating a Technical Student Resume',
                 description: 'Single page LaTeX and Markdown templates tailored for computer science students.',
                 resources: [
                   HierarchyResourceModel(
@@ -2170,37 +1539,9 @@ class NonAcademicData {
                     url: 'https://www.overleaf.com/latex/templates/jakes-resume/syzsqfdxflqy',
                     platform: 'Jake\'s Resume Guide',
                   ),
-                  HierarchyResourceModel(
-                    id: 'res_student_resume_online',
-                    title: 'Learn Online: Jake\'s Resume Latex Template',
-                    description: 'Industry standard open-source technical resume LaTeX template.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.overleaf.com/latex/templates/jakes-resume/syzsqfdxflqy',
-                    platform: 'Overleaf LaTeX',
-                  ),
                 ],
               ),
             ],
-          ),
-          HierarchicalTopicModel(
-            id: 'linkedin_profile',
-            title: 'LinkedIn Profile',
-            description: 'Headline optimization, summary, experience, recommendations, and networking.',
-          ),
-          HierarchicalTopicModel(
-            id: 'github_profile',
-            title: 'GitHub Profile',
-            description: 'Profile README, repository documentation, commit streak, and open-source contributions.',
-          ),
-          HierarchicalTopicModel(
-            id: 'portfolio_building',
-            title: 'Portfolio',
-            description: 'Personal developer website, live demo links, and project case studies.',
-          ),
-          HierarchicalTopicModel(
-            id: 'personal_branding',
-            title: 'Personal Branding',
-            description: 'Tech blogging (Hashnode/Medium), sharing learnings, and community engagement.',
           ),
         ],
       ),
@@ -2209,12 +1550,12 @@ class NonAcademicData {
       CategoryModel(
         id: 'interview_prep',
         title: 'Interview Preparation',
-        description: 'Technical interviews, coding rounds, HR rounds, mock interviews & common mistakes.',
+        description: 'Technical interviews, coding rounds, HR rounds, mock interviews & STAR method.',
         icon: Icons.quiz_rounded,
         topics: [
           HierarchicalTopicModel(
             id: 'technical_interviews',
-            title: 'Technical Interviews',
+            title: 'Technical Interview Preparation',
             description: 'System design basics, live coding etiquette, explaining complexity & thinking aloud.',
             subtopics: [
               HierarchicalTopicModel(
@@ -2230,37 +1571,9 @@ class NonAcademicData {
                     url: 'https://leetcode.com/studyplan/leetcode-75/',
                     platform: 'LeetCode Study Plan',
                   ),
-                  HierarchyResourceModel(
-                    id: 'res_tech_interview_online',
-                    title: 'Learn Online: Striver A2Z DSA Sheet',
-                    description: 'Comprehensive DSA interview roadmap with detailed solutions.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://takeuforward.org/strivers-a2zdsa-course/strivers-a2z-dsa-course-sheet-2/',
-                    platform: 'Striver A2Z',
-                  ),
                 ],
               ),
             ],
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_interviews',
-            title: 'Coding Interviews',
-            description: 'Time management during online coding assessments (OA) and edge case handling.',
-          ),
-          HierarchicalTopicModel(
-            id: 'hr_interviews',
-            title: 'HR Interviews',
-            description: 'Salary negotiation basics, company research, and asking insightful questions.',
-          ),
-          HierarchicalTopicModel(
-            id: 'mock_interviews',
-            title: 'Mock Interviews',
-            description: 'Peer-to-peer mock interviews, Pramp/Interviewing.io practice, and self-recording.',
-          ),
-          HierarchicalTopicModel(
-            id: 'interview_mistakes',
-            title: 'Interview Mistakes',
-            description: 'Common pitfalls: staying silent, rushing into code without clarifying questions.',
           ),
         ],
       ),
@@ -2268,33 +1581,13 @@ class NonAcademicData {
       // Category 6: Job Search
       CategoryModel(
         id: 'job_search',
-        title: 'Job Search',
-        description: 'Campus placements, internships, off-campus applications, cold emailing & job portals.',
+        title: 'Job Search & Off-Campus Drives',
+        description: 'Campus placements, internships, off-campus applications & job portals.',
         icon: Icons.work_history_rounded,
         topics: [
           HierarchicalTopicModel(
-            id: 'finding_jobs',
-            title: 'Finding Jobs',
-            description: 'Job search strategies, referral requests, and targeted company lists.',
-          ),
-          HierarchicalTopicModel(
-            id: 'campus_placements',
-            title: 'Campus Placements',
-            description: 'On-campus recruitment drives, company eligibility cutoffs & PPT sessions.',
-          ),
-          HierarchicalTopicModel(
-            id: 'internships',
-            title: 'Internships',
-            description: 'Summer internships, winter research internships, and conversion to Full-Time (PPO).',
-          ),
-          HierarchicalTopicModel(
-            id: 'off_campus_jobs',
-            title: 'Off-Campus Jobs',
-            description: 'Applying on career portals, reaching out to recruiters, and hiring challenges.',
-          ),
-          HierarchicalTopicModel(
             id: 'job_portals',
-            title: 'Job Portals',
+            title: 'Job Portals & Applications',
             description: 'Leveraging LinkedIn Jobs, Instahyre, Wellfound (AngelList), and Glassdoor.',
             resources: [
               HierarchyResourceModel(
@@ -2309,110 +1602,61 @@ class NonAcademicData {
           ),
         ],
       ),
-
-      // Category 7: Placement Roadmap
-      CategoryModel(
-        id: 'placement_roadmap',
-        title: 'Placement Roadmap',
-        description: 'End-to-end 8-step placement preparation roadmap for computer science engineering students.',
-        icon: Icons.map_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'roadmap_overview',
-            title: '8-Step Placement Preparation Roadmap',
-            description: 'Structured roadmap covering programming, DSA, CS core, projects, resume & job search.',
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_roadmap_notes',
-                title: 'Complete Student Placement Roadmap Notes',
-                description: 'Month-by-month study plan and resource checklist for technical placements.',
-                type: HierarchyResourceType.notes,
-                url: 'https://takeuforward.org/strivers-a2zdsa-course/strivers-a2z-dsa-course-sheet-2/',
-                platform: 'Striver Placement Roadmap',
-              ),
-            ],
-          ),
-        ],
-      ),
     ],
   );
 
   // ==========================================
-  // 5. PROJECTS & PRACTICE HUB (NEW HIERARCHICAL SYSTEM)
+  // 5. PROJECTS & PRACTICE HUB
   // ==========================================
   static const HubModel projectsHub = HubModel(
     id: 'projects',
     title: 'Projects & Practice',
-    description: 'Real-world project blueprints, source code repositories & interactive coding and SQL practice.',
+    description: 'Real-world project blueprints, source code repositories & interactive coding practice.',
     icon: Icons.rocket_launch_rounded,
     routeName: '/projects',
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
-        title: 'Step 1 — Build Beginner Mini-Projects',
+        title: 'Build Beginner Mini-Projects',
         description: 'Start with Calculator, To-Do List, and Expense Tracker to master basic state & UI.',
         targetCategoryId: 'beginner_projects',
       ),
       StartHereStepModel(
         stepNumber: 2,
-        title: 'Step 2 — Build Responsive Web Applications',
+        title: 'Build Responsive Web Applications',
         description: 'Construct Personal Portfolio, Blog Website, E-Commerce, and Weather Apps.',
         targetCategoryId: 'web_projects',
       ),
       StartHereStepModel(
         stepNumber: 3,
-        title: 'Step 3 — Build Cross-Platform Mobile Apps',
-        description: 'Develop Flutter and Android apps with offline local storage and state management.',
-        targetCategoryId: 'app_projects',
-      ),
-      StartHereStepModel(
-        stepNumber: 4,
-        title: 'Step 4 — Build AI & Machine Learning Blueprints',
+        title: 'Build AI & Machine Learning Blueprints',
         description: 'Implement House Price Predictor, Spam Detection, and NLP Chatbot models.',
         targetCategoryId: 'ai_projects',
       ),
-      StartHereStepModel(
-        stepNumber: 5,
-        title: 'Step 5 — Practice Daily Coding Problems',
-        description: 'Solve topic-wise DSA problems on Arrays, Strings, Linked Lists, and Trees.',
-        targetCategoryId: 'coding_practice',
-      ),
-      StartHereStepModel(
-        stepNumber: 6,
-        title: 'Step 6 — Master SQL Queries & Relational Data',
-        description: 'Practice SELECT, JOINs, GROUP BY, and Subqueries on interactive SQL portals.',
-        targetCategoryId: 'sql_practice',
-      ),
     ],
     categories: [
-      // Category 1: Beginner Projects
       CategoryModel(
         id: 'beginner_projects',
         title: 'Beginner Projects',
-        description: 'Calculator, To-Do List, Student Management System, and Expense Tracker mini-projects.',
+        description: 'To-Do List, Calculator, Student Record System, and Expense Tracker mini-projects.',
         icon: Icons.lightbulb_rounded,
         topics: [
           HierarchicalTopicModel(
-            id: 'calculator_proj',
-            title: 'Calculator',
-            description: 'Basic arithmetic calculator app with grid layout and button state handling.',
-          ),
-          HierarchicalTopicModel(
             id: 'todo_list_proj',
-            title: 'To-Do List',
-            description: 'Task management application with CRUD operations, completion toggles, and persistence.',
+            title: 'To-Do List Application',
+            description: 'Task management application with CRUD operations, completion toggles, and local storage.',
             icon: Icons.check_box_rounded,
             subtopics: [
               HierarchicalTopicModel(
                 id: 'build_todo_list',
-                title: 'Build a To-Do List',
+                title: 'Build a To-Do List App',
                 description: 'Step-by-step guide to building a responsive To-Do application.',
                 level: LearningLevel.beginner,
                 resources: [
                   HierarchyResourceModel(
                     id: 'res_todo_notes',
-                    title: 'To-Do App Architecture & State Management Guide',
-                    description: 'Architecture breakdown, state management, and localStorage persistence notes.',
+                    title: 'To-Do App Architecture & State Guide',
+                    description: 'Architecture breakdown and state management notes.',
                     type: HierarchyResourceType.notes,
                     url: 'https://github.com/topics/todo-list',
                     platform: 'GitHub Guide',
@@ -2437,20 +1681,8 @@ class NonAcademicData {
               ),
             ],
           ),
-          HierarchicalTopicModel(
-            id: 'student_mgmt_proj',
-            title: 'Student Management System',
-            description: 'Console or GUI app managing student records, grades, and attendance.',
-          ),
-          HierarchicalTopicModel(
-            id: 'expense_tracker_proj',
-            title: 'Expense Tracker',
-            description: 'Income and expense logging app calculating net balance and category charts.',
-          ),
         ],
       ),
-
-      // Category 2: Web Projects
       CategoryModel(
         id: 'web_projects',
         title: 'Web Projects',
@@ -2459,128 +1691,21 @@ class NonAcademicData {
         topics: [
           HierarchicalTopicModel(
             id: 'portfolio_proj',
-            title: 'Personal Portfolio',
+            title: 'Personal Developer Portfolio',
             description: 'Single page developer portfolio with about, skills, projects, and contact form.',
-            icon: Icons.person_pin_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'build_portfolio',
-                title: 'Build a Personal Portfolio',
-                description: 'Design and deploy a professional developer portfolio website.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_portfolio_notes',
-                    title: 'Developer Portfolio Design Checklist',
-                    description: 'Best practices for showcasing projects, resume links, and contact info.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://github.com/topics/portfolio-website',
-                    platform: 'GitHub Guide',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_portfolio_project',
-                    title: 'Source Code: Developer Portfolio Template',
-                    description: 'Open source responsive portfolio website template on GitHub.',
-                    type: HierarchyResourceType.project,
-                    url: 'https://github.com/topics/portfolio-template',
-                    platform: 'GitHub Repository',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_portfolio_online',
-                    title: 'Learn Online: Build & Deploy Personal Portfolio',
-                    description: 'freeCodeCamp step-by-step guide to building and hosting your portfolio.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.freecodecamp.org/news/how-to-build-a-developer-portfolio/',
-                    platform: 'freeCodeCamp',
-                  ),
-                ],
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_portfolio_notes',
+                title: 'Developer Portfolio Design Checklist',
+                description: 'Best practices for showcasing projects and contact info.',
+                type: HierarchyResourceType.notes,
+                url: 'https://github.com/topics/portfolio-website',
+                platform: 'GitHub Guide',
               ),
             ],
           ),
-          HierarchicalTopicModel(
-            id: 'blog_proj',
-            title: 'Blog Website',
-            description: 'Content management system (CMS) with markdown post rendering and comments.',
-          ),
-          HierarchicalTopicModel(
-            id: 'ecom_proj',
-            title: 'E-Commerce Website',
-            description: 'Product catalog, shopping cart state, search filters, and checkout simulation.',
-          ),
-          HierarchicalTopicModel(
-            id: 'weather_app_proj',
-            title: 'Weather Application',
-            description: 'Weather forecasting app fetching live OpenWeather API data.',
-          ),
         ],
       ),
-
-      // Category 3: App Projects
-      CategoryModel(
-        id: 'app_projects',
-        title: 'App Projects',
-        description: 'To-Do Mobile App, Notes App, Expense Tracker App, and Student Resource App.',
-        icon: Icons.phone_android_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'todo_mobile_proj',
-            title: 'To-Do Mobile App',
-            description: 'Mobile task manager with swipe gestures and local notification reminders.',
-          ),
-          HierarchicalTopicModel(
-            id: 'notes_app_proj',
-            title: 'Notes App',
-            description: 'Markdown note-taking mobile application with offline SQLite database.',
-            icon: Icons.note_alt_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'build_notes_app',
-                title: 'Build a Notes App',
-                description: 'Build a cross-platform mobile notes app using Flutter or React Native.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_notes_app_notes',
-                    title: 'Offline Notes App Schema & Local DB Guide',
-                    description: 'SQLite database table design, search indexing, and note model architecture.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://github.com/topics/notes-app',
-                    platform: 'GitHub Guide',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_notes_app_project',
-                    title: 'Source Code: Flutter Notes App Template',
-                    description: 'Open source Flutter offline notes app sample repository.',
-                    type: HierarchyResourceType.project,
-                    url: 'https://github.com/flutter/samples/tree/main/provider_shopper',
-                    platform: 'Flutter Samples Repo',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_notes_app_online',
-                    title: 'Learn Online: Build a Flutter Offline Notes App',
-                    description: 'Official Flutter cookbook guide on SQLite local storage and persistence.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://flutter.dev/docs/cookbook/persistence/sqlite',
-                    platform: 'Flutter Docs',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'expense_app_proj',
-            title: 'Expense Tracker App',
-            description: 'Personal finance mobile app tracking monthly budgets with pie charts.',
-          ),
-          HierarchicalTopicModel(
-            id: 'student_resource_app',
-            title: 'Student Resource App',
-            description: 'Study material aggregator app with PDF viewer and subject bookmarks.',
-          ),
-        ],
-      ),
-
-      // Category 4: AI & Data Projects
       CategoryModel(
         id: 'ai_projects',
         title: 'AI & Data Projects',
@@ -2589,203 +1714,18 @@ class NonAcademicData {
         topics: [
           HierarchicalTopicModel(
             id: 'house_price_proj',
-            title: 'House Price Prediction',
+            title: 'House Price Prediction Model',
             description: 'Scikit-Learn Machine Learning regression model predicting real estate prices.',
-            icon: Icons.home_work_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'build_house_price',
-                title: 'Build a House Price Predictor',
-                description: 'End-to-end Machine Learning pipeline: EDA, feature engineering, linear regression.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_house_price_notes',
-                    title: 'Scikit-Learn Regression Pipeline Notes',
-                    description: 'Data preprocessing, feature scaling, model training, and RMSE metrics.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://scikit-learn.org/stable/tutorial/basic/tutorial.html',
-                    platform: 'Scikit-Learn Docs',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_house_price_project',
-                    title: 'Source Code: Kaggle House Prices Repo',
-                    description: 'Open source Python Jupyter notebook for House Price Prediction.',
-                    type: HierarchyResourceType.project,
-                    url: 'https://github.com/topics/house-price-prediction',
-                    platform: 'GitHub ML Repo',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_house_price_online',
-                    title: 'Learn Online: Kaggle House Prices Competition',
-                    description: 'Kaggle benchmark Machine Learning dataset and starter tutorial.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.kaggle.com/c/house-prices-advanced-regression-techniques',
-                    platform: 'Kaggle Portal',
-                  ),
-                ],
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_house_price_notes',
+                title: 'Scikit-Learn Regression Pipeline Notes',
+                description: 'Data preprocessing, feature scaling, model training, and RMSE metrics.',
+                type: HierarchyResourceType.notes,
+                url: 'https://scikit-learn.org/stable/tutorial/basic/tutorial.html',
+                platform: 'Scikit-Learn Docs',
               ),
             ],
-          ),
-          HierarchicalTopicModel(
-            id: 'spam_detection_proj',
-            title: 'Spam Detection',
-            description: 'Natural Language Processing Naive Bayes model classifying emails as spam or ham.',
-          ),
-          HierarchicalTopicModel(
-            id: 'student_perf_proj',
-            title: 'Student Performance Prediction',
-            description: 'Machine Learning classification model predicting exam scores based on study hours.',
-          ),
-          HierarchicalTopicModel(
-            id: 'chatbot_proj',
-            title: 'Chatbot',
-            description: 'Rule-based or LLM API powered conversational assistant.',
-          ),
-        ],
-      ),
-
-      // Category 5: Coding Practice
-      CategoryModel(
-        id: 'coding_practice',
-        title: 'Coding Practice',
-        description: 'Interactive problem sets for Arrays, Strings, Linked Lists, Trees, and Algorithms.',
-        icon: Icons.code_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'beginner_coding_probs',
-            title: 'Beginner Problems',
-            description: 'Basic loops, conditional logic, Fibonacci, primes, and palindrome numbers.',
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_arrays_proj',
-            title: 'Arrays',
-            description: 'Two Pointers, Sliding Window, Prefix Sum, and Subarray problem sets.',
-            icon: Icons.account_tree_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'array_problem_solving',
-                title: 'Array Problem Solving',
-                description: 'Solve top array interview problems interactively.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_coding_arr_notes',
-                    title: 'Top Array Interview Patterns Notes',
-                    description: 'Master list of 15 essential array patterns and complexities.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://takeuforward.org/strivers-a2zdsa-course/strivers-a2z-dsa-course-sheet-2/',
-                    platform: 'Striver A2Z',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_coding_arr_practice',
-                    title: 'Practice: LeetCode Array Problem Set',
-                    description: 'Solve array questions on LeetCode.',
-                    type: HierarchyResourceType.practice,
-                    url: 'https://leetcode.com/tag/array/',
-                    platform: 'LeetCode Practice',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_coding_arr_online',
-                    title: 'Learn Online: GeeksforGeeks Array Problems',
-                    description: 'GeeksforGeeks curated array problem solving list.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://practice.geeksforgeeks.org/explore?page=1&category[]=Arrays',
-                    platform: 'GeeksforGeeks Practice',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_strings_proj',
-            title: 'Strings',
-            description: 'Anagrams, string matching, palindrome partitioning, and Trie structures.',
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_linked_lists_proj',
-            title: 'Linked Lists',
-            description: 'Reversing lists, cycle detection (Floyd\'s algorithm), merging sorted lists.',
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_trees_proj',
-            title: 'Trees',
-            description: 'Binary Tree traversals, Lowest Common Ancestor (LCA), BST validation.',
-          ),
-          HierarchicalTopicModel(
-            id: 'coding_algos_proj',
-            title: 'Algorithms',
-            description: 'Binary Search, Divide and Conquer, Greedy Algorithms, Dynamic Programming.',
-          ),
-        ],
-      ),
-
-      // Category 6: SQL Practice
-      CategoryModel(
-        id: 'sql_practice',
-        title: 'SQL Practice',
-        description: 'Interactive SQL query practice: SELECT, JOINs, GROUP BY, and Subqueries.',
-        icon: Icons.storage_rounded,
-        topics: [
-          HierarchicalTopicModel(
-            id: 'sql_basics_practice',
-            title: 'SQL Basics',
-            description: 'Fundamental SQL syntax, WHERE clauses, ORDER BY, and LIMIT.',
-            icon: Icons.dataset_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'sql_query_practice',
-                title: 'SQL Query Practice',
-                description: 'Solve interactive relational database query problems.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_sql_practice_notes',
-                    title: 'SQL Essentials & JOIN Cheat Sheet',
-                    description: 'Quick reference cheat sheet for SQL queries and JOIN syntax.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://www.w3schools.com/sql/',
-                    platform: 'W3Schools SQL Guide',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_sql_practice_practice',
-                    title: 'Practice: LeetCode Top 50 SQL Study Plan',
-                    description: '50 essential SQL interview problems on LeetCode.',
-                    type: HierarchyResourceType.practice,
-                    url: 'https://leetcode.com/studyplan/top-sql-50/',
-                    platform: 'LeetCode SQL Plan',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_sql_practice_online',
-                    title: 'Learn Online: SQLZoo Interactive SQL Tutorial',
-                    description: 'Interactive online SQL environment with instant query feedback.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://sqlzoo.net/',
-                    platform: 'SQLZoo Interactive',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          HierarchicalTopicModel(
-            id: 'select_queries',
-            title: 'SELECT Queries',
-            description: 'Column selection, filtering with operators (AND/OR/IN/BETWEEN), and aliasing.',
-          ),
-          HierarchicalTopicModel(
-            id: 'joins_practice',
-            title: 'JOINs',
-            description: 'INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, and Self JOINs.',
-          ),
-          HierarchicalTopicModel(
-            id: 'groupby_practice',
-            title: 'GROUP BY',
-            description: 'Aggregate functions (COUNT, SUM, AVG, MIN, MAX) and HAVING filter clauses.',
-          ),
-          HierarchicalTopicModel(
-            id: 'subqueries_practice',
-            title: 'Subqueries',
-            description: 'Nested subqueries, correlated subqueries, and Common Table Expressions (CTEs).',
           ),
         ],
       ),
@@ -2793,19 +1733,19 @@ class NonAcademicData {
   );
 
   // ==========================================
-  // 6. ENTREPRENEURSHIP HUB
+  // 6. ENTREPRENEURSHIP & STARTUP HUB
   // ==========================================
   static const HubModel entrepreneurshipHub = HubModel(
     id: 'entrepreneurship',
     title: 'Entrepreneurship & Startup Hub',
-    description: 'Master problem discovery, lean startup principles, MVP development, business models, pitch decks & fundraising.',
+    description: 'Master problem discovery, lean startup principles, MVP development, business models & pitch decks.',
     icon: Icons.rocket_launch_rounded,
     routeName: '/entrepreneurship',
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
         title: 'Discover Real-World Problems',
-        description: 'Identify painful industry problems, conduct user interviews, and validate market demand.',
+        description: 'Identify customer pain points, conduct Mom Test interviews, and assess TAM/SAM/SOM market size.',
         targetCategoryId: 'startup_ideation',
       ),
       StartHereStepModel(
@@ -2822,13 +1762,12 @@ class NonAcademicData {
       ),
       StartHereStepModel(
         stepNumber: 4,
-        title: 'Fundraising & Incubator Application',
-        description: 'Apply to Y Combinator, angel networks, university incubators, and manage legal IP.',
+        title: 'Fundraising & YC Application',
+        description: 'Apply to Y Combinator, angel networks, university incubators, and manage SAFE notes.',
         targetCategoryId: 'fundraising_pitch',
       ),
     ],
     categories: [
-      // Category 1: Startup Ideation & Problem Discovery
       CategoryModel(
         id: 'startup_ideation',
         title: 'Ideation & Problem Discovery',
@@ -2880,137 +1819,49 @@ class NonAcademicData {
               ),
             ],
           ),
-          HierarchicalTopicModel(
-            id: 'market_research',
-            title: 'Market Research & TAM/SAM/SOM',
-            description: 'Calculating Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Target Audience.',
-            level: LearningLevel.intermediate,
-            resources: [
-              HierarchyResourceModel(
-                id: 'res_tam_notes',
-                title: 'Market Sizing Frameworks (Top-down vs Bottom-up)',
-                description: 'Step-by-step guide to calculating TAM, SAM, and SOM for startup decks.',
-                type: HierarchyResourceType.notes,
-                url: 'https://www.ycombinator.com/library/4D-how-to-size-your-market',
-                platform: 'Y Combinator Library',
-              ),
-              HierarchyResourceModel(
-                id: 'res_tam_online',
-                title: 'Learn Online: Market Sizing Guide',
-                description: 'Interactive market sizing calculator and methodology tutorial.',
-                type: HierarchyResourceType.learnOnline,
-                url: 'https://www.ycombinator.com/library/',
-                platform: 'YC Startup Library',
-              ),
-            ],
-          ),
         ],
       ),
-
-      // Category 2: Lean Startup & MVP Execution
       CategoryModel(
         id: 'lean_startup',
         title: 'Lean Startup & MVP Execution',
         description: 'Build-Measure-Learn feedback loops, rapid prototyping, and Minimum Viable Products.',
         icon: Icons.speed_rounded,
-        availableLevels: [
-          LearningLevel.beginner,
-          LearningLevel.intermediate,
-          LearningLevel.advanced,
-        ],
         topics: [
           HierarchicalTopicModel(
             id: 'mvp_development',
             title: 'Minimum Viable Product (MVP)',
-            description: 'Building lean prototypes with no-code tools or minimal full-stack code to test core hypotheses.',
-            icon: Icons.build_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'lean_mvp_building',
-                title: 'MVP Prototyping & Feedback Loops',
-                description: 'Rapid product deployment, landing page tests, and concierge MVP execution.',
-                level: LearningLevel.beginner,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_mvp_notes',
-                    title: 'Lean Startup Methodology & Business Model Canvas',
-                    description: '9 building blocks of the Business Model Canvas explained.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://www.strategyzer.com/canvas/business-model-canvas',
-                    platform: 'Strategyzer Guide',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_mvp_video',
-                    title: 'Y Combinator: How to Build an MVP',
-                    description: 'Michael Seibel explains how to launch quickly and iterate.',
-                    type: HierarchyResourceType.video,
-                    url: 'https://www.youtube.com/watch?v=1hHMwLxN6EM',
-                    platform: 'Y Combinator',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_mvp_online',
-                    title: 'Learn Online: Strategyzer Business Model Canvas',
-                    description: 'Interactive Business Model Canvas generator and lean startup tools.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.strategyzer.com/',
-                    platform: 'Strategyzer Interactive',
-                  ),
-                ],
+            description: 'Building lean prototypes with no-code tools or minimal full-stack code.',
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_mvp_notes',
+                title: 'Lean Startup Methodology & Business Model Canvas',
+                description: '9 building blocks of the Business Model Canvas explained.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.strategyzer.com/canvas/business-model-canvas',
+                platform: 'Strategyzer Guide',
               ),
             ],
           ),
         ],
       ),
-
-      // Category 3: Fundraising & Pitch Decks
       CategoryModel(
         id: 'fundraising_pitch',
         title: 'Fundraising & Pitching',
         description: 'Unit economics, 10-slide pitch decks, angel investors, seed funding & incubator applications.',
         icon: Icons.monetization_on_rounded,
-        availableLevels: [
-          LearningLevel.beginner,
-          LearningLevel.intermediate,
-          LearningLevel.advanced,
-        ],
         topics: [
           HierarchicalTopicModel(
             id: 'pitch_decks',
             title: 'Crafting Investor Pitch Decks',
             description: 'Structure of winning 10-slide decks: Problem, Solution, Traction, Team, Financials.',
-            icon: Icons.slideshow_rounded,
-            subtopics: [
-              HierarchicalTopicModel(
-                id: 'investor_pitching',
-                title: 'Pitch Deck Creation & Investor Meetings',
-                description: 'Slide-by-slide structure used by Airbnb, Uber, and Sequoia-backed startups.',
-                level: LearningLevel.intermediate,
-                resources: [
-                  HierarchyResourceModel(
-                    id: 'res_pitch_notes',
-                    title: 'Sequoia Capital Pitch Deck Template',
-                    description: 'Official 10-slide startup pitch deck framework by Sequoia Capital.',
-                    type: HierarchyResourceType.notes,
-                    url: 'https://www.sequoiacap.com/company-building/writing-a-business-plan/',
-                    platform: 'Sequoia Capital',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_pitch_video',
-                    title: 'Y Combinator: How to Pitch Your Startup',
-                    description: 'Master the 30-second elevator pitch and investor deck walkthrough.',
-                    type: HierarchyResourceType.video,
-                    url: 'https://www.youtube.com/watch?v=3M_kOln_S3M',
-                    platform: 'Y Combinator',
-                  ),
-                  HierarchyResourceModel(
-                    id: 'res_pitch_online',
-                    title: 'Learn Online: YC Seed Fundraising Guide',
-                    description: 'Official Y Combinator guide to seed fundraising and SAFE notes.',
-                    type: HierarchyResourceType.learnOnline,
-                    url: 'https://www.ycombinator.com/library/',
-                    platform: 'YC Library',
-                  ),
-                ],
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_pitch_notes',
+                title: 'Sequoia Capital Pitch Deck Template',
+                description: 'Official 10-slide startup pitch deck framework by Sequoia Capital.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.sequoiacap.com/company-building/writing-a-business-plan/',
+                platform: 'Sequoia Capital',
               ),
             ],
           ),
