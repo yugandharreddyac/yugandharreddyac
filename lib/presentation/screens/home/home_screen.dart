@@ -428,6 +428,33 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: 14),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 44,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.pushNamed(context, AppRoutes.roadmap);
+                              },
+                              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
+                              label: Text(
+                                'OPEN MY PERSONALIZED ROADMAP →',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: royalBlue,
+                                foregroundColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ).animate().fadeIn(delay: 150.ms).slideY(begin: 0.05, end: 0),

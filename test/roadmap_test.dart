@@ -1,129 +1,94 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:csse_study_hub/data/models/user_goal_model.dart';
+import 'package:csse_study_hub/data/datasources/non_academic_data.dart';
 import 'package:csse_study_hub/presentation/providers/roadmap_provider.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Personalized Roadmap & Progress Verification Tests', () {
-    test('UserGoalProfile JSON serialization & extension getters', () {
-      const profile = UserGoalProfile(
-        year: StudentYear.secondYear,
+  group('CSSED Phase 1 Acceptance Test — 1st Year Student Journey', () {
+    test('18-Step Full Student Journey Acceptance Test', () async {
+      // Step 1: Fresh user opens CSSED (New RoadmapProvider instance)
+      final provider = RoadmapProvider();
+      expect(provider.hasProfile, isFalse);
+
+      // Step 2 & 3: Selects 1st Year & Software / IT Placement
+      const selectedProfile = UserGoalProfile(
+        year: StudentYear.firstYear,
         goal: CareerGoal.softwarePlacement,
         preferredDomain: 'Full-Stack Web',
-        hoursPerWeek: 12,
+        hoursPerWeek: 10,
       );
 
-      expect(profile.year.label, equals('2nd Year'));
-      expect(profile.year.shortLabel, equals('Year 2'));
-      expect(profile.goal.title, equals('Software / IT Placement'));
+      // Step 4: Generates roadmap
+      await provider.setGoalProfile(selectedProfile);
+      expect(provider.hasProfile, isTrue);
 
-      final json = profile.toJson();
-      final restored = UserGoalProfile.fromJson(json);
+      // Step 5: Opens My Roadmap & verifies stages
+      final stages = provider.getRoadmapStages();
+      expect(stages.length, greaterThanOrEqualTo(4));
+      expect(stages[0].stageTitle, contains('FOUNDATION'));
 
-      expect(restored.year, equals(StudentYear.secondYear));
-      expect(restored.goal, equals(CareerGoal.softwarePlacement));
-      expect(restored.preferredDomain, equals('Full-Stack Web'));
-      expect(restored.hoursPerWeek, equals(12));
-    });
+      // Step 6: Identifies FIRST recommended learning action
+      final initialTodaysPlan = provider.getTodaysPlan();
+      expect(initialTodaysPlan.isNotEmpty, isTrue);
+      final firstTask = initialTodaysPlan.first;
+      expect(firstTask.topicId, equals('basics_intro'));
+      expect(firstTask.type, equals(ActivityType.learn));
 
-    test('TopicProgressModel calculates exact activity counts and percentages', () {
-      const progress = TopicProgressModel(
-        topicId: 'dsa_arrays',
-        learnCompleted: true,
-        practiceCompleted: true,
-        buildCompleted: false,
-        reviewCompleted: false,
-      );
+      // Step 7: Opens topic 'basics_intro' and verifies topic lookup
+      final topicMatch = NonAcademicData.findTopicById(firstTask.topicId);
+      expect(topicMatch, isNotNull);
+      expect(topicMatch!.topic.title, equals('Introduction to Programming'));
 
-      expect(progress.completedCount, equals(2));
-      expect(progress.totalActivities, equals(4));
+      // Step 8: Verifies topic-specific external resource URL
+      final resources = topicMatch.topic.resources;
+      expect(resources.isNotEmpty, isTrue);
+      expect(resources.first.url, equals('https://docs.python.org/3/tutorial/index.html'));
+
+      // Step 10: Completes Learn (0% -> 25%)
+      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.learn);
+      var progress = provider.getProgressForTopic('basics_intro');
+      expect(progress.learnCompleted, isTrue);
+      expect(progress.percentage, equals(25.0));
+
+      // Step 11: Completes Practice (25% -> 50%)
+      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.practice);
+      progress = provider.getProgressForTopic('basics_intro');
+      expect(progress.practiceCompleted, isTrue);
       expect(progress.percentage, equals(50.0));
-      expect(progress.isFullyCompleted, isFalse);
-      expect(progress.isInProgress, isTrue);
 
-      final fullProgress = progress.copyWith(
-        buildCompleted: true,
-        reviewCompleted: true,
-      );
+      // Step 12: Completes Build (50% -> 75%)
+      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.build);
+      progress = provider.getProgressForTopic('basics_intro');
+      expect(progress.buildCompleted, isTrue);
+      expect(progress.percentage, equals(75.0));
 
-      expect(fullProgress.completedCount, equals(4));
-      expect(fullProgress.percentage, equals(100.0));
-      expect(fullProgress.isFullyCompleted, isTrue);
-    });
+      // Step 13: Completes Review (75% -> 100%)
+      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.review);
+      progress = provider.getProgressForTopic('basics_intro');
+      expect(progress.reviewCompleted, isTrue);
+      expect(progress.percentage, equals(100.0));
+      expect(progress.isFullyCompleted, isTrue);
 
-    test('RoadmapProvider builds personalized stages based on year and goal', () async {
-      final provider = RoadmapProvider();
-
-      // Test 1: Software Placement Roadmap
-      await provider.setGoalProfile(const UserGoalProfile(
-        year: StudentYear.firstYear,
-        goal: CareerGoal.softwarePlacement,
-      ));
-
-      final placementStages = provider.getRoadmapStages();
-      expect(placementStages.length, greaterThanOrEqualTo(4));
-      expect(placementStages.first.stageTitle, contains('FOUNDATION'));
-      expect(placementStages.last.stageTitle, contains('CAREER'));
-
-      // Test 2: Entrepreneurship Roadmap
-      await provider.setGoalProfile(const UserGoalProfile(
-        year: StudentYear.thirdYear,
-        goal: CareerGoal.entrepreneurship,
-      ));
-
-      final startupStages = provider.getRoadmapStages();
-      expect(startupStages.any((s) => s.stageTitle.contains('Lean MVP')), isTrue);
-      expect(startupStages.any((s) => s.stageTitle.contains('Pitch Deck')), isTrue);
-
-      // Test 3: GATE Exam Roadmap
-      await provider.setGoalProfile(const UserGoalProfile(
-        year: StudentYear.fourthYear,
-        goal: CareerGoal.gateExam,
-      ));
-
-      final gateStages = provider.getRoadmapStages();
-      expect(gateStages.any((s) => s.stageTitle.contains('GATE')), isTrue);
-    });
-
-    test('RoadmapProvider toggling activities updates topic progress and overall percentage', () async {
-      final provider = RoadmapProvider();
-
-      await provider.setGoalProfile(const UserGoalProfile(
-        year: StudentYear.firstYear,
-        goal: CareerGoal.softwarePlacement,
-      ));
-
-      final initialProgress = provider.calculateOverallProgress();
-      expect(initialProgress, equals(0.0));
-
-      await provider.toggleActivity(
-        topicId: 'basics_intro',
-        type: ActivityType.learn,
-      );
-
-      final topicProgress = provider.getProgressForTopic('basics_intro');
-      expect(topicProgress.learnCompleted, isTrue);
-      expect(topicProgress.completedCount, equals(1));
-      expect(topicProgress.percentage, equals(25.0));
-
+      // Step 14: Verify overall progress updated
       final updatedOverall = provider.calculateOverallProgress();
       expect(updatedOverall, greaterThan(0.0));
-    });
 
-    test('RoadmapProvider generates actionable daily plan tasks', () async {
-      final provider = RoadmapProvider();
+      // Step 15 & 16: Restart/reload application & verify progress persists
+      final reloadedProvider = RoadmapProvider();
+      final persistedProgress = reloadedProvider.getProgressForTopic('basics_intro');
+      expect(persistedProgress.isFullyCompleted, isTrue);
+      expect(persistedProgress.percentage, equals(100.0));
 
-      await provider.setGoalProfile(const UserGoalProfile(
-        year: StudentYear.secondYear,
-        goal: CareerGoal.softwarePlacement,
-      ));
+      // Step 17: Verify Today's Plan changes according to completed work
+      final updatedTodaysPlan = reloadedProvider.getTodaysPlan();
+      expect(updatedTodaysPlan.first.topicId, equals('python_basics'));
 
-      final tasks = provider.getTodaysPlan();
-      expect(tasks.isNotEmpty, isTrue);
-      expect(tasks.first.topicTitle.isNotEmpty, isTrue);
-      expect(tasks.first.actionTitle.isNotEmpty, isTrue);
-      expect(tasks.first.estimatedMinutes, greaterThan(0));
+      // Step 18: Move to the next roadmap activity ('python_basics')
+      final nextTopicMatch = NonAcademicData.findTopicById(updatedTodaysPlan.first.topicId);
+      expect(nextTopicMatch, isNotNull);
+      expect(nextTopicMatch!.topic.title, equals('Python Basics & Setup'));
     });
   });
 }

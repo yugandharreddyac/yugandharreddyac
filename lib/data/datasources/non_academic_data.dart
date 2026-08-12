@@ -21,6 +21,24 @@ class NonAcademicData {
     }
   }
 
+  static ({HubModel hub, CategoryModel category, HierarchicalTopicModel topic})? findTopicById(String topicId) {
+    for (final hub in allHubs) {
+      for (final cat in hub.categories) {
+        for (final top in cat.topics) {
+          if (top.id == topicId) {
+            return (hub: hub, category: cat, topic: top);
+          }
+          for (final sub in top.subtopics) {
+            if (sub.id == topicId) {
+              return (hub: hub, category: cat, topic: sub);
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   // ==========================================
   // 1. CODING HUB (COMPLETE LEARNING SYSTEM)
   // ==========================================

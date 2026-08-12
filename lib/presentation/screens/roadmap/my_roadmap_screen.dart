@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../data/models/user_goal_model.dart';
+import '../../../data/datasources/non_academic_data.dart';
 import '../../providers/roadmap_provider.dart';
+import '../hierarchy/generic_topic_screen.dart';
 import 'roadmap_onboarding_screen.dart';
 
 class MyRoadmapScreen extends StatelessWidget {
@@ -179,64 +181,57 @@ class MyRoadmapScreen extends StatelessWidget {
               children: todaysPlan.map((task) {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: cardBg,
+                  child: InkWell(
+                    onTap: () => _navigateToTopic(context, task.topicId),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: royalBlue.withAlpha(20),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(Icons.play_arrow_rounded, color: royalBlue, size: 20),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              task.topicTitle,
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: textPrimary,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              task.actionTitle,
-                              style: GoogleFonts.inter(
-                                fontSize: 12,
-                                color: textSubtitle,
-                              ),
-                            ),
-                          ],
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: cardBg,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          '${task.estimatedMinutes}m',
-                          style: GoogleFonts.inter(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: textSubtitle,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: royalBlue.withAlpha(20),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(Icons.play_arrow_rounded, color: royalBlue, size: 20),
                           ),
-                        ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  task.topicTitle,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: textPrimary,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  task.actionTitle,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    color: textSubtitle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(Icons.arrow_forward_ios_rounded, size: 14, color: textSubtitle),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 );
               }).toList(),
@@ -312,6 +307,44 @@ class MyRoadmapScreen extends StatelessWidget {
                           height: 1.3,
                         ),
                       ),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: stage.topicIds.map((tId) {
+                          final match = NonAcademicData.findTopicById(tId);
+                          final title = match?.topic.title ?? tId;
+                          return InkWell(
+                            onTap: () => _navigateToTopic(context, tId),
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    title,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: textPrimary,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Icon(Icons.arrow_forward_rounded, size: 12, color: royalBlue),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ],
                   ),
                 );
@@ -321,5 +354,22 @@ class MyRoadmapScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToTopic(BuildContext context, String topicId) {
+    final match = NonAcademicData.findTopicById(topicId);
+    if (match != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => GenericTopicScreen(
+            hub: match.hub,
+            category: match.category,
+            topic: match.topic,
+            breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+          ),
+        ),
+      );
+    }
   }
 }
