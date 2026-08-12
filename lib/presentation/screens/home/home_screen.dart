@@ -12,6 +12,7 @@ import '../../providers/theme_provider.dart';
 import '../../providers/roadmap_provider.dart';
 import '../../../data/datasources/non_academic_data.dart';
 import '../../../data/models/hierarchy_node_model.dart';
+import '../../../data/models/user_goal_model.dart';
 import '../hierarchy/generic_topic_screen.dart';
 import '../downloads/downloads_screen.dart';
 import '../profile/profile_screen.dart';
@@ -476,6 +477,13 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     // TODAY'S ACTION PLAN QUICK SECTION
                     // ==========================================
                     _buildHomeTodaysPlan(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
+
+                    const SizedBox(height: 24),
+                    
+                    // ==========================================
+                    // CAREER PROGRESS SECTION
+                    // ==========================================
+                    _buildCareerProgressSection(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
 
                     const SizedBox(height: 24),
 
@@ -1208,24 +1216,53 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 color: textSubtitle,
                               ),
                             ),
+                            if (task.reason != null) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                task.reason!,
+                                style: GoogleFonts.inter(
+                                  fontSize: 11,
+                                  color: royalBlue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ]
                           ],
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          '${task.estimatedMinutes}m',
-                          style: GoogleFonts.inter(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color: textSubtitle,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (task.progressText != null)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: royalBlue.withAlpha(20),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                task.progressText!,
+                                style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: royalBlue),
+                              ),
+                            ),
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              '${task.estimatedMinutes}m',
+                              style: GoogleFonts.inter(
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                color: textSubtitle,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
@@ -1233,6 +1270,88 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               ),
             );
           }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCareerProgressSection(
+    BuildContext context,
+    bool isDark,
+    Color textPrimary,
+    Color textSubtitle,
+    Color royalBlue,
+    Color whiteCardColor,
+    Color borderColor,
+  ) {
+    RoadmapProvider? roadmapProvider;
+    try {
+      roadmapProvider = context.watch<RoadmapProvider>();
+    } catch (_) {}
+
+    final milestones = roadmapProvider?.getCareerMilestones() ?? [];
+    if (milestones.isEmpty) return const SizedBox.shrink();
+
+    final goalTitle = roadmapProvider?.profile?.goal.title ?? 'Software / IT Placement';
+    final completedCount = milestones.where((m) => m.isCompleted).length;
+    final totalCount = milestones.length;
+    
+    CareerMilestoneModel? nextMilestone;
+    try {
+      nextMilestone = milestones.firstWhere((m) => !m.isCompleted);
+    } catch (_) {}
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Career Progress',
+          style: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: textPrimary,
+            letterSpacing: -0.3,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: whiteCardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: borderColor),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(isDark ? 25 : 6),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('CURRENT GOAL', style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: textSubtitle, letterSpacing: 0.5)),
+              Text(goalTitle, style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: royalBlue)),
+              const SizedBox(height: 16),
+              if (nextMilestone != null) ...[
+                Text('NEXT MILESTONE', style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: textSubtitle, letterSpacing: 0.5)),
+                Text(nextMilestone.title, style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary)),
+                const SizedBox(height: 16),
+              ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('$completedCount / $totalCount milestones completed', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, AppRoutes.roadmap),
+                    child: Text('VIEW ROADMAP →', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: royalBlue)),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -325,13 +325,13 @@ class MyRoadmapScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: isDone
                                     ? emeraldGreen.withAlpha(20)
-                                    : (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
+                                    : progress.isInProgress ? royalBlue.withAlpha(20) : (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
                                   color: isDone
                                       ? emeraldGreen
-                                      : (isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1)),
-                                  width: isDone ? 1.5 : 1.0,
+                                      : progress.isInProgress ? royalBlue : (isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1)),
+                                  width: (isDone || progress.isInProgress) ? 1.5 : 1.0,
                                 ),
                               ),
                               child: Row(
@@ -340,13 +340,19 @@ class MyRoadmapScreen extends StatelessWidget {
                                   if (isDone) ...[
                                     const Icon(Icons.check_circle_rounded, size: 13, color: emeraldGreen),
                                     const SizedBox(width: 4),
+                                  ] else if (progress.isInProgress) ...[
+                                    const Icon(Icons.arrow_forward_rounded, size: 13, color: royalBlue),
+                                    const SizedBox(width: 4),
+                                  ] else ...[
+                                    Icon(Icons.radio_button_unchecked_rounded, size: 13, color: textSubtitle.withOpacity(0.5)),
+                                    const SizedBox(width: 4),
                                   ],
                                   Text(
                                     title,
                                     style: GoogleFonts.inter(
                                       fontSize: 12,
                                       fontWeight: isDone ? FontWeight.bold : FontWeight.w600,
-                                      color: isDone ? emeraldGreen : textPrimary,
+                                      color: isDone ? emeraldGreen : (progress.isInProgress ? royalBlue : textPrimary),
                                     ),
                                   ),
                                   if (!isDone) ...[

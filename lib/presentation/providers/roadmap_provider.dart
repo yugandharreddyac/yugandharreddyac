@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/user_goal_model.dart';
 import '../../data/repositories/roadmap_repository.dart';
+import '../../data/datasources/non_academic_data.dart';
 
 class DailyTaskModel {
   final String topicId;
@@ -9,6 +10,8 @@ class DailyTaskModel {
   final ActivityType type;
   final String categoryTitle;
   final int estimatedMinutes;
+  final String? progressText;
+  final String? reason;
 
   const DailyTaskModel({
     required this.topicId,
@@ -17,6 +20,18 @@ class DailyTaskModel {
     required this.type,
     required this.categoryTitle,
     this.estimatedMinutes = 25,
+    this.progressText,
+    this.reason,
+  });
+}
+
+class CareerMilestoneModel {
+  final String title;
+  final bool isCompleted;
+
+  const CareerMilestoneModel({
+    required this.title,
+    required this.isCompleted,
   });
 }
 
@@ -281,127 +296,124 @@ class RoadmapProvider extends ChangeNotifier {
   List<DailyTaskModel> getTodaysPlan() {
     final stages = getRoadmapStages();
     List<DailyTaskModel> tasks = [];
+    Set<String> addedTopics = {};
 
+    // 1. Current incomplete activity on an in-progress topic
     for (final stage in stages) {
       for (final topicId in stage.topicIds) {
         final progress = getProgressForTopic(topicId);
-        if (!progress.isFullyCompleted) {
-          if (!progress.learnCompleted) {
-            tasks.add(DailyTaskModel(
-              topicId: topicId,
-              topicTitle: _formatTopicTitle(topicId),
-              actionTitle: 'Read concept & documentation',
-              type: ActivityType.learn,
-              categoryTitle: stage.stageTitle,
-              estimatedMinutes: 20,
-            ));
-          }
-          if (!progress.practiceCompleted) {
-            tasks.add(DailyTaskModel(
-              topicId: topicId,
-              topicTitle: _formatTopicTitle(topicId),
-              actionTitle: 'Solve practice exercises on LeetCode/GFG',
-              type: ActivityType.practice,
-              categoryTitle: stage.stageTitle,
-              estimatedMinutes: 35,
-            ));
-          }
-          if (!progress.buildCompleted) {
-            tasks.add(DailyTaskModel(
-              topicId: topicId,
-              topicTitle: _formatTopicTitle(topicId),
-              actionTitle: 'Build mini-project / code exercise',
-              type: ActivityType.build,
-              categoryTitle: stage.stageTitle,
-              estimatedMinutes: 30,
-            ));
-          }
+        if (progress.isInProgress && !progress.isFullyCompleted) {
+          tasks.add(_createTaskModel(topicId, stage.stageTitle, progress, 'Continue your active session'));
+          addedTopics.add(topicId);
           if (tasks.length >= 3) return tasks;
         }
       }
     }
 
-    // Default fallback if all roadmap tasks completed
+    // 2. Earliest incomplete prerequisite/roadmap topic
+    for (final stage in stages) {
+      for (final topicId in stage.topicIds) {
+        if (addedTopics.contains(topicId)) continue;
+        final progress = getProgressForTopic(topicId);
+        if (!progress.isInProgress && !progress.isFullyCompleted) {
+          tasks.add(_createTaskModel(topicId, stage.stageTitle, progress, 'Start the next roadmap topic'));
+          addedTopics.add(topicId);
+          if (tasks.length >= 3) return tasks;
+        }
+      }
+    }
+
+    // Default fallback
     if (tasks.isEmpty) {
       tasks.add(const DailyTaskModel(
         topicId: 'dsa_arrays',
-        topicTitle: 'Arrays & Two-Pointer Pattern',
-        actionTitle: 'Solve 2 LeetCode Array problems',
+        topicTitle: 'Arrays',
+        actionTitle: 'Practice Problem Solving',
         type: ActivityType.practice,
         categoryTitle: 'Daily Revision',
-        estimatedMinutes: 30,
+        progressText: '0 / 4',
+        reason: 'Daily Practice',
       ));
     }
 
     return tasks;
   }
 
-  String _formatTopicTitle(String topicId) {
-    switch (topicId) {
-      case 'basics_intro':
-        return 'Introduction to Programming';
-      case 'python_basics':
-        return 'Python Syntax & Basics';
-      case 'python_variables':
-        return 'Variables & Data Types';
-      case 'c_pointers':
-        return 'Pointers & Memory';
-      case 'cpp_stl':
-        return 'C++ STL Containers';
-      case 'dsa_complexity':
-        return 'Complexity Analysis & Big-O';
-      case 'dsa_arrays':
-        return 'Arrays & Two-Pointer';
-      case 'dsa_linked_list':
-        return 'Linked Lists & Cycles';
-      case 'dsa_stacks_queues':
-        return 'Stacks, Queues & Deque';
-      case 'dsa_trees':
-        return 'Trees & BST Traversals';
-      case 'dsa_graphs':
-        return 'Graph BFS & DFS';
-      case 'dsa_dp':
-        return 'Dynamic Programming Patterns';
-      case 'web_html_css':
-        return 'HTML5, CSS3 & Responsive Layouts';
-      case 'web_react':
-        return 'React Components & State';
-      case 'web_backend_node':
-        return 'Node.js & Express REST APIs';
-      case 'flutter_basics':
-        return 'Flutter & Dart State Management';
-      case 'todo_list_proj':
-        return 'Build a To-Do List Application';
-      case 'house_price_proj':
-        return 'House Price ML Predictor Model';
-      case 'placement_dsa':
-        return 'Striver A2Z DSA Interview Sheet';
-      case 'quant_aptitude':
-        return 'Quantitative Percentages & Ratios';
-      case 'hr_questions':
-        return 'STAR Framework HR Interview Prep';
-      case 'resume_building':
-        return 'ATS Single-Page Student Resume';
-      case 'technical_interviews':
-        return 'Live Coding & System Design Prep';
-      case 'exam_gate':
-        return 'GATE CS / IT Examination Syllabus';
-      case 'exam_gre':
-        return 'GRE General Test Preparation';
-      case 'masters_degree':
-        return 'Postgraduate Degree Selection';
-      case 'choosing_country':
-        return 'Study Abroad Country Guide';
-      case 'govt_scholarships':
-        return 'National Scholarship Portal (NSP)';
-      case 'problem_discovery':
-        return 'Customer Validation & The Mom Test';
-      case 'mvp_development':
-        return 'Lean MVP & Business Model Canvas';
-      case 'pitch_decks':
-        return 'Sequoia 10-Slide Investor Deck';
-      default:
-        return topicId;
+  DailyTaskModel _createTaskModel(String topicId, String categoryTitle, TopicProgressModel progress, String reason) {
+    String actionTitle = '';
+    ActivityType type = ActivityType.learn;
+    
+    if (!progress.learnCompleted) {
+      actionTitle = 'Read concept & documentation';
+      type = ActivityType.learn;
+    } else if (!progress.practiceCompleted) {
+      actionTitle = 'Solve practice exercises';
+      type = ActivityType.practice;
+    } else if (!progress.buildCompleted) {
+      actionTitle = 'Build mini-project / code exercise';
+      type = ActivityType.build;
+    } else if (!progress.reviewCompleted) {
+      actionTitle = 'Review and summarize';
+      type = ActivityType.review;
     }
+
+    return DailyTaskModel(
+      topicId: topicId,
+      topicTitle: _formatTopicTitle(topicId),
+      actionTitle: actionTitle,
+      type: type,
+      categoryTitle: categoryTitle,
+      progressText: '${progress.completedCount} / ${progress.totalActivities}',
+      reason: reason,
+    );
+  }
+
+  String? getNextRecommendedTopicId(String currentTopicId) {
+    final stages = getRoadmapStages();
+    bool foundCurrent = false;
+
+    for (final stage in stages) {
+      for (final topicId in stage.topicIds) {
+        if (foundCurrent) {
+          return topicId;
+        }
+        if (topicId == currentTopicId) {
+          foundCurrent = true;
+        }
+      }
+    }
+    return null; // Reached the end
+  }
+
+  List<CareerMilestoneModel> getCareerMilestones() {
+    List<CareerMilestoneModel> milestones = [];
+    final stages = getRoadmapStages();
+    
+    for (final stage in stages) {
+      int stageTotal = 0;
+      int stageCompleted = 0;
+      
+      for (final topicId in stage.topicIds) {
+        final progress = getProgressForTopic(topicId);
+        stageTotal += progress.totalActivities;
+        stageCompleted += progress.completedCount;
+      }
+      
+      bool isCompleted = stageTotal > 0 && stageTotal == stageCompleted;
+      String title = stage.stageTitle;
+      if (title.contains(':')) {
+        title = title.split(':').last.trim();
+      }
+      milestones.add(CareerMilestoneModel(title: title, isCompleted: isCompleted));
+    }
+    return milestones;
+  }
+
+  String _formatTopicTitle(String topicId) {
+    final match = NonAcademicData.findTopicById(topicId);
+    if (match != null) {
+      return match.topic.title;
+    }
+    return topicId;
   }
 }

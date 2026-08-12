@@ -2,12 +2,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:csse_study_hub/data/models/user_goal_model.dart';
 import 'package:csse_study_hub/presentation/providers/roadmap_provider.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
 
   group('CSSED Phase 3 Acceptance & Personal Student Intelligence Tests', () {
     test('1. Topic opening history deduplicates, persists, and caps at 10 items', () async {
       final provider = RoadmapProvider();
+      await Future.delayed(const Duration(milliseconds: 50));
       expect(provider.recentTopicIds.isEmpty, isTrue);
       expect(provider.lastOpenedTopicId, isNull);
 
@@ -30,6 +37,7 @@ void main() {
 
     test('2. Topic bookmarking toggles, checks status, and persists state', () async {
       final provider = RoadmapProvider();
+      await Future.delayed(const Duration(milliseconds: 50));
       expect(provider.isTopicBookmarked('basics_intro'), isFalse);
 
       await provider.toggleTopicBookmark('basics_intro');
@@ -42,6 +50,7 @@ void main() {
 
     test('3. Empirical Student Insights calculation returns accurate stats', () async {
       final provider = RoadmapProvider();
+      await Future.delayed(const Duration(milliseconds: 50));
       await provider.setGoalProfile(const UserGoalProfile(
         year: StudentYear.firstYear,
         goal: CareerGoal.softwarePlacement,
@@ -71,6 +80,7 @@ void main() {
     test('4. Full Phase 3 Student Journey Acceptance Test', () async {
       // Step A: New Student goal setup
       final provider = RoadmapProvider();
+      await Future.delayed(const Duration(milliseconds: 50));
       await provider.setGoalProfile(const UserGoalProfile(
         year: StudentYear.firstYear,
         goal: CareerGoal.softwarePlacement,
@@ -106,8 +116,55 @@ void main() {
 
       // Step G: Verify restart persistence
       final reloadedProvider = RoadmapProvider();
+      await Future.delayed(const Duration(milliseconds: 50));
       expect(reloadedProvider.isTopicBookmarked('basics_intro'), isTrue);
       expect(reloadedProvider.getProgressForTopic('basics_intro').isFullyCompleted, isTrue);
+    });
+    test('Phase 4: Active Learning Next-Action Engine & Career Milestones', () async {
+      final provider = RoadmapProvider();
+      await Future.delayed(const Duration(milliseconds: 50));
+      await provider.setGoalProfile(
+        const UserGoalProfile(
+          year: StudentYear.firstYear,
+          goal: CareerGoal.softwarePlacement,
+        ),
+      );
+
+      // Verify initial next topic resolution
+      final initialTasks = provider.getTodaysPlan();
+      expect(initialTasks.first.reason, equals('Start the next roadmap topic'));
+      expect(initialTasks.first.progressText, equals('0 / 4'));
+
+      // Start learning (In-progress)
+      final topicId = initialTasks.first.topicId;
+      await provider.toggleActivity(topicId: topicId, type: ActivityType.learn);
+      await provider.toggleActivity(topicId: topicId, type: ActivityType.practice);
+
+      // Verify Active Learning prioritization (Continue session)
+      final activeTasks = provider.getTodaysPlan();
+      expect(activeTasks.first.topicId, equals(topicId));
+      expect(activeTasks.first.reason, equals('Continue your active session'));
+      expect(activeTasks.first.progressText, equals('2 / 4'));
+      expect(activeTasks.first.actionTitle, equals('Build mini-project / code exercise'));
+
+      // Verify Career Milestone Progress math
+      final initialMilestones = provider.getCareerMilestones();
+      expect(initialMilestones.isNotEmpty, isTrue);
+      expect(initialMilestones.where((m) => m.isCompleted).length, equals(0));
+
+      // Complete topic fully
+      await provider.toggleActivity(topicId: topicId, type: ActivityType.build);
+      await provider.toggleActivity(topicId: topicId, type: ActivityType.review);
+
+      // Verify Completed topic is filtered from active tasks
+      final postTasks = provider.getTodaysPlan();
+      expect(postTasks.first.topicId, isNot(equals(topicId)));
+      expect(postTasks.first.reason, equals('Start the next roadmap topic'));
+
+      // Verify Next-Topic Resolution
+      final nextRecommended = provider.getNextRecommendedTopicId(topicId);
+      expect(nextRecommended, isNotNull);
+      expect(nextRecommended, equals(postTasks.first.topicId));
     });
   });
 }

@@ -11,6 +11,7 @@ import '../../providers/bookmark_provider.dart';
 import '../../providers/recent_provider.dart';
 import '../../providers/roadmap_provider.dart';
 import '../../../data/models/user_goal_model.dart';
+import '../../../data/datasources/non_academic_data.dart';
 import '../../widgets/hierarchy/breadcrumb_bar.dart';
 
 class GenericTopicScreen extends StatefulWidget {
@@ -127,6 +128,11 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                 ),
                 const SizedBox(height: 16),
 
+                if (roadmapProvider != null)
+                  _buildActiveLearningBanner(context, roadmapProvider, isDark, royalBlue, textPrimary),
+                  
+                const SizedBox(height: 16),
+
                 // Topic Banner Card
                 Container(
                   width: double.infinity,
@@ -228,7 +234,7 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    'Mastering ${widget.topic.title} builds core engineering intuition required for technical coding interviews, software architecture design, and competitive CS assessments.',
+                                    'Mastering ${widget.topic.title} builds core engineering intuition required for technical coding interviews, software architecture design, and competitive CS assessments.${_getCareerConnection(context)}',
                                     style: GoogleFonts.inter(
                                       fontSize: 12,
                                       color: textPrimary,
@@ -329,9 +335,145 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
 
                 if (!widget.topic.hasSubtopics && !widget.topic.hasResources)
                   _buildEmptyResourceState(isDark, cardBg, borderColor, textPrimary, textSubtitle),
+                  
+                if (roadmapProvider != null && roadmapProvider.getProgressForTopic(widget.topic.id).isFullyCompleted)
+                  _buildNextTopicSection(context, roadmapProvider, isDark, cardBg, borderColor, royalBlue, textPrimary, textSubtitle),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  String _getCareerConnection(BuildContext context) {
+    try {
+      final roadmapProvider = context.read<RoadmapProvider>();
+      final goal = roadmapProvider.profile?.goal;
+      if (goal != null) {
+         return '\n\nCAREER CONNECTION\nThis topic directly contributes to your chosen goal: ${goal.title}.';
+      }
+    } catch (_) {}
+    return '';
+  }
+
+  Widget _buildActiveLearningBanner(BuildContext context, RoadmapProvider provider, bool isDark, Color royalBlue, Color textPrimary) {
+    final progress = provider.getProgressForTopic(widget.topic.id);
+    
+    String stateLabel = 'NOT STARTED';
+    Color stateColor = Colors.grey;
+    String nextAction = 'LEARN';
+    
+    if (progress.isFullyCompleted) {
+      stateLabel = 'COMPLETED ✓';
+      stateColor = Colors.green;
+      return const SizedBox.shrink(); // Hidden if completed
+    } else if (progress.isInProgress) {
+      stateLabel = 'IN PROGRESS';
+      stateColor = royalBlue;
+      if (!progress.learnCompleted) {
+        nextAction = 'LEARN';
+      } else if (!progress.practiceCompleted) {
+        nextAction = 'PRACTICE';
+      } else if (!progress.buildCompleted) {
+        nextAction = 'BUILD';
+      } else if (!progress.reviewCompleted) {
+        nextAction = 'REVIEW';
+      }
+    }
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: stateColor.withAlpha(isDark ? 40 : 20),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: stateColor.withAlpha(isDark ? 80 : 40)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Status: $stateLabel',
+                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: stateColor),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Next Action: $nextAction',
+                style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: textPrimary),
+              ),
+            ],
+          ),
+          if (progress.isInProgress)
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: stateColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                elevation: 0,
+              ),
+              child: const Text('CONTINUE →', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNextTopicSection(BuildContext context, RoadmapProvider provider, bool isDark, Color cardBg, Color borderColor, Color royalBlue, Color textPrimary, Color textSubtitle) {
+    final nextTopicId = provider.getNextRecommendedTopicId(widget.topic.id);
+    if (nextTopicId == null) return const SizedBox.shrink();
+
+    final nextTopicMatch = NonAcademicData.findTopicById(nextTopicId);
+    if (nextTopicMatch == null) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: royalBlue.withAlpha(isDark ? 40 : 15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: royalBlue.withAlpha(isDark ? 80 : 40)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.check_circle_rounded, color: Colors.green, size: 40),
+            const SizedBox(height: 12),
+            Text('TOPIC COMPLETED ✓', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green)),
+            const SizedBox(height: 8),
+            Text('NEXT RECOMMENDED TOPIC', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: textSubtitle)),
+            const SizedBox(height: 4),
+            Text(nextTopicMatch.topic.title, style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary)),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => GenericTopicScreen(
+                      topic: nextTopicMatch.topic,
+                      hub: nextTopicMatch.hub,
+                      category: nextTopicMatch.category,
+                      breadcrumbTrail: [nextTopicMatch.hub.title, nextTopicMatch.category.title],
+                    ),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: royalBlue,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+              child: const Text('CONTINUE TO NEXT →', style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ],
         ),
       ),
     );
