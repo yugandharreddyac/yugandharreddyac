@@ -6,6 +6,10 @@ class RoadmapRepository {
   static const String _profileKey = 'cssed_user_goal_profile';
   static const String _progressKey = 'cssed_topic_progress_map';
 
+  static const String _lastOpenedKey = 'cssed_last_opened_topic_id';
+  static const String _recentTopicsKey = 'cssed_recent_topic_ids';
+  static const String _bookmarkedTopicsKey = 'cssed_bookmarked_topic_ids';
+
   Future<UserGoalProfile?> loadGoalProfile() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -52,6 +56,51 @@ class RoadmapRepository {
       final Map<String, dynamic> encodable = {};
       map.forEach((k, v) => encodable[k] = v.toJson());
       await prefs.setString(_progressKey, jsonEncode(encodable));
+    } catch (_) {}
+  }
+
+  Future<String?> loadLastOpenedTopicId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString(_lastOpenedKey);
+    } catch (_) {}
+    return null;
+  }
+
+  Future<void> saveLastOpenedTopicId(String topicId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_lastOpenedKey, topicId);
+    } catch (_) {}
+  }
+
+  Future<List<String>> loadRecentTopicIds() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getStringList(_recentTopicsKey) ?? [];
+    } catch (_) {}
+    return [];
+  }
+
+  Future<void> saveRecentTopicIds(List<String> topicIds) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList(_recentTopicsKey, topicIds);
+    } catch (_) {}
+  }
+
+  Future<List<String>> loadBookmarkedTopicIds() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getStringList(_bookmarkedTopicsKey) ?? [];
+    } catch (_) {}
+    return [];
+  }
+
+  Future<void> saveBookmarkedTopicIds(List<String> topicIds) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList(_bookmarkedTopicsKey, topicIds);
     } catch (_) {}
   }
 }

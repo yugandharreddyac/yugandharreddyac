@@ -11,6 +11,7 @@ import '../../providers/recent_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/roadmap_provider.dart';
 import '../../../data/datasources/non_academic_data.dart';
+import '../../../data/models/hierarchy_node_model.dart';
 import '../hierarchy/generic_topic_screen.dart';
 import '../downloads/downloads_screen.dart';
 import '../profile/profile_screen.dart';
@@ -465,9 +466,23 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     const SizedBox(height: 24),
 
                     // ==========================================
+                    // CONTINUE LEARNING SECTION
+                    // ==========================================
+                    _buildContinueLearningCard(context, isDark, textPrimary, textSubtitle, royalBlue, emeraldGreen, whiteCardColor, borderColor),
+
+                    const SizedBox(height: 24),
+
+                    // ==========================================
                     // TODAY'S ACTION PLAN QUICK SECTION
                     // ==========================================
                     _buildHomeTodaysPlan(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
+
+                    const SizedBox(height: 24),
+
+                    // ==========================================
+                    // RECENTLY VIEWED TOPICS SECTION
+                    // ==========================================
+                    _buildRecentlyViewedTopicsRow(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
 
                     const SizedBox(height: 24),
 
@@ -1218,6 +1233,279 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               ),
             );
           }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContinueLearningCard(
+    BuildContext context,
+    bool isDark,
+    Color textPrimary,
+    Color textSubtitle,
+    Color royalBlue,
+    Color emeraldGreen,
+    Color whiteCardColor,
+    Color borderColor,
+  ) {
+    RoadmapProvider? roadmapProvider;
+    try {
+      roadmapProvider = context.watch<RoadmapProvider>();
+    } catch (_) {}
+
+    final lastOpenedId = roadmapProvider?.lastOpenedTopicId;
+    if (lastOpenedId == null || lastOpenedId.isEmpty) return const SizedBox.shrink();
+
+    final match = NonAcademicData.findTopicById(lastOpenedId);
+    if (match == null) return const SizedBox.shrink();
+
+    final progress = roadmapProvider!.getProgressForTopic(lastOpenedId);
+    if (progress.isFullyCompleted) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Continue Learning',
+          style: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: textPrimary,
+            letterSpacing: -0.3,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: whiteCardColor,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: royalBlue.withAlpha(120), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: royalBlue.withAlpha(isDark ? 30 : 12),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: royalBlue.withAlpha(20),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(match.topic.icon, color: royalBlue, size: 22),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          match.topic.title,
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '${match.category.title} • ${progress.completedCount}/4 activities (${progress.percentage.toStringAsFixed(0)}%)',
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            color: textSubtitle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: LinearProgressIndicator(
+                  value: progress.percentage / 100.0,
+                  minHeight: 6,
+                  backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFE2E8F0),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    progress.percentage > 0 ? emeraldGreen : royalBlue,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                height: 42,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => GenericTopicScreen(
+                          hub: match.hub,
+                          category: match.category,
+                          topic: match.topic,
+                          breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                  label: Text(
+                    'RESUME TOPIC →',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: royalBlue,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRecentlyViewedTopicsRow(
+    BuildContext context,
+    bool isDark,
+    Color textPrimary,
+    Color textSubtitle,
+    Color royalBlue,
+    Color whiteCardColor,
+    Color borderColor,
+  ) {
+    RoadmapProvider? roadmapProvider;
+    try {
+      roadmapProvider = context.watch<RoadmapProvider>();
+    } catch (_) {}
+
+    final recentIds = roadmapProvider?.recentTopicIds ?? [];
+    if (recentIds.isEmpty) return const SizedBox.shrink();
+
+    final validMatches = recentIds
+        .map((id) => NonAcademicData.findTopicById(id))
+        .where((m) => m != null)
+        .cast<({CategoryModel category, HubModel hub, HierarchicalTopicModel topic})>()
+        .toList();
+
+    if (validMatches.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Recently Viewed Topics',
+              style: GoogleFonts.inter(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: textPrimary,
+                letterSpacing: -0.3,
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.savedTopics),
+              child: Text(
+                'View Saved',
+                style: GoogleFonts.inter(
+                  color: royalBlue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 100,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: validMatches.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final match = validMatches[index];
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => GenericTopicScreen(
+                        hub: match.hub,
+                        category: match.category,
+                        topic: match.topic,
+                        breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+                      ),
+                    ),
+                  );
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  width: 200,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: whiteCardColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: borderColor),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(match.topic.icon, size: 18, color: royalBlue),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              match.topic.title,
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: textPrimary,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        match.category.title,
+                        style: GoogleFonts.inter(
+                          fontSize: 11,
+                          color: textSubtitle,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );

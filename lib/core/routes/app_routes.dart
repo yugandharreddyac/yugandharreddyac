@@ -28,6 +28,9 @@ import '../../presentation/screens/hierarchy/generic_hub_screen.dart';
 import '../../presentation/screens/roadmap/my_roadmap_screen.dart';
 import '../../presentation/screens/roadmap/roadmap_onboarding_screen.dart';
 
+import '../../presentation/screens/saved/saved_topics_screen.dart';
+import '../../presentation/screens/insights/student_insights_screen.dart';
+
 class AppRoutes {
   AppRoutes._();
 
@@ -57,6 +60,8 @@ class AppRoutes {
   static const String entrepreneurshipHub = '/entrepreneurship';
   static const String roadmap = '/roadmap';
   static const String roadmapOnboarding = '/roadmap-onboarding';
+  static const String savedTopics = '/saved';
+  static const String insights = '/insights';
   static const String examDetail = '/exam-detail';
   static const String topicDetail = '/topic_detail';
 
@@ -184,6 +189,12 @@ class AppRoutes {
 
       case roadmapOnboarding:
         return _buildPageRoute(const RoadmapOnboardingScreen(), routeSettings);
+
+      case savedTopics:
+        return _buildPageRoute(const SavedTopicsScreen(), routeSettings);
+
+      case insights:
+        return _buildPageRoute(const StudentInsightsScreen(), routeSettings);
 
       default:
         return _buildPageRoute(

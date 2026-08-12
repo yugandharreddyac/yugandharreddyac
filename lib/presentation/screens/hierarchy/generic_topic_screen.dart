@@ -57,6 +57,11 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
             ),
           );
         } catch (_) {}
+
+        try {
+          final roadmapProvider = context.read<RoadmapProvider>();
+          roadmapProvider.recordTopicOpened(widget.topic.id);
+        } catch (_) {}
       }
     });
   }
@@ -74,6 +79,12 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
 
     const royalBlue = Color(0xFF2563EB);
 
+    RoadmapProvider? roadmapProvider;
+    try {
+      roadmapProvider = context.watch<RoadmapProvider>();
+    } catch (_) {}
+    final isBookmarked = roadmapProvider?.isTopicBookmarked(widget.topic.id) ?? false;
+
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -88,6 +99,18 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
             color: textPrimary,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+              color: isBookmarked ? royalBlue : textSubtitle,
+            ),
+            tooltip: isBookmarked ? 'Remove Bookmark' : 'Bookmark Topic',
+            onPressed: () {
+              roadmapProvider?.toggleTopicBookmark(widget.topic.id);
+            },
+          ),
+        ],
         iconTheme: IconThemeData(color: textPrimary),
       ),
       body: SingleChildScrollView(

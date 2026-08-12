@@ -20,17 +20,45 @@ class DailyTaskModel {
   });
 }
 
+class StudentInsightsModel {
+  final double overallPercentage;
+  final int completedTopicsCount;
+  final int inProgressTopicsCount;
+  final int notStartedTopicsCount;
+  final double foundationPercentage;
+  final double corePercentage;
+  final double buildPercentage;
+  final double careerPercentage;
+
+  const StudentInsightsModel({
+    required this.overallPercentage,
+    required this.completedTopicsCount,
+    required this.inProgressTopicsCount,
+    required this.notStartedTopicsCount,
+    required this.foundationPercentage,
+    required this.corePercentage,
+    required this.buildPercentage,
+    required this.careerPercentage,
+  });
+}
+
 class RoadmapProvider extends ChangeNotifier {
   final RoadmapRepository _repository = RoadmapRepository();
 
   UserGoalProfile? _profile;
   Map<String, TopicProgressModel> _progressMap = {};
+  String? _lastOpenedTopicId;
+  List<String> _recentTopicIds = [];
+  List<String> _bookmarkedTopicIds = [];
   bool _isLoading = true;
 
   UserGoalProfile? get profile => _profile;
   bool get hasProfile => _profile != null;
   bool get isLoading => _isLoading;
   Map<String, TopicProgressModel> get progressMap => _progressMap;
+  String? get lastOpenedTopicId => _lastOpenedTopicId;
+  List<String> get recentTopicIds => List.unmodifiable(_recentTopicIds);
+  List<String> get bookmarkedTopicIds => List.unmodifiable(_bookmarkedTopicIds);
 
   RoadmapProvider() {
     _init();
@@ -39,6 +67,9 @@ class RoadmapProvider extends ChangeNotifier {
   Future<void> _init() async {
     _profile = await _repository.loadGoalProfile();
     _progressMap = await _repository.loadTopicProgressMap();
+    _lastOpenedTopicId = await _repository.loadLastOpenedTopicId();
+    _recentTopicIds = await _repository.loadRecentTopicIds();
+    _bookmarkedTopicIds = await _repository.loadBookmarkedTopicIds();
     _isLoading = false;
     notifyListeners();
   }
@@ -47,6 +78,35 @@ class RoadmapProvider extends ChangeNotifier {
     _profile = profile;
     await _repository.saveGoalProfile(profile);
     notifyListeners();
+  }
+
+  Future<void> recordTopicOpened(String topicId) async {
+    _lastOpenedTopicId = topicId;
+
+    // Deduplicate and insert at start
+    _recentTopicIds.remove(topicId);
+    _recentTopicIds.insert(0, topicId);
+    if (_recentTopicIds.length > 10) {
+      _recentTopicIds = _recentTopicIds.sublist(0, 10);
+    }
+
+    notifyListeners();
+    await _repository.saveLastOpenedTopicId(topicId);
+    await _repository.saveRecentTopicIds(_recentTopicIds);
+  }
+
+  bool isTopicBookmarked(String topicId) {
+    return _bookmarkedTopicIds.contains(topicId);
+  }
+
+  Future<void> toggleTopicBookmark(String topicId) async {
+    if (_bookmarkedTopicIds.contains(topicId)) {
+      _bookmarkedTopicIds.remove(topicId);
+    } else {
+      _bookmarkedTopicIds.insert(0, topicId);
+    }
+    notifyListeners();
+    await _repository.saveBookmarkedTopicIds(_bookmarkedTopicIds);
   }
 
   TopicProgressModel getProgressForTopic(String topicId) {
@@ -167,6 +227,55 @@ class RoadmapProvider extends ChangeNotifier {
 
     if (totalActivities == 0) return 0.0;
     return (completedActivities / totalActivities) * 100.0;
+  }
+
+
+
+  StudentInsightsModel getStudentInsights() {
+    final stages = getRoadmapStages();
+    int completedCount = 0;
+    int inProgressCount = 0;
+    int notStartedCount = 0;
+
+    List<double> stagePercentages = [];
+
+    for (final stage in stages) {
+      int stageTotal = 0;
+      int stageCompleted = 0;
+
+      for (final topicId in stage.topicIds) {
+        final progress = getProgressForTopic(topicId);
+        stageTotal += progress.totalActivities;
+        stageCompleted += progress.completedCount;
+
+        if (progress.isFullyCompleted) {
+          completedCount++;
+        } else if (progress.isInProgress) {
+          inProgressCount++;
+        } else {
+          notStartedCount++;
+        }
+      }
+
+      final p = stageTotal == 0 ? 0.0 : (stageCompleted / stageTotal) * 100.0;
+      stagePercentages.add(p);
+    }
+
+    final foundationP = stagePercentages.isNotEmpty ? stagePercentages[0] : 0.0;
+    final coreP = stagePercentages.length > 1 ? stagePercentages[1] : 0.0;
+    final buildP = stagePercentages.length > 2 ? stagePercentages[2] : 0.0;
+    final careerP = stagePercentages.length > 3 ? stagePercentages[3] : 0.0;
+
+    return StudentInsightsModel(
+      overallPercentage: calculateOverallProgress(),
+      completedTopicsCount: completedCount,
+      inProgressTopicsCount: inProgressCount,
+      notStartedTopicsCount: notStartedCount,
+      foundationPercentage: foundationP,
+      corePercentage: coreP,
+      buildPercentage: buildP,
+      careerPercentage: careerP,
+    );
   }
 
   List<DailyTaskModel> getTodaysPlan() {
