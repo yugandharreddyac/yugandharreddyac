@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,35 +7,37 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'firebase_options.dart';
-import 'core/theme/app_theme.dart';
-import 'core/constants/app_constants.dart';
-import 'core/routes/app_routes.dart';
-import 'data/datasources/firebase_datasource.dart';
-import 'data/datasources/local_storage_datasource.dart';
-import 'data/repositories/study_repository.dart';
-import 'data/repositories/career_repository.dart';
-import 'data/repositories/coding_repository.dart';
-import 'data/repositories/placement_repository.dart';
-import 'data/repositories/project_repository.dart';
-import 'data/repositories/higher_education_repository.dart';
-import 'data/repositories/download_repository.dart';
-import 'presentation/providers/theme_provider.dart';
-import 'presentation/providers/study_provider.dart';
-import 'presentation/providers/bookmark_provider.dart';
-import 'presentation/providers/download_provider.dart';
-import 'presentation/providers/auth_provider.dart';
-import 'presentation/providers/profile_provider.dart';
-import 'presentation/providers/recent_provider.dart';
-import 'presentation/providers/career_provider.dart';
-import 'presentation/providers/coding_provider.dart';
-import 'presentation/providers/placement_provider.dart';
-import 'presentation/providers/project_provider.dart';
-import 'presentation/providers/higher_education_provider.dart';
-import 'presentation/providers/unibyte_provider.dart';
+import 'package:csse_study_hub/firebase_options.dart';
+import 'package:csse_study_hub/core/theme/app_theme.dart';
+import 'package:csse_study_hub/core/constants/app_constants.dart';
+import 'package:csse_study_hub/core/routes/app_routes.dart';
+import 'package:csse_study_hub/data/datasources/firebase_datasource.dart';
+import 'package:csse_study_hub/data/datasources/local_storage_datasource.dart';
+import 'package:csse_study_hub/data/repositories/study_repository.dart';
+import 'package:csse_study_hub/data/repositories/career_repository.dart';
+import 'package:csse_study_hub/data/repositories/coding_repository.dart';
+import 'package:csse_study_hub/data/repositories/placement_repository.dart';
+import 'package:csse_study_hub/data/repositories/project_repository.dart';
+import 'package:csse_study_hub/data/repositories/higher_education_repository.dart';
+import 'package:csse_study_hub/data/repositories/download_repository.dart';
+import 'package:csse_study_hub/presentation/providers/theme_provider.dart';
+import 'package:csse_study_hub/presentation/providers/study_provider.dart';
+import 'package:csse_study_hub/presentation/providers/bookmark_provider.dart';
+import 'package:csse_study_hub/presentation/providers/download_provider.dart';
+import 'package:csse_study_hub/presentation/providers/auth_provider.dart';
+import 'package:csse_study_hub/presentation/providers/profile_provider.dart';
+import 'package:csse_study_hub/presentation/providers/recent_provider.dart';
+import 'package:csse_study_hub/presentation/providers/career_provider.dart';
+import 'package:csse_study_hub/presentation/providers/coding_provider.dart';
+import 'package:csse_study_hub/presentation/providers/placement_provider.dart';
+import 'package:csse_study_hub/presentation/providers/project_provider.dart';
+import 'package:csse_study_hub/presentation/providers/higher_education_provider.dart';
+import 'package:csse_study_hub/presentation/providers/unibyte_provider.dart';
 
-import 'data/repositories/admin_repository.dart';
-import 'presentation/providers/admin_provider.dart';
+import 'package:csse_study_hub/data/repositories/admin_repository.dart';
+import 'package:csse_study_hub/presentation/providers/admin_provider.dart';
+import 'package:csse_study_hub/data/repositories/non_academic_repository.dart';
+import 'package:csse_study_hub/presentation/providers/hierarchy_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,9 +65,11 @@ void main() async {
   // Defer Crashlytics & non-essential telemetry until after first frame paint
   WidgetsBinding.instance.addPostFrameCallback((_) {
     try {
-      FlutterError.onError = (errorDetails) {
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-      };
+      if (!kIsWeb) {
+        FlutterError.onError = (errorDetails) {
+          FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+        };
+      }
     } catch (_) {}
   });
 
@@ -170,6 +175,9 @@ class CSSEStudyHubApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => AdminProvider(repository: adminRepository),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HierarchyProvider(NonAcademicRepository()),
         ),
       ],
       child: Consumer<ThemeProvider>(

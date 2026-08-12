@@ -69,52 +69,52 @@ class Formatters {
     }
   }
 
-  /// Returns dedicated emoji, Material Icon and accent color per CSSE subject
+  /// Returns dedicated emoji, Material Icon and small accent color per CSSE subject
   static SubjectIconInfo getSubjectIconInfo(String name) {
     final lower = name.toLowerCase();
 
     if (lower.contains('c programming') || lower.contains('programming in c')) {
-      return const SubjectIconInfo(emoji: '💻', icon: Icons.code_rounded, accentColor: Colors.blue);
-    } else if (lower.contains('java')) {
-      return const SubjectIconInfo(emoji: '☕', icon: Icons.coffee_rounded, accentColor: Colors.deepOrange);
-    } else if (lower.contains('artificial intelligence') || lower.contains(' ai ')) {
-      return const SubjectIconInfo(emoji: '🤖', icon: Icons.psychology_rounded, accentColor: Colors.purple);
-    } else if (lower.contains('cloud computing') || lower.contains('cloud')) {
-      return const SubjectIconInfo(emoji: '☁️', icon: Icons.cloud_queue_rounded, accentColor: Colors.lightBlue);
+      return const SubjectIconInfo(emoji: '💻', icon: Icons.code_rounded, accentColor: Color(0xFF4F46E5)); // Indigo
     } else if (lower.contains('data structures')) {
-      return const SubjectIconInfo(emoji: '📊', icon: Icons.account_tree_rounded, accentColor: Colors.teal);
-    } else if (lower.contains('database') || lower.contains('dbms')) {
-      return const SubjectIconInfo(emoji: '🗄️', icon: Icons.dataset_rounded, accentColor: Colors.amber);
-    } else if (lower.contains('cryptography') || lower.contains('security')) {
-      return const SubjectIconInfo(emoji: '🔐', icon: Icons.security_rounded, accentColor: Colors.redAccent);
-    } else if (lower.contains('network') || lower.contains('communication')) {
-      return const SubjectIconInfo(emoji: '🌐', icon: Icons.router_rounded, accentColor: Colors.indigo);
+      return const SubjectIconInfo(emoji: '🌳', icon: Icons.account_tree_rounded, accentColor: Color(0xFF14B8A6)); // Teal
+    } else if (lower.contains('java') || lower.contains('python')) {
+      return const SubjectIconInfo(emoji: '☕', icon: Icons.coffee_rounded, accentColor: Color(0xFFE11D48)); // Rose
     } else if (lower.contains('operating system') || lower.contains('os')) {
-      return const SubjectIconInfo(emoji: '⚙️', icon: Icons.terminal_rounded, accentColor: Colors.blueGrey);
-    } else if (lower.contains('python')) {
-      return const SubjectIconInfo(emoji: '🐍', icon: Icons.code_rounded, accentColor: Colors.green);
-    } else if (lower.contains('machine learning') || lower.contains(' ml ')) {
-      return const SubjectIconInfo(emoji: '🎯', icon: Icons.smart_toy_rounded, accentColor: Colors.deepPurple);
-    } else if (lower.contains('compiler')) {
-      return const SubjectIconInfo(emoji: '🧠', icon: Icons.precision_manufacturing_rounded, accentColor: Colors.orange);
-    } else if (lower.contains('chemistry')) {
-      return const SubjectIconInfo(emoji: '🌱', icon: Icons.science_rounded, accentColor: Color(0xFF059669));
-    } else if (lower.contains('physics')) {
-      return const SubjectIconInfo(emoji: '⚡', icon: Icons.bolt_rounded, accentColor: Colors.amber);
-    } else if (lower.contains('math')) {
-      return const SubjectIconInfo(emoji: '📐', icon: Icons.calculate_rounded, accentColor: Colors.indigoAccent);
+      return const SubjectIconInfo(emoji: '🖥️', icon: Icons.terminal_rounded, accentColor: Color(0xFF64748B)); // Slate
+    } else if (lower.contains('digital logic') || lower.contains('organization') || lower.contains('architecture') || lower.contains('coa')) {
+      return const SubjectIconInfo(emoji: '⚙️', icon: Icons.memory_rounded, accentColor: Color(0xFF8B5CF6)); // Purple
+    } else if (lower.contains('database') || lower.contains('dbms') || lower.contains('data mining')) {
+      return const SubjectIconInfo(emoji: '🗄️', icon: Icons.dataset_rounded, accentColor: Color(0xFFD97706)); // Amber
+    } else if (lower.contains('network') || lower.contains('communication')) {
+      return const SubjectIconInfo(emoji: '🌐', icon: Icons.router_rounded, accentColor: Color(0xFF2563EB)); // Royal Blue
+    } else if (lower.contains('artificial intelligence') || lower.contains(' ai ') || lower.contains('machine learning') || lower.contains(' ml ')) {
+      return const SubjectIconInfo(emoji: '🤖', icon: Icons.psychology_rounded, accentColor: Color(0xFF7C3AED)); // Deep Purple
+    } else if (lower.contains('cloud computing') || lower.contains('cloud')) {
+      return const SubjectIconInfo(emoji: '☁️', icon: Icons.cloud_queue_rounded, accentColor: Color(0xFF0284C7)); // Sky Blue
+    } else if (lower.contains('cryptography') || lower.contains('security')) {
+      return const SubjectIconInfo(emoji: '🔐', icon: Icons.security_rounded, accentColor: Color(0xFFDC2626)); // Red
+    } else if (lower.contains('software engineering') || lower.contains('oose')) {
+      return const SubjectIconInfo(emoji: '🏗️', icon: Icons.engineering_rounded, accentColor: Color(0xFF2563EB)); // Blue
+    } else if (lower.contains('project')) {
+      return const SubjectIconInfo(emoji: '🚀', icon: Icons.rocket_launch_rounded, accentColor: Color(0xFF4F46E5)); // Indigo
+    } else if (lower.contains('green chemistry') || lower.contains('chemistry')) {
+      return const SubjectIconInfo(emoji: '🌿', icon: Icons.science_rounded, accentColor: Color(0xFF16A34A)); // Green
     } else if (lower.contains('english')) {
-      return const SubjectIconInfo(emoji: '📖', icon: Icons.menu_book_rounded, accentColor: Colors.cyan);
-    } else if (lower.contains('microprocessor') || lower.contains('microcontroller')) {
-      return const SubjectIconInfo(emoji: '📠', icon: Icons.developer_board_rounded, accentColor: Colors.brown);
-    } else if (lower.contains('software engineering')) {
-      return const SubjectIconInfo(emoji: '🏗️', icon: Icons.engineering_rounded, accentColor: Colors.blue);
-    } else if (lower.contains('automata') || lower.contains('formal language')) {
-      return const SubjectIconInfo(emoji: '🔣', icon: Icons.auto_graph_rounded, accentColor: Colors.purpleAccent);
+      return const SubjectIconInfo(emoji: '📖', icon: Icons.menu_book_rounded, accentColor: Color(0xFFF97316)); // Orange
+    } else if (lower.contains('math')) {
+      return const SubjectIconInfo(emoji: '🔢', icon: Icons.calculate_rounded, accentColor: Color(0xFF10B981)); // Emerald
+    } else if (lower.contains('it essentials') || lower.contains('essentials')) {
+      return const SubjectIconInfo(emoji: '💻', icon: Icons.computer_rounded, accentColor: Color(0xFF06B6D4)); // Cyan
+    } else if (lower.contains('physics') || lower.contains('electronic')) {
+      return const SubjectIconInfo(emoji: '⚡', icon: Icons.bolt_rounded, accentColor: Color(0xFFF59E0B)); // Amber
+    } else if (lower.contains('microprocessor') || lower.contains('microcontroller') || lower.contains('compiler') || lower.contains('automata') || lower.contains('embedded')) {
+      return const SubjectIconInfo(emoji: '⚙️', icon: Icons.developer_board_rounded, accentColor: Color(0xFF8B5CF6)); // Purple
     } else if (lower.contains('algorithm')) {
-      return const SubjectIconInfo(emoji: '⚡', icon: Icons.speed_rounded, accentColor: Colors.teal);
+      return const SubjectIconInfo(emoji: '⚡', icon: Icons.speed_rounded, accentColor: Color(0xFF14B8A6)); // Teal
+    } else if (lower.contains('economics') || lower.contains('managerial')) {
+      return const SubjectIconInfo(emoji: '📊', icon: Icons.bar_chart_rounded, accentColor: Color(0xFFD97706)); // Amber
     }
 
-    return const SubjectIconInfo(emoji: '📚', icon: Icons.book_rounded, accentColor: AppColors.primary);
+    return const SubjectIconInfo(emoji: '📚', icon: Icons.book_rounded, accentColor: Color(0xFF2563EB));
   }
 }

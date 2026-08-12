@@ -44,7 +44,7 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle();
-    expect(find.text('CSSE Study Hub'), findsWidgets);
+    await tester.pumpAndSettle(const Duration(seconds: 3));
+    expect(find.text('UNIDOCS'), findsWidgets);
   });
 }

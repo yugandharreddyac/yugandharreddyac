@@ -42,6 +42,18 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
         return Icons.loop_rounded;
       case 'architecture_rounded':
         return Icons.architecture_rounded;
+      case 'auto_awesome_rounded':
+        return Icons.auto_awesome_rounded;
+      case 'chat_bubble_outline_rounded':
+        return Icons.chat_bubble_outline_rounded;
+      case 'remove_red_eye_rounded':
+        return Icons.remove_red_eye_rounded;
+      case 'storage_rounded':
+        return Icons.storage_rounded;
+      case 'currency_bitcoin_rounded':
+        return Icons.currency_bitcoin_rounded;
+      case 'developer_board_rounded':
+        return Icons.developer_board_rounded;
       default:
         return Icons.terminal_rounded;
     }
@@ -79,6 +91,68 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
       ),
       body: Column(
         children: [
+          // Value Proposition Banner
+          Container(
+            margin: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF2563EB).withOpacity(0.25),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.verified_rounded,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Why CSSE Hub vs 10,000+ Web Books?',
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Zero fluff. Structured step-by-step master paths with direct links to GeeksforGeeks, W3Schools, roadmap.sh, & official docs.',
+                        style: GoogleFonts.inter(
+                          color: Colors.white.withOpacity(0.9),
+                          fontSize: 12,
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           // Category Filter Bar
           if (provider.categories.isNotEmpty)
             SingleChildScrollView(

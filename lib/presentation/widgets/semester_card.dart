@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import '../../core/constants/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../data/models/semester_model.dart';
 
 class SemesterCard extends StatefulWidget {
@@ -22,55 +21,61 @@ class SemesterCard extends StatefulWidget {
 class _SemesterCardState extends State<SemesterCard> {
   bool _isHovered = false;
 
+  String _getSemesterEmoji(String title) {
+    if (title.contains('1-1')) return '🌱';
+    if (title.contains('1-2')) return '📚';
+    if (title.contains('2-1')) return '💻';
+    if (title.contains('2-2')) return '⚙️';
+    if (title.contains('3-1')) return '🌐';
+    if (title.contains('3-2')) return '🤖';
+    if (title.contains('4-1')) return '🚀';
+    if (title.contains('4-2')) return '🎓';
+    return '📚';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final emoji = _getSemesterEmoji(widget.semester.title);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOutCubic,
         transform: _isHovered ? (Matrix4.identity()..translate(0, -2)) : Matrix4.identity(),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1565C0), // Primary Blue #1565C0
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(_isHovered ? 50 : 25),
+              blurRadius: _isHovered ? 12 : 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
             child: Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.cardDark : AppColors.cardLight,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: _isHovered
-                      ? AppColors.primary
-                      : (isDark ? AppColors.borderDark : AppColors.borderLight),
-                  width: _isHovered ? 1.5 : 1,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(isDark ? (_isHovered ? 30 : 15) : (_isHovered ? 14 : 5)),
-                    blurRadius: _isHovered ? 14 : 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Row(
                 children: [
-                  // Book Emoji Icon Container
+                  // Emoji Container
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withAlpha(18),
+                      color: Colors.white.withAlpha(35),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        '📚',
-                        style: TextStyle(fontSize: 22),
+                        emoji,
+                        style: const TextStyle(fontSize: 22),
                       ),
                     ),
                   ),
@@ -82,10 +87,11 @@ class _SemesterCardState extends State<SemesterCard> {
                       children: [
                         Text(
                           widget.semester.title,
-                          style: theme.textTheme.titleMedium?.copyWith(
+                          style: GoogleFonts.inter(
                             fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                            fontSize: 18,
+                            color: Colors.white,
+                            letterSpacing: 0.3,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -93,28 +99,26 @@ class _SemesterCardState extends State<SemesterCard> {
                           widget.semester.description,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                          style: GoogleFonts.inter(
+                            color: Colors.white.withAlpha(220),
                             fontSize: 13,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Icon(
+                  const SizedBox(width: 8),
+                  const Icon(
                     Icons.arrow_forward_ios_rounded,
-                    size: 16,
-                    color: _isHovered
-                        ? AppColors.primary
-                        : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                    color: Colors.white,
+                    size: 18,
                   ),
                 ],
               ),
             ),
           ),
         ),
-      ).animate().fadeIn(duration: 300.ms, delay: (widget.index * 60).ms),
+      ),
     );
   }
 }

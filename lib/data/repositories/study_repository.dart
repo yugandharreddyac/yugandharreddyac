@@ -3,10 +3,13 @@ import '../models/year_model.dart';
 import '../models/semester_model.dart';
 import '../models/subject_model.dart';
 import '../models/resource_model.dart';
+import '../models/textbook_model.dart';
 import '../models/global_search_result.dart';
 import '../datasources/firebase_datasource.dart';
 import '../datasources/local_storage_datasource.dart';
 import '../datasources/mock_data.dart';
+import '../datasources/textbook_mock_data.dart';
+import '../datasources/search_index_engine.dart';
 import 'firestore_repository.dart';
 import 'storage_repository.dart';
 
@@ -21,6 +24,8 @@ class StudyRepository {
   final Map<String, List<SemesterModel>> _cachedSemesters = {};
   final Map<String, List<SubjectModel>> _cachedSubjects = {};
   final Map<String, List<ResourceModel>> _cachedResources = {};
+  final Map<String, CourseOverviewModel> _cachedCourseOverviews = {};
+  final Map<String, List<TextbookChapterModel>> _cachedTextbookChapters = {};
 
   StudyRepository({
     required this.firebaseDataSource,
@@ -100,6 +105,8 @@ class StudyRepository {
     return fallback;
   }
 
+  SearchIndexEngine _searchEngine = SearchIndexEngine();
+
   /// Fetch all subjects across the entire curriculum (Combining Firestore & Fallback)
   Future<List<SubjectModel>> getAllSubjects() async {
     final Map<String, SubjectModel> subjectMap = {};
@@ -127,6 +134,44 @@ class StudyRepository {
     }
 
     return subjectMap.values.toList();
+  }
+
+  /// Fetch all resources across the entire application (Combining Firestore & Fallback)
+  Future<List<ResourceModel>> getAllResources() async {
+    final Map<String, ResourceModel> resourceMap = {};
+
+    // 1. Load default CSSE resources dataset
+    for (final r in MockData.resources) {
+      resourceMap[r.id] = r;
+    }
+
+    // 2. Fetch Firestore resources if available
+    try {
+      if (firebaseDataSource.isAvailable) {
+        final firestoreList = await _firestoreRepository.searchResources('');
+        for (final res in firestoreList) {
+          resourceMap[res.id] = res;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore fetch for all resources notice: $e');
+    }
+
+    return resourceMap.values.toList();
+  }
+
+  /// Build or refresh search index once
+  Future<void> ensureSearchIndexBuilt() async {
+    if (_searchEngine.isIndexed) return;
+
+    final subjects = await getAllSubjects();
+    final resources = await getAllResources();
+    _searchEngine.buildIndex(
+      subjects,
+      resources,
+      textbookChaptersMap: _cachedTextbookChapters,
+      courseOverviewsMap: _cachedCourseOverviews,
+    );
   }
 
   /// Fetch Resources for a Subject with optional category filter (Memory Cached)
@@ -163,49 +208,14 @@ class StudyRepository {
     return list;
   }
 
-  /// True Global Search across Years, Semesters, Subjects, and Resources
+  /// True Global Search across Years, Semesters, Subjects, Syllabus Topics & Resources
   Future<GlobalSearchResult> searchGlobalAll(String query) async {
     if (query.trim().isEmpty) {
       return const GlobalSearchResult();
     }
 
-    final queryLower = query.trim().toLowerCase();
-
-    // 1. Search Subjects (across all years & semesters)
-    final allSubjs = await getAllSubjects();
-    final matchingSubjs = allSubjs.where((subj) {
-      return subj.name.toLowerCase().contains(queryLower) ||
-          subj.code.toLowerCase().contains(queryLower) ||
-          (subj.subjectCode != null && subj.subjectCode!.toLowerCase().contains(queryLower)) ||
-          subj.description.toLowerCase().contains(queryLower) ||
-          subj.yearId.toLowerCase().contains(queryLower) ||
-          subj.semesterId.toLowerCase().contains(queryLower);
-    }).toList();
-
-    // 2. Search Resources
-    List<ResourceModel> matchingRes = [];
-    try {
-      if (firebaseDataSource.isAvailable) {
-        matchingRes = await _firestoreRepository.searchResources(query);
-      }
-    } catch (e) {
-      debugPrint('Firestore search failed for resources: $e');
-    }
-
-    if (matchingRes.isEmpty) {
-      matchingRes = MockData.resources.where((res) {
-        return res.title.toLowerCase().contains(queryLower) ||
-            res.description.toLowerCase().contains(queryLower) ||
-            res.subjectName.toLowerCase().contains(queryLower) ||
-            res.resourceType.toLowerCase().contains(queryLower) ||
-            res.tags.any((tag) => tag.toLowerCase().contains(queryLower));
-      }).toList();
-    }
-
-    return GlobalSearchResult(
-      matchingSubjects: matchingSubjs,
-      matchingResources: matchingRes,
-    );
+    await ensureSearchIndexBuilt();
+    return _searchEngine.search(query);
   }
 
   /// Backward-compatible search returning resources only
@@ -225,13 +235,14 @@ class StudyRepository {
     required String fileName,
     required List<int> pdfBytes,
     required void Function(double progress) onProgress,
-    List<String> tags = const [],
     int pageCount = 0,
+    List<String> tags = const [],
+    String? sectionType,
   }) async {
-    // 1. Build standardized Storage path
+    // 1. Build Storage Path
     final storagePath = _storageRepository.buildStoragePath(
-      year: year.title,
-      semester: semester.title.replaceAll(' Semester', ''),
+      year: year.id,
+      semester: semester.id,
       subject: subject.name,
       resourceType: resourceType,
       fileName: fileName,
@@ -281,6 +292,7 @@ class StudyRepository {
       lastUpdated: now,
       isFeatured: false,
       isActive: true,
+      sectionType: sectionType,
     );
 
     // 5. Store Firestore Document in 'resources' collection
@@ -396,11 +408,148 @@ class StudyRepository {
     clearMemoryCache();
   }
 
+  /// Fetch Course Overview for a Subject (Firestore Primary -> Offline Fallback)
+  Future<CourseOverviewModel> getCourseOverview(String subjectId) async {
+    if (_cachedCourseOverviews.containsKey(subjectId)) {
+      return _cachedCourseOverviews[subjectId]!;
+    }
+
+    try {
+      if (firebaseDataSource.isAvailable) {
+        final remoteOverview = await _firestoreRepository.fetchCourseOverview(subjectId);
+        if (remoteOverview != null) {
+          _cachedCourseOverviews[subjectId] = remoteOverview;
+          return remoteOverview;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore fetch failed for courseOverview ($subjectId), using offline fallback: $e');
+    }
+
+    final fallback = TextbookMockData.getCourseOverview(subjectId);
+    _cachedCourseOverviews[subjectId] = fallback;
+    return fallback;
+  }
+
+  /// Fetch Textbook Chapters for a Subject (Firestore Primary -> Offline Fallback)
+  Future<List<TextbookChapterModel>> getTextbookChapters(String subjectId) async {
+    if (_cachedTextbookChapters.containsKey(subjectId)) {
+      return _cachedTextbookChapters[subjectId]!;
+    }
+
+    try {
+      if (firebaseDataSource.isAvailable) {
+        final remoteChapters = await _firestoreRepository.fetchTextbookChapters(subjectId);
+        if (remoteChapters.isNotEmpty) {
+          _cachedTextbookChapters[subjectId] = remoteChapters;
+          return remoteChapters;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore fetch failed for textbookChapters ($subjectId), using offline fallback: $e');
+    }
+
+    final fallback = TextbookMockData.getTextbookChapters(subjectId);
+    _cachedTextbookChapters[subjectId] = fallback;
+    return fallback;
+  }
+
+  /// Save / Update Course Overview (Admin)
+  Future<void> saveCourseOverview(CourseOverviewModel overview) async {
+    if (firebaseDataSource.isAvailable) {
+      await _firestoreRepository.saveCourseOverview(overview);
+    }
+    _cachedCourseOverviews[overview.subjectId] = overview;
+    invalidateSearchIndex();
+  }
+
+  /// Delete Course Overview (Admin)
+  Future<void> deleteCourseOverview(String subjectId) async {
+    if (firebaseDataSource.isAvailable) {
+      await _firestoreRepository.deleteCourseOverview(subjectId);
+    }
+    _cachedCourseOverviews.remove(subjectId);
+    invalidateSearchIndex();
+  }
+
+  /// Save / Update Textbook Chapter (Admin)
+  Future<String> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+    String assignedId = chapter.id;
+    if (firebaseDataSource.isAvailable) {
+      assignedId = await _firestoreRepository.saveTextbookChapter(subjectId, chapter);
+    }
+    
+    final currentList = List<TextbookChapterModel>.from(_cachedTextbookChapters[subjectId] ?? TextbookMockData.getTextbookChapters(subjectId));
+    final idx = currentList.indexWhere((c) => c.id == chapter.id);
+    if (idx != -1) {
+      currentList[idx] = chapter;
+    } else {
+      currentList.add(chapter);
+    }
+    _cachedTextbookChapters[subjectId] = currentList;
+    invalidateSearchIndex();
+    return assignedId;
+  }
+
+  /// Delete Textbook Chapter (Admin)
+  Future<void> deleteTextbookChapter(String subjectId, String chapterId) async {
+    if (firebaseDataSource.isAvailable) {
+      await _firestoreRepository.deleteTextbookChapter(subjectId, chapterId);
+    }
+    
+    final currentList = List<TextbookChapterModel>.from(_cachedTextbookChapters[subjectId] ?? TextbookMockData.getTextbookChapters(subjectId));
+    currentList.removeWhere((c) => c.id == chapterId);
+    _cachedTextbookChapters[subjectId] = currentList;
+    invalidateSearchIndex();
+  }
+
+  /// Reorder Textbook Chapters (Admin)
+  Future<void> reorderTextbookChapters(String subjectId, List<TextbookChapterModel> chapters) async {
+    if (firebaseDataSource.isAvailable) {
+      await _firestoreRepository.updateChapterOrders(subjectId, chapters);
+    }
+    _cachedTextbookChapters[subjectId] = chapters;
+    invalidateSearchIndex();
+  }
+
+  /// Fetch Important Questions for a Subject
+  Future<List<AcademicQuestionModel>> getImportantQuestions(String subjectId) async {
+    return TextbookMockData.getImportantQuestions(subjectId);
+  }
+
+  /// Fetch Quick Revision Notes for a Subject
+  Future<List<QuickRevisionModel>> getQuickRevisionNotes(String subjectId) async {
+    return TextbookMockData.getQuickRevisionNotes(subjectId);
+  }
+
+  /// Fetch Lab Experiments for a Subject
+  Future<List<LabExperimentModel>> getLabExperiments(String subjectId) async {
+    return TextbookMockData.getLabExperiments(subjectId);
+  }
+
+  /// Fetch Academic Projects for a Subject
+  Future<List<AcademicProjectModel>> getAcademicProjects(String subjectId) async {
+    return TextbookMockData.getAcademicProjects(subjectId);
+  }
+
+  /// Fetch Additional Resources for a Subject
+  Future<List<ExternalResourceModel>> getAdditionalResources(String subjectId) async {
+    return TextbookMockData.getAdditionalResources(subjectId);
+  }
+
+  /// Invalidate Search Index
+  void invalidateSearchIndex() {
+    _searchEngine = SearchIndexEngine();
+  }
+
   void clearMemoryCache() {
     _cachedYears = null;
     _cachedSemesters.clear();
     _cachedSubjects.clear();
     _cachedResources.clear();
+    _cachedCourseOverviews.clear();
+    _cachedTextbookChapters.clear();
+    invalidateSearchIndex();
     _storageRepository.clearCache();
   }
 }

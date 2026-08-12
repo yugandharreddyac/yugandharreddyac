@@ -15,6 +15,7 @@ import 'pages/project_admin_page.dart';
 import 'pages/higher_education_admin_page.dart';
 import 'pages/user_admin_page.dart';
 import 'pages/settings_admin_page.dart';
+import 'admin_textbook_screen.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -297,6 +298,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     title: '📚 Academic Resources & PDF Management',
                     subtitle: 'Full CRUD: Add/Edit/Delete Notes, PYQs & Syllabus',
                     targetPage: const AcademicAdminPage(),
+                    textPrimary: textPrimary,
+                    textSubtitle: textSubtitle,
+                  ),
+                  Divider(height: 1, color: borderColor),
+                  _buildModuleTile(
+                    context,
+                    icon: Icons.menu_book_rounded,
+                    iconColor: const Color(0xFF8B5CF6),
+                    title: '📖 Textbook & Course Overview Manager',
+                    subtitle: 'Full CRUD: Chapters, Sections, Topics & Syllabus Overviews',
+                    targetPage: const AdminTextbookScreen(),
                     textPrimary: textPrimary,
                     textSubtitle: textSubtitle,
                   ),

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import '../../data/models/resource_model.dart';
 import '../../data/datasources/local_storage_datasource.dart';
@@ -143,14 +142,7 @@ class DownloadProvider extends ChangeNotifier {
   int get totalDownloadedSizeBytes {
     int sum = 0;
     for (var r in _downloadedResources) {
-      if (r.localFilePath != null) {
-        final f = File(r.localFilePath!);
-        if (f.existsSync()) {
-          sum += f.lengthSync();
-        } else {
-          sum += r.fileSizeBytes;
-        }
-      }
+      sum += r.fileSizeBytes;
     }
     return sum;
   }

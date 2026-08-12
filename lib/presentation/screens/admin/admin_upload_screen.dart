@@ -25,6 +25,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
   SemesterModel? _selectedSemester;
   SubjectModel? _selectedSubject;
   String _selectedResourceType = AppConstants.typeNotes;
+  String _selectedSectionType = 'Textbook';
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -168,6 +169,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
         description: _descriptionController.text.trim(),
         fileName: _selectedFile!.name,
         pdfBytes: _selectedFile!.bytes!,
+        sectionType: _selectedSectionType,
         onProgress: (progress) {
           if (mounted) {
             setState(() {
@@ -345,7 +347,7 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
               // Resource Type Dropdown
               DropdownButtonFormField<String>(
                 value: _selectedResourceType,
-                decoration: _buildInputDecoration(isDark, 'Resource Type', Icons.category_rounded),
+                decoration: _buildInputDecoration(isDark, 'Resource Format', Icons.category_rounded),
                 items: AppConstants.resourceTypes.map((type) {
                   return DropdownMenuItem<String>(
                     value: type,
@@ -354,6 +356,32 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                 }).toList(),
                 onChanged: (type) {
                   if (type != null) setState(() => _selectedResourceType = type);
+                },
+              ),
+
+              const SizedBox(height: 14),
+
+              // Textbook Section Type Dropdown
+              DropdownButtonFormField<String>(
+                value: _selectedSectionType,
+                decoration: _buildInputDecoration(isDark, 'Subject Learning Section', Icons.auto_stories_rounded),
+                items: const [
+                  'Textbook',
+                  'Important Questions',
+                  'Previous Papers',
+                  'Quick Revision',
+                  'Practical / Lab',
+                  'Assignments',
+                  'Projects',
+                  'Additional Resources',
+                ].map((sec) {
+                  return DropdownMenuItem<String>(
+                    value: sec,
+                    child: Text(sec),
+                  );
+                }).toList(),
+                onChanged: (sec) {
+                  if (sec != null) setState(() => _selectedSectionType = sec);
                 },
               ),
 

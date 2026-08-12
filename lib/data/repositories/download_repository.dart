@@ -170,11 +170,13 @@ class DownloadRepository {
       task.cancelToken?.cancel('Cancelled by user');
       task.status = TaskStatus.cancelled;
 
-      final file = File(task.savePath);
-      if (file.existsSync()) {
-        try {
-          file.deleteSync();
-        } catch (_) {}
+      if (!kIsWeb) {
+        final file = File(task.savePath);
+        if (file.existsSync()) {
+          try {
+            file.deleteSync();
+          } catch (_) {}
+        }
       }
       _activeTasks.remove(resourceId);
     }
@@ -185,7 +187,7 @@ class DownloadRepository {
     final index = downloads.indexWhere((r) => r.id == resourceId);
     if (index >= 0) {
       final res = downloads[index];
-      if (res.localFilePath != null) {
+      if (!kIsWeb && res.localFilePath != null) {
         final file = File(res.localFilePath!);
         if (await file.exists()) {
           await file.delete();

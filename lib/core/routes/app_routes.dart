@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../data/models/resource_model.dart';
+import '../../data/models/textbook_model.dart';
 import '../../presentation/screens/splash/splash_screen.dart';
 import '../../presentation/screens/home/home_screen.dart';
 import '../../presentation/screens/semesters/semester_screen.dart';
 import '../../presentation/screens/subjects/subject_screen.dart';
 import '../../presentation/screens/resources/resource_screen.dart';
+import '../../presentation/screens/topic/topic_detail_screen.dart';
 import '../../presentation/screens/pdf_viewer/pdf_viewer_screen.dart';
 import '../../presentation/screens/search/search_screen.dart';
 import '../../presentation/screens/bookmarks/bookmarks_screen.dart';
@@ -16,13 +18,12 @@ import '../../presentation/screens/legal/about_screen.dart';
 import '../../presentation/screens/legal/contact_screen.dart';
 import '../../presentation/screens/admin/admin_upload_screen.dart';
 import '../../presentation/screens/admin/admin_dashboard_screen.dart';
-import '../../presentation/screens/career/career_hub_screen.dart';
-import '../../presentation/screens/coding/coding_hub_screen.dart';
-import '../../presentation/screens/placement/placement_hub_screen.dart';
-import '../../presentation/screens/projects/project_hub_screen.dart';
+import '../../presentation/screens/admin/admin_textbook_screen.dart';
 
 import '../../presentation/screens/admin/admin_login_screen.dart';
 import '../../presentation/widgets/admin_auth_guard.dart';
+import '../../data/datasources/non_academic_data.dart';
+import '../../presentation/screens/hierarchy/generic_hub_screen.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -44,12 +45,14 @@ class AppRoutes {
   static const String adminLogin = '/admin-login';
   static const String adminDashboard = '/admin-dashboard';
   static const String adminUpload = '/admin-upload';
+  static const String adminTextbook = '/admin-textbook';
   static const String careerHub = '/career';
   static const String codingHub = '/coding';
   static const String placementHub = '/placement';
   static const String projectHub = '/projects';
   static const String higherEducationHub = '/higher-education';
   static const String examDetail = '/exam-detail';
+  static const String topicDetail = '/topic_detail';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -85,6 +88,7 @@ class AppRoutes {
           ResourceScreen(
             subjectId: args['subjectId'] ?? '',
             subjectName: args['subjectName'] ?? 'Subject',
+            initialSectionIndex: args['initialSectionIndex'] as int?,
           ),
           routeSettings,
         );
@@ -132,18 +136,39 @@ class AppRoutes {
           routeSettings,
         );
 
+      case adminTextbook:
+        return _buildPageRoute(
+          const AdminAuthGuard(child: AdminTextbookScreen()),
+          routeSettings,
+        );
+
 
       case careerHub:
-        return _buildPageRoute(const CareerHubScreen(), routeSettings);
+        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.emergingTechHub), routeSettings);
 
       case codingHub:
-        return _buildPageRoute(const CodingHubScreen(), routeSettings);
+        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.codingHub), routeSettings);
 
       case placementHub:
-        return _buildPageRoute(const PlacementHubScreen(), routeSettings);
+        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.placementHub), routeSettings);
 
       case projectHub:
-        return _buildPageRoute(const ProjectHubScreen(), routeSettings);
+        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.projectsHub), routeSettings);
+
+      case higherEducationHub:
+        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.higherEducationHub), routeSettings);
+
+      case topicDetail:
+        final args = routeSettings.arguments as Map<String, dynamic>;
+        return _buildPageRoute(
+          TopicDetailScreen(
+            topic: args['topic'] as TextbookTopicModel,
+            subjectName: args['subjectName'] as String? ?? 'Subject',
+            chapterTitle: args['chapterTitle'] as String? ?? 'Chapter',
+            sectionTitle: args['sectionTitle'] as String? ?? 'Section',
+          ),
+          routeSettings,
+        );
 
       default:
         return _buildPageRoute(

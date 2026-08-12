@@ -8,7 +8,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../data/models/higher_education_model.dart';
 import '../../providers/higher_education_provider.dart';
 import '../../widgets/custom_app_bar.dart';
-import 'exam_detail_screen.dart';
+import 'higher_ed_detail_screen.dart';
 
 class OfficialPortalItem {
   final String title;
@@ -164,8 +164,8 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
-    const royalBlue = Color(0xFF2563EB);
-    const emeraldGreen = Color(0xFF10B981);
+    const primaryBlue = AppColors.primary;
+    const navyBlue = AppColors.primaryDark;
 
     final higherStudiesExams = provider.higherStudiesItems.where((i) {
       if (_searchController.text.trim().isEmpty) return true;
@@ -198,7 +198,7 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
         showBackButton: true,
       ),
       body: provider.isLoading
-          ? const Center(child: CircularProgressIndicator(color: royalBlue))
+          ? const Center(child: CircularProgressIndicator(color: primaryBlue))
           : RefreshIndicator(
               onRefresh: () => provider.fetchHigherEducationResources(),
               child: ListView(
@@ -211,14 +211,14 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                       gradient: LinearGradient(
                         colors: isDark
                             ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-                            : [royalBlue, const Color(0xFF1D4ED8)],
+                            : [primaryBlue, navyBlue],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: royalBlue.withAlpha(isDark ? 30 : 60),
+                          color: primaryBlue.withAlpha(isDark ? 30 : 60),
                           blurRadius: 18,
                           offset: const Offset(0, 6),
                         ),
@@ -240,7 +240,7 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '🔥 GATE CSE 2027 & Higher Ed Hub',
+                                '🎓 Higher Education & Competitive Exams',
                                 style: GoogleFonts.inter(
                                   color: Colors.white,
                                   fontSize: 21,
@@ -249,7 +249,7 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'Dedicated Computer Science Entrance Roadmaps, Syllabus, M.Tech & Official Portals',
+                                'GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad & Research Opportunities',
                                 style: GoogleFonts.inter(
                                   color: Colors.white.withAlpha(220),
                                   fontSize: 13,
@@ -282,8 +282,8 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                       controller: _searchController,
                       onChanged: (_) => setState(() {}),
                       decoration: const InputDecoration(
-                        hintText: 'Search GATE CSE 2027, GRE, IELTS, CAT, Portals...',
-                        prefixIcon: Icon(Icons.search_rounded, color: royalBlue),
+                        hintText: 'Search GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad...',
+                        prefixIcon: Icon(Icons.search_rounded, color: primaryBlue),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       ),
@@ -304,14 +304,14 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                     child: TabBar(
                       controller: _tabController,
                       indicator: BoxDecoration(
-                        color: royalBlue,
+                        color: primaryBlue,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       labelColor: Colors.white,
                       unselectedLabelColor: textSubtitle,
                       labelStyle: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 12),
                       tabs: const [
-                        Tab(text: '🎓 GATE CSE 2027 & MS'),
+                        Tab(text: '🎓 Higher Studies & Exams'),
                         Tab(text: '🏛️ Govt & PSUs'),
                         Tab(text: '🌐 Official Portals'),
                       ],
@@ -326,9 +326,9 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        _buildExamList(context, higherStudiesExams, royalBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
-                        _buildExamList(context, governmentExams, emeraldGreen, cardColor, borderColor, textPrimary, textSubtitle, isDark),
-                        _buildPortalsList(context, filteredPortals, royalBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
+                        _buildExamList(context, higherStudiesExams, primaryBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
+                        _buildExamList(context, governmentExams, navyBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
+                        _buildPortalsList(context, filteredPortals, primaryBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
                       ],
                     ),
                   ),
@@ -385,7 +385,7 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ExamDetailScreen(exam: exam),
+                  builder: (_) => HigherEdDetailScreen(item: exam),
                 ),
               );
             },

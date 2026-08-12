@@ -219,26 +219,11 @@ class _ResourceCardState extends State<ResourceCard> {
                     ),
                     const SizedBox(height: 14),
 
-                    // Bottom Metadata Bar (Subject, File Size, Download Count & Status Badge)
+                    // Bottom Metadata & Action Bar
                     Row(
                       children: [
-                        Icon(Icons.folder_open_rounded, size: 14, color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
                         const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            widget.resource.subjectName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-
-                        // File Size
                         Text(
                           Formatters.formatBytes(widget.resource.fileSizeBytes),
                           style: TextStyle(
@@ -248,55 +233,72 @@ class _ResourceCardState extends State<ResourceCard> {
                           ),
                         ),
                         const SizedBox(width: 10),
-
-                        // Download Count
-                        Row(
-                          children: [
-                            const Icon(Icons.download_rounded, size: 14, color: AppColors.primaryLight),
-                            const SizedBox(width: 2),
-                            Text(
-                              '${widget.resource.downloadCount}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primaryLight,
-                              ),
-                            ),
-                          ],
+                        const Icon(Icons.download_rounded, size: 14, color: AppColors.primary),
+                        const SizedBox(width: 2),
+                        Text(
+                          '${widget.resource.downloadCount}',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
                         ),
                         const SizedBox(width: 10),
-
-                        // Downloaded Status Badge
-                        if (isDownloaded) ...[
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                            decoration: BoxDecoration(
-                              color: Colors.green.withAlpha(20),
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: const Row(
-                              children: [
-                                Icon(Icons.check_circle_rounded, size: 13, color: Colors.green),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Offline',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              ],
+                        Icon(Icons.calendar_today_rounded, size: 12, color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        const SizedBox(width: 3),
+                        Expanded(
+                          child: Text(
+                            Formatters.formatDate(widget.resource.lastUpdated),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                             ),
                           ),
-                        ] else if (isDownloading) ...[
+                        ),
+                        const SizedBox(width: 8),
+
+                        // Action Buttons: Open & Download
+                        if (isDownloading) ...[
                           SizedBox(
-                            width: 16,
-                            height: 16,
+                            width: 24,
+                            height: 24,
                             child: CircularProgressIndicator(
                               value: downloadProgress > 0 ? downloadProgress : null,
-                              strokeWidth: 2,
+                              strokeWidth: 2.5,
+                              color: AppColors.primary,
                             ),
+                          ),
+                        ] else ...[
+                          IconButton(
+                            constraints: const BoxConstraints(),
+                            padding: const EdgeInsets.all(6),
+                            tooltip: isDownloaded ? 'Downloaded Offline' : 'Download PDF',
+                            icon: Icon(
+                              isDownloaded ? Icons.check_circle_rounded : Icons.file_download_outlined,
+                              color: isDownloaded ? AppColors.primary : AppColors.primary,
+                              size: 22,
+                            ),
+                            onPressed: () async {
+                              if (!isDownloaded) {
+                                await downloadProvider.downloadPdf(widget.resource);
+                              }
+                            },
+                          ),
+                          const SizedBox(width: 4),
+                          ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            onPressed: widget.onTap,
+                            icon: const Icon(Icons.picture_as_pdf_rounded, size: 14),
+                            label: const Text('Open', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ],

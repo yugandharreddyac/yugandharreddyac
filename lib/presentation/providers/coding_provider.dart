@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
 import '../../data/models/coding_resource_model.dart';
+import '../../data/models/beyond_academics_model.dart';
 import '../../data/repositories/coding_repository.dart';
 
 class CodingProvider extends ChangeNotifier {
   final CodingRepository _codingRepository;
 
   List<CodingResourceModel> _resources = [];
+  List<CodingLanguageModel> _languages = [];
+  List<DsaTopicModel> _dsaTopics = [];
+  List<IndustryProjectModel> _codingProjects = [];
   bool _isLoading = false;
   String? _errorMessage;
   String _selectedPlatform = 'All';
@@ -14,6 +18,9 @@ class CodingProvider extends ChangeNotifier {
   CodingProvider(this._codingRepository);
 
   List<CodingResourceModel> get resources => _resources;
+  List<CodingLanguageModel> get languages => _languages;
+  List<DsaTopicModel> get dsaTopics => _dsaTopics;
+  List<IndustryProjectModel> get codingProjects => _codingProjects;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String get selectedPlatform => _selectedPlatform;
@@ -40,6 +47,9 @@ class CodingProvider extends ChangeNotifier {
 
     try {
       _resources = await _codingRepository.getCodingResources();
+      _languages = await _codingRepository.getCodingLanguages();
+      _dsaTopics = await _codingRepository.getDsaTopics();
+      _codingProjects = await _codingRepository.getCodingProjects();
     } catch (e) {
       _errorMessage = 'Failed to load coding resources';
     } finally {

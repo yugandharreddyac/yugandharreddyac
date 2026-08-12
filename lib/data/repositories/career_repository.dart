@@ -1,5 +1,6 @@
 import '../datasources/firebase_datasource.dart';
 import '../models/career_model.dart';
+import '../models/beyond_academics_model.dart';
 
 class CareerRepository {
   final FirebaseDataSource _firebaseDataSource;
@@ -19,573 +20,369 @@ class CareerRepository {
   }
 
   static const List<CareerModel> _fallbackCareerTechnologies = [
+    // --- DOMAIN 1: EMERGING TECH & AI ---
     CareerModel(
-      id: 'ai',
-      name: 'Artificial Intelligence',
-      category: 'AI & Data',
+      id: 'ai_engineer',
+      name: 'Artificial Intelligence & Machine Learning Engineer',
+      category: 'Emerging Tech & AI',
       icon: 'smart_toy_rounded',
-      introduction:
-          'Artificial Intelligence involves creating intelligent agents that perceive their environment and make decisions to achieve specific goals, replicating human cognition.',
-      whyLearn:
-          'AI is driving automated decision-making across healthcare, finance, robotics, and consumer applications. High demand for engineers skilled in neural networks and deep learning.',
-      careerOpportunities: [
-        'AI Engineer',
-        'Research Scientist',
-        'Computer Vision Specialist',
-        'NLP Engineer',
-        'AI Ethics Officer'
-      ],
-      requiredSkills: [
-        'Python',
-        'Mathematics & Linear Algebra',
-        'Probability & Statistics',
-        'PyTorch / TensorFlow',
-        'Neural Networks'
-      ],
+      introduction: 'Design, train, and deploy deep learning neural networks, computer vision algorithms, and natural language models.',
+      whyLearn: 'Core cognitive engineering role powering autonomous systems, medical imaging, and enterprise automation.',
+      careerOpportunities: ['AI Research Engineer', 'Machine Learning Engineer', 'Computer Vision Specialist', 'Data Scientist'],
+      requiredSkills: ['Python', 'Linear Algebra', 'PyTorch', 'TensorFlow', 'Scikit-Learn', 'OpenCV'],
       learningRoadmap: [
-        '1. Master Python & Scientific Libraries (NumPy, Pandas)',
-        '2. Study Mathematics (Calculus, Linear Algebra, Probability)',
-        '3. Learn Core Machine Learning Algorithms',
-        '4. Deep Learning Architectures (CNN, RNN, Transformers)',
-        '5. Model Deployment (ONNX, FastAPI, Docker)'
+        'Phase 1: Python, Linear Algebra & Probability Fundamentals',
+        'Phase 2: Classical Machine Learning Algorithms (Regression, Decision Trees, SVMs)',
+        'Phase 3: Deep Learning & Neural Network Architectures (CNNs, RNNs, Transformers)',
+        'Phase 4: MLOps, Model Quantization & Production API Deployment'
       ],
+      learningPhases: [
+        LearningPhaseModel(
+          phaseNumber: 1,
+          title: 'Math & Python Core',
+          subtitle: 'Linear Algebra, Calculus & Tensors',
+          description: 'Master matrix operations, partial derivatives, and tensor manipulations in PyTorch.',
+          estimatedDuration: '4 Weeks',
+          topics: ['Linear Algebra', 'Calculus', 'PyTorch Tensors'],
+          milestones: ['Build custom autograd engine', 'Implement linear regression from scratch'],
+        ),
+        LearningPhaseModel(
+          phaseNumber: 2,
+          title: 'Deep Learning & Neural Networks',
+          subtitle: 'CNNs, Transformers & Backprop',
+          description: 'Train deep convolutional networks and self-attention mechanisms for vision and text.',
+          estimatedDuration: '6 Weeks',
+          topics: ['CNNs', 'ResNets', 'Object Detection', 'Transformers'],
+          milestones: ['Classify CIFAR-10 images at 90%+ accuracy', 'Fine-tune Vision Transformer'],
+        ),
+      ],
+      skillMatrix: [
+        SkillMatrixModel(
+          skillName: 'Python & PyTorch',
+          category: 'Programming & Frameworks',
+          level: 'Advanced',
+          importance: 'Mandatory',
+          description: 'Deep neural network design, CUDA tensor acceleration, and model autograd.',
+        ),
+        SkillMatrixModel(
+          skillName: 'Computer Vision & OpenCV',
+          category: 'Domain Mastery',
+          level: 'Intermediate',
+          importance: 'Recommended',
+          description: 'Image filtering, bounding box regressions, and YOLO object tracking.',
+        ),
+      ],
+      portfolioRequirements: [
+        'End-to-End Image Classification Model deployed with FastAPI',
+        'Fine-Tuned LLM on custom technical documentation'
+      ],
+      resumeRequirements: [
+        'Trained PyTorch ResNet-50 achieving 94.2% top-1 accuracy on custom dataset.',
+        'Optimized model inference latency by 40% using ONNX Runtime quantization.'
+      ],
+      interviewPrepTopics: ['Bias-Variance Tradeoff', 'Backpropagation derivation', 'Overfitting regularization'],
+      entryLevelResponsibilities: ['Train and evaluate ML models', 'Clean and preprocess datasets', 'Build model serving APIs'],
       bestFreeResources: [
-        CareerResourceLink(
-            title: 'Elements of AI (University of Helsinki)',
-            url: 'https://www.elementsofai.com/',
-            platform: 'Web',
-            type: 'Course'),
-        CareerResourceLink(
-            title: 'Fast.ai - Practical Deep Learning for Coders',
-            url: 'https://www.fast.ai/',
-            platform: 'Fast.ai',
-            type: 'Course'),
+        CareerResourceLink(title: 'Fast.ai Practical Deep Learning', url: 'https://fast.ai', platform: 'Fast.ai'),
+        CareerResourceLink(title: 'Google Machine Learning Crash Course', url: 'https://developers.google.com/machine-learning/crash-course', platform: 'Google'),
       ],
       books: [
-        CareerResourceLink(
-            title: 'Artificial Intelligence: A Modern Approach by Stuart Russell & Peter Norvig',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
-        CareerResourceLink(
-            title: 'Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
+        CareerResourceLink(title: 'Hands-On Machine Learning with Scikit-Learn, Keras, & TensorFlow', url: 'https://oreilly.com', platform: 'OReilly'),
       ],
       certifications: [
-        CareerResourceLink(
-            title: 'DeepLearning.AI TensorFlow Developer Professional Certificate',
-            url: 'https://www.coursera.org/professional-certificates/tensorflow-in-practice',
-            platform: 'Coursera',
-            type: 'Certification'),
+        CareerResourceLink(title: 'Deep Learning Specialization by Andrew Ng', url: 'https://coursera.org', platform: 'Coursera'),
       ],
       youtubePlaylists: [
-        CareerResourceLink(
-            title: '3Blue1Brown - Neural Networks Series',
-            url: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
-            platform: 'YouTube',
-            type: 'Playlist'),
+        CareerResourceLink(title: '3Blue1Brown Neural Networks', url: 'https://youtube.com', platform: 'YouTube'),
       ],
       miniProjects: [
-        CareerProjectInfo(
-            title: 'Handwritten Digit Recognizer (MNIST)',
-            description: 'Train a CNN model using PyTorch to recognize handwritten numbers 0-9.',
-            difficulty: 'Beginner'),
-        CareerProjectInfo(
-            title: 'Sentiment Analyzer App',
-            description: 'Classify user review text as positive, neutral, or negative using DistilBERT.',
-            difficulty: 'Intermediate'),
+        CareerProjectInfo(title: 'CIFAR-10 Image Classifier', description: 'Build CNN using PyTorch', difficulty: 'Beginner'),
       ],
       advancedProjects: [
-        CareerProjectInfo(
-            title: 'Autonomous Mobile Robot Navigator',
-            description: 'Real-time object detection and pathfinding using YOLOv8 and ROS2.',
-            difficulty: 'Advanced'),
+        CareerProjectInfo(title: 'Real-Time Edge Object Detector', description: 'YOLOv8 Streamlit application', difficulty: 'Advanced'),
       ],
       githubRepos: [
-        CareerResourceLink(
-            title: 'huggingface/transformers',
-            url: 'https://github.com/huggingface/transformers',
-            platform: 'GitHub',
-            type: 'Repository'),
+        CareerResourceLink(title: 'PyTorch Examples', url: 'https://github.com/pytorch/examples', platform: 'GitHub'),
       ],
-      futureScope:
-          'Generative AI, Autonomous Systems, AI-powered Healthcare Diagnostics, and Edge AI deployment will define the next decade of technology.',
+      futureScope: 'Rapid growth driven by autonomous robotics, generative AI, and edge AI hardware.',
     ),
+
     CareerModel(
-      id: 'ml',
-      name: 'Machine Learning',
-      category: 'AI & Data',
+      id: 'genai_engineer',
+      name: 'Generative AI & LLM Systems Engineer',
+      category: 'Emerging Tech & AI',
       icon: 'psychology_rounded',
-      introduction:
-          'Machine Learning focuses on building models that automatically learn patterns from data and improve accuracy over time without being explicitly programmed.',
-      whyLearn:
-          'ML forms the core backbone of recommendation engines, predictive analytics, fraud detection, and modern data-driven software.',
-      careerOpportunities: [
-        'Machine Learning Engineer',
-        'MLOps Engineer',
-        'Data Scientist',
-        'Applied Scientist'
-      ],
-      requiredSkills: [
-        'Python / R',
-        'Scikit-Learn',
-        'XGBoost',
-        'Feature Engineering',
-        'ML Pipeline Optimization'
-      ],
+      introduction: 'Architect applications powered by Large Language Models, Retrieval-Augmented Generation (RAG), and autonomous AI agents.',
+      whyLearn: 'Fastest-growing engineering specialization transforming enterprise software, search, and productivity.',
+      careerOpportunities: ['GenAI Engineer', 'LLM Systems Architect', 'Prompt Engineer Specialist'],
+      requiredSkills: ['Python', 'LangChain', 'LlamaIndex', 'Vector Databases (Pinecone, Chroma)', 'Fine-tuning (LoRA)', 'FastAPI'],
       learningRoadmap: [
-        '1. Data Wrangling with Pandas & Data Visualization',
-        '2. Supervised Learning (Regression, Classification)',
-        '3. Unsupervised Learning (Clustering, PCA)',
-        '4. Model Evaluation & Hyperparameter Tuning',
-        '5. MLOps (MLflow, DVC, Kubernetes)'
+        'Phase 1: Transformer Attention Mechanism & Open-Source LLMs',
+        'Phase 2: Vector Embeddings & Similarity Search',
+        'Phase 3: RAG Pipelines & Semantic Search Optimization',
+        'Phase 4: Fine-tuning Open LLMs (Llama 3, Mistral) with PEFT/LoRA'
       ],
       bestFreeResources: [
-        CareerResourceLink(
-            title: 'Andrew Ng Machine Learning Specialization',
-            url: 'https://www.coursera.org/specializations/machine-learning-introduction',
-            platform: 'Coursera',
-            type: 'Course'),
+        CareerResourceLink(title: 'Hugging Face NLP Course', url: 'https://huggingface.co/learn', platform: 'HuggingFace'),
       ],
       books: [
-        CareerResourceLink(
-            title: 'Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow by Aurélien Géron',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
+        CareerResourceLink(title: 'Generative AI on AWS', url: 'https://oreilly.com', platform: 'OReilly'),
       ],
       certifications: [
-        CareerResourceLink(
-            title: 'AWS Certified Machine Learning - Specialty',
-            url: 'https://aws.amazon.com/certification/certified-machine-learning-specialty/',
-            platform: 'AWS',
-            type: 'Certification'),
+        CareerResourceLink(title: 'LangChain Developer Certification', url: 'https://langchain.com', platform: 'LangChain'),
       ],
       youtubePlaylists: [
-        CareerResourceLink(
-            title: 'StatQuest with Josh Starmer - Machine Learning',
-            url: 'https://www.youtube.com/c/joshstarmer',
-            platform: 'YouTube',
-            type: 'Playlist'),
+        CareerResourceLink(title: 'Andrej Karpathy - Let us build GPT', url: 'https://youtube.com', platform: 'YouTube'),
       ],
       miniProjects: [
-        CareerProjectInfo(
-            title: 'House Price Prediction System',
-            description: 'Build a multi-variable regression model with Scikit-Learn.',
-            difficulty: 'Beginner'),
+        CareerProjectInfo(title: 'PDF Document Q&A Bot', description: 'RAG system using LangChain & ChromaDB', difficulty: 'Intermediate'),
       ],
       advancedProjects: [
-        CareerProjectInfo(
-            title: 'End-to-End MLOps Pipeline',
-            description: 'Deploy an automated ML pipeline using Fast-API, Docker, MLflow, and GitHub Actions.',
-            difficulty: 'Advanced'),
+        CareerProjectInfo(title: 'Multi-Agent Autonomous Coding Assistant', description: 'CrewAI agent swarm writing code', difficulty: 'Advanced'),
       ],
       githubRepos: [
-        CareerResourceLink(
-            title: 'scikit-learn/scikit-learn',
-            url: 'https://github.com/scikit-learn/scikit-learn',
-            platform: 'GitHub',
-            type: 'Repository'),
+        CareerResourceLink(title: 'LangChain GitHub Repo', url: 'https://github.com/langchain-ai/langchain', platform: 'GitHub'),
       ],
-      futureScope:
-          'Automated Machine Learning (AutoML), Federated Learning, and Continuous Online Learning systems.',
+      futureScope: 'Critical infrastructure layer for next-generation AI-native software applications.',
     ),
+
+    // --- DOMAIN 2: SOFTWARE ENGINEERING ---
     CareerModel(
-      id: 'cloud',
-      name: 'Cloud Computing',
-      category: 'Infrastructure',
-      icon: 'cloud_done_rounded',
-      introduction:
-          'Cloud Computing provides on-demand availability of computing resources (servers, databases, networking, software) over the internet with pay-as-you-go pricing.',
-      whyLearn:
-          'Every enterprise app relies on AWS, GCP, or Azure for scalable hosting, global elasticity, and high reliability.',
-      careerOpportunities: [
-        'Cloud Solutions Architect',
-        'Cloud Infrastructure Engineer',
-        'DevOps Engineer',
-        'Site Reliability Engineer (SRE)'
-      ],
-      requiredSkills: [
-        'AWS / GCP / Azure Services',
-        'Linux Administration',
-        'Networking (VPC, Subnets, DNS)',
-        'Infrastructure as Code (Terraform)',
-        'Docker & Kubernetes'
-      ],
+      id: 'fullstack_dev',
+      name: 'Full Stack Web Development Engineer',
+      category: 'Software Engineering',
+      icon: 'web_rounded',
+      introduction: 'Build modern responsive frontends and resilient backend REST/GraphQL microservices.',
+      whyLearn: 'Foundational engineering role across global tech companies, high-growth startups, and freelancing.',
+      careerOpportunities: ['Full Stack Engineer', 'Frontend Engineer', 'Backend Developer', 'Web Architect'],
+      requiredSkills: ['TypeScript', 'React.js', 'Node.js', 'Express', 'PostgreSQL', 'Redis', 'Docker'],
       learningRoadmap: [
-        '1. Master Networking Fundamentals & Linux Command Line',
-        '2. Choose a Primary Cloud Provider (AWS/Azure/GCP)',
-        '3. Learn Core Cloud Compute, Storage & Database Services',
-        '4. Automate Infrastructure using Terraform / CloudFormation',
-        '5. Container Orchestration with Kubernetes'
+        'Phase 1: HTML5, CSS3, Modern JavaScript (ES6+), DOM Manipulation',
+        'Phase 2: React.js Component Architecture, Hooks, State Management',
+        'Phase 3: Node.js Express REST APIs, Authentication (JWT), PostgreSQL ORMs',
+        'Phase 4: Caching (Redis), Containerization (Docker), CI/CD & Vercel/Render Deployment'
       ],
       bestFreeResources: [
-        CareerResourceLink(
-            title: 'AWS Skill Builder Free Tier',
-            url: 'https://explore.skillbuilder.aws/',
-            platform: 'AWS',
-            type: 'Course'),
+        CareerResourceLink(title: 'The Odin Project', url: 'https://theodinproject.com', platform: 'Web'),
+        CareerResourceLink(title: 'Full Stack Open (University of Helsinki)', url: 'https://fullstackopen.com', platform: 'Helsinki'),
       ],
       books: [
-        CareerResourceLink(
-            title: 'Cloud Native Patterns by Cornelia Davis',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
+        CareerResourceLink(title: 'Eloquent JavaScript', url: 'https://eloquentjavascript.net', platform: 'Web'),
       ],
       certifications: [
-        CareerResourceLink(
-            title: 'AWS Certified Solutions Architect – Associate',
-            url: 'https://aws.amazon.com/certification/certified-solutions-architect-associate/',
-            platform: 'AWS',
-            type: 'Certification'),
+        CareerResourceLink(title: 'Meta Front-End Developer Certificate', url: 'https://coursera.org', platform: 'Coursera'),
       ],
       youtubePlaylists: [
-        CareerResourceLink(
-            title: 'freeCodeCamp - AWS Certified Cloud Practitioner Course',
-            url: 'https://www.youtube.com/watch?v=3hLmDS179YE',
-            platform: 'YouTube',
-            type: 'Playlist'),
+        CareerResourceLink(title: 'Traversy Media Web Dev Tutorials', url: 'https://youtube.com', platform: 'YouTube'),
       ],
       miniProjects: [
-        CareerProjectInfo(
-            title: 'Static Website Hosting on S3 + CloudFront',
-            description: 'Configure SSL, custom domain, and global CDN caching on AWS.',
-            difficulty: 'Beginner'),
+        CareerProjectInfo(title: 'Collaborative Task Board', description: 'React & Node.js Kanban app', difficulty: 'Beginner'),
       ],
       advancedProjects: [
-        CareerProjectInfo(
-            title: 'Multi-Region High-Availability Cluster',
-            description: 'Deploy auto-scaling web application across multi-AZs using Terraform and EKS.',
-            difficulty: 'Advanced'),
+        CareerProjectInfo(title: 'E-Commerce Platform with Stripe Checkout', description: 'Full stack microservices store', difficulty: 'Advanced'),
       ],
       githubRepos: [
-        CareerResourceLink(
-            title: 'hashicorp/terraform',
-            url: 'https://github.com/hashicorp/terraform',
-            platform: 'GitHub',
-            type: 'Repository'),
+        CareerResourceLink(title: 'RealWorld Example App', url: 'https://github.com/gothinkster/realworld', platform: 'GitHub'),
       ],
-      futureScope:
-          'Serverless Architectures, Multi-Cloud Orchestration, and Edge Cloud Infrastructure.',
+      futureScope: 'Constant demand as business digital transformation expands globally.',
     ),
+
+    CareerModel(
+      id: 'backend_engineer',
+      name: 'Backend Systems & Microservices Engineer',
+      category: 'Software Engineering',
+      icon: 'dns_rounded',
+      introduction: 'Design high-throughput backend APIs, distributed databases, event-driven messaging, and server infrastructure.',
+      whyLearn: 'Core discipline ensuring scalable software performance, data integrity, and system reliability.',
+      careerOpportunities: ['Backend Engineer', 'Systems Architect', 'Database Administrator', 'API Developer'],
+      requiredSkills: ['Go (Golang)', 'Java Spring Boot', 'PostgreSQL', 'Apache Kafka', 'Redis', 'gRPC'],
+      learningRoadmap: [
+        'Phase 1: Data Structures, OOP, SQL Relational Schemas & Indexing',
+        'Phase 2: REST & gRPC API Design, Authentication, Middleware',
+        'Phase 3: Database Transactions (ACID), Caching (Redis), Connection Pools',
+        'Phase 4: Distributed Systems, Message Queues (Kafka), Docker & Kubernetes'
+      ],
+      bestFreeResources: [
+        CareerResourceLink(title: 'System Design Primer', url: 'https://github.com/donnemartin/system-design-primer', platform: 'GitHub'),
+      ],
+      books: [
+        CareerResourceLink(title: 'Designing Data-Intensive Applications by Martin Kleppmann', url: 'https://oreilly.com', platform: 'OReilly'),
+      ],
+      certifications: [
+        CareerResourceLink(title: 'AWS Certified Developer Associate', url: 'https://aws.amazon.com', platform: 'AWS'),
+      ],
+      youtubePlaylists: [
+        CareerResourceLink(title: 'Hussein Nasser Database & Systems', url: 'https://youtube.com', platform: 'YouTube'),
+      ],
+      miniProjects: [
+        CareerProjectInfo(title: 'Base62 URL Shortener Microservice', description: 'Fast Node.js / Go shortener', difficulty: 'Beginner'),
+      ],
+      advancedProjects: [
+        CareerProjectInfo(title: 'Distributed Multi-Tenant Payment Processor', description: 'Go + Kafka idempotency engine', difficulty: 'Industry Level'),
+      ],
+      githubRepos: [
+        CareerResourceLink(title: 'Awesome System Design', url: 'https://github.com', platform: 'GitHub'),
+      ],
+      futureScope: 'High compensation and long-term career growth in cloud enterprise engineering.',
+    ),
+
+    // --- DOMAIN 3: CLOUD & SECURITY ---
+    CareerModel(
+      id: 'cloud_devops',
+      name: 'Cloud Native & DevOps Engineer',
+      category: 'Cloud & Security',
+      icon: 'cloud_rounded',
+      introduction: 'Automate infrastructure provisioning, CI/CD deployment pipelines, container orchestration, and cloud monitoring.',
+      whyLearn: 'Essential engineering function bridging software development and IT cloud infrastructure.',
+      careerOpportunities: ['DevOps Engineer', 'Cloud Architect', 'Site Reliability Engineer (SRE)', 'Infrastructure Engineer'],
+      requiredSkills: ['Linux', 'Docker', 'Kubernetes', 'Terraform', 'GitHub Actions', 'AWS / GCP', 'Prometheus'],
+      learningRoadmap: [
+        'Phase 1: Linux Administration, Bash Shell Scripting & Networking (TCP/IP, DNS)',
+        'Phase 2: Docker Containerization & Docker Compose Multi-Container Orchestration',
+        'Phase 3: Kubernetes Deployment, Pods, Services, Helm Charts & Ingress',
+        'Phase 4: Infrastructure as Code (Terraform), CI/CD Automation & Grafana Monitoring'
+      ],
+      bestFreeResources: [
+        CareerResourceLink(title: 'Kubernetes Official Documentation', url: 'https://kubernetes.io/docs', platform: 'Kubernetes'),
+      ],
+      books: [
+        CareerResourceLink(title: 'The Phoenix Project', url: 'https://oreilly.com', platform: 'OReilly'),
+      ],
+      certifications: [
+        CareerResourceLink(title: 'Certified Kubernetes Administrator (CKA)', url: 'https://cncf.io', platform: 'CNCF'),
+      ],
+      youtubePlaylists: [
+        CareerResourceLink(title: 'TechWorld with Nana DevOps Course', url: 'https://youtube.com', platform: 'YouTube'),
+      ],
+      miniProjects: [
+        CareerProjectInfo(title: 'Dockerized Web App with CI/CD', description: 'GitHub Actions deploy pipeline', difficulty: 'Beginner'),
+      ],
+      advancedProjects: [
+        CareerProjectInfo(title: 'Multi-Region Kubernetes Cluster with Terraform', description: 'Production AWS EKS Setup', difficulty: 'Advanced'),
+      ],
+      githubRepos: [
+        CareerResourceLink(title: 'DevOps Exercises', url: 'https://github.com/bregman-arie/devops-exercises', platform: 'GitHub'),
+      ],
+      futureScope: 'Indispensable role as enterprise software moves 100% to cloud infrastructure.',
+    ),
+
     CareerModel(
       id: 'cybersecurity',
-      name: 'Cyber Security',
-      category: 'Security',
+      name: 'Cyber Security & Ethical Hacking Specialist',
+      category: 'Cloud & Security',
       icon: 'security_rounded',
-      introduction:
-          'Cyber Security focuses on protecting systems, networks, devices, and data from digital attacks, unauthorized access, and data breaches.',
-      whyLearn:
-          'Crucial field protecting global digital assets, financial transactions, and privacy against evolving cyber threats.',
-      careerOpportunities: [
-        'Ethical Hacker / Penetration Tester',
-        'Security Operations Center (SOC) Analyst',
-        'Information Security Engineer',
-        'Cyber Security Architect'
-      ],
-      requiredSkills: [
-        'Networking & TCP/IP Protocols',
-        'Linux & Bash Scripting',
-        'OWASP Top 10 Vulnerabilities',
-        'Penetration Testing Tools (Burp Suite, Wireshark)',
-        'Cryptography Fundamentals'
-      ],
+      introduction: 'Protect networks, web applications, and cloud environments against cyber threats, vulnerabilities, and unauthorized intrusions.',
+      whyLearn: 'Critical global defense discipline protecting user data, finance systems, and infrastructure.',
+      careerOpportunities: ['Ethical Hacker', 'Penetration Tester', 'SOC Security Analyst', 'Cybersecurity Engineer'],
+      requiredSkills: ['Linux', 'Network Protocols', 'OWASP Top 10', 'Wireshark', 'Metasploit', 'Burp Suite', 'Python'],
       learningRoadmap: [
-        '1. Learn Fundamentals of Networking & Cryptography',
-        '2. Practice Linux Commands & Scripting',
-        '3. Understand Web Application Security (OWASP)',
-        '4. Hands-on Capture The Flag (CTF) Challenges on TryHackMe/HackTheBox',
-        '5. Security Automation & SIEM Analysis'
+        'Phase 1: Computer Networks (OSI Model, Wireshark Packet Analysis, TCP/IP Security)',
+        'Phase 2: Linux Security, Privilege Escalation & Cryptography (RSA, AES)',
+        'Phase 3: Web Application Penetration Testing & OWASP Vulnerability Exploitation',
+        'Phase 4: Cloud Security Auditing, SIEM Monitoring & Incident Response'
       ],
       bestFreeResources: [
-        CareerResourceLink(
-            title: 'TryHackMe Learning Paths',
-            url: 'https://tryhackme.com/',
-            platform: 'Web',
-            type: 'Interactive'),
+        CareerResourceLink(title: 'TryHackMe Cyber Security Training', url: 'https://tryhackme.com', platform: 'TryHackMe'),
+        CareerResourceLink(title: 'Hack The Box', url: 'https://hackthebox.com', platform: 'HackTheBox'),
       ],
       books: [
-        CareerResourceLink(
-            title: 'The Web Application Hacker\'s Handbook by Dafydd Stuttard & Marcus Pinto',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
+        CareerResourceLink(title: 'The Web Application Hacker’s Handbook', url: 'https://wiley.com', platform: 'Wiley'),
       ],
       certifications: [
-        CareerResourceLink(
-            title: 'CompTIA Security+',
-            url: 'https://www.comptia.org/certifications/security',
-            platform: 'CompTIA',
-            type: 'Certification'),
+        CareerResourceLink(title: 'CompTIA Security+ / CEH', url: 'https://comptia.org', platform: 'CompTIA'),
       ],
       youtubePlaylists: [
-        CareerResourceLink(
-            title: 'NetworkChuck - Cyber Security & Networking',
-            url: 'https://www.youtube.com/c/NetworkChuck',
-            platform: 'YouTube',
-            type: 'Playlist'),
+        CareerResourceLink(title: 'NetworkChuck Security Lessons', url: 'https://youtube.com', platform: 'YouTube'),
       ],
       miniProjects: [
-        CareerProjectInfo(
-            title: 'Network Packet Sniffer & Analyzer',
-            description: 'Write a Python script using Scapy to analyze local network traffic.',
-            difficulty: 'Beginner'),
+        CareerProjectInfo(title: 'Port Scanner & Vulnerability Detector', description: 'Python socket security tool', difficulty: 'Beginner'),
       ],
       advancedProjects: [
-        CareerProjectInfo(
-            title: 'Vulnerability Scanner & Reporting Engine',
-            description: 'Automate web application security auditing against OWASP Top 10.',
-            difficulty: 'Advanced'),
+        CareerProjectInfo(title: 'Automated Web Vulnerability Scanner', description: 'OWASP Top 10 auditing tool', difficulty: 'Advanced'),
       ],
       githubRepos: [
-        CareerResourceLink(
-            title: 'OWASP/CheatSheetSeries',
-            url: 'https://github.com/OWASP/CheatSheetSeries',
-            platform: 'GitHub',
-            type: 'Repository'),
+        CareerResourceLink(title: 'PayloadsAllTheThings', url: 'https://github.com/swisskyrepo/PayloadsAllTheThings', platform: 'GitHub'),
       ],
-      futureScope:
-          'Zero-Trust Architecture, Quantum Cryptography, and AI-Driven Cyber Defense.',
+      futureScope: 'High demand driven by increasing cloud data security regulations and threat landscape.',
     ),
+
+    // --- DOMAIN 4: MOBILE & SYSTEMS ---
     CareerModel(
-      id: 'flutter',
-      name: 'Flutter Development',
-      category: 'Mobile & Web',
-      icon: 'flutter_dash_rounded',
-      introduction:
-          'Flutter is Google’s open-source UI toolkit for building natively compiled applications for mobile, web, desktop, and embedded devices from a single codebase.',
-      whyLearn:
-          'Build beautiful, high-performance apps for iOS, Android, and Web simultaneously using Dart, saving development time and effort.',
-      careerOpportunities: [
-        'Flutter Mobile App Developer',
-        'Cross-Platform Software Engineer',
-        'Frontend Engineer',
-        'Mobile Tech Lead'
-      ],
-      requiredSkills: [
-        'Dart Programming Language',
-        'Flutter Widget Tree & Custom UI',
-        'State Management (Provider, Riverpod, Bloc)',
-        'Firebase & REST API Integration',
-        'Clean Architecture'
-      ],
+      id: 'flutter_engineer',
+      name: 'Flutter & Cross-Platform Mobile Engineer',
+      category: 'Mobile & Systems',
+      icon: 'phone_android_rounded',
+      introduction: 'Build high-performance, beautiful mobile and web applications using Dart, Flutter, and Clean Architecture.',
+      whyLearn: 'Single codebase powering native iOS, Android, and Web applications used by millions.',
+      careerOpportunities: ['Flutter Developer', 'Mobile Systems Architect', 'Cross-Platform Engineer'],
+      requiredSkills: ['Dart', 'Flutter SDK', 'Clean Architecture', 'Provider / Riverpod', 'Firebase', 'REST APIs'],
       learningRoadmap: [
-        '1. Master Dart Fundamentals & OOP Principles',
-        '2. Flutter Basics (Layouts, Navigation, Material 3 Widgets)',
-        '3. State Management (Provider, Riverpod)',
-        '4. Backend & Firebase Integration (Firestore, Storage, Auth)',
-        '5. App Optimization, CI/CD, and Publishing to Google Play Store & Apple App Store'
+        'Phase 1: Dart Programming, OOP, Functional Concepts & Async Future/Streams',
+        'Phase 2: Flutter Widget Tree, Layout Alignment, Custom Painters & Material 3',
+        'Phase 3: State Management (Provider/Riverpod/Bloc), Clean Architecture & SQLite',
+        'Phase 4: Firebase Integration, Offline Caching, Automated Testing & Play Store Release'
       ],
       bestFreeResources: [
-        CareerResourceLink(
-            title: 'Official Flutter Documentation & Codelabs',
-            url: 'https://docs.flutter.dev/',
-            platform: 'Flutter.dev',
-            type: 'Documentation'),
+        CareerResourceLink(title: 'Official Flutter Documentation', url: 'https://flutter.dev/docs', platform: 'Flutter'),
       ],
       books: [
-        CareerResourceLink(
-            title: 'Flutter in Action by Eric Windmill',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
+        CareerResourceLink(title: 'Flutter in Action by Eric Windmill', url: 'https://manning.com', platform: 'Manning'),
       ],
       certifications: [
-        CareerResourceLink(
-            title: 'Google Associate Android / Flutter Developer Roadmap',
-            url: 'https://flutter.dev/learn',
-            platform: 'Google',
-            type: 'Certification'),
+        CareerResourceLink(title: 'Google Associate Android Developer', url: 'https://developers.google.com', platform: 'Google'),
       ],
       youtubePlaylists: [
-        CareerResourceLink(
-            title: 'Flutter Official YouTube Channel',
-            url: 'https://www.youtube.com/@cFlutter',
-            platform: 'YouTube',
-            type: 'Playlist'),
+        CareerResourceLink(title: 'Flutter Official YouTube Channel', url: 'https://youtube.com', platform: 'YouTube'),
       ],
       miniProjects: [
-        CareerProjectInfo(
-            title: 'Expense Tracker App',
-            description: 'Build a dark/light themed expense tracker with local database storage.',
-            difficulty: 'Beginner'),
+        CareerProjectInfo(title: 'Smart Task & Student Notes App', description: 'Offline Flutter + SQLite app', difficulty: 'Beginner'),
       ],
       advancedProjects: [
-        CareerProjectInfo(
-            title: 'CSSE Study Hub Platform',
-            description: 'Complete cross-platform academic and career development suite with Firebase backend.',
-            difficulty: 'Advanced'),
+        CareerProjectInfo(title: 'UniDocs Academic & Career Platform', description: 'Production Clean Architecture app', difficulty: 'Industry Level'),
       ],
       githubRepos: [
-        CareerResourceLink(
-            title: 'flutter/flutter',
-            url: 'https://github.com/flutter/flutter',
-            platform: 'GitHub',
-            type: 'Repository'),
+        CareerResourceLink(title: 'Flutter Samples Repo', url: 'https://github.com/flutter/samples', platform: 'GitHub'),
       ],
-      futureScope:
-          'Multi-platform desktop applications, Flutter Web optimization, and Flutter for embedded IoT displays.',
+      futureScope: 'Dominant cross-platform framework choice for modern mobile startups and corporate apps.',
     ),
+
     CareerModel(
-      id: 'devops',
-      name: 'DevOps',
-      category: 'Infrastructure',
-      icon: 'loop_rounded',
-      introduction:
-          'DevOps combines software development (Dev) and IT operations (Ops) to shorten the systems development life cycle and provide continuous delivery with high quality.',
-      whyLearn:
-          'Enables automated building, testing, continuous integration, and rapid deployment of cloud applications.',
-      careerOpportunities: [
-        'DevOps Engineer',
-        'Build & Release Engineer',
-        'Cloud DevOps Architect',
-        'Site Reliability Engineer'
-      ],
-      requiredSkills: [
-        'Git & GitHub Actions / Jenkins',
-        'Docker Containerization',
-        'Kubernetes',
-        'Terraform / Ansible',
-        'CI/CD Pipelines'
-      ],
+      id: 'android_engineer',
+      name: 'Native Android & Kotlin Systems Engineer',
+      category: 'Mobile & Systems',
+      icon: 'android_rounded',
+      introduction: 'Develop native high-performance Android applications using Kotlin, Jetpack Compose, Coroutines, and Dagger Hilt.',
+      whyLearn: 'Core OS engineering role driving 3+ billion Android devices worldwide.',
+      careerOpportunities: ['Native Android Engineer', 'Kotlin Specialist', 'Mobile SDK Developer'],
+      requiredSkills: ['Kotlin', 'Jetpack Compose', 'Coroutines & Flow', 'Room Database', 'Dagger Hilt', 'Retrofit'],
       learningRoadmap: [
-        '1. Master Linux & Shell Scripting',
-        '2. Version Control with Git & GitHub Flow',
-        '3. Docker Containerization & Docker Compose',
-        '4. CI/CD Pipeline Automation (GitHub Actions / Jenkins)',
-        '5. Kubernetes Cluster Management & Helm Charts'
+        'Phase 1: Kotlin Syntax, Lambdas, Null Safety & Coroutines',
+        'Phase 2: Jetpack Compose Declarative UI & Navigation',
+        'Phase 3: MVVM / MVI Architecture, Room DB & Retrofit APIs',
+        'Phase 4: Dependency Injection (Hilt), WorkManager & Play Console Release'
       ],
       bestFreeResources: [
-        CareerResourceLink(
-            title: 'DevOps Roadmap by Roadmap.sh',
-            url: 'https://roadmap.sh/devops',
-            platform: 'Web',
-            type: 'Roadmap'),
+        CareerResourceLink(title: 'Android Developers Training', url: 'https://developer.android.com/courses', platform: 'Google'),
       ],
       books: [
-        CareerResourceLink(
-            title: 'The Phoenix Project by Gene Kim, Kevin Behr, and George Spafford',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
+        CareerResourceLink(title: 'Android Programming: The Big Nerd Ranch Guide', url: 'https://bignerdbranch.com', platform: 'BigNerdRanch'),
       ],
       certifications: [
-        CareerResourceLink(
-            title: 'Certified Kubernetes Administrator (CKA)',
-            url: 'https://www.cncf.io/certification/cka/',
-            platform: 'Linux Foundation',
-            type: 'Certification'),
+        CareerResourceLink(title: 'Google Certified Associate Android Developer', url: 'https://developers.google.com', platform: 'Google'),
       ],
       youtubePlaylists: [
-        CareerResourceLink(
-            title: 'TechWorld with Nana - DevOps Beginner Tutorial',
-            url: 'https://www.youtube.com/@TechWorldwithNana',
-            platform: 'YouTube',
-            type: 'Playlist'),
+        CareerResourceLink(title: 'Philipp Lackner Android Tutorials', url: 'https://youtube.com', platform: 'YouTube'),
       ],
       miniProjects: [
-        CareerProjectInfo(
-            title: 'Dockerize a Full-Stack Node/React App',
-            description: 'Write Dockerfile and Docker Compose configurations for multi-container deployment.',
-            difficulty: 'Beginner'),
+        CareerProjectInfo(title: 'Weather Forecast App', description: 'Jetpack Compose + OpenWeather API', difficulty: 'Beginner'),
       ],
       advancedProjects: [
-        CareerProjectInfo(
-            title: 'Automated GitOps Pipeline with ArgoCD',
-            description: 'Deploy microservices to a Kubernetes cluster using Infrastructure as Code.',
-            difficulty: 'Advanced'),
+        CareerProjectInfo(title: 'Offline Video & Audio Streaming Player', description: 'Media3 Exoplayer + Room DB app', difficulty: 'Advanced'),
       ],
       githubRepos: [
-        CareerResourceLink(
-            title: 'kubernetes/kubernetes',
-            url: 'https://github.com/kubernetes/kubernetes',
-            platform: 'GitHub',
-            type: 'Repository'),
+        CareerResourceLink(title: 'Android Architecture Samples', url: 'https://github.com/android/architecture-samples', platform: 'GitHub'),
       ],
-      futureScope:
-          'DevSecOps (Security integrated into CI/CD), GitOps, and Platform Engineering.',
-    ),
-    CareerModel(
-      id: 'system_design',
-      name: 'System Design',
-      category: 'Software Architecture',
-      icon: 'architecture_rounded',
-      introduction:
-          'System Design is the process of defining the architecture, components, modules, interfaces, and data for a system to satisfy specified requirements.',
-      whyLearn:
-          'Essential for senior software engineering roles and technical interview rounds at top tech companies.',
-      careerOpportunities: [
-        'Software Architect',
-        'Principal Software Engineer',
-        'Engineering Manager',
-        'Backend System Architect'
-      ],
-      requiredSkills: [
-        'Scalability & Load Balancing',
-        'Database Sharding & Caching (Redis)',
-        'Microservices Architecture',
-        'Message Queues (Kafka, RabbitMQ)',
-        'Distributed Systems Design'
-      ],
-      learningRoadmap: [
-        '1. Master Basic Building Blocks (DNS, CDN, Load Balancers)',
-        '2. Caching Strategies (Redis/Memcached) & Database Indexing',
-        '3. SQL vs NoSQL & Data Replication/Sharding',
-        '4. Asynchronous Processing with Message Queues (Kafka)',
-        '5. Study Real-World Architectures (Netflix, Uber, WhatsApp)'
-      ],
-      bestFreeResources: [
-        CareerResourceLink(
-            title: 'System Design Primer on GitHub',
-            url: 'https://github.com/donnemartin/system-design-primer',
-            platform: 'GitHub',
-            type: 'Guide'),
-      ],
-      books: [
-        CareerResourceLink(
-            title: 'Designing Data-Intensive Applications by Martin Kleppmann',
-            url: '',
-            platform: 'Book',
-            type: 'Book'),
-      ],
-      certifications: [
-        CareerResourceLink(
-            title: 'AWS Certified Solutions Architect – Professional',
-            url: 'https://aws.amazon.com/certification/certified-solutions-architect-professional/',
-            platform: 'AWS',
-            type: 'Certification'),
-      ],
-      youtubePlaylists: [
-        CareerResourceLink(
-            title: 'Gaurav Sen - System Design Tutorials',
-            url: 'https://www.youtube.com/@GauravSensei',
-            platform: 'YouTube',
-            type: 'Playlist'),
-      ],
-      miniProjects: [
-        CareerProjectInfo(
-            title: 'Design a URL Shortener (Bit.ly Clone)',
-            description: 'Implement key generation service, base62 encoding, and Redis cache.',
-            difficulty: 'Intermediate'),
-      ],
-      advancedProjects: [
-        CareerProjectInfo(
-            title: 'Distributed Real-Time Chat System',
-            description: 'Architect a scalable chat system supporting millions of concurrent WebSocket connections.',
-            difficulty: 'Advanced'),
-      ],
-      githubRepos: [
-        CareerResourceLink(
-            title: 'donnemartin/system-design-primer',
-            url: 'https://github.com/donnemartin/system-design-primer',
-            platform: 'GitHub',
-            type: 'Repository'),
-      ],
-      futureScope:
-          'Ultra-low-latency edge computing, serverless event-driven architecture, and global distributed storage.',
+      futureScope: 'Enduring demand across mobile hardware, smart TVs, automotive (Android Auto), and wearables.',
     ),
   ];
 }

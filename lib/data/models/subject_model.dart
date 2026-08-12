@@ -28,6 +28,7 @@ class SubjectModel {
   // Backward-compatibility getters for UI widgets
   String get code => subjectCode ?? id.toUpperCase();
   int get creditHours => credits ?? 3;
+  int get resourceCount => 5;
 
   Map<String, dynamic> toFirestore() {
     return {

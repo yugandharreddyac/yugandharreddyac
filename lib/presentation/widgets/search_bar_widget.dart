@@ -12,7 +12,7 @@ class SearchBarWidget extends StatelessWidget {
     this.controller,
     required this.onChanged,
     this.onClear,
-    this.hintText = 'Search notes, subjects, papers...',
+    this.hintText = 'Search subjects...',
   });
 
   @override
@@ -21,15 +21,17 @@ class SearchBarWidget extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return Container(
+      height: 48,
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? AppColors.borderDark : AppColors.borderLight,
+          color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0),
+          width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(isDark ? 15 : 6),
+            color: Colors.black.withAlpha(isDark ? 20 : 6),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -39,22 +41,26 @@ class SearchBarWidget extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         style: TextStyle(
-          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-          fontSize: 14,
+          color: isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A),
+          fontSize: 14.5,
+          fontWeight: FontWeight.w500,
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
-            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+            color: isDark ? AppColors.textSecondaryDark : const Color(0xFF94A3B8),
             fontSize: 14,
+            fontWeight: FontWeight.normal,
           ),
           prefixIcon: const Icon(
             Icons.search_rounded,
-            color: AppColors.primaryLight,
+            color: AppColors.primary,
+            size: 22,
           ),
           suffixIcon: controller != null && controller!.text.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.clear_rounded, size: 20),
+                  icon: const Icon(Icons.clear_rounded, size: 18),
+                  color: isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B),
                   onPressed: () {
                     controller!.clear();
                     onChanged('');
@@ -63,7 +69,7 @@ class SearchBarWidget extends StatelessWidget {
                 )
               : null,
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
       ),
     );

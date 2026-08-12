@@ -60,10 +60,10 @@ class _SubjectScreenState extends State<SubjectScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
             child: SearchBarWidget(
               controller: _searchController,
-              hintText: 'Filter subjects by code or name...',
+              hintText: 'Search subjects...',
               onChanged: (val) {
                 setState(() {
                   _filterQuery = val;
@@ -75,13 +75,10 @@ class _SubjectScreenState extends State<SubjectScreen> {
             child: studyProvider.isLoading
                 ? const ShimmerListLoading(itemCount: 4, itemHeight: 140)
                 : filteredSubjects.isEmpty
-                    ? EmptyStateWidget(
-                        title: 'No Subjects Found',
-                        message: _filterQuery.isNotEmpty
-                            ? 'No subjects match "$_filterQuery".'
-                            : 'No subjects listed for this semester.',
-                        onActionTap: () => studyProvider.fetchSubjects(widget.semesterId),
-                        actionLabel: 'Refresh',
+                    ? const EmptyStateWidget(
+                        title: 'No subjects found',
+                        message: 'Try another search keyword.',
+                        icon: Icons.book_rounded,
                       )
                     : ListView.separated(
                         padding: const EdgeInsets.all(20),

@@ -9,6 +9,7 @@ import '../models/semester_model.dart';
 import '../models/subject_model.dart';
 import '../models/resource_model.dart';
 import '../models/user_model.dart';
+import '../models/textbook_model.dart';
 
 class FirebaseDataSource {
   final FirebaseFirestore? _firestoreInstance;
@@ -176,6 +177,15 @@ class FirebaseDataSource {
           res.resourceType.toLowerCase().contains(queryLower) ||
           res.tags.any((tag) => tag.toLowerCase().contains(queryLower));
     }).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> getEmergingTechs() async {
+    try {
+      final snapshot = await _firestore.collection('emerging_techs').get();
+      return snapshot.docs.map((doc) => {'id': doc.id, ...doc.data()}).toList();
+    } catch (_) {
+      return [];
+    }
   }
 
   Future<void> incrementDownloadCount(String resourceId) async {
@@ -506,6 +516,123 @@ class FirebaseDataSource {
 
   Future<void> deleteSubjectDocument(String subjectId) async {
     await _firestore.collection('subjects').doc(subjectId).delete();
+  }
+
+  // --- Textbook & Course Overview Firestore Endpoints ---
+
+  /// Fetch Course Overview Document from 'courseOverviews/{subjectId}'
+  Future<CourseOverviewModel?> getCourseOverview(String subjectId) async {
+    try {
+      final doc = await _firestore.collection('courseOverviews').doc(subjectId).get();
+      if (doc.exists && doc.data() != null) {
+        return CourseOverviewModel.fromJson(doc.data()!, subjectId);
+      }
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to fetch courseOverview for $subjectId');
+    }
+    return null;
+  }
+
+  /// Fetch Textbook Chapters from 'subjects/{subjectId}/chapters' ordered by 'order'
+  Future<List<TextbookChapterModel>> getTextbookChapters(String subjectId) async {
+    try {
+      final query = await _firestore
+          .collection('subjects')
+          .doc(subjectId)
+          .collection('chapters')
+          .orderBy('order')
+          .get();
+
+      if (query.docs.isNotEmpty) {
+        return query.docs.map((doc) {
+          final data = doc.data();
+          data['id'] = doc.id;
+          return TextbookChapterModel.fromJson(data);
+        }).toList();
+      }
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to fetch textbook chapters for $subjectId');
+    }
+    return [];
+  }
+
+  /// Save / Update Course Overview in 'courseOverviews/{subjectId}'
+  Future<void> saveCourseOverview(CourseOverviewModel overview) async {
+    try {
+      await _firestore
+          .collection('courseOverviews')
+          .doc(overview.subjectId)
+          .set(overview.toJson(), SetOptions(merge: true));
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to save courseOverview for ${overview.subjectId}');
+      rethrow;
+    }
+  }
+
+  /// Delete Course Overview Document
+  Future<void> deleteCourseOverview(String subjectId) async {
+    try {
+      await _firestore.collection('courseOverviews').doc(subjectId).delete();
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to delete courseOverview for $subjectId');
+      rethrow;
+    }
+  }
+
+  /// Save / Update Textbook Chapter in 'subjects/{subjectId}/chapters/{chapterId}'
+  Future<String> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+    try {
+      final docRef = _firestore
+          .collection('subjects')
+          .doc(subjectId)
+          .collection('chapters')
+          .doc(chapter.id.isNotEmpty ? chapter.id : null);
+
+      final data = chapter.toJson();
+      if (chapter.id.isEmpty) {
+        data['id'] = docRef.id;
+      }
+      await docRef.set(data, SetOptions(merge: true));
+      return docRef.id;
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to save textbook chapter for $subjectId');
+      rethrow;
+    }
+  }
+
+  /// Delete Textbook Chapter Document
+  Future<void> deleteTextbookChapter(String subjectId, String chapterId) async {
+    try {
+      await _firestore
+          .collection('subjects')
+          .doc(subjectId)
+          .collection('chapters')
+          .doc(chapterId)
+          .delete();
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to delete chapter $chapterId from $subjectId');
+      rethrow;
+    }
+  }
+
+  /// Update Chapter Order Ranks
+  Future<void> updateChapterOrders(String subjectId, List<TextbookChapterModel> chapters) async {
+    try {
+      final batch = _firestore.batch();
+      for (int i = 0; i < chapters.length; i++) {
+        final ch = chapters[i];
+        final ref = _firestore
+            .collection('subjects')
+            .doc(subjectId)
+            .collection('chapters')
+            .doc(ch.id);
+        batch.update(ref, {'order': i + 1, 'chapterNumber': i + 1});
+      }
+      await batch.commit();
+    } catch (e, stack) {
+      await logError(e, stack, reason: 'Failed to update chapter orders for $subjectId');
+      rethrow;
+    }
   }
 
 

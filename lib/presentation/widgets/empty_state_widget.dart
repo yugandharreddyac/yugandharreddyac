@@ -10,8 +10,8 @@ class EmptyStateWidget extends StatelessWidget {
 
   const EmptyStateWidget({
     super.key,
-    required this.title,
-    required this.message,
+    this.title = '📂 Resources Coming Soon',
+    this.message = 'We are continuously updating study materials.',
     this.icon = Icons.folder_open_rounded,
     this.onActionTap,
     this.actionLabel,

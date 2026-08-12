@@ -15,6 +15,7 @@ class HigherEducationProvider extends ChangeNotifier {
   HigherEducationProvider(this._repository);
 
   List<HigherEducationModel> get items => _items;
+  List<HigherEducationModel> get higherEducationItems => _items;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String get selectedCategory => _selectedCategory;

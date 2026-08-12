@@ -2,10 +2,13 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     
-    // Helper function to check admin role from Firestore
+    // Helper function to check admin role (Custom Claims or Firestore fallback)
     function isAdmin() {
-      return request.auth != null && 
-        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      return request.auth != null && (
+        (request.auth.token != null && request.auth.token.admin == true) ||
+        (firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+         firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin')
+      );
     }
 
     // Academic Resources storage folder: StudyHub/{year}/{semester}/{subject}/{resourceType}/{filename}
@@ -16,10 +19,16 @@ service firebase.storage {
       allow write: if isAdmin();
     }
     
-    // Fallback for user avatars or root storage
+    // User Avatars & Profile uploads: Only profile owner can write
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Root / Fallback Storage rules: Admin only writes
     match /{allPaths=**} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
   }
 }

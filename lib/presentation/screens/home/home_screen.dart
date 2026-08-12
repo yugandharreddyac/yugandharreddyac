@@ -12,13 +12,9 @@ import '../../providers/theme_provider.dart';
 import '../downloads/downloads_screen.dart';
 import '../profile/profile_screen.dart';
 import '../pdf_viewer/pdf_viewer_screen.dart';
-import '../career/career_hub_screen.dart';
-import '../coding/coding_hub_screen.dart';
-import '../placement/placement_hub_screen.dart';
-import '../projects/project_hub_screen.dart';
-import '../higher_education/higher_education_hub_screen.dart';
 import '../../widgets/home/unibyte_card.dart';
 import '../../widgets/home/academic_year_card.dart';
+import '../../widgets/home/motivational_banner_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -236,7 +232,9 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 10),
+                        const MotivationalBannerWidget(),
+                        const SizedBox(height: 10),
                         Text(
                           _getGreeting(),
                           style: GoogleFonts.inter(
@@ -341,7 +339,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       builder: (context, constraints) {
                         final isWide = constraints.maxWidth > 700;
                         final crossAxisCount = isWide ? 4 : 2;
-                        final childAspectRatio = isWide ? 1.05 : 0.88;
+                        final childAspectRatio = isWide ? 1.25 : 1.02;
 
                         return GridView.count(
                           crossAxisCount: crossAxisCount,
@@ -353,55 +351,23 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           children: const [
                             AcademicYearCard(
                               yearTitle: '1st Year',
-                              subtitle: 'Foundation',
+                              subtitle: 'Foundation & Basic Concepts',
                               yearId: 'year_1',
-                              primaryColor: Color(0xFF2563EB),
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              themeIcons: [Icons.laptop_mac_rounded, Icons.menu_book_rounded, Icons.functions_rounded],
-                              themeBadges: ['C Programming', 'Maths', 'Coding Basics'],
                             ),
                             AcademicYearCard(
                               yearTitle: '2nd Year',
-                              subtitle: 'Core Subjects',
+                              subtitle: 'Core CS & Data Structures',
                               yearId: 'year_2',
-                              primaryColor: Color(0xFF10B981),
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF10B981), Color(0xFF059669)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              themeIcons: [Icons.account_tree_rounded, Icons.storage_rounded, Icons.terminal_rounded],
-                              themeBadges: ['DSA & Algo', 'Java & OOP', 'DBMS'],
                             ),
                             AcademicYearCard(
                               yearTitle: '3rd Year',
-                              subtitle: 'Advanced Computing',
+                              subtitle: 'Advanced Tech & AI',
                               yearId: 'year_3',
-                              primaryColor: Color(0xFF8B5CF6),
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF8B5CF6), Color(0xFF6D28D9)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              themeIcons: [Icons.smart_toy_rounded, Icons.security_rounded, Icons.cloud_rounded],
-                              themeBadges: ['AI & ML', 'Cyber Security', 'Cloud Tech'],
                             ),
                             AcademicYearCard(
                               yearTitle: '4th Year',
-                              subtitle: 'Career Ready',
+                              subtitle: 'Placements & Graduation',
                               yearId: 'year_4',
-                              primaryColor: Color(0xFFF59E0B),
-                              gradient: LinearGradient(
-                                colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              themeIcons: [Icons.school_rounded, Icons.work_rounded, Icons.domain_rounded],
-                              themeBadges: ['Placements', 'Interview Prep', 'Major Project'],
                             ),
                           ],
                         );
@@ -411,7 +377,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     const SizedBox(height: 28),
 
                     // ==========================================
-                    // 3. EXPLORE HUBS (ALTERNATING TINTED CARDS)
+                    // 3. EXPLORE HUBS (UNIFIED PRIMARY BLUE TINT CARDS)
                     // ==========================================
                     Text(
                       'Explore Hubs',
@@ -432,7 +398,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       accentColor: royalBlue,
                       bgColor: blueTintBg,
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const CareerHubScreen()));
+                        Navigator.pushNamed(context, AppRoutes.careerHub);
                       },
                     ),
                     const SizedBox(height: 12),
@@ -440,12 +406,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     _buildTintedExploreHubCard(
                       context,
                       title: 'Coding Hub',
-                      description: 'Practice Programming & DSA',
+                      description: 'Practice Programming & Data Structures',
                       icon: Icons.code_rounded,
-                      accentColor: emeraldGreen,
-                      bgColor: greenTintBg,
+                      accentColor: royalBlue,
+                      bgColor: blueTintBg,
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const CodingHubScreen()));
+                        Navigator.pushNamed(context, AppRoutes.codingHub);
                       },
                     ),
                     const SizedBox(height: 12),
@@ -453,12 +419,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     _buildTintedExploreHubCard(
                       context,
                       title: 'Placement Hub',
-                      description: 'Interview Preparation & Resume Guides',
+                      description: 'Interview Preparation & Company Profiles',
                       icon: Icons.work_rounded,
                       accentColor: royalBlue,
                       bgColor: blueTintBg,
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const PlacementHubScreen()));
+                        Navigator.pushNamed(context, AppRoutes.placementHub);
                       },
                     ),
                     const SizedBox(height: 12),
@@ -466,12 +432,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     _buildTintedExploreHubCard(
                       context,
                       title: 'Project Hub',
-                      description: 'Real World Mini & Major Projects',
+                      description: 'Real World Mini & Major Student Projects',
                       icon: Icons.lightbulb_rounded,
-                      accentColor: emeraldGreen,
-                      bgColor: greenTintBg,
+                      accentColor: royalBlue,
+                      bgColor: blueTintBg,
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const ProjectHubScreen()));
+                        Navigator.pushNamed(context, AppRoutes.projectHub);
                       },
                     ),
                     const SizedBox(height: 12),
@@ -479,12 +445,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     _buildTintedExploreHubCard(
                       context,
                       title: 'Higher Education & Competitive Exams',
-                      description: 'Prepare for GATE, CAT, GRE, GMAT, IELTS, TOEFL, UPSC, SSC, Banking & PSUs',
+                      description: 'GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad & Research Opportunities',
                       icon: Icons.school_rounded,
                       accentColor: royalBlue,
                       bgColor: blueTintBg,
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const HigherEducationHubScreen()));
+                        Navigator.pushNamed(context, AppRoutes.higherEducationHub);
                       },
                     ),
 

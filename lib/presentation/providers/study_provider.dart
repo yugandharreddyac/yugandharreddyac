@@ -4,6 +4,8 @@ import '../../data/models/year_model.dart';
 import '../../data/models/semester_model.dart';
 import '../../data/models/subject_model.dart';
 import '../../data/models/resource_model.dart';
+import '../../data/models/textbook_model.dart';
+import '../../data/models/searchable_item.dart';
 import '../../data/repositories/study_repository.dart';
 
 enum ViewState { idle, loading, success, error, offline, empty }
@@ -17,8 +19,16 @@ class StudyProvider extends ChangeNotifier {
   List<SemesterModel> _semesters = [];
   List<SubjectModel> _subjects = [];
   List<ResourceModel> _resources = [];
+  CourseOverviewModel? _courseOverview;
+  List<TextbookChapterModel> _textbookChapters = [];
+  List<AcademicQuestionModel> _importantQuestions = [];
+  List<QuickRevisionModel> _quickRevisionNotes = [];
+  List<LabExperimentModel> _labExperiments = [];
+  List<AcademicProjectModel> _academicProjects = [];
+  List<ExternalResourceModel> _additionalResources = [];
   List<SubjectModel> _subjectSearchResults = [];
   List<ResourceModel> _searchResults = [];
+  List<SearchableItem> _matchingItems = [];
 
   ViewState _state = ViewState.idle;
   String? _errorMessage;
@@ -31,8 +41,16 @@ class StudyProvider extends ChangeNotifier {
   List<SemesterModel> get semesters => _semesters;
   List<SubjectModel> get subjects => _subjects;
   List<ResourceModel> get resources => _resources;
+  CourseOverviewModel? get courseOverview => _courseOverview;
+  List<TextbookChapterModel> get textbookChapters => _textbookChapters;
+  List<AcademicQuestionModel> get importantQuestions => _importantQuestions;
+  List<QuickRevisionModel> get quickRevisionNotes => _quickRevisionNotes;
+  List<LabExperimentModel> get labExperiments => _labExperiments;
+  List<AcademicProjectModel> get academicProjects => _academicProjects;
+  List<ExternalResourceModel> get additionalResources => _additionalResources;
   List<SubjectModel> get subjectSearchResults => _subjectSearchResults;
   List<ResourceModel> get searchResults => _searchResults;
+  List<SearchableItem> get matchingItems => _matchingItems;
 
   // View State Getters
   ViewState get state => _state;
@@ -123,6 +141,7 @@ class StudyProvider extends ChangeNotifier {
     if (query.trim().isEmpty) {
       _subjectSearchResults = [];
       _searchResults = [];
+      _matchingItems = [];
       _setState(ViewState.idle);
       return;
     }
@@ -134,6 +153,7 @@ class StudyProvider extends ChangeNotifier {
         final globalResult = await repository.searchGlobalAll(query);
         _subjectSearchResults = globalResult.matchingSubjects;
         _searchResults = globalResult.matchingResources;
+        _matchingItems = globalResult.matchingItems;
 
         if (globalResult.isEmpty) {
           _setState(ViewState.empty);
@@ -143,6 +163,7 @@ class StudyProvider extends ChangeNotifier {
       } catch (e) {
         _subjectSearchResults = [];
         _searchResults = [];
+        _matchingItems = [];
         _setState(ViewState.error, error: 'Search failed: $e');
       }
     });
@@ -153,11 +174,124 @@ class StudyProvider extends ChangeNotifier {
     _searchQuery = '';
     _subjectSearchResults = [];
     _searchResults = [];
+    _matchingItems = [];
     _setState(ViewState.idle);
   }
 
-  Future<void> incrementDownload(String resourceId) async {
-    await repository.incrementDownloadCount(resourceId);
+  Future<void> fetchCourseOverview(String subjectId) async {
+    try {
+      _courseOverview = await repository.getCourseOverview(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching course overview: $e');
+    }
+  }
+
+  Future<void> fetchTextbookChapters(String subjectId) async {
+    try {
+      _textbookChapters = await repository.getTextbookChapters(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching textbook chapters: $e');
+    }
+  }
+
+  Future<void> fetchImportantQuestions(String subjectId) async {
+    try {
+      _importantQuestions = await repository.getImportantQuestions(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching important questions: $e');
+    }
+  }
+
+  Future<void> fetchQuickRevisionNotes(String subjectId) async {
+    try {
+      _quickRevisionNotes = await repository.getQuickRevisionNotes(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching quick revision notes: $e');
+    }
+  }
+
+  Future<void> fetchLabExperiments(String subjectId) async {
+    try {
+      _labExperiments = await repository.getLabExperiments(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching lab experiments: $e');
+    }
+  }
+
+  Future<void> fetchAcademicProjects(String subjectId) async {
+    try {
+      _academicProjects = await repository.getAcademicProjects(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching academic projects: $e');
+    }
+  }
+
+  Future<void> fetchAdditionalResources(String subjectId) async {
+    try {
+      _additionalResources = await repository.getAdditionalResources(subjectId);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching additional resources: $e');
+    }
+  }
+
+  Future<void> saveCourseOverview(CourseOverviewModel overview) async {
+    try {
+      await repository.saveCourseOverview(overview);
+      _courseOverview = overview;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error saving course overview: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> deleteCourseOverview(String subjectId) async {
+    try {
+      await repository.deleteCourseOverview(subjectId);
+      _courseOverview = null;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error deleting course overview: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+    try {
+      await repository.saveTextbookChapter(subjectId, chapter);
+      await fetchTextbookChapters(subjectId);
+    } catch (e) {
+      debugPrint('Error saving textbook chapter: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> deleteTextbookChapter(String subjectId, String chapterId) async {
+    try {
+      await repository.deleteTextbookChapter(subjectId, chapterId);
+      await fetchTextbookChapters(subjectId);
+    } catch (e) {
+      debugPrint('Error deleting textbook chapter: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> reorderTextbookChapters(String subjectId, List<TextbookChapterModel> chapters) async {
+    try {
+      await repository.reorderTextbookChapters(subjectId, chapters);
+      _textbookChapters = chapters;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error reordering chapters: $e');
+      rethrow;
+    }
   }
 
   void _setState(ViewState state, {String? error}) {

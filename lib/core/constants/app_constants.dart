@@ -1,8 +1,8 @@
 class AppConstants {
   AppConstants._();
 
-  static const String appName = 'CSSE Study Hub';
-  static const String appTagline = 'Computer Science & Software Engineering Academic Repository';
+  static const String appName = 'UNIDOCS';
+  static const String appTagline = 'Academic & Career Learning Management Platform';
   static const String appVersion = '1.0.0';
 
   // Local storage keys

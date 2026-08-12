@@ -13,6 +13,7 @@ class PlacementProvider extends ChangeNotifier {
   PlacementProvider(this._placementRepository);
 
   List<PlacementModel> get items => _items;
+  List<PlacementModel> get resources => _items;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String get selectedCategory => _selectedCategory;

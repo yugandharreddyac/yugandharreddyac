@@ -19,6 +19,11 @@ class ResourceModel {
   final bool isActive;
   final String? localFilePath;
   final String? videoUrl;
+  final String? chapterId;
+  final int? chapterNumber;
+  final String? sectionId;
+  final String? sectionNumber;
+  final String? sectionType; // e.g., 'Textbook', 'Important Questions', 'Previous Papers', 'Quick Revision', 'Labs', 'Assignments', 'Projects', 'Additional Resources'
 
   const ResourceModel({
     required this.id,
@@ -41,6 +46,11 @@ class ResourceModel {
     this.isActive = true,
     this.localFilePath,
     this.videoUrl,
+    this.chapterId,
+    this.chapterNumber,
+    this.sectionId,
+    this.sectionNumber,
+    this.sectionType,
   });
 
   // Backward-compatibility getters
@@ -117,6 +127,11 @@ class ResourceModel {
       'lastUpdated': lastUpdated.toIso8601String(),
       'isFeatured': isFeatured,
       'isActive': isActive,
+      'chapterId': chapterId,
+      'chapterNumber': chapterNumber,
+      'sectionId': sectionId,
+      'sectionNumber': sectionNumber,
+      'sectionType': sectionType,
     };
   }
 
@@ -142,6 +157,11 @@ class ResourceModel {
           : DateTime.now(),
       isFeatured: data['isFeatured'] ?? false,
       isActive: data['isActive'] ?? true,
+      chapterId: data['chapterId'],
+      chapterNumber: data['chapterNumber'] as int?,
+      sectionId: data['sectionId'],
+      sectionNumber: data['sectionNumber'],
+      sectionType: data['sectionType'],
     );
   }
 }
