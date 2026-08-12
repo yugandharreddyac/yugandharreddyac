@@ -81,8 +81,10 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
     const royalBlue = Color(0xFF2563EB);
 
     RoadmapProvider? roadmapProvider;
+    TopicProgressModel? progress;
     try {
       roadmapProvider = context.watch<RoadmapProvider>();
+      progress = roadmapProvider.getProgressForTopic(widget.topic.id);
     } catch (_) {}
     final isBookmarked = roadmapProvider?.isTopicBookmarked(widget.topic.id) ?? false;
 
@@ -201,6 +203,32 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
+                      
+                      // STATUS & PROGRESS
+                      if (progress != null) ...[
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: progress.isFullyCompleted ? const Color(0xFF10B981) : (progress.isInProgress ? royalBlue : textSubtitle.withAlpha(50)),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                progress.isFullyCompleted ? 'COMPLETED' : (progress.isInProgress ? 'IN PROGRESS' : 'NOT STARTED'),
+                                style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: progress.isFullyCompleted || progress.isInProgress ? Colors.white : textPrimary),
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '${progress.completedCount} / 4 Activities',
+                              style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: textSubtitle),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
@@ -247,6 +275,52 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                           ],
                         ),
                       ),
+                      
+                      // NEXT ACTION (If Completed)
+                      if (progress != null && progress.isFullyCompleted) ...[
+                        const SizedBox(height: 16),
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF10B981).withAlpha(20),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: const Color(0xFF10B981).withAlpha(50),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.next_plan_rounded, color: Color(0xFF10B981), size: 20),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'NEXT ACTION',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFF10B981),
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      'Return to your dashboard or My Roadmap to proceed to the next recommended topic.',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        color: textPrimary,
+                                        height: 1.3,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ).animate().fadeIn().slideY(begin: -0.04, end: 0),

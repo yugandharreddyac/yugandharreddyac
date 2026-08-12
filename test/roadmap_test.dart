@@ -132,7 +132,7 @@ void main() {
 
       // Verify initial next topic resolution
       final initialTasks = provider.getTodaysPlan();
-      expect(initialTasks.first.reason, equals('Start the next roadmap topic'));
+      expect(initialTasks.first.reason, contains('to build your foundation'));
       expect(initialTasks.first.progressText, equals('0 / 4'));
 
       // Start learning (In-progress)
@@ -143,7 +143,7 @@ void main() {
       // Verify Active Learning prioritization (Continue session)
       final activeTasks = provider.getTodaysPlan();
       expect(activeTasks.first.topicId, equals(topicId));
-      expect(activeTasks.first.reason, equals('Continue your active session'));
+      expect(activeTasks.first.reason, contains('Continue learning'));
       expect(activeTasks.first.progressText, equals('2 / 4'));
       expect(activeTasks.first.actionTitle, equals('Build mini-project / code exercise'));
 

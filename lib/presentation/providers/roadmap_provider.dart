@@ -4,6 +4,8 @@ import '../../data/models/career_models.dart';
 import '../../data/datasources/career_data_mapper.dart';
 import '../../data/datasources/non_academic_data.dart';
 import '../../data/repositories/roadmap_repository.dart';
+import '../../data/models/guidance_models.dart';
+import '../../data/datasources/guidance_engine.dart';
 
 class DailyTaskModel {
   final String topicId;
@@ -82,6 +84,11 @@ class RoadmapProvider extends ChangeNotifier {
   List<String> get recentTopicIds => List.unmodifiable(_recentTopicIds);
   List<String> get bookmarkedTopicIds => List.unmodifiable(_bookmarkedTopicIds);
   ResumeReadinessModel get resumeChecklist => _resumeChecklist;
+
+  // Phase 6 Guidance Engine Methods
+  StudentStatus get studentStatus => GuidanceEngine.determineStudentStatus(_profile, _progressMap, getRoadmapStages(), _resumeChecklist);
+  RoadmapHealthModel? get roadmapHealth => _profile == null ? null : GuidanceEngine.calculateRoadmapHealth(_profile!, _progressMap, getRoadmapStages());
+  NextBestActionModel? get nextBestAction => GuidanceEngine.getNextBestAction(_profile, _progressMap, getRoadmapStages(), _lastOpenedTopicId, _resumeChecklist);
 
   RoadmapProvider() {
     _init();

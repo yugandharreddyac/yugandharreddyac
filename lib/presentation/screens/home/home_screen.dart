@@ -6,6 +6,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/formatters.dart';
+import '../../../data/models/guidance_models.dart';
 import '../../providers/study_provider.dart';
 import '../../providers/recent_provider.dart';
 import '../../providers/theme_provider.dart';
@@ -130,6 +131,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
     final studyProvider = context.watch<StudyProvider>();
     final recentProvider = context.watch<RecentProvider>();
+    final roadmapProvider = context.watch<RoadmapProvider>();
     final recents = recentProvider.recentResources;
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
@@ -137,12 +139,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
-    // Strict Dual Colors & Tints
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
 
     final blueTintBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF);
-    final greenTintBg = isDark ? const Color(0xFF132A22) : const Color(0xFFECFDF5);
     final whiteCardColor = isDark ? AppColors.cardDark : Colors.white;
 
     return Scaffold(
@@ -155,9 +155,6 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // ==========================================
-              // 1. ROYAL BLUE HEADER (28px Bottom Curve) & FLOATING SEARCH BAR
-              // ==========================================
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -186,7 +183,6 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Top Row Header Actions
                         Row(
                           children: [
                             Container(
@@ -262,7 +258,6 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     ),
                   ),
 
-                  // Floating Search Bar (30px Rounded, Soft Shadow)
                   Positioned(
                     bottom: -26,
                     left: 24,
@@ -314,200 +309,49 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
               const SizedBox(height: 28),
 
-              // ==========================================
-              // UNIBYTE BITE-SIZED LEARNING CARD
-              // ==========================================
               const UniByteCard().animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: _buildPersonalizedRoadmapHero(context, roadmapProvider, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
+              ),
+              const SizedBox(height: 24),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: _buildHomeTodaysPlan(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
+              ),
+              const SizedBox(height: 24),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: _buildNextBestActionCard(context, roadmapProvider, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor, emeraldGreen),
+              ),
+              const SizedBox(height: 24),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: _buildContinueLearningCard(context, isDark, textPrimary, textSubtitle, royalBlue, emeraldGreen, whiteCardColor, borderColor),
+              ),
+              const SizedBox(height: 24),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: _buildCareerProgressSection(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
+              ),
+              const SizedBox(height: 24),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ==========================================
-                    // 4-YEAR CSE STUDENT ROADMAP & NAVIGATOR
-                    // ==========================================
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: isDark
-                              ? [const Color(0xFF1E1B4B), const Color(0xFF312E81)]
-                              : [const Color(0xFFEFF6FF), const Color(0xFFDBEAFE)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: const BoxDecoration(
-                                  color: royalBlue,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(Icons.explore_rounded, color: Colors.white, size: 20),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '4-Year B.Tech CSE Student Roadmap',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: textPrimary,
-                                      ),
-                                    ),
-                                    Text(
-                                      'LEARN → BUILD → PRACTICE → INTERN → GRADUATE',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.bold,
-                                        color: royalBlue,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 14),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _buildRoadmapPhaseChip(
-                                  context,
-                                  yearLabel: 'Year 1',
-                                  title: 'Programming & Logic',
-                                  color: const Color(0xFF2563EB),
-                                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: _buildRoadmapPhaseChip(
-                                  context,
-                                  yearLabel: 'Year 2',
-                                  title: 'DSA & Full-Stack',
-                                  color: const Color(0xFF059669),
-                                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _buildRoadmapPhaseChip(
-                                  context,
-                                  yearLabel: 'Year 3',
-                                  title: 'AI/Cloud & Projects',
-                                  color: const Color(0xFFD97706),
-                                  onTap: () => Navigator.pushNamed(context, AppRoutes.projectHub),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: _buildRoadmapPhaseChip(
-                                  context,
-                                  yearLabel: 'Year 4',
-                                  title: 'Placements & GATE',
-                                  color: const Color(0xFF7C3AED),
-                                  onTap: () => Navigator.pushNamed(context, AppRoutes.placementHub),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 14),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 44,
-                            child: ElevatedButton.icon(
-                              onPressed: () {
-                                Navigator.pushNamed(context, AppRoutes.roadmap);
-                              },
-                              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
-                              label: Text(
-                                'OPEN MY PERSONALIZED ROADMAP →',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: royalBlue,
-                                foregroundColor: Colors.white,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ).animate().fadeIn(delay: 150.ms).slideY(begin: 0.05, end: 0),
-
-                    const SizedBox(height: 24),
-
-                    // ==========================================
-                    // CONTINUE LEARNING SECTION
-                    // ==========================================
-                    _buildContinueLearningCard(context, isDark, textPrimary, textSubtitle, royalBlue, emeraldGreen, whiteCardColor, borderColor),
-
-                    const SizedBox(height: 24),
-
-                    // ==========================================
-                    // TODAY'S ACTION PLAN QUICK SECTION
-                    // ==========================================
-                    _buildHomeTodaysPlan(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
-
-                    const SizedBox(height: 24),
-                    
-                    // ==========================================
-                    // CAREER PROGRESS SECTION
-                    // ==========================================
-                    _buildCareerProgressSection(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
-
-                    const SizedBox(height: 24),
-
-                    // ==========================================
-                    // RECENTLY VIEWED TOPICS SECTION
-                    // ==========================================
-                    _buildRecentlyViewedTopicsRow(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
-
-                    const SizedBox(height: 24),
-
-                    // ==========================================
-                    // 2. ACADEMIC CURRICULUM (4 ALTERNATING TINTED CARDS)
-                    // ==========================================
                     Text(
                       'Academic Curriculum',
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: textPrimary,
-                        letterSpacing: -0.3,
-                      ),
+                      style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.3),
                     ),
                     const SizedBox(height: 16),
-
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final isWide = constraints.maxWidth > 700;
@@ -522,129 +366,17 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           mainAxisSpacing: 16,
                           childAspectRatio: childAspectRatio,
                           children: const [
-                            AcademicYearCard(
-                              yearTitle: '1st Year',
-                              subtitle: 'Foundation & Basic Concepts',
-                              yearId: 'year_1',
-                            ),
-                            AcademicYearCard(
-                              yearTitle: '2nd Year',
-                              subtitle: 'Core CS & Data Structures',
-                              yearId: 'year_2',
-                            ),
-                            AcademicYearCard(
-                              yearTitle: '3rd Year',
-                              subtitle: 'Advanced Tech & AI',
-                              yearId: 'year_3',
-                            ),
-                            AcademicYearCard(
-                              yearTitle: '4th Year',
-                              subtitle: 'Placements & Graduation',
-                              yearId: 'year_4',
-                            ),
+                            AcademicYearCard(yearTitle: '1st Year', subtitle: 'Foundation & Basic Concepts', yearId: 'year_1'),
+                            AcademicYearCard(yearTitle: '2nd Year', subtitle: 'Core CS & Data Structures', yearId: 'year_2'),
+                            AcademicYearCard(yearTitle: '3rd Year', subtitle: 'Advanced Tech & AI', yearId: 'year_3'),
+                            AcademicYearCard(yearTitle: '4th Year', subtitle: 'Placements & Graduation', yearId: 'year_4'),
                           ],
                         );
                       },
                     ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
-
                     const SizedBox(height: 28),
 
-                    // ==========================================
-                    // 3. EXPLORE HUBS (UNIFIED PRIMARY BLUE TINT CARDS)
-                    // ==========================================
-                    Text(
-                      'Explore Hubs',
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: textPrimary,
-                        letterSpacing: -0.3,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
 
-                    _buildTintedExploreHubCard(
-                      context,
-                      title: 'Career Hub',
-                      description: 'Emerging Technologies & Career Roadmaps',
-                      icon: Icons.rocket_launch_rounded,
-                      accentColor: royalBlue,
-                      bgColor: blueTintBg,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.careerHub);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildTintedExploreHubCard(
-                      context,
-                      title: 'Coding Hub',
-                      description: 'Practice Programming & Data Structures',
-                      icon: Icons.code_rounded,
-                      accentColor: royalBlue,
-                      bgColor: blueTintBg,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.codingHub);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildTintedExploreHubCard(
-                      context,
-                      title: 'Placement Hub',
-                      description: 'Interview Preparation & Company Profiles',
-                      icon: Icons.work_rounded,
-                      accentColor: royalBlue,
-                      bgColor: blueTintBg,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.placementHub);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildTintedExploreHubCard(
-                      context,
-                      title: 'Project Hub',
-                      description: 'Real World Mini & Major Student Projects',
-                      icon: Icons.lightbulb_rounded,
-                      accentColor: royalBlue,
-                      bgColor: blueTintBg,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.projectHub);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildTintedExploreHubCard(
-                      context,
-                      title: 'Higher Education & Competitive Exams',
-                      description: 'GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad & Research Opportunities',
-                      icon: Icons.school_rounded,
-                      accentColor: royalBlue,
-                      bgColor: blueTintBg,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.higherEducationHub);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildTintedExploreHubCard(
-                      context,
-                      title: 'Entrepreneurship & Startup Hub',
-                      description: 'Ideation, Lean Startup, MVP, Pitch Decks & Fundraising',
-                      icon: Icons.rocket_launch_rounded,
-                      accentColor: royalBlue,
-                      bgColor: blueTintBg,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.entrepreneurshipHub);
-                      },
-                    ),
-
-                    const SizedBox(height: 28),
-
-                    // ==========================================
-                    // 4. RECENTLY ADDED (COMPACT TINTED LIST)
-                    // ==========================================
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -769,7 +501,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       description: 'Read downloaded PDFs anytime.',
                       icon: Icons.download_rounded,
                       accentColor: emeraldGreen,
-                      bgColor: greenTintBg,
+                      bgColor: emeraldGreen.withAlpha(isDark ? 20 : 10),
                       onTap: () => Navigator.pushNamed(context, AppRoutes.downloads),
                     ),
                     const SizedBox(height: 12),
@@ -780,7 +512,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       description: 'Your bookmarked notes and papers.',
                       icon: Icons.bookmark_rounded,
                       accentColor: royalBlue,
-                      bgColor: blueTintBg,
+                      bgColor: royalBlue.withAlpha(isDark ? 20 : 10),
                       onTap: () => Navigator.pushNamed(context, AppRoutes.bookmarks),
                     ),
                     const SizedBox(height: 12),
@@ -791,7 +523,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       description: 'Resume from your last opened PDF.',
                       icon: Icons.history_rounded,
                       accentColor: emeraldGreen,
-                      bgColor: greenTintBg,
+                      bgColor: emeraldGreen.withAlpha(isDark ? 20 : 10),
                       onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
                     ),
                     const SizedBox(height: 12),
@@ -802,7 +534,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       description: 'Official syllabus, notes & previous papers.',
                       icon: Icons.verified_user_rounded,
                       accentColor: royalBlue,
-                      bgColor: blueTintBg,
+                      bgColor: royalBlue.withAlpha(isDark ? 20 : 10),
                       onTap: () => Navigator.pushNamed(context, AppRoutes.about),
                     ),
 
@@ -1637,6 +1369,310 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           ),
         ),
       ],
+    );
+  }
+  Widget _build4YearJourney(BuildContext context, bool isDark, Color textPrimary, Color textSubtitle, Color royalBlue) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF1E1B4B), const Color(0xFF312E81)]
+              : [const Color(0xFFEFF6FF), const Color(0xFFDBEAFE)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: royalBlue,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.explore_rounded, color: Colors.white, size: 20),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '4-Year B.Tech CSE Student Roadmap',
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: textPrimary,
+                      ),
+                    ),
+                    Text(
+                      'LEARN → BUILD → PRACTICE → INTERN → GRADUATE',
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: royalBlue,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: _buildRoadmapPhaseChip(
+                  context,
+                  yearLabel: 'Year 1',
+                  title: 'Programming & Logic',
+                  color: const Color(0xFF2563EB),
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _buildRoadmapPhaseChip(
+                  context,
+                  yearLabel: 'Year 2',
+                  title: 'DSA & Full-Stack',
+                  color: const Color(0xFF059669),
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: _buildRoadmapPhaseChip(
+                  context,
+                  yearLabel: 'Year 3',
+                  title: 'AI/Cloud & Projects',
+                  color: const Color(0xFFD97706),
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.projectHub),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _buildRoadmapPhaseChip(
+                  context,
+                  yearLabel: 'Year 4',
+                  title: 'Placements & GATE',
+                  color: const Color(0xFF7C3AED),
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.placementHub),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          SizedBox(
+            width: double.infinity,
+            height: 44,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.roadmap);
+              },
+              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
+              label: Text(
+                'OPEN MY PERSONALIZED ROADMAP →',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: royalBlue,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ).animate().fadeIn(delay: 150.ms).slideY(begin: 0.05, end: 0);
+  }
+
+  Widget _buildNextBestActionCard(BuildContext context, RoadmapProvider roadmapProvider, bool isDark, Color textPrimary, Color textSubtitle, Color royalBlue, Color whiteCardColor, Color borderColor, Color emeraldGreen) {
+    final nextAction = roadmapProvider.nextBestAction;
+    if (nextAction == null) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'NEXT BEST ACTION',
+          style: GoogleFonts.inter(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: textSubtitle,
+            letterSpacing: 1.0,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: whiteCardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: emeraldGreen.withAlpha(80), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: emeraldGreen.withAlpha(isDark ? 20 : 10),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.stars_rounded, color: emeraldGreen, size: 24),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      nextAction.title,
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Why: ${nextAction.reason}',
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  color: textSubtitle,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, nextAction.route, arguments: nextAction.arguments);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: emeraldGreen,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    'CONTINUE →',
+                    style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPersonalizedRoadmapHero(BuildContext context, RoadmapProvider roadmapProvider, bool isDark, Color textPrimary, Color textSubtitle, Color royalBlue, Color whiteCardColor, Color borderColor) {
+    final status = roadmapProvider.studentStatus;
+    
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: whiteCardColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: borderColor),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(isDark ? 20 : 5),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'PERSONALIZED ROADMAP',
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: textSubtitle,
+              letterSpacing: 1.0,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            status.displayName,
+            style: GoogleFonts.inter(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: textPrimary,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            status.description,
+            style: GoogleFonts.inter(
+              fontSize: 13,
+              color: textSubtitle,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            height: 44,
+            child: OutlinedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.roadmap);
+              },
+              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
+              label: Text(
+                'VIEW MY ROADMAP',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: royalBlue,
+                side: BorderSide(color: royalBlue, width: 1.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

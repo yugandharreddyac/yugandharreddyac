@@ -30,6 +30,7 @@ class MyRoadmapScreen extends StatelessWidget {
     final overallProgress = roadmapProvider.calculateOverallProgress();
     final stages = roadmapProvider.getRoadmapStages();
     final todaysPlan = roadmapProvider.getTodaysPlan();
+    final stageHealths = roadmapProvider.roadmapHealth?.stageHealths ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -299,6 +300,63 @@ class MyRoadmapScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 8),
+                      // Roadmap Health metrics for this stage
+                      if (index < stageHealths.length) ...[
+                        Builder(
+                          builder: (context) {
+                            final stageHealth = stageHealths[index];
+                            final isCurrent = roadmapProvider.roadmapHealth?.currentStageName == stageHealth.name;
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: isCurrent ? royalBlue.withAlpha(20) : Colors.transparent,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: isCurrent ? royalBlue.withAlpha(50) : Colors.transparent),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.bar_chart_rounded, size: 14, color: isCurrent ? royalBlue : textSubtitle),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '${stageHealth.completed} / ${stageHealth.total} completed',
+                                    style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: isCurrent ? royalBlue : textSubtitle),
+                                  ),
+                                  if (isCurrent) ...[
+                                    const Spacer(),
+                                    Text(
+                                      'CURRENT STAGE',
+                                      style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: royalBlue, letterSpacing: 0.5),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        if (roadmapProvider.roadmapHealth?.blockingTopicTitle != null && roadmapProvider.roadmapHealth?.currentStageName == stage.stageTitle)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withAlpha(20),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.red.withAlpha(50)),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.block_rounded, size: 14, color: Colors.red),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    'BLOCKING: ${roadmapProvider.roadmapHealth?.blockingTopicTitle ?? ''}',
+                                    style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: textPrimary),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
                       Text(
                         stage.stageDescription,
                         style: GoogleFonts.inter(
