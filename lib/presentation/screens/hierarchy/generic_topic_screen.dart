@@ -498,19 +498,16 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
               onPressed: () {
                 UrlLauncherUtil.openUrl(context, resource.url);
               },
-              icon: Icon(
-                resource.type == HierarchyResourceType.learnOnline
-                    ? Icons.open_in_new_rounded
-                    : Icons.arrow_forward_rounded,
+              icon: const Icon(
+                Icons.open_in_new_rounded,
                 size: 18,
               ),
               label: Text(
-                resource.type == HierarchyResourceType.learnOnline
-                    ? 'Open Online Resource'
-                    : 'Access ${resource.type.displayName}',
+                'LEARN ONLINE →',
                 style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                   fontSize: 14,
+                  letterSpacing: 0.5,
                 ),
               ),
               style: ElevatedButton.styleFrom(

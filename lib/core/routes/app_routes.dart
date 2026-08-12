@@ -51,6 +51,7 @@ class AppRoutes {
   static const String placementHub = '/placement';
   static const String projectHub = '/projects';
   static const String higherEducationHub = '/higher-education';
+  static const String entrepreneurshipHub = '/entrepreneurship';
   static const String examDetail = '/exam-detail';
   static const String topicDetail = '/topic_detail';
 
@@ -157,6 +158,9 @@ class AppRoutes {
 
       case higherEducationHub:
         return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.higherEducationHub), routeSettings);
+
+      case entrepreneurshipHub:
+        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.entrepreneurshipHub), routeSettings);
 
       case topicDetail:
         final args = routeSettings.arguments as Map<String, dynamic>;

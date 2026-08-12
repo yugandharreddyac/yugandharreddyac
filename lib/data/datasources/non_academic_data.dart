@@ -10,6 +10,7 @@ class NonAcademicData {
     higherEducationHub,
     placementHub,
     projectsHub,
+    entrepreneurshipHub,
   ];
 
   static HubModel? getHubById(String id) {
@@ -2785,6 +2786,233 @@ class NonAcademicData {
             id: 'subqueries_practice',
             title: 'Subqueries',
             description: 'Nested subqueries, correlated subqueries, and Common Table Expressions (CTEs).',
+          ),
+        ],
+      ),
+    ],
+  );
+
+  // ==========================================
+  // 6. ENTREPRENEURSHIP HUB
+  // ==========================================
+  static const HubModel entrepreneurshipHub = HubModel(
+    id: 'entrepreneurship',
+    title: 'Entrepreneurship & Startup Hub',
+    description: 'Master problem discovery, lean startup principles, MVP development, business models, pitch decks & fundraising.',
+    icon: Icons.rocket_launch_rounded,
+    routeName: '/entrepreneurship',
+    startHereSteps: [
+      StartHereStepModel(
+        stepNumber: 1,
+        title: 'Discover Real-World Problems',
+        description: 'Identify painful industry problems, conduct user interviews, and validate market demand.',
+        targetCategoryId: 'startup_ideation',
+      ),
+      StartHereStepModel(
+        stepNumber: 2,
+        title: 'Build a Minimum Viable Product (MVP)',
+        description: 'Apply Lean Startup methodology to rapid prototype and test core value propositions.',
+        targetCategoryId: 'lean_startup',
+      ),
+      StartHereStepModel(
+        stepNumber: 3,
+        title: 'Formulate Business Model & Pitch Deck',
+        description: 'Design unit economics, revenue streams, and build investor-ready pitch decks.',
+        targetCategoryId: 'fundraising_pitch',
+      ),
+      StartHereStepModel(
+        stepNumber: 4,
+        title: 'Fundraising & Incubator Application',
+        description: 'Apply to Y Combinator, angel networks, university incubators, and manage legal IP.',
+        targetCategoryId: 'fundraising_pitch',
+      ),
+    ],
+    categories: [
+      // Category 1: Startup Ideation & Problem Discovery
+      CategoryModel(
+        id: 'startup_ideation',
+        title: 'Ideation & Problem Discovery',
+        description: 'Uncover real customer pain points, conduct interviews, and assess TAM/SAM/SOM market size.',
+        icon: Icons.lightbulb_rounded,
+        availableLevels: [
+          LearningLevel.beginner,
+          LearningLevel.intermediate,
+          LearningLevel.advanced,
+        ],
+        topics: [
+          HierarchicalTopicModel(
+            id: 'problem_discovery',
+            title: 'Problem Discovery & Customer Validation',
+            description: 'Frameworks for finding genuine customer problems and conducting Mom Test interviews.',
+            icon: Icons.search_rounded,
+            subtopics: [
+              HierarchicalTopicModel(
+                id: 'customer_interviews',
+                title: 'Customer Discovery & Mom Test',
+                description: 'How to talk to users and learn if your business idea is good when everyone is lying to you.',
+                level: LearningLevel.beginner,
+                resources: [
+                  HierarchyResourceModel(
+                    id: 'res_mom_test_notes',
+                    title: 'The Mom Test Summary & Rules',
+                    description: 'Golden rules for customer validation interviews without bias.',
+                    type: HierarchyResourceType.notes,
+                    url: 'https://www.momtestbook.com/',
+                    platform: 'The Mom Test Guide',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_customer_disc_video',
+                    title: 'Y Combinator: How to Talk to Users',
+                    description: 'Official YC video on customer discovery techniques.',
+                    type: HierarchyResourceType.video,
+                    url: 'https://www.youtube.com/watch?v=z1iF1c8w5Lg',
+                    platform: 'Y Combinator Channel',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_customer_disc_online',
+                    title: 'Learn Online: YC Startup School Ideation',
+                    description: 'Free interactive YC startup curriculum on ideation and user interviews.',
+                    type: HierarchyResourceType.learnOnline,
+                    url: 'https://www.startupschool.org/',
+                    platform: 'Y Combinator Startup School',
+                  ),
+                ],
+              ),
+            ],
+          ),
+          HierarchicalTopicModel(
+            id: 'market_research',
+            title: 'Market Research & TAM/SAM/SOM',
+            description: 'Calculating Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Target Audience.',
+            level: LearningLevel.intermediate,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_tam_notes',
+                title: 'Market Sizing Frameworks (Top-down vs Bottom-up)',
+                description: 'Step-by-step guide to calculating TAM, SAM, and SOM for startup decks.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.ycombinator.com/library/4D-how-to-size-your-market',
+                platform: 'Y Combinator Library',
+              ),
+              HierarchyResourceModel(
+                id: 'res_tam_online',
+                title: 'Learn Online: Market Sizing Guide',
+                description: 'Interactive market sizing calculator and methodology tutorial.',
+                type: HierarchyResourceType.learnOnline,
+                url: 'https://www.ycombinator.com/library/',
+                platform: 'YC Startup Library',
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Category 2: Lean Startup & MVP Execution
+      CategoryModel(
+        id: 'lean_startup',
+        title: 'Lean Startup & MVP Execution',
+        description: 'Build-Measure-Learn feedback loops, rapid prototyping, and Minimum Viable Products.',
+        icon: Icons.speed_rounded,
+        availableLevels: [
+          LearningLevel.beginner,
+          LearningLevel.intermediate,
+          LearningLevel.advanced,
+        ],
+        topics: [
+          HierarchicalTopicModel(
+            id: 'mvp_development',
+            title: 'Minimum Viable Product (MVP)',
+            description: 'Building lean prototypes with no-code tools or minimal full-stack code to test core hypotheses.',
+            icon: Icons.build_rounded,
+            subtopics: [
+              HierarchicalTopicModel(
+                id: 'lean_mvp_building',
+                title: 'MVP Prototyping & Feedback Loops',
+                description: 'Rapid product deployment, landing page tests, and concierge MVP execution.',
+                level: LearningLevel.beginner,
+                resources: [
+                  HierarchyResourceModel(
+                    id: 'res_mvp_notes',
+                    title: 'Lean Startup Methodology & Business Model Canvas',
+                    description: '9 building blocks of the Business Model Canvas explained.',
+                    type: HierarchyResourceType.notes,
+                    url: 'https://www.strategyzer.com/canvas/business-model-canvas',
+                    platform: 'Strategyzer Guide',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_mvp_video',
+                    title: 'Y Combinator: How to Build an MVP',
+                    description: 'Michael Seibel explains how to launch quickly and iterate.',
+                    type: HierarchyResourceType.video,
+                    url: 'https://www.youtube.com/watch?v=1hHMwLxN6EM',
+                    platform: 'Y Combinator',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_mvp_online',
+                    title: 'Learn Online: Strategyzer Business Model Canvas',
+                    description: 'Interactive Business Model Canvas generator and lean startup tools.',
+                    type: HierarchyResourceType.learnOnline,
+                    url: 'https://www.strategyzer.com/',
+                    platform: 'Strategyzer Interactive',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Category 3: Fundraising & Pitch Decks
+      CategoryModel(
+        id: 'fundraising_pitch',
+        title: 'Fundraising & Pitching',
+        description: 'Unit economics, 10-slide pitch decks, angel investors, seed funding & incubator applications.',
+        icon: Icons.monetization_on_rounded,
+        availableLevels: [
+          LearningLevel.beginner,
+          LearningLevel.intermediate,
+          LearningLevel.advanced,
+        ],
+        topics: [
+          HierarchicalTopicModel(
+            id: 'pitch_decks',
+            title: 'Crafting Investor Pitch Decks',
+            description: 'Structure of winning 10-slide decks: Problem, Solution, Traction, Team, Financials.',
+            icon: Icons.slideshow_rounded,
+            subtopics: [
+              HierarchicalTopicModel(
+                id: 'investor_pitching',
+                title: 'Pitch Deck Creation & Investor Meetings',
+                description: 'Slide-by-slide structure used by Airbnb, Uber, and Sequoia-backed startups.',
+                level: LearningLevel.intermediate,
+                resources: [
+                  HierarchyResourceModel(
+                    id: 'res_pitch_notes',
+                    title: 'Sequoia Capital Pitch Deck Template',
+                    description: 'Official 10-slide startup pitch deck framework by Sequoia Capital.',
+                    type: HierarchyResourceType.notes,
+                    url: 'https://www.sequoiacap.com/company-building/writing-a-business-plan/',
+                    platform: 'Sequoia Capital',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_pitch_video',
+                    title: 'Y Combinator: How to Pitch Your Startup',
+                    description: 'Master the 30-second elevator pitch and investor deck walkthrough.',
+                    type: HierarchyResourceType.video,
+                    url: 'https://www.youtube.com/watch?v=3M_kOln_S3M',
+                    platform: 'Y Combinator',
+                  ),
+                  HierarchyResourceModel(
+                    id: 'res_pitch_online',
+                    title: 'Learn Online: YC Seed Fundraising Guide',
+                    description: 'Official Y Combinator guide to seed fundraising and SAFE notes.',
+                    type: HierarchyResourceType.learnOnline,
+                    url: 'https://www.ycombinator.com/library/',
+                    platform: 'YC Library',
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),

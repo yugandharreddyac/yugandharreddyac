@@ -453,6 +453,19 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         Navigator.pushNamed(context, AppRoutes.higherEducationHub);
                       },
                     ),
+                    const SizedBox(height: 12),
+
+                    _buildTintedExploreHubCard(
+                      context,
+                      title: 'Entrepreneurship & Startup Hub',
+                      description: 'Ideation, Lean Startup, MVP, Pitch Decks & Fundraising',
+                      icon: Icons.rocket_launch_rounded,
+                      accentColor: royalBlue,
+                      bgColor: blueTintBg,
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.entrepreneurshipHub);
+                      },
+                    ),
 
                     const SizedBox(height: 28),
 
