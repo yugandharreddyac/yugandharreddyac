@@ -142,17 +142,30 @@ class DownloadRepository {
         onProgress(task);
         return null;
       }
+      _cleanupPartialFile(filePath);
       task.status = TaskStatus.error;
       task.error = 'Download failed: ${e.message}';
       _activeTasks.remove(resourceId);
       onError(task.error!);
       return null;
     } catch (e) {
+      _cleanupPartialFile(filePath);
       task.status = TaskStatus.error;
       task.error = e.toString();
       _activeTasks.remove(resourceId);
       onError(task.error!);
       return null;
+    }
+  }
+
+  void _cleanupPartialFile(String filePath) {
+    if (!kIsWeb) {
+      final file = File(filePath);
+      if (file.existsSync()) {
+        try {
+          file.deleteSync();
+        } catch (_) {}
+      }
     }
   }
 
