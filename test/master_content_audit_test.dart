@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:csse_study_hub/data/datasources/non_academic_data.dart';
 import 'package:csse_study_hub/data/datasources/search_index_engine.dart';
+import 'package:csse_study_hub/data/models/career_models.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +71,42 @@ void main() {
 
       final pythonResults = searchEngine.search('Python');
       expect(pythonResults.isNotEmpty, isTrue);
+    });
+
+    test('Verify ResumeReadinessModel contains full Resume and LinkedIn checklist items', () {
+      final model = const ResumeReadinessModel();
+      expect(model.resumeTotalItems, equals(9));
+      expect(model.linkedInTotalItems, equals(11));
+      expect(model.resumeCompletedCount, equals(0));
+      expect(model.linkedInCompletedCount, equals(0));
+
+      final completed = model.copyWith(
+        technicalSkillsIdentified: true,
+        oneCompletedProject: true,
+        projectDescriptionsPrepared: true,
+        evidenceAvailable: true,
+        educationPrepared: true,
+        careerObjectivePrepared: true,
+        resumeReviewed: true,
+        certificationsAdded: true,
+        achievementsAdded: true,
+        linkedInProfileCreated: true,
+        linkedInPhotoAdded: true,
+        linkedInHeadlineAdded: true,
+        linkedInAboutCompleted: true,
+        linkedInExperienceAdded: true,
+        linkedInSkillsAdded: true,
+        linkedInProjectsAdded: true,
+        linkedInCertificationsAdded: true,
+        linkedInUrlSaved: true,
+        customUrlSaved: true,
+        networkingBasicsCompleted: true,
+      );
+
+      expect(completed.resumeCompletedCount, equals(9));
+      expect(completed.linkedInCompletedCount, equals(11));
+      expect(completed.overallProgress, equals(1.0));
+      expect(completed.isReady, isTrue);
     });
   });
 }
