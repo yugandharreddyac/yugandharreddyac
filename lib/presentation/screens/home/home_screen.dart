@@ -21,6 +21,7 @@ import '../pdf_viewer/pdf_viewer_screen.dart';
 import '../../widgets/home/unibyte_card.dart';
 import '../../widgets/home/academic_year_card.dart';
 import '../../widgets/home/motivational_banner_widget.dart';
+import '../../widgets/navigation/app_navigation_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -142,11 +143,11 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
 
-    final blueTintBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF);
     final whiteCardColor = isDark ? AppColors.cardDark : Colors.white;
 
     return Scaffold(
       backgroundColor: bgColor,
+      drawer: const AppNavigationDrawer(),
       body: RefreshIndicator(
         onRefresh: () async {
           await studyProvider.fetchYears();
@@ -185,13 +186,20 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       children: [
                         Row(
                           children: [
+                            Builder(
+                              builder: (scaffoldCtx) => IconButton(
+                                icon: const Icon(Icons.menu_rounded, color: Colors.white, size: 26),
+                                tooltip: 'Navigation Menu',
+                                onPressed: () => Scaffold.of(scaffoldCtx).openDrawer(),
+                              ),
+                            ),
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: Colors.white.withAlpha(35),
                                 shape: BoxShape.circle,
                               ),
-                              child: const Icon(Icons.school_rounded, color: Colors.white, size: 24),
+                              child: const Icon(Icons.school_rounded, color: Colors.white, size: 20),
                             ),
                             const SizedBox(width: 10),
                             Expanded(

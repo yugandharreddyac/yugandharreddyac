@@ -488,6 +488,31 @@ class RoadmapProvider extends ChangeNotifier {
         currentVal = _resumeChecklist.resumeReviewed;
         _resumeChecklist = _resumeChecklist.copyWith(resumeReviewed: !currentVal);
         break;
+      // LinkedIn Checklist Items
+      case 'linkedInProfileCreated':
+        currentVal = _resumeChecklist.linkedInProfileCreated;
+        _resumeChecklist = _resumeChecklist.copyWith(linkedInProfileCreated: !currentVal);
+        break;
+      case 'linkedInPhotoAdded':
+        currentVal = _resumeChecklist.linkedInPhotoAdded;
+        _resumeChecklist = _resumeChecklist.copyWith(linkedInPhotoAdded: !currentVal);
+        break;
+      case 'linkedInHeadlineAdded':
+        currentVal = _resumeChecklist.linkedInHeadlineAdded;
+        _resumeChecklist = _resumeChecklist.copyWith(linkedInHeadlineAdded: !currentVal);
+        break;
+      case 'linkedInAboutCompleted':
+        currentVal = _resumeChecklist.linkedInAboutCompleted;
+        _resumeChecklist = _resumeChecklist.copyWith(linkedInAboutCompleted: !currentVal);
+        break;
+      case 'linkedInExperienceAdded':
+        currentVal = _resumeChecklist.linkedInExperienceAdded;
+        _resumeChecklist = _resumeChecklist.copyWith(linkedInExperienceAdded: !currentVal);
+        break;
+      case 'linkedInUrlSaved':
+        currentVal = _resumeChecklist.linkedInUrlSaved;
+        _resumeChecklist = _resumeChecklist.copyWith(linkedInUrlSaved: !currentVal);
+        break;
     }
     notifyListeners();
     await _repository.saveResumeChecklist(_resumeChecklist);

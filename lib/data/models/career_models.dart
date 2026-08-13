@@ -55,6 +55,14 @@ class ResumeReadinessModel {
   final bool careerObjectivePrepared;
   final bool resumeReviewed;
 
+  // LinkedIn Checklist Properties
+  final bool linkedInProfileCreated;
+  final bool linkedInPhotoAdded;
+  final bool linkedInHeadlineAdded;
+  final bool linkedInAboutCompleted;
+  final bool linkedInExperienceAdded;
+  final bool linkedInUrlSaved;
+
   const ResumeReadinessModel({
     this.technicalSkillsIdentified = false,
     this.oneCompletedProject = false,
@@ -63,6 +71,12 @@ class ResumeReadinessModel {
     this.educationPrepared = false,
     this.careerObjectivePrepared = false,
     this.resumeReviewed = false,
+    this.linkedInProfileCreated = false,
+    this.linkedInPhotoAdded = false,
+    this.linkedInHeadlineAdded = false,
+    this.linkedInAboutCompleted = false,
+    this.linkedInExperienceAdded = false,
+    this.linkedInUrlSaved = false,
   });
 
   ResumeReadinessModel copyWith({
@@ -73,6 +87,12 @@ class ResumeReadinessModel {
     bool? educationPrepared,
     bool? careerObjectivePrepared,
     bool? resumeReviewed,
+    bool? linkedInProfileCreated,
+    bool? linkedInPhotoAdded,
+    bool? linkedInHeadlineAdded,
+    bool? linkedInAboutCompleted,
+    bool? linkedInExperienceAdded,
+    bool? linkedInUrlSaved,
   }) {
     return ResumeReadinessModel(
       technicalSkillsIdentified: technicalSkillsIdentified ?? this.technicalSkillsIdentified,
@@ -82,6 +102,12 @@ class ResumeReadinessModel {
       educationPrepared: educationPrepared ?? this.educationPrepared,
       careerObjectivePrepared: careerObjectivePrepared ?? this.careerObjectivePrepared,
       resumeReviewed: resumeReviewed ?? this.resumeReviewed,
+      linkedInProfileCreated: linkedInProfileCreated ?? this.linkedInProfileCreated,
+      linkedInPhotoAdded: linkedInPhotoAdded ?? this.linkedInPhotoAdded,
+      linkedInHeadlineAdded: linkedInHeadlineAdded ?? this.linkedInHeadlineAdded,
+      linkedInAboutCompleted: linkedInAboutCompleted ?? this.linkedInAboutCompleted,
+      linkedInExperienceAdded: linkedInExperienceAdded ?? this.linkedInExperienceAdded,
+      linkedInUrlSaved: linkedInUrlSaved ?? this.linkedInUrlSaved,
     );
   }
 
@@ -93,6 +119,12 @@ class ResumeReadinessModel {
         'educationPrepared': educationPrepared,
         'careerObjectivePrepared': careerObjectivePrepared,
         'resumeReviewed': resumeReviewed,
+        'linkedInProfileCreated': linkedInProfileCreated,
+        'linkedInPhotoAdded': linkedInPhotoAdded,
+        'linkedInHeadlineAdded': linkedInHeadlineAdded,
+        'linkedInAboutCompleted': linkedInAboutCompleted,
+        'linkedInExperienceAdded': linkedInExperienceAdded,
+        'linkedInUrlSaved': linkedInUrlSaved,
       };
 
   factory ResumeReadinessModel.fromJson(Map<String, dynamic> json) {
@@ -104,10 +136,16 @@ class ResumeReadinessModel {
       educationPrepared: json['educationPrepared'] ?? false,
       careerObjectivePrepared: json['careerObjectivePrepared'] ?? false,
       resumeReviewed: json['resumeReviewed'] ?? false,
+      linkedInProfileCreated: json['linkedInProfileCreated'] ?? false,
+      linkedInPhotoAdded: json['linkedInPhotoAdded'] ?? false,
+      linkedInHeadlineAdded: json['linkedInHeadlineAdded'] ?? false,
+      linkedInAboutCompleted: json['linkedInAboutCompleted'] ?? false,
+      linkedInExperienceAdded: json['linkedInExperienceAdded'] ?? false,
+      linkedInUrlSaved: json['linkedInUrlSaved'] ?? false,
     );
   }
 
-  int get completedCount {
+  int get resumeCompletedCount {
     int count = 0;
     if (technicalSkillsIdentified) count++;
     if (oneCompletedProject) count++;
@@ -119,8 +157,24 @@ class ResumeReadinessModel {
     return count;
   }
 
-  int get totalItems => 7;
-  double get percentage => (completedCount / totalItems) * 100.0;
+  int get resumeTotalItems => 7;
+
+  int get linkedInCompletedCount {
+    int count = 0;
+    if (linkedInProfileCreated) count++;
+    if (linkedInPhotoAdded) count++;
+    if (linkedInHeadlineAdded) count++;
+    if (linkedInAboutCompleted) count++;
+    if (linkedInExperienceAdded) count++;
+    if (linkedInUrlSaved) count++;
+    return count;
+  }
+
+  int get linkedInTotalItems => 6;
+
+  int get completedCount => resumeCompletedCount + linkedInCompletedCount;
+  int get totalItems => resumeTotalItems + linkedInTotalItems;
+  double get percentage => totalItems == 0 ? 0.0 : (completedCount / totalItems) * 100.0;
 }
 
 class CareerDimensionProgress {
