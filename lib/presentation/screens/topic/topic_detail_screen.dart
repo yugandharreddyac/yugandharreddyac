@@ -4,6 +4,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../data/models/textbook_model.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/resource_card.dart';
 
 class TopicDetailScreen extends StatelessWidget {
   final TextbookTopicModel topic;
@@ -286,13 +287,9 @@ class TopicDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             _buildSectionHeader('11. Attached Reference PDF', Icons.picture_as_pdf_rounded),
             const SizedBox(height: 8),
-            ListTile(
-              tileColor: cardBg,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: borderColor)),
-              leading: const Icon(Icons.picture_as_pdf, color: Colors.red),
-              title: Text(topic.attachedResource!.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-              subtitle: Text(topic.attachedResource!.description, style: const TextStyle(fontSize: 11)),
-              trailing: const Icon(Icons.chevron_right_rounded),
+            ResourceCard(
+              resource: topic.attachedResource!,
+              index: 0,
               onTap: () {
                 Navigator.pushNamed(
                   context,

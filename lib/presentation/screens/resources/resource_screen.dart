@@ -6,6 +6,7 @@ import '../../../core/routes/app_routes.dart';
 import '../../../data/models/subject_model.dart';
 import '../../../data/models/textbook_model.dart';
 import '../../../data/models/resource_model.dart';
+import '../../../data/datasources/academic_resource_catalog.dart';
 import '../../providers/study_provider.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/resource_card.dart';
@@ -819,7 +820,7 @@ class _ResourceScreenState extends State<ResourceScreen> {
     );
   }
 
-  // RESOURCE LIST FOR OTHER SECTIONS (3 & 6)
+  // RESOURCE LIST FOR OTHER SECTIONS (3 & 6 & GENERAL)
   Widget _buildFilteredResourcesList(
     String sectionTitle,
     String description,
@@ -829,40 +830,150 @@ class _ResourceScreenState extends State<ResourceScreen> {
     Color textPrimary,
     Color textSecondary,
   ) {
-    if (rawResources.isEmpty) {
-      return EmptyStateWidget(
-        title: '$sectionTitle Coming Soon',
-        message: description,
-        onActionTap: () => context.read<StudyProvider>().fetchResources(widget.subjectId),
-        actionLabel: 'Refresh',
+    final catalogResources = AcademicResourceCatalog.getResourcesForSubject(widget.subjectId);
+    final combinedMap = <String, ResourceModel>{};
+
+    for (final res in catalogResources) {
+      combinedMap[res.id] = res;
+    }
+    for (final res in rawResources) {
+      combinedMap[res.id] = res;
+    }
+    final allResources = combinedMap.values.toList();
+
+    final recommended = AcademicResourceCatalog.getRecommendedResource(widget.subjectId);
+
+    if (allResources.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.picture_as_pdf_outlined, size: 54, color: Colors.orange),
+            const SizedBox(height: 14),
+            Text(
+              'No PDF Added Yet for $sectionTitle',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'No PDF file has been uploaded for this unit yet. You can still continue learning using these recommended alternative options:',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12.5, color: textSecondary, height: 1.4),
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              alignment: WrapAlignment.center,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () => setState(() => _selectedSectionIndex = 1),
+                  icon: const Icon(Icons.menu_book_rounded, size: 16),
+                  label: const Text('Read Textbook'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => setState(() => _selectedSectionIndex = 4),
+                  icon: const Icon(Icons.bolt_rounded, size: 16),
+                  label: const Text('Quick Revision'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => setState(() => _selectedSectionIndex = 8),
+                  icon: const Icon(Icons.link_rounded, size: 16),
+                  label: const Text('External Web Links'),
+                ),
+              ],
+            ),
+          ],
+        ),
       );
     }
 
-    return ListView.separated(
+    return ListView(
       padding: const EdgeInsets.all(16),
-      itemCount: rawResources.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
-        final res = rawResources[index];
-        return ResourceCard(
-          resource: res,
-          index: index,
-          onTap: () async {
-            if (res.videoUrl != null && res.videoUrl!.isNotEmpty) {
-              final Uri uri = Uri.parse(res.videoUrl!);
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
-              }
-            } else {
+      children: [
+        if (recommended != null) ...[
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFEF3C7), Color(0xFFFDE68A)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.amber.shade400),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.star_rounded, color: Colors.amber, size: 22),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '⭐ RECOMMENDED FOR YOU / START HERE',
+                        style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF92400E), letterSpacing: 0.5),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Top beginner-friendly resource recommended for ${widget.subjectName}',
+                        style: const TextStyle(fontSize: 11, color: Color(0xFF78350F)),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          ResourceCard(
+            resource: recommended,
+            index: 0,
+            onTap: () async {
               Navigator.pushNamed(
                 context,
                 AppRoutes.pdfViewer,
-                arguments: res,
+                arguments: recommended,
               );
-            }
-          },
-        );
-      },
+            },
+          ),
+          const SizedBox(height: 18),
+          const Row(
+            children: [
+              Icon(Icons.folder_copy_rounded, color: AppColors.primary, size: 18),
+              SizedBox(width: 8),
+              Text('ALL SUBJECT RESOURCES', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5)),
+            ],
+          ),
+          const SizedBox(height: 10),
+        ],
+
+        ...allResources.where((r) => r.id != recommended?.id).map((res) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: ResourceCard(
+              resource: res,
+              index: allResources.indexOf(res),
+              onTap: () async {
+                if (res.videoUrl != null && res.videoUrl!.isNotEmpty) {
+                  final Uri uri = Uri.parse(res.videoUrl!);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.pdfViewer,
+                    arguments: res,
+                  );
+                }
+              },
+            ),
+          );
+        }),
+      ],
     );
   }
 
