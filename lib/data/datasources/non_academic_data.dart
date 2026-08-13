@@ -1996,47 +1996,66 @@ class NonAcademicData {
   static const HubModel higherEducationHub = HubModel(
     id: 'higher_education',
     title: 'Higher Education & Exams',
-    description: 'Explore Master\'s degrees, GATE, CAT, GRE, TOEFL, IELTS, GMAT, Study Abroad & Research Fellowships.',
+    description: 'Complete beginner-first higher education guide: M.Tech, MS Abroad, GATE, GRE, SOP/LOR writing, profile building, university shortlisting & 4-year preparation roadmap.',
     icon: Icons.school_rounded,
     routeName: '/higher-education',
     startHereSteps: [
       StartHereStepModel(
         stepNumber: 1,
-        title: 'Explore Postgraduate Pathways',
-        description: 'Compare M.Tech, M.S. Abroad, MBA, MCA, and PhD doctoral research degrees.',
+        title: 'Explore Postgraduate Degree Options',
+        description: 'Compare MS, M.Tech, MBA, Research degrees vs Coursework, and India vs Abroad options.',
         targetCategoryId: 'pg_studies',
       ),
       StartHereStepModel(
         stepNumber: 2,
-        title: 'Prepare for Competitive Exams',
-        description: 'Access syllabus, past papers, and prep portals for GATE, GRE, GMAT, IELTS, and TOEFL.',
+        title: 'Master GATE Exam Structure & Strategy',
+        description: 'Understand GATE CS/IT syllabus, 65-question computer exam pattern, virtual calculator, and IIT COAP counseling.',
         targetCategoryId: 'entrance_exams',
       ),
       StartHereStepModel(
         stepNumber: 3,
-        title: 'Study Abroad Guidance',
-        description: 'University selection, SOP/LOR writing, application timelines, and visa interviews.',
-        targetCategoryId: 'study_abroad',
+        title: 'Master GRE & English Language Tests',
+        description: 'Understand GRE Quant & Verbal sections, 800+ vocabulary words, TOEFL/IELTS, and test score targets.',
+        targetCategoryId: 'entrance_exams',
       ),
       StartHereStepModel(
         stepNumber: 4,
-        title: 'Scholarships & Financial Aid',
-        description: 'Discover government scholarships, university assistantships (TA/RA), and international grants.',
+        title: 'MS Profile Building & University Shortlisting',
+        description: 'Build GPA, technical projects, research experience, and shortlist Dream, Target & Safe global universities.',
+        targetCategoryId: 'university_research',
+      ),
+      StartHereStepModel(
+        stepNumber: 5,
+        title: 'Draft SOP, LORs & Application Documents',
+        description: 'Learn Statement of Purpose (SOP) storytelling structure, requesting professor LORs, and transcript preparation.',
+        targetCategoryId: 'application_process',
+      ),
+      StartHereStepModel(
+        stepNumber: 6,
+        title: 'Scholarships, Assistantships (TA/RA) & Aid',
+        description: 'Discover Teaching Assistantships (TA), Research Assistantships (RA), GATE stipends, and government grants.',
         targetCategoryId: 'scholarships_aid',
+      ),
+      StartHereStepModel(
+        stepNumber: 7,
+        title: 'Follow 4-Year Higher Education Student Roadmap',
+        description: 'Execute year-by-year milestones from 1st-year exploration to 4th-year application submission.',
+        targetCategoryId: 'prep_roadmap',
       ),
     ],
     categories: [
       // Category 1: Postgraduate Studies
       CategoryModel(
         id: 'pg_studies',
-        title: 'Postgraduate Studies',
-        description: 'Explore Master\'s Degree, M.Tech, MBA, MCA, MS, and PhD pathways.',
+        title: 'Postgraduate Studies & Options',
+        description: 'Explore Master\'s degrees, MS vs M.Tech vs MBA, Research vs Coursework, and India vs Abroad choices.',
         icon: Icons.workspace_premium_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate],
         topics: [
           HierarchicalTopicModel(
             id: 'masters_degree',
-            title: 'Master\'s Degree Overview',
-            description: 'Master graduate level academic degrees focusing on advanced research, domain specialization, thesis defense, credit requirements, and postgraduate software application development for global engineering careers.',
+            title: 'Master\'s Degree Overview & Selection Strategy',
+            description: 'Master graduate level academic degrees: compare MSc, M.Tech, MS by Research, and MBA programs, evaluation of curriculum specializations, faculty research publications, credit requirements, tuition ROI, and career placement outcomes for CSE students.',
             icon: Icons.school_rounded,
             level: LearningLevel.beginner,
             subtopics: [
@@ -2092,8 +2111,8 @@ class NonAcademicData {
           ),
           HierarchicalTopicModel(
             id: 'mtech',
-            title: 'M.Tech (Master of Technology)',
-            description: 'Master M.Tech postgraduate engineering admissions: GATE cutoff scores, CCMT counseling, IIT/NIT research specializations, thesis projects, and high-paying R&D tech industry career placement paths.',
+            title: 'M.Tech (Master of Technology in India)',
+            description: 'Master M.Tech postgraduate engineering admissions: GATE cutoff scores, CCMT counseling, IIT/NIT research specializations, thesis projects, stipend fellowships, and high-paying R&D tech industry career placement paths.',
             icon: Icons.engineering_rounded,
             level: LearningLevel.intermediate,
             subtopics: [
@@ -2210,14 +2229,15 @@ class NonAcademicData {
       // Category 2: Entrance Exams
       CategoryModel(
         id: 'entrance_exams',
-        title: 'Entrance Exams',
-        description: 'Syllabus, question papers & preparation for GATE, GRE, GMAT, IELTS, and TOEFL.',
+        title: 'Entrance Exams (GATE & GRE)',
+        description: 'Syllabus, question papers, virtual calculators & preparation strategies for GATE, GRE, GMAT, IELTS, and TOEFL.',
         icon: Icons.quiz_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate, LearningLevel.advanced],
         topics: [
           HierarchicalTopicModel(
             id: 'exam_gate',
             title: 'GATE (Graduate Aptitude Test in Engineering)',
-            description: 'Master GATE CS/IT examination: core computer science subject syllabus, numerical answer type (NAT) solving, time management, and PSU job recruitment opportunities.',
+            description: 'Master GATE CS/IT examination: core computer science subject syllabus, numerical answer type (NAT) solving, virtual calculator practice, time management, and PSU job recruitment opportunities for engineering students.',
             icon: Icons.menu_book_rounded,
             level: LearningLevel.advanced,
             subtopics: [
@@ -2331,16 +2351,17 @@ class NonAcademicData {
         ],
       ),
 
-      // Category 3: Study Abroad
+      // Category 3: Study Abroad & Specializations
       CategoryModel(
         id: 'study_abroad',
-        title: 'Study Abroad',
-        description: 'Country selection, university shortlisting, applications, visas, and scholarships.',
+        title: 'Study Abroad & Specializations',
+        description: 'Country selection, MS specializations (AI, Data Science, Systems), profile building & post-study work visas (STEM OPT).',
         icon: Icons.flight_takeoff_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate],
         topics: [
           HierarchicalTopicModel(
             id: 'choosing_country',
-            title: 'Choosing a Country',
+            title: 'Choosing a Country & STEM Visas',
             description: 'Master study abroad decision making: compare USA, Canada, Germany, UK, and Australia for tuition fees, STEM OPT post-study work visas, PR pathways, living costs, and tech industry career placement opportunities.',
             level: LearningLevel.beginner,
             resources: [
@@ -2386,6 +2407,55 @@ class NonAcademicData {
               ),
             ],
           ),
+          HierarchicalTopicModel(
+            id: 'profile_building_ms',
+            title: 'MS Profile Building (GPA, Projects & Research)',
+            description: 'Learn how to build a stellar academic profile for MS in CS: GPA targets, technical project portfolios, research papers, GitHub repositories, and developer internships.',
+            icon: Icons.fact_check_rounded,
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_profile_notes',
+                title: 'MS Admission Profile Building Checklist',
+                description: 'Complete checklist covering CGPA target (3.5+ GPA), open-source contributions, and research publication steps.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/how-to-build-a-profile-for-ms-in-cs-abroad/',
+                platform: 'GeeksforGeeks Profile Guide',
+              ),
+              HierarchyResourceModel(
+                id: 'res_profile_video',
+                title: 'How to Build a Profile for Top-20 MS in CS Universities (Video)',
+                description: 'Video tutorial breaking down GPA weightage, research papers, and software engineering projects.',
+                type: HierarchyResourceType.video,
+                url: 'https://www.youtube.com/watch?v=0_J65e1A14E',
+                platform: 'YouTube / MS Profile Strategy',
+              ),
+              HierarchyResourceModel(
+                id: 'res_profile_practice',
+                title: 'Yocket Profile Evaluator & Admission Odds Calculator',
+                description: 'Input your GPA, GRE, and projects to calculate admission probabilities for top US/German universities.',
+                type: HierarchyResourceType.practice,
+                url: 'https://yocket.com/college-finder',
+                platform: 'Yocket College Finder',
+              ),
+              HierarchyResourceModel(
+                id: 'res_profile_practice_2',
+                title: 'GitHub Portfolio Audit & Developer Profile Review',
+                description: 'Interactive checklist auditing your GitHub README, pinned repos, and code documentation quality.',
+                type: HierarchyResourceType.practice,
+                url: 'https://github.com/academic/academic-kickstart',
+                platform: 'GitHub Academic Practice',
+              ),
+              HierarchyResourceModel(
+                id: 'res_profile_project',
+                title: 'Academic Portfolio & Personal Research Website Project',
+                description: 'Build a Markdown-powered Hugo/Jekyll personal academic website showcasing your projects and papers.',
+                type: HierarchyResourceType.project,
+                url: 'https://github.com/academic/academic-kickstart',
+                platform: 'GitHub Portfolio Project',
+              ),
+            ],
+          ),
         ],
       ),
 
@@ -2393,13 +2463,14 @@ class NonAcademicData {
       CategoryModel(
         id: 'scholarships_aid',
         title: 'Scholarships & Financial Aid',
-        description: 'Government schemes, university fellowships, international grants & merit aid.',
+        description: 'Government schemes, university fellowships, Teaching Assistantships (TA), Research Assistantships (RA) & education loans.',
         icon: Icons.payments_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate],
         topics: [
           HierarchicalTopicModel(
             id: 'govt_scholarships',
-            title: 'Government Scholarships',
-            description: 'Master student financial aid: Central & State government scholarships, Teaching Assistantships (TA), Research Assistantships (RA), Fulbright-Nehru fellowships, and Education Loans for higher studies.',
+            title: 'Scholarships & Assistantships (TA / RA)',
+            description: 'Master student financial aid: Central & State government scholarships, Teaching Assistantships (TA), Research Assistantships (RA), Fulbright-Nehru fellowships, DAAD grants, and Education Loans for higher studies.',
             level: LearningLevel.beginner,
             resources: [
               HierarchyResourceModel(
@@ -2441,6 +2512,186 @@ class NonAcademicData {
                 type: HierarchyResourceType.project,
                 url: 'https://github.com/Awesome-Scholarships/Awesome-Scholarships',
                 platform: 'GitHub Scholarship Project',
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Category 5: University Research & Selection
+      CategoryModel(
+        id: 'university_research',
+        title: 'University Selection & Research',
+        description: 'How to research, evaluate, and shortlist universities into Dream, Target, and Safe categories based on curriculum and lab ROI.',
+        icon: Icons.account_balance_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate],
+        topics: [
+          HierarchicalTopicModel(
+            id: 'university_shortlisting',
+            title: 'University Research & Shortlisting Framework',
+            description: 'Learn how to independently research global universities: evaluate program curriculum, faculty research groups, campus labs, tuition cost vs career placement ROI, and build a balanced Dream/Target/Safe shortlist.',
+            icon: Icons.travel_explore_rounded,
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_unishortlist_notes',
+                title: 'University Shortlisting Strategy Framework',
+                description: 'Complete strategy guide categorizing universities into Dream (top 15%), Target (match), and Safe options.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.topuniversities.com/university-rankings',
+                platform: 'QS Rankings Guide',
+              ),
+              HierarchyResourceModel(
+                id: 'res_unishortlist_video',
+                title: 'How to Shortlist Universities for MS in CS (Video)',
+                description: 'Video tutorial demonstrating how to analyze university course catalogs and research faculty labs.',
+                type: HierarchyResourceType.video,
+                url: 'https://www.youtube.com/watch?v=vLnPwxZdW4Y',
+                platform: 'YouTube / University Research',
+              ),
+              HierarchyResourceModel(
+                id: 'res_unishortlist_practice',
+                title: 'QS World University Computer Science Ranking Explorer',
+                description: 'Explore global computer science university rankings, research citations, and graduate employability.',
+                type: HierarchyResourceType.practice,
+                url: 'https://www.topuniversities.com/university-rankings/university-subject-rankings/computer-science-information-systems',
+                platform: 'QS Computer Science Rankings',
+              ),
+              HierarchyResourceModel(
+                id: 'res_unishortlist_practice_2',
+                title: 'US News Best Computer Science Graduate Schools Explorer',
+                description: 'Explore US graduate program rankings in Artificial Intelligence, Systems, and Theory.',
+                type: HierarchyResourceType.practice,
+                url: 'https://www.usnews.com/best-graduate-schools/top-science-schools/computer-science-rankings',
+                platform: 'US News CS Rankings',
+              ),
+              HierarchyResourceModel(
+                id: 'res_unishortlist_project',
+                title: 'University Comparison & Admission Matrix Web Tool',
+                description: 'Build a web spreadsheet app comparing program fees, acceptance rates, and application deadlines.',
+                type: HierarchyResourceType.project,
+                url: 'https://github.com/public-apis/public-apis',
+                platform: 'GitHub Shortlisting Tool',
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Category 6: Application Documents & Execution
+      CategoryModel(
+        id: 'application_process',
+        title: 'SOP, LOR & Application Documents',
+        description: 'Statement of Purpose (SOP) writing, Letters of Recommendation (LOR) requests, academic transcripts, and portal execution.',
+        icon: Icons.description_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate],
+        topics: [
+          HierarchicalTopicModel(
+            id: 'application_documents',
+            title: 'SOP, LOR & Application Documents Mastery',
+            description: 'Master the graduate school application toolkit: Statement of Purpose (SOP) narrative structure, requesting strong professor Letters of Recommendation (LORs), official university transcripts, and online application portal execution.',
+            icon: Icons.history_edu_rounded,
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_appdocs_notes',
+                title: 'Statement of Purpose (SOP) Structure & Checklist',
+                description: 'Complete 5-paragraph SOP blueprint covering hook, academic background, projects, career goals, and program fit.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.shiksha.com/studyabroad/how-to-write-sop-statement-of-purpose-apply-page-254',
+                platform: 'Shiksha SOP Blueprint',
+              ),
+              HierarchyResourceModel(
+                id: 'res_appdocs_video',
+                title: 'How to Write a Winning SOP for MS in CS (Video)',
+                description: 'Step-by-step video guide walking through real SOP examples accepted at top US universities.',
+                type: HierarchyResourceType.video,
+                url: 'https://www.youtube.com/watch?v=byqqD6PzG1I',
+                platform: 'YouTube / SOP Masterclass',
+              ),
+              HierarchyResourceModel(
+                id: 'res_appdocs_practice',
+                title: 'SOP Self-Audit & Paragraph Proofreading Practice Checklist',
+                description: 'Interactive checklist auditing your SOP for storytelling clarity, tone, and specific lab mentions.',
+                type: HierarchyResourceType.practice,
+                url: 'https://resumeworded.com/',
+                platform: 'ResumeWorded Audit Tool',
+              ),
+              HierarchyResourceModel(
+                id: 'res_appdocs_practice_2',
+                title: 'LOR Recommendation Request Email Template Builder',
+                description: 'Interactive tool generating professional email drafts for requesting LORs from professors.',
+                type: HierarchyResourceType.practice,
+                url: 'https://www.overleaf.com/gallery/tagged/cv',
+                platform: 'Overleaf Template Lab',
+              ),
+              HierarchyResourceModel(
+                id: 'res_appdocs_project',
+                title: 'Open-Source Academic Application Tracker Kanban App',
+                description: 'Build a web application tracking SOP drafts, LOR submission statuses, and university application deadlines.',
+                type: HierarchyResourceType.project,
+                url: 'https://github.com/academic/academic-kickstart',
+                platform: 'GitHub Application Tracker',
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Category 7: 4-Year Student Preparation Roadmap
+      CategoryModel(
+        id: 'prep_roadmap',
+        title: '4-Year Higher Education Student Roadmap',
+        description: 'Semester-by-semester 4-year roadmap for CSE students planning for GATE, GRE, or MS Abroad from Year 1 to Year 4.',
+        icon: Icons.alt_route_rounded,
+        availableLevels: [LearningLevel.beginner, LearningLevel.intermediate, LearningLevel.advanced],
+        topics: [
+          HierarchicalTopicModel(
+            id: 'four_year_highered_roadmap',
+            title: '4-Year Higher Education Action Plan',
+            description: 'Master 4-year student preparation timeline: Year 1 academic exploration & coding foundations -> Year 2 subject depth & project portfolio -> Year 3 exam prep (GATE/GRE) & document drafting -> Year 4 application submission & decision making.',
+            icon: Icons.timeline_rounded,
+            level: LearningLevel.beginner,
+            resources: [
+              HierarchyResourceModel(
+                id: 'res_4year_notes',
+                title: 'CSE Student 4-Year Higher Education Roadmap Handbook',
+                description: 'Complete semester-by-semester checklist mapping CGPA maintenance, exam prep, and research publications.',
+                type: HierarchyResourceType.notes,
+                url: 'https://www.geeksforgeeks.org/higher-studies-after-b-tech/',
+                platform: 'GeeksforGeeks Higher Ed Guide',
+              ),
+              HierarchyResourceModel(
+                id: 'res_4year_video',
+                title: '4-Year Higher Education Roadmap for Computer Science Students (Video)',
+                description: 'Video roadmap guiding 1st, 2nd, 3rd, and 4th year CSE students through exam timelines and applications.',
+                type: HierarchyResourceType.video,
+                url: 'https://www.youtube.com/watch?v=vLnPwxZdW4Y',
+                platform: 'YouTube / Higher Ed Strategy',
+              ),
+              HierarchyResourceModel(
+                id: 'res_4year_practice',
+                title: 'CSSED Personal Student Intelligence Milestone Tracker',
+                description: 'Interactive milestone tracker assessing your current preparation stage against target higher study goals.',
+                type: HierarchyResourceType.practice,
+                url: 'https://gateoverflow.in/exams',
+                platform: 'CSSED Student Practice',
+              ),
+              HierarchyResourceModel(
+                id: 'res_4year_practice_2',
+                title: 'GATE & GRE Prep Timeline Interactive Quiz',
+                description: 'Self-assessment quiz computing optimal month to start GATE or GRE preparation based on your target intake.',
+                type: HierarchyResourceType.practice,
+                url: 'https://www.ets.org/gre.html',
+                platform: 'ETS Timeline Practice',
+              ),
+              HierarchyResourceModel(
+                id: 'res_4year_project',
+                title: 'Personalized Academic Journey Planner Web App',
+                description: 'Build an interactive timeline planner app tracking course credits, exam prep milestones, and application forms.',
+                type: HierarchyResourceType.project,
+                url: 'https://github.com/public-apis/public-apis',
+                platform: 'GitHub Planner Project',
               ),
             ],
           ),
