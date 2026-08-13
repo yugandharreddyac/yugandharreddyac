@@ -111,9 +111,9 @@ void main() {
             resourceScore = 5;
           }
 
-          // H. Career / Exam Relevance (5)
+          // H. Career / Exam / Startup Relevance (5)
           double careerScore = 0;
-          if (hub.id == 'placement' || hub.id == 'higher_education' || descLower.contains('career') || descLower.contains('interview') || descLower.contains('gate') || descLower.contains('resume')) {
+          if (hub.id == 'placement' || hub.id == 'higher_education' || hub.id == 'entrepreneurship' || descLower.contains('career') || descLower.contains('interview') || descLower.contains('gate') || descLower.contains('resume') || descLower.contains('startup')) {
             careerScore = 5;
           } else {
             careerScore = 2;
