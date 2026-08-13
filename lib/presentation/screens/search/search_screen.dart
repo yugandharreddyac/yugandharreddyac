@@ -227,7 +227,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   // 2. Matching Textbook Topics, Chapters & Academic Sections
                                   if (matchingItems.where((i) => i.category.contains('Textbook') || i.topicModel != null || i.sectionIndex != null).isNotEmpty) ...[
                                     Text(
-                                      'Textbook Topics & Academic Sections (${matchingItems.where((i) => i.category.contains('Textbook') || i.topicModel != null || i.sectionIndex != null).length})',
+                                      'Notes & Academic Topics (${matchingItems.where((i) => i.category.contains('Textbook') || i.category.contains('Notes') || i.topicModel != null || i.sectionIndex != null).length})',
+
                                       style: GoogleFonts.inter(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,

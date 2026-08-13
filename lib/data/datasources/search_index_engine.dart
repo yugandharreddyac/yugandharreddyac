@@ -98,16 +98,13 @@ class SearchIndexEngine {
         ),
       );
 
-      // Index 8 Standardized Subject Section Types
+      // Index 3 Standardized Subject Section Types
       final sectionTypes = [
-        {'title': 'Important Questions', 'index': 2, 'kw': ['important questions', 'exam questions', 'viva']},
-        {'title': 'Previous Question Papers', 'index': 3, 'kw': ['previous papers', 'past papers', 'pyqs', 'mid term']},
-        {'title': 'Quick Revision Notes', 'index': 4, 'kw': ['quick revision', 'notes', 'summary', 'cheat sheet']},
-        {'title': 'Practical / Laboratory', 'index': 5, 'kw': ['practical', 'lab manual', 'experiments', 'code']},
-        {'title': 'Assignments', 'index': 6, 'kw': ['assignments', 'homework', 'problem sets']},
-        {'title': 'Projects', 'index': 7, 'kw': ['projects', 'mini projects', 'source code']},
-        {'title': 'Additional Resources', 'index': 8, 'kw': ['additional resources', 'video lectures', 'web links']},
+        {'title': 'Syllabus', 'index': 0, 'kw': ['syllabus', 'curriculum', 'overview']},
+        {'title': 'Notes & Lecture Material', 'index': 1, 'kw': ['notes', 'textbook', 'lecture notes', 'summary']},
+        {'title': 'Previous Question Papers', 'index': 2, 'kw': ['previous papers', 'past papers', 'pyqs', 'exam papers']},
       ];
+
 
       for (final sec in sectionTypes) {
         final secTitle = sec['title'] as String;
@@ -168,7 +165,8 @@ class SearchIndexEngine {
             year: subj.yearId,
             keywords: [lab.title, lab.objective, lab.theory, lab.code, ...lab.vivaQuestions, subj.name],
             subject: subj,
-            sectionIndex: 5,
+            sectionIndex: 1,
+
             sectionType: 'Practical / Laboratory',
           ),
         );

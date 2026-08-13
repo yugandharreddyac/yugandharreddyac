@@ -23,30 +23,32 @@ class EmptyStateWidget extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: AppColors.primary.withAlpha(20),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 icon,
-                size: 54,
+                size: 48,
                 color: AppColors.primaryLight,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             Text(
               title,
               textAlign: TextAlign.center,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 17,
               ),
             ),
             const SizedBox(height: 8),
@@ -58,11 +60,18 @@ class EmptyStateWidget extends StatelessWidget {
               ),
             ),
             if (onActionTap != null && actionLabel != null) ...[
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: onActionTap,
                 icon: const Icon(Icons.refresh_rounded, size: 18),
                 label: Text(actionLabel!),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
             ],
           ],

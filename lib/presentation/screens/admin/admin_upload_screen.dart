@@ -25,7 +25,8 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
   SemesterModel? _selectedSemester;
   SubjectModel? _selectedSubject;
   String _selectedResourceType = AppConstants.typeNotes;
-  String _selectedSectionType = 'Textbook';
+  String _selectedSectionType = 'Notes';
+
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -366,15 +367,11 @@ class _AdminUploadScreenState extends State<AdminUploadScreen> {
                 value: _selectedSectionType,
                 decoration: _buildInputDecoration(isDark, 'Subject Learning Section', Icons.auto_stories_rounded),
                 items: const [
-                  'Textbook',
-                  'Important Questions',
+                  'Syllabus',
+                  'Notes',
                   'Previous Papers',
-                  'Quick Revision',
-                  'Practical / Lab',
-                  'Assignments',
-                  'Projects',
-                  'Additional Resources',
                 ].map((sec) {
+
                   return DropdownMenuItem<String>(
                     value: sec,
                     child: Text(sec),
