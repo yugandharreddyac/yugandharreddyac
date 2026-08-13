@@ -197,10 +197,21 @@ class AppNavigationDrawer extends StatelessWidget {
                   ),
                   _buildDrawerTile(
                     context: context,
+                    icon: Icons.folder_special_rounded,
+                    title: 'Project Hub',
+                    subtitle: 'Mini & Major Projects, Blueprints & Open Source',
+                    color: const Color(0xFF8B5CF6),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.projectHub);
+                    },
+                  ),
+                  _buildDrawerTile(
+                    context: context,
                     icon: Icons.school_rounded,
                     title: 'Higher Education Hub',
                     subtitle: 'GATE, GRE, MS Abroad & Scholarships',
-                    color: const Color(0xFF8B5CF6),
+                    color: const Color(0xFFF59E0B),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.higherEducationHub);

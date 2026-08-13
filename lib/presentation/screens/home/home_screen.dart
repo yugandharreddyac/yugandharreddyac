@@ -6,15 +6,9 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/utils/formatters.dart';
-import '../../../data/models/guidance_models.dart';
 import '../../providers/study_provider.dart';
 import '../../providers/recent_provider.dart';
 import '../../providers/theme_provider.dart';
-import '../../providers/roadmap_provider.dart';
-import '../../../data/datasources/non_academic_data.dart';
-import '../../../data/models/hierarchy_node_model.dart';
-import '../../../data/models/user_goal_model.dart';
-import '../hierarchy/generic_topic_screen.dart';
 import '../downloads/downloads_screen.dart';
 import '../profile/profile_screen.dart';
 import '../pdf_viewer/pdf_viewer_screen.dart';
@@ -119,9 +113,9 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
   String _getGreeting() {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning 👋';
-    if (hour < 17) return 'Good Afternoon 👋';
-    return 'Good Evening 👋';
+    if (hour < 12) return 'Good Morning ðŸ‘‹';
+    if (hour < 17) return 'Good Afternoon ðŸ‘‹';
+    return 'Good Evening ðŸ‘‹';
   }
 
   @override
@@ -132,7 +126,6 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
     final studyProvider = context.watch<StudyProvider>();
     final recentProvider = context.watch<RecentProvider>();
-    final roadmapProvider = context.watch<RoadmapProvider>();
     final recents = recentProvider.recentResources;
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
@@ -255,7 +248,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Ready to learn today? • Academic & Career Development Platform',
+                          'Ready to learn today? â€¢ Academic & Career Development Platform',
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -319,34 +312,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
               const UniByteCard().animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildPersonalizedRoadmapHero(context, roadmapProvider, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
-              ),
-              const SizedBox(height: 24),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildHomeTodaysPlan(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
-              ),
-              const SizedBox(height: 24),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildNextBestActionCard(context, roadmapProvider, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor, emeraldGreen),
-              ),
-              const SizedBox(height: 24),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildContinueLearningCard(context, isDark, textPrimary, textSubtitle, royalBlue, emeraldGreen, whiteCardColor, borderColor),
-              ),
-              const SizedBox(height: 24),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildCareerProgressSection(context, isDark, textPrimary, textSubtitle, royalBlue, whiteCardColor, borderColor),
+                child: _buildCompactQuickAccessGrid(context, isDark, textPrimary, textSubtitle, whiteCardColor, borderColor, royalBlue, emeraldGreen),
               ),
               const SizedBox(height: 24),
 
@@ -383,6 +352,29 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       },
                     ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
                     const SizedBox(height: 28),
+
+                    Text(
+                      'Career & Practical Hubs',
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: textPrimary,
+                        letterSpacing: -0.3,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Specialized hubs for coding, placements, projects & higher studies',
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: textSubtitle,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildHubsGrid(context, isDark, textPrimary, textSubtitle, whiteCardColor, borderColor),
+                    const SizedBox(height: 28),
+
 
 
                     Row(
@@ -487,66 +479,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             }).toList(),
                           ),
 
-                    const SizedBox(height: 28),
-
-                    // ==========================================
-                    // 5. QUICK ACTIONS (VERTICAL FULL-WIDTH TINTED CARDS)
-                    // ==========================================
-                    Text(
-                      'Quick Actions',
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: textPrimary,
-                        letterSpacing: -0.3,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-
-                    _buildVerticalTintedQuickActionTile(
-                      context,
-                      title: 'Offline Downloads',
-                      description: 'Read downloaded PDFs anytime.',
-                      icon: Icons.download_rounded,
-                      accentColor: emeraldGreen,
-                      bgColor: emeraldGreen.withAlpha(isDark ? 20 : 10),
-                      onTap: () => Navigator.pushNamed(context, AppRoutes.downloads),
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildVerticalTintedQuickActionTile(
-                      context,
-                      title: 'Saved Resources',
-                      description: 'Your bookmarked notes and papers.',
-                      icon: Icons.bookmark_rounded,
-                      accentColor: royalBlue,
-                      bgColor: royalBlue.withAlpha(isDark ? 20 : 10),
-                      onTap: () => Navigator.pushNamed(context, AppRoutes.bookmarks),
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildVerticalTintedQuickActionTile(
-                      context,
-                      title: 'Continue Learning',
-                      description: 'Resume from your last opened PDF.',
-                      icon: Icons.history_rounded,
-                      accentColor: emeraldGreen,
-                      bgColor: emeraldGreen.withAlpha(isDark ? 20 : 10),
-                      onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
-                    ),
-                    const SizedBox(height: 12),
-
-                    _buildVerticalTintedQuickActionTile(
-                      context,
-                      title: 'Trusted Content',
-                      description: 'Official syllabus, notes & previous papers.',
-                      icon: Icons.verified_user_rounded,
-                      accentColor: royalBlue,
-                      bgColor: royalBlue.withAlpha(isDark ? 20 : 10),
-                      onTap: () => Navigator.pushNamed(context, AppRoutes.about),
-                    ),
-
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -557,140 +490,293 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     );
   }
 
-
-
-  // --- ROADMAP PHASE CHIP ---
-  Widget _buildRoadmapPhaseChip(
-    BuildContext context, {
-    required String yearLabel,
-    required String title,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        decoration: BoxDecoration(
-          color: isDark ? color.withAlpha(40) : color.withAlpha(18),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withAlpha(60)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                yearLabel,
-                style: GoogleFonts.inter(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                title,
-                style: GoogleFonts.inter(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
+  // --- COMPACT QUICK ACCESS GRID ---
+  Widget _buildCompactQuickAccessGrid(
+    BuildContext context,
+    bool isDark,
+    Color textPrimary,
+    Color textSubtitle,
+    Color whiteCardColor,
+    Color borderColor,
+    Color royalBlue,
+    Color emeraldGreen,
+  ) {
+    final actions = [
+      (
+        title: 'Downloads',
+        subtitle: 'Offline PDFs',
+        icon: Icons.download_rounded,
+        color: emeraldGreen,
+        onTap: () => Navigator.pushNamed(context, AppRoutes.downloads),
       ),
+      (
+        title: 'Saved',
+        subtitle: 'Bookmarks & Notes',
+        icon: Icons.bookmark_rounded,
+        color: royalBlue,
+        onTap: () => Navigator.pushNamed(context, AppRoutes.bookmarks),
+      ),
+      (
+        title: 'Continue',
+        subtitle: 'Resume Reading',
+        icon: Icons.history_rounded,
+        color: const Color(0xFF8B5CF6),
+        onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
+      ),
+      (
+        title: 'Roadmap',
+        subtitle: 'Learning Path',
+        icon: Icons.map_rounded,
+        color: const Color(0xFFF59E0B),
+        onTap: () => Navigator.pushNamed(context, AppRoutes.roadmap),
+      ),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'QUICK ACCESS',
+          style: GoogleFonts.inter(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+            color: textSubtitle,
+          ),
+        ),
+        const SizedBox(height: 12),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth > 700;
+            final crossAxisCount = isWide ? 4 : 2;
+            final childAspectRatio = isWide ? 2.5 : 2.2;
+
+            return GridView.count(
+              crossAxisCount: crossAxisCount,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: childAspectRatio,
+              children: actions.map((item) {
+                return Material(
+                  color: whiteCardColor,
+                  borderRadius: BorderRadius.circular(16),
+                  child: InkWell(
+                    onTap: item.onTap,
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: borderColor),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(isDark ? 20 : 5),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: item.color.withAlpha(isDark ? 35 : 18),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(item.icon, color: item.color, size: 20),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  item.title,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: textPrimary,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  item.subtitle,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 11,
+                                    color: textSubtitle,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            );
+          },
+        ),
+      ],
     );
   }
 
-  // --- EXPLORE HUB TINTED CARD ---
-  Widget _buildTintedExploreHubCard(
-    BuildContext context, {
-    required String title,
-    required String description,
-    required IconData icon,
-    required Color accentColor,
-    required Color bgColor,
-    required VoidCallback onTap,
-  }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: borderColor),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(isDark ? 30 : 6),
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: accentColor.withAlpha(25),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: accentColor, size: 22),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      color: textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: textSubtitle,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Icon(Icons.arrow_forward_ios_rounded, size: 14, color: accentColor),
-          ],
-        ),
+  // --- CAREER & PRACTICAL HUBS GRID ---
+  Widget _buildHubsGrid(
+    BuildContext context,
+    bool isDark,
+    Color textPrimary,
+    Color textSubtitle,
+    Color whiteCardColor,
+    Color borderColor,
+  ) {
+    final hubs = [
+      (
+        title: 'Coding Hub',
+        subtitle: 'Languages, DSA, Web/App & DBs',
+        icon: Icons.code_rounded,
+        color: const Color(0xFF2563EB),
+        route: AppRoutes.codingHub,
       ),
-    );
+      (
+        title: 'Career Hub',
+        subtitle: 'Emerging Tech, Portfolio & Resume',
+        icon: Icons.rocket_launch_rounded,
+        color: const Color(0xFFEC4899),
+        route: AppRoutes.careerHub,
+      ),
+      (
+        title: 'Placement Hub',
+        subtitle: 'Aptitude, Tech & HR Interviews',
+        icon: Icons.work_history_rounded,
+        color: const Color(0xFF10B981),
+        route: AppRoutes.placementHub,
+      ),
+      (
+        title: 'Project Hub',
+        subtitle: 'Mini/Major Projects & Systems',
+        icon: Icons.folder_special_rounded,
+        color: const Color(0xFF8B5CF6),
+        route: AppRoutes.projectHub,
+      ),
+      (
+        title: 'Higher Education Hub',
+        subtitle: 'GATE, GRE, MS Abroad & Research',
+        icon: Icons.school_rounded,
+        color: const Color(0xFFF59E0B),
+        route: AppRoutes.higherEducationHub,
+      ),
+      (
+        title: 'Entrepreneurship Hub',
+        subtitle: 'Idea Validation, MVP & Startups',
+        icon: Icons.lightbulb_rounded,
+        color: const Color(0xFF06B6D4),
+        route: AppRoutes.entrepreneurshipHub,
+      ),
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth > 700;
+        final crossAxisCount = isWide ? 3 : 2;
+        final childAspectRatio = isWide ? 1.4 : 1.15;
+
+        return GridView.count(
+          crossAxisCount: crossAxisCount,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: 14,
+          mainAxisSpacing: 14,
+          childAspectRatio: childAspectRatio,
+          children: hubs.map((hub) {
+            return Material(
+              color: whiteCardColor,
+              borderRadius: BorderRadius.circular(20),
+              child: InkWell(
+                onTap: () => Navigator.pushNamed(context, hub.route),
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: borderColor),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(isDark ? 25 : 6),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: hub.color.withAlpha(isDark ? 40 : 20),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Icon(hub.icon, color: hub.color, size: 22),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 18,
+                            color: textSubtitle.withAlpha(120),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            hub.title,
+                            style: GoogleFonts.inter(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: textPrimary,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            hub.subtitle,
+                            style: GoogleFonts.inter(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color: textSubtitle,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        );
+      },
+    ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0);
   }
+
 
   // --- RECENTLY ADDED FALLBACK ITEMS ---
   Widget _buildRecentFallbackList(
@@ -761,926 +847,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               ),
             ),
             trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
-            onTap: () => Navigator.pushNamed(context, AppRoutes.search),
           ),
         );
       }).toList(),
     );
   }
 
-  // --- VERTICAL QUICK ACTION TILE (Radius 16, Full Width, Tinted) ---
-  Widget _buildVerticalTintedQuickActionTile(
-    BuildContext context, {
-    required String title,
-    required String description,
-    required IconData icon,
-    required Color accentColor,
-    required Color bgColor,
-    required VoidCallback onTap,
-  }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: borderColor),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(isDark ? 25 : 6),
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: accentColor.withAlpha(25),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: accentColor, size: 22),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    description,
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: textSubtitle,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Icon(Icons.arrow_forward_ios_rounded, size: 14, color: accentColor),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHomeTodaysPlan(
-    BuildContext context,
-    bool isDark,
-    Color textPrimary,
-    Color textSubtitle,
-    Color royalBlue,
-    Color whiteCardColor,
-    Color borderColor,
-  ) {
-    RoadmapProvider? roadmapProvider;
-    try {
-      roadmapProvider = context.watch<RoadmapProvider>();
-    } catch (_) {}
-
-    final todaysPlan = roadmapProvider?.getTodaysPlan() ?? [];
-    if (todaysPlan.isEmpty) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Today\'s Recommended Plan',
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-                letterSpacing: -0.3,
-              ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pushNamed(context, AppRoutes.roadmap),
-              child: Text(
-                'View All',
-                style: GoogleFonts.inter(
-                  color: royalBlue,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Column(
-          children: todaysPlan.take(3).map((task) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              child: InkWell(
-                onTap: () {
-                  if (task.actionRoute != null) {
-                     Navigator.pushNamed(context, task.actionRoute!, arguments: task.actionArguments);
-                     return;
-                  }
-                  final match = NonAcademicData.findTopicById(task.topicId);
-                  if (match != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => GenericTopicScreen(
-                          hub: match.hub,
-                          category: match.category,
-                          topic: match.topic,
-                          breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
-                        ),
-                      ),
-                    );
-                  }
-                },
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: whiteCardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: borderColor),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(isDark ? 25 : 6),
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: royalBlue.withAlpha(20),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(Icons.play_arrow_rounded, color: royalBlue, size: 20),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              task.topicTitle,
-                              style: GoogleFonts.inter(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: textPrimary,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              task.actionTitle,
-                              style: GoogleFonts.inter(
-                                fontSize: 12,
-                                color: textSubtitle,
-                              ),
-                            ),
-                            if (task.reason != null) ...[
-                              const SizedBox(height: 4),
-                              Text(
-                                task.reason!,
-                                style: GoogleFonts.inter(
-                                  fontSize: 11,
-                                  color: royalBlue,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ]
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          if (task.progressText != null)
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: royalBlue.withAlpha(20),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                task.progressText!,
-                                style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: royalBlue),
-                              ),
-                            ),
-                          const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              '${task.estimatedMinutes}m',
-                              style: GoogleFonts.inter(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                color: textSubtitle,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCareerProgressSection(
-    BuildContext context,
-    bool isDark,
-    Color textPrimary,
-    Color textSubtitle,
-    Color royalBlue,
-    Color whiteCardColor,
-    Color borderColor,
-  ) {
-    RoadmapProvider? roadmapProvider;
-    try {
-      roadmapProvider = context.watch<RoadmapProvider>();
-    } catch (_) {}
-
-    final milestones = roadmapProvider?.getCareerMilestones() ?? [];
-    if (milestones.isEmpty) return const SizedBox.shrink();
-
-    final goalTitle = roadmapProvider?.profile?.goal.title ?? 'Software / IT Placement';
-    final completedCount = milestones.where((m) => m.isCompleted).length;
-    final totalCount = milestones.length;
-    
-    CareerMilestoneModel? nextMilestone;
-    try {
-      nextMilestone = milestones.firstWhere((m) => !m.isCompleted);
-    } catch (_) {}
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Career Progress',
-          style: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: textPrimary,
-            letterSpacing: -0.3,
-          ),
-        ),
-        const SizedBox(height: 12),
-        InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, AppRoutes.careerDashboard);
-          },
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: whiteCardColor,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: borderColor),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(isDark ? 25 : 6),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('CURRENT GOAL', style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: textSubtitle, letterSpacing: 0.5)),
-              Text(goalTitle, style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: royalBlue)),
-              const SizedBox(height: 16),
-              if (nextMilestone != null) ...[
-                Text('NEXT MILESTONE', style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: textSubtitle, letterSpacing: 0.5)),
-                Text(nextMilestone.title, style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary)),
-                const SizedBox(height: 16),
-              ],
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('$completedCount / $totalCount milestones completed', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-                  InkWell(
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.roadmap),
-                    child: Text('VIEW ROADMAP →', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: royalBlue)),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildContinueLearningCard(
-    BuildContext context,
-    bool isDark,
-    Color textPrimary,
-    Color textSubtitle,
-    Color royalBlue,
-    Color emeraldGreen,
-    Color whiteCardColor,
-    Color borderColor,
-  ) {
-    RoadmapProvider? roadmapProvider;
-    try {
-      roadmapProvider = context.watch<RoadmapProvider>();
-    } catch (_) {}
-
-    final lastOpenedId = roadmapProvider?.lastOpenedTopicId;
-    if (lastOpenedId == null || lastOpenedId.isEmpty) return const SizedBox.shrink();
-
-    final match = NonAcademicData.findTopicById(lastOpenedId);
-    if (match == null) return const SizedBox.shrink();
-
-    final progress = roadmapProvider!.getProgressForTopic(lastOpenedId);
-    if (progress.isFullyCompleted) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Continue Learning',
-          style: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: textPrimary,
-            letterSpacing: -0.3,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: whiteCardColor,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: royalBlue.withAlpha(120), width: 1.5),
-            boxShadow: [
-              BoxShadow(
-                color: royalBlue.withAlpha(isDark ? 30 : 12),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: royalBlue.withAlpha(20),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(match.topic.icon, color: royalBlue, size: 22),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          match.topic.title,
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${match.category.title} • ${progress.completedCount}/4 activities (${progress.percentage.toStringAsFixed(0)}%)',
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            color: textSubtitle,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: LinearProgressIndicator(
-                  value: progress.percentage / 100.0,
-                  minHeight: 6,
-                  backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFE2E8F0),
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    progress.percentage > 0 ? emeraldGreen : royalBlue,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              SizedBox(
-                width: double.infinity,
-                height: 42,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => GenericTopicScreen(
-                          hub: match.hub,
-                          category: match.category,
-                          topic: match.topic,
-                          breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
-                        ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.play_arrow_rounded, size: 18),
-                  label: Text(
-                    'RESUME TOPIC →',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: royalBlue,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRecentlyViewedTopicsRow(
-    BuildContext context,
-    bool isDark,
-    Color textPrimary,
-    Color textSubtitle,
-    Color royalBlue,
-    Color whiteCardColor,
-    Color borderColor,
-  ) {
-    RoadmapProvider? roadmapProvider;
-    try {
-      roadmapProvider = context.watch<RoadmapProvider>();
-    } catch (_) {}
-
-    final recentIds = roadmapProvider?.recentTopicIds ?? [];
-    if (recentIds.isEmpty) return const SizedBox.shrink();
-
-    final validMatches = recentIds
-        .map((id) => NonAcademicData.findTopicById(id))
-        .where((m) => m != null)
-        .cast<({CategoryModel category, HubModel hub, HierarchicalTopicModel topic})>()
-        .toList();
-
-    if (validMatches.isEmpty) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Recently Viewed Topics',
-              style: GoogleFonts.inter(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: textPrimary,
-                letterSpacing: -0.3,
-              ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pushNamed(context, AppRoutes.savedTopics),
-              child: Text(
-                'View Saved',
-                style: GoogleFonts.inter(
-                  color: royalBlue,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 100,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: validMatches.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 12),
-            itemBuilder: (context, index) {
-              final match = validMatches[index];
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => GenericTopicScreen(
-                        hub: match.hub,
-                        category: match.category,
-                        topic: match.topic,
-                        breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
-                      ),
-                    ),
-                  );
-                },
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  width: 200,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: whiteCardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: borderColor),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(match.topic.icon, size: 18, color: royalBlue),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              match.topic.title,
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: textPrimary,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        match.category.title,
-                        style: GoogleFonts.inter(
-                          fontSize: 11,
-                          color: textSubtitle,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-  Widget _build4YearJourney(BuildContext context, bool isDark, Color textPrimary, Color textSubtitle, Color royalBlue) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: isDark
-              ? [const Color(0xFF1E1B4B), const Color(0xFF312E81)]
-              : [const Color(0xFFEFF6FF), const Color(0xFFDBEAFE)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: royalBlue,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.explore_rounded, color: Colors.white, size: 20),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '4-Year B.Tech CSE Student Roadmap',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: textPrimary,
-                      ),
-                    ),
-                    Text(
-                      'LEARN → BUILD → PRACTICE → INTERN → GRADUATE',
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        color: royalBlue,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: _buildRoadmapPhaseChip(
-                  context,
-                  yearLabel: 'Year 1',
-                  title: 'Programming & Logic',
-                  color: const Color(0xFF2563EB),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _buildRoadmapPhaseChip(
-                  context,
-                  yearLabel: 'Year 2',
-                  title: 'DSA & Full-Stack',
-                  color: const Color(0xFF059669),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.codingHub),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: _buildRoadmapPhaseChip(
-                  context,
-                  yearLabel: 'Year 3',
-                  title: 'AI/Cloud & Projects',
-                  color: const Color(0xFFD97706),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.projectHub),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _buildRoadmapPhaseChip(
-                  context,
-                  yearLabel: 'Year 4',
-                  title: 'Placements & GATE',
-                  color: const Color(0xFF7C3AED),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.placementHub),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          SizedBox(
-            width: double.infinity,
-            height: 44,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.roadmap);
-              },
-              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
-              label: Text(
-                'OPEN MY PERSONALIZED ROADMAP →',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: royalBlue,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(delay: 150.ms).slideY(begin: 0.05, end: 0);
-  }
-
-  Widget _buildNextBestActionCard(BuildContext context, RoadmapProvider roadmapProvider, bool isDark, Color textPrimary, Color textSubtitle, Color royalBlue, Color whiteCardColor, Color borderColor, Color emeraldGreen) {
-    final nextAction = roadmapProvider.nextBestAction;
-    if (nextAction == null) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'NEXT BEST ACTION',
-          style: GoogleFonts.inter(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: textSubtitle,
-            letterSpacing: 1.0,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: whiteCardColor,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: emeraldGreen.withAlpha(80), width: 1.5),
-            boxShadow: [
-              BoxShadow(
-                color: emeraldGreen.withAlpha(isDark ? 20 : 10),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.stars_rounded, color: emeraldGreen, size: 24),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      nextAction.title,
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: textPrimary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Why: ${nextAction.reason}',
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  color: textSubtitle,
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, nextAction.route, arguments: nextAction.arguments);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: emeraldGreen,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    'CONTINUE →',
-                    style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPersonalizedRoadmapHero(BuildContext context, RoadmapProvider roadmapProvider, bool isDark, Color textPrimary, Color textSubtitle, Color royalBlue, Color whiteCardColor, Color borderColor) {
-    final status = roadmapProvider.studentStatus;
-    
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: whiteCardColor,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: borderColor),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(isDark ? 20 : 5),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'PERSONALIZED ROADMAP',
-            style: GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: textSubtitle,
-              letterSpacing: 1.0,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            status.displayName,
-            style: GoogleFonts.inter(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: textPrimary,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            status.description,
-            style: GoogleFonts.inter(
-              fontSize: 13,
-              color: textSubtitle,
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            height: 44,
-            child: OutlinedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.roadmap);
-              },
-              icon: const Icon(Icons.rocket_launch_rounded, size: 18),
-              label: Text(
-                'VIEW MY ROADMAP',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: royalBlue,
-                side: BorderSide(color: royalBlue, width: 1.5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
