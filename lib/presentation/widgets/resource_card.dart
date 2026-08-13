@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_constants.dart';
 import '../../core/utils/formatters.dart';
 import '../../core/utils/share_helper.dart';
 import '../../data/models/resource_model.dart';
@@ -29,16 +29,16 @@ class _ResourceCardState extends State<ResourceCard> {
   bool _isHovered = false;
 
   String _getCategoryBadge(String resourceType) {
-    switch (resourceType) {
-      case AppConstants.typeSyllabus:
-        return '📖 Syllabus';
-      case AppConstants.typeNotes:
-        return '📝 Notes';
-      case AppConstants.typePastPapers:
-        return '📄 Previous Papers';
-      default:
-        return '📁 Study Document';
-    }
+    final lower = resourceType.toLowerCase();
+    if (lower.contains('syllabus')) return '📑 Official Syllabus';
+    if (lower.contains('note')) return '📄 Study Notes';
+    if (lower.contains('pyq') || lower.contains('paper') || lower.contains('previous')) return '🎯 Previous Year Questions';
+    if (lower.contains('textbook') || lower.contains('book') || lower.contains('reference')) return '📘 Reference Book';
+    if (lower.contains('lab') || lower.contains('manual')) return '💻 Lab Manual';
+    if (lower.contains('video')) return '🎥 Video Tutorial';
+    if (lower.contains('doc') || lower.contains('official')) return '🌐 Official Docs';
+    if (lower.contains('practice') || lower.contains('quiz')) return '💻 Practice Questions';
+    return '📁 Academic Resource';
   }
 
   bool _isNew(DateTime lastUpdated) {
@@ -217,7 +217,68 @@ class _ResourceCardState extends State<ResourceCard> {
                         height: 1.4,
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 8),
+
+                    // Beginner-first "What is this?" & "Why use it?" section
+                    if (widget.resource.whatIsThis != null || widget.resource.whyUseIt != null) ...[
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? AppColors.primary.withAlpha(20)
+                              : AppColors.primary.withAlpha(12),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppColors.primary.withAlpha(40),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (widget.resource.whatIsThis != null)
+                              Row(
+                                children: [
+                                  const Icon(Icons.help_outline_rounded, size: 12, color: AppColors.primary),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      'What is this: ${widget.resource.whatIsThis}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            if (widget.resource.whyUseIt != null) ...[
+                              const SizedBox(height: 3),
+                              Row(
+                                children: [
+                                  const Icon(Icons.star_outline_rounded, size: 12, color: Colors.orange),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      'Why use it: ${widget.resource.whyUseIt}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 11,
+                                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
 
                     // Bottom Metadata & Action Bar
                     Row(
@@ -260,7 +321,31 @@ class _ResourceCardState extends State<ResourceCard> {
                         const SizedBox(width: 8),
 
                         // Action Buttons: Open & Download
-                        if (isDownloading) ...[
+                        if (widget.resource.isComingSoon) ...[
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.amber.withAlpha(30),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.amber),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.schedule_rounded, size: 14, color: Colors.amber),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Coming Soon',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.amber.shade800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ] else if (isDownloading) ...[
                           SizedBox(
                             width: 24,
                             height: 24,
@@ -271,21 +356,22 @@ class _ResourceCardState extends State<ResourceCard> {
                             ),
                           ),
                         ] else ...[
-                          IconButton(
-                            constraints: const BoxConstraints(),
-                            padding: const EdgeInsets.all(6),
-                            tooltip: isDownloaded ? 'Downloaded Offline' : 'Download PDF',
-                            icon: Icon(
-                              isDownloaded ? Icons.check_circle_rounded : Icons.file_download_outlined,
-                              color: isDownloaded ? AppColors.primary : AppColors.primary,
-                              size: 22,
+                          if (widget.resource.isDownloadable && !widget.resource.isExternalCopyrighted)
+                            IconButton(
+                              constraints: const BoxConstraints(),
+                              padding: const EdgeInsets.all(6),
+                              tooltip: isDownloaded ? 'Downloaded Offline' : 'Download PDF',
+                              icon: Icon(
+                                isDownloaded ? Icons.check_circle_rounded : Icons.file_download_outlined,
+                                color: isDownloaded ? AppColors.primary : AppColors.primary,
+                                size: 22,
+                              ),
+                              onPressed: () async {
+                                if (!isDownloaded) {
+                                  await downloadProvider.downloadPdf(widget.resource);
+                                }
+                              },
                             ),
-                            onPressed: () async {
-                              if (!isDownloaded) {
-                                await downloadProvider.downloadPdf(widget.resource);
-                              }
-                            },
-                          ),
                           const SizedBox(width: 4),
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
@@ -297,8 +383,16 @@ class _ResourceCardState extends State<ResourceCard> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: widget.onTap,
-                            icon: const Icon(Icons.picture_as_pdf_rounded, size: 14),
-                            label: const Text('Open', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                            icon: Icon(
+                              widget.resource.isExternalCopyrighted
+                                  ? Icons.open_in_new_rounded
+                                  : Icons.picture_as_pdf_rounded,
+                              size: 14,
+                            ),
+                            label: Text(
+                              widget.resource.isExternalCopyrighted ? 'Open Website' : 'Open PDF',
+                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ],
                       ],

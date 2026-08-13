@@ -24,6 +24,19 @@ class ResourceModel {
   final String? sectionId;
   final String? sectionNumber;
   final String? sectionType; // e.g., 'Textbook', 'Important Questions', 'Previous Papers', 'Quick Revision', 'Labs', 'Assignments', 'Projects', 'Additional Resources'
+  final String difficultyLevel; // e.g., 'Beginner', 'Intermediate', 'Advanced'
+  final String version;
+  final String sourceProvider;
+  final bool isDownloadable;
+  final bool isAvailable;
+  final String? whatIsThis;
+  final String? whyUseIt;
+  final String estimatedStudyTime;
+  final bool isOfficial;
+  final String language;
+  final int ordering;
+  final String availabilityStatus; // 'available', 'coming_soon', 'external', 'unavailable'
+  final String copyrightTier; // 'created_by_cssed', 'open_licensed', 'public_domain', 'officially_provided', 'external_copyrighted'
 
   const ResourceModel({
     required this.id,
@@ -51,12 +64,34 @@ class ResourceModel {
     this.sectionId,
     this.sectionNumber,
     this.sectionType,
+    this.difficultyLevel = 'Beginner',
+    this.version = '1.0',
+    this.sourceProvider = 'CSSED Curated',
+    this.isDownloadable = true,
+    this.isAvailable = true,
+    this.whatIsThis,
+    this.whyUseIt,
+    this.estimatedStudyTime = '15 mins',
+    this.isOfficial = true,
+    this.language = 'English',
+    this.ordering = 1,
+    this.availabilityStatus = 'available',
+    this.copyrightTier = 'officially_provided',
   });
 
-  // Backward-compatibility getters
+  // Backward-compatibility & Phase 8 getters
   String get downloadUrl => storageUrl;
+  String get remoteUrl => storageUrl;
   int get fileSize => fileSizeBytes;
   int get downloads => downloadCount;
+  String get unitId => chapterId ?? '';
+  String get topicId => sectionId ?? '';
+  String get documentType => sectionType ?? resourceType;
+  String get fileName => storagePath.isNotEmpty
+      ? storagePath.split('/').last
+      : (id.endsWith('.pdf') ? id : '$id.pdf');
+  bool get isComingSoon => availabilityStatus == 'coming_soon';
+  bool get isExternalCopyrighted => copyrightTier == 'external_copyrighted';
 
   ResourceModel copyWith({
     String? id,
@@ -79,6 +114,24 @@ class ResourceModel {
     bool? isActive,
     String? localFilePath,
     String? videoUrl,
+    String? chapterId,
+    int? chapterNumber,
+    String? sectionId,
+    String? sectionNumber,
+    String? sectionType,
+    String? difficultyLevel,
+    String? version,
+    String? sourceProvider,
+    bool? isDownloadable,
+    bool? isAvailable,
+    String? whatIsThis,
+    String? whyUseIt,
+    String? estimatedStudyTime,
+    bool? isOfficial,
+    String? language,
+    int? ordering,
+    String? availabilityStatus,
+    String? copyrightTier,
   }) {
     return ResourceModel(
       id: id ?? this.id,
@@ -101,6 +154,24 @@ class ResourceModel {
       isActive: isActive ?? this.isActive,
       localFilePath: localFilePath ?? this.localFilePath,
       videoUrl: videoUrl ?? this.videoUrl,
+      chapterId: chapterId ?? this.chapterId,
+      chapterNumber: chapterNumber ?? this.chapterNumber,
+      sectionId: sectionId ?? this.sectionId,
+      sectionNumber: sectionNumber ?? this.sectionNumber,
+      sectionType: sectionType ?? this.sectionType,
+      difficultyLevel: difficultyLevel ?? this.difficultyLevel,
+      version: version ?? this.version,
+      sourceProvider: sourceProvider ?? this.sourceProvider,
+      isDownloadable: isDownloadable ?? this.isDownloadable,
+      isAvailable: isAvailable ?? this.isAvailable,
+      whatIsThis: whatIsThis ?? this.whatIsThis,
+      whyUseIt: whyUseIt ?? this.whyUseIt,
+      estimatedStudyTime: estimatedStudyTime ?? this.estimatedStudyTime,
+      isOfficial: isOfficial ?? this.isOfficial,
+      language: language ?? this.language,
+      ordering: ordering ?? this.ordering,
+      availabilityStatus: availabilityStatus ?? this.availabilityStatus,
+      copyrightTier: copyrightTier ?? this.copyrightTier,
     );
   }
 
@@ -132,6 +203,19 @@ class ResourceModel {
       'sectionId': sectionId,
       'sectionNumber': sectionNumber,
       'sectionType': sectionType,
+      'difficultyLevel': difficultyLevel,
+      'version': version,
+      'sourceProvider': sourceProvider,
+      'isDownloadable': isDownloadable,
+      'isAvailable': isAvailable,
+      'whatIsThis': whatIsThis,
+      'whyUseIt': whyUseIt,
+      'estimatedStudyTime': estimatedStudyTime,
+      'isOfficial': isOfficial,
+      'language': language,
+      'ordering': ordering,
+      'availabilityStatus': availabilityStatus,
+      'copyrightTier': copyrightTier,
     };
   }
 
@@ -162,6 +246,19 @@ class ResourceModel {
       sectionId: data['sectionId'],
       sectionNumber: data['sectionNumber'],
       sectionType: data['sectionType'],
+      difficultyLevel: data['difficultyLevel'] ?? data['difficulty'] ?? 'Beginner',
+      version: data['version'] ?? '1.0',
+      sourceProvider: data['sourceProvider'] ?? data['source'] ?? data['provider'] ?? 'CSSED Curated',
+      isDownloadable: data['isDownloadable'] ?? true,
+      isAvailable: data['isAvailable'] ?? true,
+      whatIsThis: data['whatIsThis'],
+      whyUseIt: data['whyUseIt'],
+      estimatedStudyTime: data['estimatedStudyTime'] ?? data['studyTime'] ?? '15 mins',
+      isOfficial: data['isOfficial'] ?? true,
+      language: data['language'] ?? 'English',
+      ordering: data['ordering'] as int? ?? 1,
+      availabilityStatus: data['availabilityStatus'] ?? 'available',
+      copyrightTier: data['copyrightTier'] ?? 'officially_provided',
     );
   }
 }
