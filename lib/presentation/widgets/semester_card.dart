@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../core/constants/app_colors.dart';
 import '../../data/models/semester_model.dart';
 
 class SemesterCard extends StatefulWidget {
@@ -35,7 +36,15 @@ class _SemesterCardState extends State<SemesterCard> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final emoji = _getSemesterEmoji(widget.semester.title);
+
+    final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final orangeAccent = AppColors.primary;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -45,11 +54,17 @@ class _SemesterCardState extends State<SemesterCard> {
         curve: Curves.easeOutCubic,
         transform: _isHovered ? (Matrix4.identity()..translate(0, -2)) : Matrix4.identity(),
         decoration: BoxDecoration(
-          color: const Color(0xFF1565C0), // Primary Blue #1565C0
+          color: cardBg,
           borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: _isHovered ? orangeAccent : borderColor,
+            width: _isHovered ? 1.5 : 1,
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withAlpha(_isHovered ? 50 : 25),
+              color: _isHovered
+                  ? orangeAccent.withAlpha(isDark ? 40 : 25)
+                  : Colors.black.withAlpha(isDark ? 20 : 5),
               blurRadius: _isHovered ? 12 : 6,
               offset: const Offset(0, 3),
             ),
@@ -60,6 +75,8 @@ class _SemesterCardState extends State<SemesterCard> {
           child: InkWell(
             onTap: widget.onTap,
             borderRadius: BorderRadius.circular(18),
+            splashColor: orangeAccent.withAlpha(20),
+            highlightColor: orangeAccent.withAlpha(10),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Row(
@@ -69,7 +86,7 @@ class _SemesterCardState extends State<SemesterCard> {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: Colors.white.withAlpha(35),
+                      color: orangeAccent.withAlpha(isDark ? 30 : 18),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -90,7 +107,7 @@ class _SemesterCardState extends State<SemesterCard> {
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.white,
+                            color: textPrimary,
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -100,7 +117,7 @@ class _SemesterCardState extends State<SemesterCard> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
-                            color: Colors.white.withAlpha(220),
+                            color: textSecondary,
                             fontSize: 13,
                           ),
                         ),
@@ -108,9 +125,9 @@ class _SemesterCardState extends State<SemesterCard> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Icon(
+                  Icon(
                     Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
+                    color: _isHovered ? orangeAccent : textSecondary.withAlpha(160),
                     size: 18,
                   ),
                 ],

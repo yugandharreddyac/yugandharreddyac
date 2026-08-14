@@ -25,6 +25,7 @@ class ProfileScreen extends StatelessWidget {
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
+    final orangeAccent = AppColors.primary;
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
 
@@ -67,16 +68,16 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [royalBlue, emeraldGreen],
+                      colors: [orangeAccent, emeraldGreen],
                     ),
                     shape: BoxShape.circle,
                   ),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     radius: 32,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person_rounded, size: 36, color: royalBlue),
+                    child: Icon(Icons.person_rounded, size: 36, color: orangeAccent),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -104,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
-                          color: royalBlue.withAlpha(15),
+                          color: orangeAccent.withAlpha(20),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -112,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
-                            color: royalBlue,
+                            color: orangeAccent,
                           ),
                         ),
                       ),

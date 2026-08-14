@@ -84,11 +84,14 @@ class AppRoutes {
         return _buildPageRoute(const HomeScreen(), routeSettings);
 
       case semesters:
-        final args = routeSettings.arguments as Map<String, dynamic>? ?? {};
+        final args = routeSettings.arguments as Map<String, dynamic>?;
+        if (args == null || args['yearId'] == null) {
+          return _buildPageRoute(const HomeScreen(), routeSettings);
+        }
         return _buildPageRoute(
           SemesterScreen(
-            yearId: args['yearId'] ?? 'year_1',
-            yearTitle: args['yearTitle'] ?? '1st Year',
+            yearId: args['yearId']!,
+            yearTitle: args['yearTitle'] ?? 'Academic Semesters',
           ),
           routeSettings,
         );

@@ -56,13 +56,13 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     final rawBookmarks = bookmarkProvider.bookmarks;
     final processedBookmarks = _filterBookmarks(rawBookmarks);
 
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
+    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
-    const royalBlue = Color(0xFF2563EB);
+    const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
 
     final filters = ['All', 'Pages Only', 'Syllabus', 'Notes', 'Previous Question Papers'];
@@ -120,11 +120,11 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                         ),
                       ),
                       selected: isSelected,
-                      selectedColor: royalBlue,
+                      selectedColor: orangeAccent,
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? royalBlue : borderColor),
+                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (selected) {
                         if (selected) {
@@ -141,7 +141,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           ],
           Expanded(
             child: rawBookmarks.isEmpty
-                ? _buildEmptyState(context, textPrimary, textSubtitle, royalBlue, isDark, cardColor, borderColor)
+                ? _buildEmptyState(context, textPrimary, textSubtitle, orangeAccent, isDark, cardColor, borderColor)
                 : processedBookmarks.isEmpty
                     ? Center(
                         child: Text(
@@ -173,12 +173,12 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                               leading: Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: (bookmark.pageNumber != null ? emeraldGreen : royalBlue).withAlpha(20),
+                                  color: (bookmark.pageNumber != null ? emeraldGreen : orangeAccent).withAlpha(20),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
                                   bookmark.pageNumber != null ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-                                  color: bookmark.pageNumber != null ? emeraldGreen : royalBlue,
+                                  color: bookmark.pageNumber != null ? emeraldGreen : orangeAccent,
                                   size: 22,
                                 ),
                               ),
@@ -247,7 +247,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     BuildContext context,
     Color textPrimary,
     Color textSubtitle,
-    Color royalBlue,
+    Color orangeAccent,
     bool isDark,
     Color cardColor,
     Color borderColor,
@@ -275,10 +275,10 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: royalBlue.withAlpha(15),
+                  color: orangeAccent.withAlpha(15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.bookmark_border_rounded, color: royalBlue, size: 48),
+                child: Icon(Icons.bookmark_border_rounded, color: orangeAccent, size: 48),
               ),
               const SizedBox(height: 16),
               Text(
@@ -307,7 +307,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                   style: GoogleFonts.inter(fontWeight: FontWeight.bold),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: royalBlue,
+                  backgroundColor: orangeAccent,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

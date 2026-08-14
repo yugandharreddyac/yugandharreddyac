@@ -15,7 +15,7 @@ import '../pdf_viewer/pdf_viewer_screen.dart';
 import '../../widgets/home/unibyte_card.dart';
 import '../../widgets/home/academic_year_card.dart';
 import '../../widgets/home/motivational_banner_widget.dart';
-import '../../widgets/navigation/app_navigation_drawer.dart';
+import '../../widgets/navigation/app_desktop_shell.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,56 +38,63 @@ class _HomeScreenState extends State<HomeScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: pages,
-      ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(isDark ? 50 : 10),
-              blurRadius: 16,
-              offset: const Offset(0, 4),
-            ),
-          ],
+    final isDesktop = MediaQuery.of(context).size.width >= 850;
+
+    return AppDesktopShell(
+      currentRoute: AppRoutes.home,
+      child: Scaffold(
+        backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
+        body: IndexedStack(
+          index: _currentIndex,
+          children: pages,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: NavigationBar(
-            selectedIndex: _currentIndex,
-            elevation: 0,
-            height: 65,
-            backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
-            indicatorColor: const Color(0xFF2563EB).withAlpha(30),
-            onDestinationSelected: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.home_outlined),
-                selectedIcon: Icon(Icons.home_rounded, color: Color(0xFF2563EB)),
-                label: 'Home',
+        bottomNavigationBar: isDesktop
+            ? null
+            : Container(
+                margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(isDark ? 50 : 10),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: NavigationBar(
+                    selectedIndex: _currentIndex,
+                    elevation: 0,
+                    height: 65,
+                    backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
+                    indicatorColor: AppColors.primary.withAlpha(35),
+                    onDestinationSelected: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    destinations: const [
+                      NavigationDestination(
+                        icon: Icon(Icons.home_outlined),
+                        selectedIcon: Icon(Icons.home_rounded, color: AppColors.primary),
+                        label: 'Home',
+                      ),
+                      NavigationDestination(
+                        icon: Icon(Icons.download_outlined),
+                        selectedIcon: Icon(Icons.download_rounded, color: AppColors.primary),
+                        label: 'Downloads',
+                      ),
+                      NavigationDestination(
+                        icon: Icon(Icons.person_outline_rounded),
+                        selectedIcon: Icon(Icons.person_rounded, color: AppColors.primary),
+                        label: 'Profile',
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              NavigationDestination(
-                icon: Icon(Icons.download_outlined),
-                selectedIcon: Icon(Icons.download_rounded, color: Color(0xFF2563EB)),
-                label: 'Downloads',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.person_outline_rounded),
-                selectedIcon: Icon(Icons.person_rounded, color: Color(0xFF2563EB)),
-                label: 'Profile',
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -113,9 +120,9 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
   String _getGreeting() {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning ðŸ‘‹';
-    if (hour < 17) return 'Good Afternoon ðŸ‘‹';
-    return 'Good Evening ðŸ‘‹';
+    if (hour < 12) return 'Good Morning 👋';
+    if (hour < 17) return 'Good Afternoon 👋';
+    return 'Good Evening 👋';
   }
 
   @override
@@ -128,20 +135,18 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     final recentProvider = context.watch<RecentProvider>();
     final recents = recentProvider.recentResources;
 
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    const orangeAccent = AppColors.primary;
+    final cardColor = isDark ? AppColors.surfaceDark : Colors.white;
+    final isDesktop = MediaQuery.of(context).size.width >= 850;
 
-    const royalBlue = Color(0xFF2563EB);
-    const emeraldGreen = Color(0xFF10B981);
-
-    final whiteCardColor = isDark ? AppColors.cardDark : Colors.white;
-
-    return Scaffold(
-      backgroundColor: bgColor,
-      drawer: const AppNavigationDrawer(),
-      body: RefreshIndicator(
+    return Container(
+      color: bgColor,
+      child: RefreshIndicator(
+        color: orangeAccent,
         onRefresh: () async {
           await studyProvider.fetchYears();
         },
@@ -149,198 +154,356 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 45),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: isDark
-                            ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-                            : [royalBlue, const Color(0xFF1D4ED8)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(28),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: royalBlue.withAlpha(isDark ? 30 : 60),
-                          blurRadius: 18,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Builder(
-                              builder: (scaffoldCtx) => IconButton(
-                                icon: const Icon(Icons.menu_rounded, color: Colors.white, size: 26),
-                                tooltip: 'Navigation Menu',
-                                onPressed: () => Scaffold.of(scaffoldCtx).openDrawer(),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withAlpha(35),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(Icons.school_rounded, color: Colors.white, size: 20),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                AppConstants.appName,
+              // --- STREAMLINED HEADER BASED ON VIEWPORT ---
+              if (isDesktop)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _getGreeting(),
                                 style: GoogleFonts.inter(
-                                  fontSize: 18,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: textPrimary,
+                                  letterSpacing: -0.4,
                                 ),
                               ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.admin_panel_settings_rounded, color: Colors.white),
-                              tooltip: 'Admin Portal',
-                              onPressed: () => Navigator.pushNamed(context, AppRoutes.adminDashboard),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.download_rounded, color: Colors.white),
-                              tooltip: 'Downloads',
-                              onPressed: () => Navigator.pushNamed(context, AppRoutes.downloads),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                themeProvider.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                                color: themeProvider.isDarkMode ? Colors.amberAccent : Colors.white,
+                              const SizedBox(height: 2),
+                              Text(
+                                'Continue your Computer Science journey.',
+                                style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: textSubtitle,
+                                ),
                               ),
-                              tooltip: 'Toggle Theme',
-                              onPressed: () => themeProvider.toggleTheme(),
+                            ],
+                          ),
+                          const MotivationalBannerWidget(),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      // Desktop Search Bar
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                        child: AbsorbPointer(
+                          child: Container(
+                            height: 46,
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            decoration: BoxDecoration(
+                              color: cardColor,
+                              borderRadius: BorderRadius.circular(23),
+                              border: Border.all(color: orangeAccent, width: 1.5),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withAlpha(isDark ? 40 : 10),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 4),
-                            GestureDetector(
-                              onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
-                              child: const CircleAvatar(
-                                radius: 18,
-                                backgroundColor: Colors.white,
-                                child: Icon(Icons.person_rounded, size: 20, color: royalBlue),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.search_rounded, color: orangeAccent, size: 20),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    'Search subjects, notes, PYQs, coding, projects...',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 13,
+                                      color: textSubtitle,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Icon(Icons.tune_rounded, color: textSubtitle, size: 18),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              else
+                // --- MOBILE COMPACT HEADER ---
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 42),
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF18181B) : const Color(0xFF09090B),
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(24),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(isDark ? 50 : 30),
+                            blurRadius: 16,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Builder(
+                                builder: (scaffoldCtx) => IconButton(
+                                  icon: const Icon(Icons.menu_rounded, color: Colors.white, size: 24),
+                                  tooltip: 'Navigation Menu',
+                                  onPressed: () => Scaffold.of(scaffoldCtx).openDrawer(),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: orangeAccent,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(Icons.terminal_rounded, color: Colors.white, size: 18),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  AppConstants.appName,
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    letterSpacing: -0.3,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  themeProvider.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                                  color: themeProvider.isDarkMode ? Colors.amberAccent : Colors.white70,
+                                ),
+                                tooltip: 'Toggle Theme',
+                                onPressed: () => themeProvider.toggleTheme(),
+                              ),
+                              const SizedBox(width: 4),
+                              GestureDetector(
+                                onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
+                                child: const CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: orangeAccent,
+                                  child: Icon(Icons.person_rounded, size: 18, color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          const MotivationalBannerWidget(),
+                          const SizedBox(height: 8),
+                          Text(
+                            _getGreeting(),
+                            style: GoogleFonts.inter(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              letterSpacing: -0.4,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Continue your Computer Science journey.',
+                            style: GoogleFonts.inter(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Mobile Search Bar Overlay
+                    Positioned(
+                      bottom: -24,
+                      left: 20,
+                      right: 20,
+                      child: GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                        child: AbsorbPointer(
+                          child: Container(
+                            height: 48,
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            decoration: BoxDecoration(
+                              color: cardColor,
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(color: orangeAccent, width: 1.5),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withAlpha(isDark ? 40 : 10),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.search_rounded, color: orangeAccent, size: 20),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    'Search subjects, notes, PYQs...',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 13,
+                                      color: textSubtitle,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Icon(Icons.tune_rounded, color: textSubtitle, size: 18),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ).animate().fadeIn().slideY(begin: -0.05, end: 0),
+
+              SizedBox(height: isDesktop ? 16 : 32),
+
+              // --- CS QUICK BYTE ---
+              const UniByteCard().animate().fadeIn(delay: 80.ms).slideY(begin: 0.05, end: 0),
+
+              const SizedBox(height: 12),
+
+              // --- COMPACT ROADMAP SUMMARY TILE ---
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: cardColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: borderColor),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: orangeAccent.withAlpha(20),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(Icons.map_rounded, color: orangeAccent, size: 20),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'PERSONAL ROADMAP',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.8,
+                                    color: orangeAccent,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  'Active Path',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                    color: textSubtitle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              'Track your CS milestones & topics',
+                              style: GoogleFonts.inter(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textPrimary,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        const MotivationalBannerWidget(),
-                        const SizedBox(height: 10),
-                        Text(
-                          _getGreeting(),
-                          style: GoogleFonts.inter(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: -0.5,
-                          ),
+                      ),
+                      const SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () => Navigator.pushNamed(context, AppRoutes.roadmap),
+                        style: TextButton.styleFrom(
+                          foregroundColor: orangeAccent,
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Ready to learn today? â€¢ Academic & Career Development Platform',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white.withAlpha(220),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  Positioned(
-                    bottom: -26,
-                    left: 24,
-                    right: 24,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, AppRoutes.search),
-                      child: AbsorbPointer(
-                        child: Container(
-                          height: 52,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: whiteCardColor,
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: borderColor),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withAlpha(isDark ? 30 : 10),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.search_rounded, color: royalBlue, size: 22),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  'Search Notes, PYQs, Subjects, AI, Projects...',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    color: textSubtitle,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Icon(Icons.tune_rounded, color: textSubtitle, size: 20),
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Open Path',
+                              style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(width: 2),
+                            const Icon(Icons.arrow_forward_rounded, size: 14),
+                          ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ).animate().fadeIn().slideY(begin: -0.05, end: 0),
-
-              const SizedBox(height: 28),
-
-              const UniByteCard().animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
+                ),
+              ),
 
               const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _buildCompactQuickAccessGrid(context, isDark, textPrimary, textSubtitle, whiteCardColor, borderColor, royalBlue, emeraldGreen),
-              ),
-              const SizedBox(height: 24),
 
+              // --- COMPACT QUICK ACCESS GRID ---
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: _buildCompactQuickAccessGrid(context, isDark, textPrimary, textSubtitle, cardColor, borderColor, orangeAccent),
+              ),
+              const SizedBox(height: 20),
+
+              // --- ACADEMIC CURRICULUM GRID ---
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Academic Curriculum',
-                      style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.3),
+                      style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.3),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final isWide = constraints.maxWidth > 700;
-                        final crossAxisCount = isWide ? 4 : 2;
-                        final childAspectRatio = isWide ? 1.25 : 1.02;
+                        final crossAxisCount = isWide ? 4 : (constraints.maxWidth > 480 ? 2 : 1);
+                        final childAspectRatio = isWide ? 3.4 : (constraints.maxWidth > 480 ? 2.8 : 3.8);
 
                         return GridView.count(
                           crossAxisCount: crossAxisCount,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
                           childAspectRatio: childAspectRatio,
                           children: const [
                             AcademicYearCard(yearTitle: '1st Year', subtitle: 'Foundation & Basic Concepts', yearId: 'year_1'),
@@ -351,39 +514,39 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         );
                       },
                     ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 24),
 
+                    // --- CAREER & PRACTICAL HUBS ---
                     Text(
                       'Career & Practical Hubs',
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
+                      style: GoogleFonts.outfit(
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: textPrimary,
                         letterSpacing: -0.3,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       'Specialized hubs for coding, placements, projects & higher studies',
                       style: GoogleFonts.inter(
-                        fontSize: 13,
+                        fontSize: 12,
                         color: textSubtitle,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    _buildHubsGrid(context, isDark, textPrimary, textSubtitle, whiteCardColor, borderColor),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 12),
+                    _buildHubsGrid(context, isDark, textPrimary, textSubtitle, cardColor, borderColor, orangeAccent),
+                    const SizedBox(height: 24),
 
-
-
+                    // --- RECENTLY ADDED RESOURCES ---
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Recently Added',
-                          style: GoogleFonts.inter(
-                            fontSize: 20,
+                          style: GoogleFonts.outfit(
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: textPrimary,
                             letterSpacing: -0.3,
@@ -394,65 +557,65 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           icon: Text(
                             'View All',
                             style: GoogleFonts.inter(
-                              color: royalBlue,
+                              color: orangeAccent,
                               fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                              fontSize: 13,
                             ),
                           ),
-                          label: const Icon(Icons.arrow_forward_rounded, size: 16, color: royalBlue),
+                          label: const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
 
                     recents.isEmpty
-                        ? _buildRecentFallbackList(context, royalBlue, emeraldGreen, whiteCardColor, borderColor, textPrimary, textSubtitle)
+                        ? _buildRecentFallbackList(context, orangeAccent, cardColor, borderColor, textPrimary, textSubtitle)
                         : Column(
-                            children: recents.take(5).map((recent) {
+                            children: recents.take(4).map((recent) {
                               final resource = recent.toResourceModel();
                               return Container(
-                                margin: const EdgeInsets.only(bottom: 12),
+                                margin: const EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
-                                  color: whiteCardColor,
-                                  borderRadius: BorderRadius.circular(20),
+                                  color: cardColor,
+                                  borderRadius: BorderRadius.circular(16),
                                   border: Border.all(color: borderColor),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withAlpha(isDark ? 30 : 6),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 3),
+                                      color: Colors.black.withAlpha(isDark ? 30 : 5),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
                                     ),
                                   ],
                                 ),
                                 child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
                                   leading: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: royalBlue.withAlpha(20),
+                                      color: orangeAccent.withAlpha(20),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(Icons.description_rounded, color: royalBlue, size: 20),
+                                    child: const Icon(Icons.description_rounded, color: orangeAccent, size: 18),
                                   ),
                                   title: Text(
                                     recent.resourceTitle,
-                                    style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 17, color: textPrimary),
+                                    style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 14, color: textPrimary),
                                   ),
                                   subtitle: Padding(
-                                    padding: const EdgeInsets.only(top: 4),
+                                    padding: const EdgeInsets.only(top: 2),
                                     child: Row(
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                           decoration: BoxDecoration(
-                                            color: royalBlue.withAlpha(12),
-                                            borderRadius: BorderRadius.circular(6),
+                                            color: orangeAccent.withAlpha(15),
+                                            borderRadius: BorderRadius.circular(4),
                                           ),
                                           child: Text(
                                             recent.resourceType,
                                             style: GoogleFonts.inter(
-                                              color: royalBlue,
-                                              fontSize: 12,
+                                              color: orangeAccent,
+                                              fontSize: 11,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -460,12 +623,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                         const SizedBox(width: 8),
                                         Text(
                                           Formatters.formatDate(recent.openedAt),
-                                          style: GoogleFonts.inter(fontSize: 13, color: textSubtitle),
+                                          style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+                                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.grey),
                                   onTap: () {
                                     Navigator.push(
                                       context,
@@ -496,38 +659,37 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     bool isDark,
     Color textPrimary,
     Color textSubtitle,
-    Color whiteCardColor,
+    Color cardColor,
     Color borderColor,
-    Color royalBlue,
-    Color emeraldGreen,
+    Color orangeAccent,
   ) {
     final actions = [
       (
         title: 'Downloads',
         subtitle: 'Offline PDFs',
         icon: Icons.download_rounded,
-        color: emeraldGreen,
+        color: orangeAccent,
         onTap: () => Navigator.pushNamed(context, AppRoutes.downloads),
       ),
       (
         title: 'Saved',
         subtitle: 'Bookmarks & Notes',
         icon: Icons.bookmark_rounded,
-        color: royalBlue,
+        color: orangeAccent,
         onTap: () => Navigator.pushNamed(context, AppRoutes.bookmarks),
       ),
       (
         title: 'Continue',
         subtitle: 'Resume Reading',
         icon: Icons.history_rounded,
-        color: const Color(0xFF8B5CF6),
+        color: orangeAccent,
         onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
       ),
       (
         title: 'Roadmap',
         subtitle: 'Learning Path',
         icon: Icons.map_rounded,
-        color: const Color(0xFFF59E0B),
+        color: orangeAccent,
         onTap: () => Navigator.pushNamed(context, AppRoutes.roadmap),
       ),
     ];
@@ -538,42 +700,42 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
         Text(
           'QUICK ACCESS',
           style: GoogleFonts.inter(
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.0,
             color: textSubtitle,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         LayoutBuilder(
           builder: (context, constraints) {
             final isWide = constraints.maxWidth > 700;
             final crossAxisCount = isWide ? 4 : 2;
-            final childAspectRatio = isWide ? 2.5 : 2.2;
+            final childAspectRatio = isWide ? 3.4 : 2.8;
 
             return GridView.count(
               crossAxisCount: crossAxisCount,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
               childAspectRatio: childAspectRatio,
               children: actions.map((item) {
                 return Material(
-                  color: whiteCardColor,
-                  borderRadius: BorderRadius.circular(16),
+                  color: cardColor,
+                  borderRadius: BorderRadius.circular(14),
                   child: InkWell(
                     onTap: item.onTap,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(14),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                         border: Border.all(color: borderColor),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withAlpha(isDark ? 20 : 5),
-                            blurRadius: 8,
+                            color: Colors.black.withAlpha(isDark ? 20 : 4),
+                            blurRadius: 6,
                             offset: const Offset(0, 2),
                           ),
                         ],
@@ -581,14 +743,14 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(7),
                             decoration: BoxDecoration(
-                              color: item.color.withAlpha(isDark ? 35 : 18),
-                              borderRadius: BorderRadius.circular(12),
+                              color: item.color.withAlpha(isDark ? 30 : 15),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Icon(item.icon, color: item.color, size: 20),
+                            child: Icon(item.icon, color: item.color, size: 18),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -597,7 +759,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 Text(
                                   item.title,
                                   style: GoogleFonts.inter(
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                     color: textPrimary,
                                   ),
@@ -607,7 +769,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 Text(
                                   item.subtitle,
                                   style: GoogleFonts.inter(
-                                    fontSize: 11,
+                                    fontSize: 10,
                                     color: textSubtitle,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -636,50 +798,45 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     bool isDark,
     Color textPrimary,
     Color textSubtitle,
-    Color whiteCardColor,
+    Color cardColor,
     Color borderColor,
+    Color orangeAccent,
   ) {
     final hubs = [
       (
         title: 'Coding Hub',
         subtitle: 'Languages, DSA, Web/App & DBs',
         icon: Icons.code_rounded,
-        color: const Color(0xFF2563EB),
         route: AppRoutes.codingHub,
       ),
       (
         title: 'Career Hub',
         subtitle: 'Emerging Tech, Portfolio & Resume',
         icon: Icons.rocket_launch_rounded,
-        color: const Color(0xFFEC4899),
         route: AppRoutes.careerHub,
       ),
       (
         title: 'Placement Hub',
         subtitle: 'Aptitude, Tech & HR Interviews',
         icon: Icons.work_history_rounded,
-        color: const Color(0xFF10B981),
         route: AppRoutes.placementHub,
       ),
       (
         title: 'Project Hub',
         subtitle: 'Mini/Major Projects & Systems',
         icon: Icons.folder_special_rounded,
-        color: const Color(0xFF8B5CF6),
         route: AppRoutes.projectHub,
       ),
       (
         title: 'Higher Education Hub',
         subtitle: 'GATE, GRE, MS Abroad & Research',
         icon: Icons.school_rounded,
-        color: const Color(0xFFF59E0B),
         route: AppRoutes.higherEducationHub,
       ),
       (
         title: 'Entrepreneurship Hub',
         subtitle: 'Idea Validation, MVP & Startups',
         icon: Icons.lightbulb_rounded,
-        color: const Color(0xFF06B6D4),
         route: AppRoutes.entrepreneurshipHub,
       ),
     ];
@@ -688,32 +845,32 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
       builder: (context, constraints) {
         final isWide = constraints.maxWidth > 700;
         final crossAxisCount = isWide ? 3 : 2;
-        final childAspectRatio = isWide ? 1.4 : 1.15;
+        final childAspectRatio = isWide ? 1.4 : 1.18;
 
         return GridView.count(
           crossAxisCount: crossAxisCount,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 14,
-          mainAxisSpacing: 14,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
           childAspectRatio: childAspectRatio,
           children: hubs.map((hub) {
             return Material(
-              color: whiteCardColor,
-              borderRadius: BorderRadius.circular(20),
+              color: cardColor,
+              borderRadius: BorderRadius.circular(16),
               child: InkWell(
                 onTap: () => Navigator.pushNamed(context, hub.route),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
                 child: Container(
-                  padding: const EdgeInsets.all(14),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: borderColor),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withAlpha(isDark ? 25 : 6),
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
+                        color: Colors.black.withAlpha(isDark ? 20 : 4),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -725,28 +882,28 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: hub.color.withAlpha(isDark ? 40 : 20),
-                              borderRadius: BorderRadius.circular(14),
+                              color: orangeAccent.withAlpha(isDark ? 35 : 18),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Icon(hub.icon, color: hub.color, size: 22),
+                            child: Icon(hub.icon, color: orangeAccent, size: 20),
                           ),
                           Icon(
                             Icons.arrow_forward_rounded,
-                            size: 18,
-                            color: textSubtitle.withAlpha(120),
+                            size: 16,
+                            color: textSubtitle.withAlpha(140),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 6),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             hub.title,
                             style: GoogleFonts.inter(
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: textPrimary,
                             ),
@@ -777,80 +934,69 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0);
   }
 
-
   // --- RECENTLY ADDED FALLBACK ITEMS ---
   Widget _buildRecentFallbackList(
     BuildContext context,
-    Color royalBlue,
-    Color emeraldGreen,
-    Color whiteCardColor,
+    Color orangeAccent,
+    Color cardColor,
     Color borderColor,
     Color textPrimary,
     Color textSubtitle,
   ) {
     final sampleItems = [
-      {'title': 'Operating Systems Notes', 'cat': 'Notes', 'time': 'Today', 'color': royalBlue},
-      {'title': 'DBMS PYQ', 'cat': 'Question Paper', 'time': 'Yesterday', 'color': emeraldGreen},
-      {'title': 'Artificial Intelligence Roadmap', 'cat': 'Career Hub', 'time': 'Today', 'color': royalBlue},
+      {'title': 'Operating Systems Notes', 'cat': 'Notes', 'time': 'Today'},
+      {'title': 'DBMS PYQ', 'cat': 'Question Paper', 'time': 'Yesterday'},
+      {'title': 'Artificial Intelligence Roadmap', 'cat': 'Career Hub', 'time': 'Today'},
     ];
 
     return Column(
       children: sampleItems.map((item) {
-        final itemColor = item['color'] as Color;
         return Container(
-          margin: const EdgeInsets.only(bottom: 12),
+          margin: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            color: whiteCardColor,
-            borderRadius: BorderRadius.circular(20),
+            color: cardColor,
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(color: borderColor),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(6),
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              ),
-            ],
           ),
           child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
             leading: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: itemColor.withAlpha(20),
+                color: orangeAccent.withAlpha(20),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.description_rounded, color: itemColor, size: 20),
+              child: Icon(Icons.description_rounded, color: orangeAccent, size: 18),
             ),
-            title: Text(item['title'] as String, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 17, color: textPrimary)),
+            title: Text(item['title'] as String, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
             subtitle: Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: 2),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: itemColor.withAlpha(15),
-                      borderRadius: BorderRadius.circular(6),
+                      color: orangeAccent.withAlpha(15),
+                      borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
                       item['cat'] as String,
                       style: GoogleFonts.inter(
-                        color: itemColor,
-                        fontSize: 12,
+                        color: orangeAccent,
+                        fontSize: 11,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Text(item['time'] as String, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+                  Text(item['time'] as String, style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
                 ],
               ),
             ),
-            trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.grey),
           ),
         );
       }).toList(),
     );
   }
-
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../providers/unibyte_provider.dart';
 
@@ -45,24 +46,24 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
     final provider = context.watch<UniByteProvider>();
     final byte = provider.currentUniByte;
 
-    const royalBlue = Color(0xFF2563EB);
-    final cardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? Colors.white : const Color(0xFF111827);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final orangeAccent = AppColors.primary;
+    final cardColor = isDark ? AppColors.surfaceDark : Colors.white;
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: cardColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(isDark ? 30 : 8),
-            blurRadius: 12,
-            offset: const Offset(0, 3),
+            color: Colors.black.withAlpha(isDark ? 30 : 6),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -77,19 +78,19 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                   Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: royalBlue.withAlpha(20),
-                      borderRadius: BorderRadius.circular(10),
+                      color: orangeAccent.withAlpha(25),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.psychology_rounded, color: royalBlue, size: 18),
+                    child: Icon(Icons.psychology_rounded, color: orangeAccent, size: 18),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '🧠 CS QUICK BYTE',
+                    'CS QUICK BYTE',
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.5,
-                      color: royalBlue,
+                      color: orangeAccent,
                     ),
                   ),
                 ],
@@ -107,7 +108,7 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text(
             byte.learn,
             style: GoogleFonts.inter(
@@ -127,7 +128,7 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(
@@ -143,11 +144,11 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: royalBlue,
+                        color: orangeAccent,
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.arrow_forward_rounded, size: 14, color: royalBlue),
+                    Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
                   ],
                 ),
               ),

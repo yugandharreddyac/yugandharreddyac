@@ -49,10 +49,10 @@ class _SubjectCardState extends State<SubjectCard> {
     final iconInfo = Formatters.getSubjectIconInfo(widget.subject.name);
     final accentColor = iconInfo.accentColor;
 
-    final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
+    final cardBgColor = isDark ? AppColors.surfaceDark : Colors.white;
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
 
     return RepaintBoundary(
       child: MouseRegion(
@@ -124,7 +124,7 @@ class _SubjectCardState extends State<SubjectCard> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.inter(
-                                  fontSize: 22,
+                                  fontSize: 16.5,
                                   fontWeight: FontWeight.bold,
                                   color: textPrimary,
                                   letterSpacing: -0.3,
@@ -240,19 +240,19 @@ class _SubjectCardState extends State<SubjectCard> {
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
           child: Row(
             children: [
               Text(
                 iconEmoji,
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 15),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   title,
                   style: GoogleFonts.inter(
-                    fontSize: 15.5,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: textPrimary,
                   ),

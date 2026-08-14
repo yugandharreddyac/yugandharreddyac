@@ -3,61 +3,61 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // Official UNIDOCS Branding Palette (Primary Blue, Black, White)
-  static const Color primary = Color(0xFF2563EB); // Royal Primary Blue
-  static const Color primaryLight = Color(0xFF3B82F6); // Soft Accent Blue
-  static const Color accent = primaryLight; // Alias for backward compatibility
-  static const Color primaryDark = Color(0xFF1D4ED8); // Deep Navy Blue
-  static const Color secondary = Color(0xFF1E40AF); // Secondary Deep Blue
+  // Official UNIDOCS Black & Orange Branding Palette
+  static const Color primary = Color(0xFFFF6B00); // Energetic CS Orange
+  static const Color primaryLight = Color(0xFFF97316); // Bright Orange Accent
+  static const Color accent = primary; // Primary Orange Accent
+  static const Color primaryDark = Color(0xFFEA580C); // Deep Orange Accent
+  static const Color secondary = Color(0xFFC2410C); // Secondary Warm Orange
 
-  // Surface & Background Colors - Light Theme (Pure White & Light Grey)
+  // Surface & Background Colors - Light Theme
   static const Color backgroundLight = Color(0xFFFFFFFF); // Pure White Background
-  static const Color surfaceLight = Color(0xFFF8FAFC); // Off-White Surface
+  static const Color surfaceLight = Color(0xFFF4F4F5); // Off-White Surface
   static const Color cardLight = Colors.white;
-  static const Color borderLight = Color(0xFFE2E8F0); // Light Grey Border
-  static const Color textPrimaryLight = Color(0xFF0F172A); // Slate Black Headings
-  static const Color textSecondaryLight = Color(0xFF475569); // Dark Grey Body Text
+  static const Color borderLight = Color(0xFFE4E4E7); // Clean Neutral Border
+  static const Color textPrimaryLight = Color(0xFF09090B); // Deep Charcoal Headings
+  static const Color textSecondaryLight = Color(0xFF71717A); // Neutral Subtitle Text
 
-  // Surface & Background Colors - University Portal Dark Theme
-  static const Color backgroundDark = Color(0xFF0F172A); // Dark Slate Navy #0F172A
-  static const Color surfaceDark = Color(0xFF1E293B); // Slate Dark 800 #1E293B
-  static const Color cardDark = Color(0xFF1E293B); // Sleek Dark Slate Card #1E293B
-  static const Color portalCardBlue = Color(0xFF1E293B); // Sleek Dark Slate Card
-  static const Color portalBackgroundDark = Color(0xFF0F172A); // Dark Navy #0F172A
-  static const Color borderDark = Color(0xFF334155); // Subtle Slate Border #334155
-  static const Color textPrimaryDark = Color(0xFFF8FAFC);
-  static const Color textSecondaryDark = Color(0xFF94A3B8);
+  // Surface & Background Colors - Black & Dark Charcoal Theme
+  static const Color backgroundDark = Color(0xFF09090B); // Deep Rich Black #09090B
+  static const Color surfaceDark = Color(0xFF18181B); // Sleek Dark Charcoal #18181B
+  static const Color cardDark = Color(0xFF18181B); // Sleek Dark Charcoal Card
+  static const Color portalCardBlue = Color(0xFF18181B); // Sleek Dark Slate/Charcoal Card
+  static const Color portalBackgroundDark = Color(0xFF09090B); // Deep Rich Black
+  static const Color borderDark = Color(0xFF27272A); // Subtle Dark Border #27272A
+  static const Color textPrimaryDark = Color(0xFFFAFAFA);
+  static const Color textSecondaryDark = Color(0xFFA1A1AA);
 
   // Card & Border Aliases
-  static const Color darkCardBackground = Color(0xFF1E293B);
-  static const Color darkCardBorder = Color(0xFF334155);
+  static const Color darkCardBackground = Color(0xFF18181B);
+  static const Color darkCardBorder = Color(0xFF27272A);
   static const Color lightCardBorder = borderLight;
 
-  // Header Gradients (Unified Blue Tonal Gradients)
+  // Header Gradients (Black & Orange Tonal Gradients)
   static const LinearGradient headerGradient = LinearGradient(
     colors: [primaryDark, primary],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
   static const LinearGradient darkHeaderGradient = LinearGradient(
-    colors: [backgroundDark, surfaceDark],
+    colors: [Color(0xFF09090B), Color(0xFF18181B)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
   // Functional Status Colors
-  static const Color success = Color(0xFF2563EB); // Unified Primary Blue for success status
-  static const Color warning = Color(0xFF1E40AF);
-  static const Color error = Color(0xFFDC2626);
+  static const Color success = Color(0xFF10B981); // Emerald Green
+  static const Color warning = Color(0xFFF59E0B); // Amber
+  static const Color error = Color(0xFFEF4444); // Crimson Red
 
-  // Resource Type Specific Colors (Unified Blue Palette)
-  static const Color syllabusColor = Color(0xFF2563EB);
-  static const Color notesColor = Color(0xFF1D4ED8);
-  static const Color pastPapersColor = Color(0xFF3B82F6);
+  // Resource Type Specific Colors (Black & Orange Palette)
+  static const Color syllabusColor = Color(0xFFFF6B00);
+  static const Color notesColor = Color(0xFFF97316);
+  static const Color pastPapersColor = Color(0xFFEA580C);
 
   // Shimmer Skeleton Colors
-  static const Color shimmerBaseLight = Color(0xFFE2E8F0);
-  static const Color shimmerHighlightLight = Color(0xFFF8FAFC);
-  static const Color shimmerBaseDark = Color(0xFF1E293B);
-  static const Color shimmerHighlightDark = Color(0xFF334155);
+  static const Color shimmerBaseLight = Color(0xFFE4E4E7);
+  static const Color shimmerHighlightLight = Color(0xFFF4F4F5);
+  static const Color shimmerBaseDark = Color(0xFF18181B);
+  static const Color shimmerHighlightDark = Color(0xFF27272A);
 }

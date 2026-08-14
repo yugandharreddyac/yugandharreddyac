@@ -32,13 +32,13 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
     final downloadProvider = context.watch<DownloadProvider>();
     final downloadedList = downloadProvider.downloadedResources;
 
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
+    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
-    const royalBlue = Color(0xFF2563EB);
+    const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
 
     // Storage calculation
@@ -103,10 +103,10 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: royalBlue.withAlpha(20),
+                            color: orangeAccent.withAlpha(20),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.sd_storage_rounded, color: royalBlue, size: 20),
+                          child: const Icon(Icons.sd_storage_rounded, color: orangeAccent, size: 20),
                         ),
                         const SizedBox(width: 10),
                         Text(
@@ -124,7 +124,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                       style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: royalBlue,
+                        color: orangeAccent,
                       ),
                     ),
                   ],
@@ -136,7 +136,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                     value: storageProgress > 0 ? storageProgress : 0.02,
                     minHeight: 8,
                     backgroundColor: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
-                    color: royalBlue,
+                    color: orangeAccent,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -171,13 +171,13 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: royalBlue.withAlpha(15),
+                  color: orangeAccent.withAlpha(15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   '${downloadedList.length} Items',
                   style: GoogleFonts.inter(
-                    color: royalBlue,
+                    color: orangeAccent,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -192,7 +192,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
           // 3. DOWNLOADED LIST OR PROFESSIONAL EMPTY STATE
           // ==========================================
           if (downloadedList.isEmpty)
-            _buildEmptyDownloadsState(context, textPrimary, textSubtitle, royalBlue, isDark, cardColor, borderColor)
+            _buildEmptyDownloadsState(context, textPrimary, textSubtitle, orangeAccent, isDark, cardColor, borderColor)
           else
             ListView.builder(
               shrinkWrap: true,
@@ -239,13 +239,13 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                              color: royalBlue.withAlpha(15),
+                              color: orangeAccent.withAlpha(15),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
                               resource.resourceType,
                               style: GoogleFonts.inter(
-                                color: royalBlue,
+                                color: orangeAccent,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -293,7 +293,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
     BuildContext context,
     Color textPrimary,
     Color textSubtitle,
-    Color royalBlue,
+    Color orangeAccent,
     bool isDark,
     Color cardColor,
     Color borderColor,
@@ -317,10 +317,10 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
-              color: royalBlue.withAlpha(15),
+              color: orangeAccent.withAlpha(15),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.cloud_download_outlined, color: royalBlue, size: 48),
+            child: Icon(Icons.cloud_download_outlined, color: orangeAccent, size: 48),
           ),
           const SizedBox(height: 16),
           Text(
@@ -349,7 +349,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
               style: GoogleFonts.inter(fontWeight: FontWeight.bold),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: royalBlue,
+              backgroundColor: orangeAccent,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

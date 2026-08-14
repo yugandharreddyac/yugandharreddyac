@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../data/models/user_goal_model.dart';
 import '../../../data/datasources/non_academic_data.dart';
 import '../../providers/roadmap_provider.dart';
@@ -14,11 +15,12 @@ class MyRoadmapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final roadmapProvider = context.watch<RoadmapProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final orangeAccent = AppColors.primary;
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF059669);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     if (roadmapProvider.isLoading) {
       return const Scaffold(
@@ -83,8 +85,8 @@ class MyRoadmapScreen extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          color: royalBlue,
+                        decoration: BoxDecoration(
+                          color: orangeAccent,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -110,7 +112,7 @@ class MyRoadmapScreen extends StatelessWidget {
                               'Target: ${profile?.year.label ?? '1st Year'} • ${profile?.preferredDomain ?? 'Full-Stack'}',
                               style: GoogleFonts.inter(
                                 fontSize: 12,
-                                color: royalBlue,
+                                color: orangeAccent,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -138,7 +140,7 @@ class MyRoadmapScreen extends StatelessWidget {
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: overallProgress > 0 ? emeraldGreen : royalBlue,
+                          color: overallProgress > 0 ? emeraldGreen : orangeAccent,
                         ),
                       ),
                     ],
@@ -151,7 +153,7 @@ class MyRoadmapScreen extends StatelessWidget {
                       minHeight: 10,
                       backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFCBD5E1),
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        overallProgress > 0 ? emeraldGreen : royalBlue,
+                        overallProgress > 0 ? emeraldGreen : orangeAccent,
                       ),
                     ),
                   ),

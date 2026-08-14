@@ -12,11 +12,10 @@ class AppNavigationDrawer extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    const royalBlue = Color(0xFF2563EB);
-    const emeraldGreen = Color(0xFF10B981);
+    const energeticOrange = AppColors.primary;
 
     return Drawer(
-      backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC),
+      backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFFAFAFA),
       child: SafeArea(
         child: Column(
           children: [
@@ -25,13 +24,7 @@ class AppNavigationDrawer extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: isDark
-                      ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-                      : [royalBlue, const Color(0xFF1D4ED8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: isDark ? const Color(0xFF18181B) : const Color(0xFF09090B),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,10 +34,10 @@ class AppNavigationDrawer extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.white.withAlpha(40),
-                          shape: BoxShape.circle,
+                          color: energeticOrange,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.school_rounded, color: Colors.white, size: 28),
+                        child: const Icon(Icons.terminal_rounded, color: Colors.white, size: 24),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -53,17 +46,18 @@ class AppNavigationDrawer extends StatelessWidget {
                           children: [
                             Text(
                               AppConstants.appName,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.outfit(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
+                                letterSpacing: -0.3,
                               ),
                             ),
                             Text(
-                              'CSE Learning System',
+                              'CS Learning Platform',
                               style: GoogleFonts.inter(
                                 fontSize: 12,
-                                color: Colors.white.withAlpha(210),
+                                color: Colors.white70,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -76,12 +70,12 @@ class AppNavigationDrawer extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: emeraldGreen.withAlpha(40),
+                      color: energeticOrange.withAlpha(40),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: emeraldGreen.withAlpha(80)),
+                      border: Border.all(color: energeticOrange.withAlpha(80)),
                     ),
                     child: Text(
-                      '🎓 Beginner-First Mentor Guide',
+                      '🎓 Computer Science Learning Hub',
                       style: GoogleFonts.inter(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -98,13 +92,24 @@ class AppNavigationDrawer extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 children: [
-                  _buildSectionHeader(context, 'ACADEMIC CURRICULUM'),
+                  _buildSectionHeader(context, 'LEARN'),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.school_rounded,
+                    title: 'Academic Curriculum Overview',
+                    subtitle: 'View All 4 Academic Years (1st - 4th Year)',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
+                    },
+                  ),
                   _buildDrawerTile(
                     context: context,
                     icon: Icons.filter_1_rounded,
-                    title: '1st Year',
-                    subtitle: 'Engineering Mathematics, C, Physics, Chemistry',
-                    color: const Color(0xFF3B82F6),
+                    title: '1st Year Academic',
+                    subtitle: 'Engineering Maths, C, Physics, Chemistry',
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.semesters, arguments: {
@@ -116,9 +121,9 @@ class AppNavigationDrawer extends StatelessWidget {
                   _buildDrawerTile(
                     context: context,
                     icon: Icons.filter_2_rounded,
-                    title: '2nd Year',
+                    title: '2nd Year Academic',
                     subtitle: 'Data Structures, OOP Java, OS, DBMS',
-                    color: const Color(0xFF10B981),
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.semesters, arguments: {
@@ -130,9 +135,9 @@ class AppNavigationDrawer extends StatelessWidget {
                   _buildDrawerTile(
                     context: context,
                     icon: Icons.filter_3_rounded,
-                    title: '3rd Year',
+                    title: '3rd Year Academic',
                     subtitle: 'Algorithms, Web Dev, Computer Networks',
-                    color: const Color(0xFF8B5CF6),
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.semesters, arguments: {
@@ -144,9 +149,9 @@ class AppNavigationDrawer extends StatelessWidget {
                   _buildDrawerTile(
                     context: context,
                     icon: Icons.filter_4_rounded,
-                    title: '4th Year',
+                    title: '4th Year Academic',
                     subtitle: 'Cloud, Distributed Systems, Capstone Project',
-                    color: const Color(0xFFF59E0B),
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.semesters, arguments: {
@@ -166,8 +171,8 @@ class AppNavigationDrawer extends StatelessWidget {
                     context: context,
                     icon: Icons.code_rounded,
                     title: 'Coding Hub',
-                    subtitle: 'Basics, Python, Java, C++, DSA, Projects',
-                    color: const Color(0xFF2563EB),
+                    subtitle: 'Languages, DSA, Web/App & DBs',
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.codingHub);
@@ -178,7 +183,7 @@ class AppNavigationDrawer extends StatelessWidget {
                     icon: Icons.rocket_launch_rounded,
                     title: 'Career Hub',
                     subtitle: 'Emerging Tech, Portfolio & Resume Prep',
-                    color: const Color(0xFFEC4899),
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.careerHub);
@@ -188,8 +193,8 @@ class AppNavigationDrawer extends StatelessWidget {
                     context: context,
                     icon: Icons.work_history_rounded,
                     title: 'Placement Hub',
-                    subtitle: 'Aptitude, Reasoning, Technical & HR Interviews',
-                    color: const Color(0xFF10B981),
+                    subtitle: 'Aptitude, Reasoning, Technical & HR',
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.placementHub);
@@ -199,8 +204,8 @@ class AppNavigationDrawer extends StatelessWidget {
                     context: context,
                     icon: Icons.folder_special_rounded,
                     title: 'Project Hub',
-                    subtitle: 'Mini & Major Projects, Blueprints & Open Source',
-                    color: const Color(0xFF8B5CF6),
+                    subtitle: 'Mini & Major Projects, Blueprints',
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.projectHub);
@@ -210,8 +215,8 @@ class AppNavigationDrawer extends StatelessWidget {
                     context: context,
                     icon: Icons.school_rounded,
                     title: 'Higher Education Hub',
-                    subtitle: 'GATE, GRE, MS Abroad & Scholarships',
-                    color: const Color(0xFFF59E0B),
+                    subtitle: 'GATE, GRE, MS Abroad & Research',
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.higherEducationHub);
@@ -221,11 +226,51 @@ class AppNavigationDrawer extends StatelessWidget {
                     context: context,
                     icon: Icons.lightbulb_rounded,
                     title: 'Entrepreneurship Hub',
-                    subtitle: 'Problem Discovery, MVP & Startup Execution',
-                    color: const Color(0xFFF59E0B),
+                    subtitle: 'Problem Discovery, MVP & Startups',
+                    color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.entrepreneurshipHub);
+                    },
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Divider(height: 1),
+                  ),
+
+                  _buildSectionHeader(context, 'LIBRARY & ACCOUNT'),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.bookmark_rounded,
+                    title: 'Saved Resources',
+                    subtitle: 'Bookmarked notes and syllabus',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.bookmarks);
+                    },
+                  ),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.download_rounded,
+                    title: 'Offline Downloads',
+                    subtitle: 'Saved PDFs for offline viewing',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.downloads);
+                    },
+                  ),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.person_rounded,
+                    title: 'Profile & Settings',
+                    subtitle: 'User account preferences',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.profile);
                     },
                   ),
                 ],
@@ -247,7 +292,7 @@ class AppNavigationDrawer extends StatelessWidget {
           fontSize: 11,
           fontWeight: FontWeight.bold,
           letterSpacing: 1.0,
-          color: isDark ? AppColors.textSecondaryDark : const Color(0xFF94A3B8),
+          color: isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A),
         ),
       ),
     );
@@ -277,19 +322,19 @@ class AppNavigationDrawer extends StatelessWidget {
         style: GoogleFonts.inter(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: isDark ? AppColors.textPrimaryDark : const Color(0xFF1E293B),
+          color: isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B),
         ),
       ),
       subtitle: Text(
         subtitle,
         style: GoogleFonts.inter(
           fontSize: 11,
-          color: isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B),
+          color: isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A),
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: const Icon(Icons.chevron_right_rounded, size: 18, color: Color(0xFF94A3B8)),
+      trailing: const Icon(Icons.chevron_right_rounded, size: 18, color: Color(0xFF71717A)),
       onTap: onTap,
     );
   }

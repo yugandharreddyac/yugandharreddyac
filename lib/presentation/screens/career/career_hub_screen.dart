@@ -65,13 +65,13 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
     final isDark = theme.brightness == Brightness.dark;
     final provider = context.watch<CareerProvider>();
 
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
+    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
-    const royalBlue = Color(0xFF2563EB);
+    const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
 
     return Scaffold(
@@ -96,17 +96,14 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
             margin: const EdgeInsets.fromLTRB(24, 16, 24, 8),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: isDark ? AppColors.surfaceDark : Colors.white,
               borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: borderColor),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF2563EB).withOpacity(0.25),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withAlpha(isDark ? 25 : 6),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -115,12 +112,12 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
+                    color: orangeAccent.withAlpha(20),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.verified_rounded,
-                    color: Colors.white,
+                    color: orangeAccent,
                     size: 28,
                   ),
                 ),
@@ -132,7 +129,7 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                       Text(
                         'Why CSSE Hub vs 10,000+ Web Books?',
                         style: GoogleFonts.inter(
-                          color: Colors.white,
+                          color: textPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
@@ -141,7 +138,7 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                       Text(
                         'Zero fluff. Structured step-by-step master paths with direct links to GeeksforGeeks, W3Schools, roadmap.sh, & official docs.',
                         style: GoogleFonts.inter(
-                          color: Colors.white.withOpacity(0.9),
+                          color: textSubtitle,
                           fontSize: 12,
                           height: 1.3,
                         ),
@@ -173,11 +170,11 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                         ),
                       ),
                       selected: isSelected,
-                      selectedColor: royalBlue,
+                      selectedColor: orangeAccent,
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? royalBlue : borderColor),
+                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (_) => provider.selectCategory(cat),
                     ),
@@ -202,7 +199,7 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                         itemCount: provider.filteredTechnologies.length,
                         itemBuilder: (context, index) {
                           final tech = provider.filteredTechnologies[index];
-                          return _buildTechCard(context, tech, royalBlue, emeraldGreen, cardColor, borderColor, textPrimary, textSubtitle, isDark)
+                          return _buildTechCard(context, tech, orangeAccent, emeraldGreen, cardColor, borderColor, textPrimary, textSubtitle, isDark)
                               .animate()
                               .fadeIn(delay: (30 * index).ms)
                               .slideY(begin: 0.05, end: 0);
@@ -217,7 +214,7 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
   Widget _buildTechCard(
     BuildContext context,
     CareerModel tech,
-    Color royalBlue,
+    Color orangeAccent,
     Color emeraldGreen,
     Color cardColor,
     Color borderColor,
@@ -257,12 +254,12 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                 width: 52,
                 height: 52,
                 decoration: BoxDecoration(
-                  color: royalBlue.withAlpha(20),
+                  color: orangeAccent.withAlpha(20),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Icon(
                   _getIconData(tech.icon),
-                  color: royalBlue,
+                  color: orangeAccent,
                   size: 26,
                 ),
               ),
@@ -316,13 +313,13 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: royalBlue.withAlpha(15),
+                            color: orangeAccent.withAlpha(15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             tech.category,
                             style: GoogleFonts.inter(
-                              color: royalBlue,
+                              color: orangeAccent,
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),

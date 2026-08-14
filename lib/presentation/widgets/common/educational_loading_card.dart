@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../data/datasources/educational_content_provider.dart';
 
 class EducationalLoadingCard extends StatefulWidget {
@@ -66,10 +67,11 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? Colors.white : const Color(0xFF111827);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    const orangeAccent = AppColors.primary;
 
     // ==========================================
     // 1. ERROR STATE
@@ -80,13 +82,13 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: cardBg,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.red.shade300),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.error.withAlpha(150)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline_rounded, color: Colors.red, size: 36),
+            const Icon(Icons.error_outline_rounded, color: AppColors.error, size: 36),
             const SizedBox(height: 10),
             Text(
               'Something went wrong',
@@ -112,7 +114,7 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
                 icon: const Icon(Icons.refresh_rounded, size: 16),
                 label: Text('Retry', style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2563EB),
+                  backgroundColor: orangeAccent,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -133,7 +135,7 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: cardBg,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(color: borderColor),
         ),
         child: Column(
@@ -142,10 +144,10 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF2563EB).withAlpha(20),
+                color: orangeAccent.withAlpha(20),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.inbox_rounded, color: Color(0xFF2563EB), size: 32),
+              child: const Icon(Icons.inbox_rounded, color: orangeAccent, size: 32),
             ),
             const SizedBox(height: 12),
             Text(
@@ -170,6 +172,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
               OutlinedButton(
                 onPressed: widget.onEmptyAction,
                 style: OutlinedButton.styleFrom(
+                  foregroundColor: orangeAccent,
+                  side: const BorderSide(color: orangeAccent),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 ),

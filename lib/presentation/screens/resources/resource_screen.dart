@@ -75,11 +75,12 @@ class _ResourceScreenState extends State<ResourceScreen> {
     final chapters = studyProvider.textbookChapters;
     final allResources = studyProvider.resources;
 
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
+    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    const orangeAccent = AppColors.primary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -94,13 +95,7 @@ class _ResourceScreenState extends State<ResourceScreen> {
             margin: const EdgeInsets.fromLTRB(16, 12, 16, 6),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: isDark
-                    ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-                    : [const Color(0xFFEFF6FF), const Color(0xFFDBEAFE)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: isDark ? AppColors.surfaceDark : Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: borderColor),
             ),
@@ -109,10 +104,10 @@ class _ResourceScreenState extends State<ResourceScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.2),
+                    color: orangeAccent.withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.school_rounded, color: AppColors.primary, size: 28),
+                  child: const Icon(Icons.school_rounded, color: orangeAccent, size: 28),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -158,21 +153,21 @@ class _ResourceScreenState extends State<ResourceScreen> {
                     avatar: Icon(
                       sec['icon'] as IconData,
                       size: 16,
-                      color: isSelected ? Colors.black : textSecondary,
+                      color: isSelected ? Colors.white : textSecondary,
                     ),
                     label: Text(
                       sec['title'] as String,
                       style: TextStyle(
-                        color: isSelected ? Colors.black : textPrimary,
+                        color: isSelected ? Colors.white : textPrimary,
                         fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                         fontSize: 13,
                       ),
                     ),
                     selected: isSelected,
-                    selectedColor: AppColors.primary,
+                    selectedColor: orangeAccent,
                     backgroundColor: cardBg,
                     side: BorderSide(
-                      color: isSelected ? AppColors.primary : borderColor,
+                      color: isSelected ? orangeAccent : borderColor,
                     ),
                     onSelected: (selected) {
                       if (selected) {

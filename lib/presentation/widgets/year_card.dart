@@ -23,40 +23,41 @@ class _YearCardState extends State<YearCard> {
   bool _isHovered = false;
 
   Map<String, dynamic> _getYearStyle(int yearNum) {
+    const orangeAccent = AppColors.primary;
     switch (yearNum) {
       case 1:
         return {
           'emoji': '🌱',
-          'subtitle': 'Foundation',
-          'gradient': const [Color(0xFF059669), Color(0xFF10B981)],
+          'subtitle': '1st Year Foundation',
+          'accent': orangeAccent,
           'icon': Icons.spa_rounded,
         };
       case 2:
         return {
-          'emoji': '🚀',
-          'subtitle': 'Core Concepts',
-          'gradient': const [Color(0xFF2563EB), Color(0xFF3B82F6)],
-          'icon': Icons.rocket_launch_rounded,
+          'emoji': '💻',
+          'subtitle': '2nd Year Core CS',
+          'accent': orangeAccent,
+          'icon': Icons.code_rounded,
         };
       case 3:
         return {
-          'emoji': '💻',
-          'subtitle': 'Advanced Learning',
-          'gradient': const [Color(0xFF7C3AED), Color(0xFF8B5CF6)],
-          'icon': Icons.laptop_mac_rounded,
+          'emoji': '🚀',
+          'subtitle': '3rd Year Advanced Systems',
+          'accent': orangeAccent,
+          'icon': Icons.rocket_launch_rounded,
         };
       case 4:
         return {
           'emoji': '🎓',
-          'subtitle': 'Career Ready',
-          'gradient': const [Color(0xFFD97706), Color(0xFBF59E0B)],
+          'subtitle': '4th Year Career & Industry',
+          'accent': orangeAccent,
           'icon': Icons.school_rounded,
         };
       default:
         return {
           'emoji': '📚',
-          'subtitle': 'Curriculum',
-          'gradient': const [Color(0xFF2563EB), Color(0xFF3B82F6)],
+          'subtitle': 'Academic Curriculum',
+          'accent': orangeAccent,
           'icon': Icons.book_rounded,
         };
     }
@@ -70,7 +71,7 @@ class _YearCardState extends State<YearCard> {
     final style = _getYearStyle(widget.year.yearNumber);
     final String emoji = style['emoji'];
     final String subtitle = style['subtitle'];
-    final List<Color> gradientColors = style['gradient'];
+    final Color accentColor = style['accent'];
 
     return RepaintBoundary(
       child: MouseRegion(
@@ -85,49 +86,42 @@ class _YearCardState extends State<YearCard> {
             child: InkWell(
               onTap: widget.onTap,
               borderRadius: BorderRadius.circular(20),
-              splashColor: gradientColors.first.withAlpha(40),
-              highlightColor: gradientColors.first.withAlpha(20),
+              splashColor: accentColor.withAlpha(40),
+              highlightColor: accentColor.withAlpha(20),
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.cardDark : AppColors.cardLight,
+                  color: isDark ? AppColors.surfaceDark : Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: _isHovered
-                        ? gradientColors.first
-                        : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                        ? accentColor
+                        : (isDark ? AppColors.borderDark : const Color(0xFFE4E4E7)),
                     width: _isHovered ? 1.8 : 1,
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: _isHovered
-                          ? gradientColors.first.withAlpha(60)
-                          : Colors.black.withAlpha(isDark ? 30 : 10),
+                          ? accentColor.withAlpha(50)
+                          : Colors.black.withAlpha(isDark ? 25 : 6),
                       blurRadius: _isHovered ? 20 : 10,
-                      offset: const Offset(0, 6),
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Row(
                   children: [
-                    // Gradient Badge Container
+                    // Badge Container
                     Container(
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: gradientColors,
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        color: accentColor.withAlpha(isDark ? 35 : 20),
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: gradientColors.first.withAlpha(80),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                        border: Border.all(
+                          color: accentColor.withAlpha(60),
+                          width: 1,
+                        ),
                       ),
                       child: Center(
                         child: Text(
@@ -150,14 +144,14 @@ class _YearCardState extends State<YearCard> {
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                  color: isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B),
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                 decoration: BoxDecoration(
-                                  color: gradientColors.first.withAlpha(20),
+                                  color: accentColor.withAlpha(20),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
@@ -165,7 +159,7 @@ class _YearCardState extends State<YearCard> {
                                   style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
-                                    color: gradientColors.first,
+                                    color: accentColor,
                                   ),
                                 ),
                               ),
@@ -177,7 +171,7 @@ class _YearCardState extends State<YearCard> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                              color: isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A),
                               fontSize: 13,
                             ),
                           ),
@@ -192,14 +186,14 @@ class _YearCardState extends State<YearCard> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: _isHovered
-                            ? gradientColors.first
+                            ? accentColor
                             : (isDark ? AppColors.borderDark.withAlpha(50) : Colors.grey.withAlpha(20)),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.arrow_forward_rounded,
                         size: 18,
-                        color: _isHovered ? Colors.white : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        color: _isHovered ? Colors.white : (isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A)),
                       ),
                     ),
                   ],

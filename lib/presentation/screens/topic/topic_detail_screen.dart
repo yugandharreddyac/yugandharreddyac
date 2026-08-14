@@ -44,9 +44,9 @@ class TopicDetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.surfaceDark : const Color(0xFFEFF6FF),
+              color: isDark ? AppColors.surfaceDark : const Color(0xFFFFF7ED),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFBFDBFE)),
+              border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFFFEDD5)),
             ),
             child: Row(
               children: [
@@ -69,17 +69,14 @@ class TopicDetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: isDark ? AppColors.surfaceDark : Colors.white,
               borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: borderColor),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF2563EB).withOpacity(0.25),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withAlpha(isDark ? 25 : 6),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -89,18 +86,18 @@ class TopicDetailScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: AppColors.primary.withAlpha(25),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     'TOPIC ${topic.topicNumber}',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11),
+                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 11),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   topic.title,
-                  style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),

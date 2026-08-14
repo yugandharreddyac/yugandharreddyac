@@ -74,8 +74,7 @@ class _PlacementHubScreenState extends State<PlacementHubScreen> {
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
-
-    const royalBlue = Color(0xFF2563EB);
+    final orangeAccent = AppColors.primary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -166,11 +165,11 @@ class _PlacementHubScreenState extends State<PlacementHubScreen> {
                         ),
                       ),
                       selected: isSelected,
-                      selectedColor: royalBlue,
+                      selectedColor: orangeAccent,
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? royalBlue : borderColor),
+                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (_) => provider.selectCategory(cat),
                     ),

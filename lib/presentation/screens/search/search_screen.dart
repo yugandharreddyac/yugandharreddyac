@@ -83,13 +83,13 @@ class _SearchScreenState extends State<SearchScreen> {
     final bool hasSearchQuery = _searchController.text.trim().isNotEmpty;
     final bool hasResults = matchingSubjs.isNotEmpty || processedResults.isNotEmpty || matchingItems.isNotEmpty;
 
-    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
+    final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
-    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
+    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
-    const royalBlue = Color(0xFF2563EB);
+    const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
     const purpleAccent = Color(0xFF8B5CF6);
 
@@ -98,7 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         title: Text(
           'Global Academic Search',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.outfit(
             fontWeight: FontWeight.bold,
             fontSize: 22,
             color: textPrimary,
@@ -145,11 +145,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                       selected: isSelected,
-                      selectedColor: royalBlue,
+                      selectedColor: orangeAccent,
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? royalBlue : borderColor),
+                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (selected) {
                         if (selected) {
@@ -167,13 +167,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
           Expanded(
             child: studyProvider.isLoading
-                ? _buildLoadingState(royalBlue, textSubtitle)
+                ? _buildLoadingState(orangeAccent, textSubtitle)
                 : studyProvider.isError
-                    ? _buildErrorState(textPrimary, textSubtitle, royalBlue, studyProvider)
+                    ? _buildErrorState(textPrimary, textSubtitle, orangeAccent, studyProvider)
                     : !hasSearchQuery
-                        ? _buildRecentSearchSuggestions(context, royalBlue, textPrimary, textSubtitle, cardColor, borderColor, isDark, studyProvider)
+                        ? _buildRecentSearchSuggestions(context, orangeAccent, textPrimary, textSubtitle, cardColor, borderColor, isDark, studyProvider)
                         : !hasResults
-                            ? _buildNoResultsState(_searchController.text.trim(), textPrimary, textSubtitle, royalBlue, isDark, cardColor, borderColor)
+                            ? _buildNoResultsState(_searchController.text.trim(), textPrimary, textSubtitle, orangeAccent, isDark, cardColor, borderColor)
                             : ListView(
                                 padding: const EdgeInsets.all(20),
                                 children: [
@@ -323,10 +323,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                           leading: Container(
                                             padding: const EdgeInsets.all(10),
                                             decoration: BoxDecoration(
-                                              color: royalBlue.withAlpha(20),
+                                              color: orangeAccent.withAlpha(20),
                                               shape: BoxShape.circle,
                                             ),
-                                            child: const Icon(Icons.description_rounded, color: royalBlue, size: 22),
+                                            child: Icon(Icons.description_rounded, color: orangeAccent, size: 22),
                                           ),
                                           title: Text(
                                             resource.title,
@@ -339,13 +339,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 Container(
                                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                                   decoration: BoxDecoration(
-                                                    color: royalBlue.withAlpha(15),
+                                                    color: orangeAccent.withAlpha(15),
                                                     borderRadius: BorderRadius.circular(6),
                                                   ),
                                                   child: Text(
                                                     resource.resourceType,
                                                     style: GoogleFonts.inter(
-                                                      color: royalBlue,
+                                                      color: orangeAccent,
                                                       fontSize: 12,
                                                       fontWeight: FontWeight.bold,
                                                     ),
@@ -444,7 +444,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildRecentSearchSuggestions(
     BuildContext context,
-    Color royalBlue,
+    Color orangeAccent,
     Color textPrimary,
     Color textSubtitle,
     Color cardColor,
@@ -484,7 +484,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.north_west_rounded, size: 14, color: royalBlue),
+                    Icon(Icons.north_west_rounded, size: 14, color: orangeAccent),
                     const SizedBox(width: 6),
                     Text(
                       kw,
@@ -508,7 +508,7 @@ class _SearchScreenState extends State<SearchScreen> {
     String query,
     Color textPrimary,
     Color textSubtitle,
-    Color royalBlue,
+    Color orangeAccent,
     bool isDark,
     Color cardColor,
     Color borderColor,
@@ -536,10 +536,10 @@ class _SearchScreenState extends State<SearchScreen> {
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: royalBlue.withAlpha(15),
+                  color: orangeAccent.withAlpha(15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.search_off_rounded, color: royalBlue, size: 48),
+                child: Icon(Icons.search_off_rounded, color: orangeAccent, size: 48),
               ),
               const SizedBox(height: 16),
               Text(
