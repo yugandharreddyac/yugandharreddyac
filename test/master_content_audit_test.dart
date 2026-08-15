@@ -74,7 +74,7 @@ void main() {
     });
 
     test('Verify ResumeReadinessModel contains full Resume and LinkedIn checklist items', () {
-      final model = const ResumeReadinessModel();
+      const model = ResumeReadinessModel();
       expect(model.resumeTotalItems, equals(9));
       expect(model.linkedInTotalItems, equals(11));
       expect(model.resumeCompletedCount, equals(0));

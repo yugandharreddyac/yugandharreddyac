@@ -8,6 +8,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:csse_study_hub/firebase_options.dart';
+import 'package:csse_study_hub/core/config/app_config.dart';
 import 'package:csse_study_hub/core/theme/app_theme.dart';
 import 'package:csse_study_hub/core/constants/app_constants.dart';
 import 'package:csse_study_hub/core/routes/app_routes.dart';
@@ -39,6 +40,12 @@ import 'package:csse_study_hub/presentation/providers/admin_provider.dart';
 import 'package:csse_study_hub/data/repositories/non_academic_repository.dart';
 import 'package:csse_study_hub/presentation/providers/hierarchy_provider.dart';
 import 'package:csse_study_hub/presentation/providers/roadmap_provider.dart';
+import 'package:csse_study_hub/presentation/providers/quiz_provider.dart';
+import 'package:csse_study_hub/presentation/providers/unidocs_ai_provider.dart';
+import 'package:csse_study_hub/presentation/providers/document_processing_provider.dart';
+import 'package:csse_study_hub/data/repositories/document_repository.dart';
+import 'package:csse_study_hub/data/datasources/gemini_provider.dart';
+import 'package:csse_study_hub/data/services/ai_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -182,6 +189,34 @@ class CSSEStudyHubApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => RoadmapProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => QuizProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DocumentProcessingProvider(repository: InMemoryDocumentRepository()),
+        ),
+        ChangeNotifierProxyProvider<DocumentProcessingProvider, UniDocsAiProvider>(
+          create: (ctx) {
+            final aiService = AiService(
+              provider: GeminiProvider(
+                backendUrl: AppConfig.aiBackendUrl,
+              ),
+            );
+            return UniDocsAiProvider(aiService: aiService);
+          },
+          update: (ctx, docProc, aiProv) {
+            final prov = aiProv ??
+                UniDocsAiProvider(
+                  aiService: AiService(
+                    provider: GeminiProvider(
+                      backendUrl: AppConfig.aiBackendUrl,
+                    ),
+                  ),
+                );
+            prov.configureDocumentRepository(docProc.repository);
+            return prov;
+          },
         ),
       ],
       child: Consumer<ThemeProvider>(

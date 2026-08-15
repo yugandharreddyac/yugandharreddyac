@@ -92,6 +92,35 @@ class AppNavigationDrawer extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 children: [
+                  _buildSectionHeader(context, 'AI & PERSONALIZED LEARNING'),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.auto_awesome_rounded,
+                    title: 'UniDocs AI Assistant',
+                    subtitle: 'Conversational chat & PDF document intelligence',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.ai);
+                    },
+                  ),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.map_rounded,
+                    title: 'Personalized Roadmap',
+                    subtitle: '15-step custom CS milestone journey',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.roadmap);
+                    },
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Divider(height: 1),
+                  ),
+
                   _buildSectionHeader(context, 'LEARN'),
                   _buildDrawerTile(
                     context: context,
@@ -101,7 +130,7 @@ class AppNavigationDrawer extends StatelessWidget {
                     color: energeticOrange,
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
+                      Navigator.pushNamed(context, AppRoutes.years);
                     },
                   ),
                   _buildDrawerTile(
@@ -198,6 +227,17 @@ class AppNavigationDrawer extends StatelessWidget {
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, AppRoutes.placementHub);
+                    },
+                  ),
+                  _buildDrawerTile(
+                    context: context,
+                    icon: Icons.quiz_rounded,
+                    title: 'Placement & Practice Quizzes',
+                    subtitle: 'MCQs with timers and detailed explanations',
+                    color: energeticOrange,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.quizHub);
                     },
                   ),
                   _buildDrawerTile(

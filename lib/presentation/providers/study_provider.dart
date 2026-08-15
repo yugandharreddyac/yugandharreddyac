@@ -29,6 +29,8 @@ class StudyProvider extends ChangeNotifier {
   List<SubjectModel> _subjectSearchResults = [];
   List<ResourceModel> _searchResults = [];
   List<SearchableItem> _matchingItems = [];
+  String? _didYouMean;
+  bool _isFuzzyResult = false;
 
   ViewState _state = ViewState.idle;
   String? _errorMessage;
@@ -51,6 +53,8 @@ class StudyProvider extends ChangeNotifier {
   List<SubjectModel> get subjectSearchResults => _subjectSearchResults;
   List<ResourceModel> get searchResults => _searchResults;
   List<SearchableItem> get matchingItems => _matchingItems;
+  String? get didYouMean => _didYouMean;
+  bool get isFuzzyResult => _isFuzzyResult;
 
   // View State Getters
   ViewState get state => _state;
@@ -154,6 +158,8 @@ class StudyProvider extends ChangeNotifier {
         _subjectSearchResults = globalResult.matchingSubjects;
         _searchResults = globalResult.matchingResources;
         _matchingItems = globalResult.matchingItems;
+        _didYouMean = globalResult.didYouMean;
+        _isFuzzyResult = globalResult.isFuzzyResult;
 
         if (globalResult.isEmpty) {
           _setState(ViewState.empty);
@@ -164,6 +170,8 @@ class StudyProvider extends ChangeNotifier {
         _subjectSearchResults = [];
         _searchResults = [];
         _matchingItems = [];
+        _didYouMean = null;
+        _isFuzzyResult = false;
         _setState(ViewState.error, error: 'Search failed: $e');
       }
     });
@@ -175,6 +183,8 @@ class StudyProvider extends ChangeNotifier {
     _subjectSearchResults = [];
     _searchResults = [];
     _matchingItems = [];
+    _didYouMean = null;
+    _isFuzzyResult = false;
     _setState(ViewState.idle);
   }
 

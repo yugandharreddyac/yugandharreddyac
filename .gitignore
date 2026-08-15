@@ -41,3 +41,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Node / Backend
+node_modules/
+**/node_modules/
+.env*
+lib_source.zip
+lib_structure.txt

@@ -14,6 +14,8 @@ class GlobalSearchResult {
   final List<CodingResourceModel> matchingCodingResources;
   final List<PlacementModel> matchingPlacementItems;
   final List<ProjectModel> matchingProjects;
+  final String? didYouMean;
+  final bool isFuzzyResult;
 
   const GlobalSearchResult({
     this.matchingSubjects = const [],
@@ -23,6 +25,8 @@ class GlobalSearchResult {
     this.matchingCodingResources = const [],
     this.matchingPlacementItems = const [],
     this.matchingProjects = const [],
+    this.didYouMean,
+    this.isFuzzyResult = false,
   });
 
   bool get isEmpty =>

@@ -8,6 +8,7 @@ import '../../providers/coding_provider.dart';
 import '../../widgets/shimmer_loading.dart';
 import 'coding_language_detail_screen.dart';
 import 'dsa_topic_detail_screen.dart';
+import 'code_playground_screen.dart';
 
 class CodingHubScreen extends StatefulWidget {
   const CodingHubScreen({super.key});
@@ -65,7 +66,7 @@ class _CodingHubScreenState extends State<CodingHubScreen> {
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
@@ -80,6 +81,20 @@ class _CodingHubScreenState extends State<CodingHubScreen> {
           centerTitle: false,
           backgroundColor: cardColor,
           elevation: 0,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.terminal_rounded, color: AppColors.primary),
+              tooltip: 'Launch Sandbox',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CodePlaygroundScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
         body: Column(
           children: [
@@ -158,6 +173,7 @@ class _CodingHubScreenState extends State<CodingHubScreen> {
                   Tab(text: '🎯 Patterns'),
                   Tab(text: '🛠️ Projects'),
                   Tab(text: '📄 Sheets & Links'),
+                  Tab(text: '🚀 Sandbox'),
                 ],
               ),
             ),
@@ -173,6 +189,7 @@ class _CodingHubScreenState extends State<CodingHubScreen> {
                         _buildPatternsTab(context, cardColor, borderColor, textPrimary, textSubtitle, isDark),
                         _buildProjectsTab(context, provider.codingProjects, cardColor, borderColor, textPrimary, textSubtitle, isDark),
                         _buildSheetsTab(context, provider, cardColor, borderColor, textPrimary, textSubtitle, isDark),
+                        const CodePlaygroundScreen(),
                       ],
                     ),
             ),

@@ -1,3 +1,4 @@
+import '../../core/utils/fuzzy_matcher.dart';
 import 'subject_model.dart';
 import 'resource_model.dart';
 import 'textbook_model.dart';
@@ -67,59 +68,92 @@ class SearchableItem {
   });
 
   /// Evaluates whether this item matches a search query
-  bool matches(String rawQuery) {
-    if (rawQuery.trim().isEmpty) return false;
+  bool matches(String rawQuery) => matchScore(rawQuery) > 0;
 
-    // 1. Trim whitespace & ignore multiple consecutive spaces
+  /// Returns an intelligent match score (0 = no match, 100 = exact match)
+  int matchScore(String rawQuery) {
+    if (rawQuery.trim().isEmpty) return 0;
+
     final q = rawQuery.trim().replaceAll(RegExp(r'\s+'), ' ').toLowerCase();
+    final tLower = title.toLowerCase();
+    final sNameLower = subjectName.toLowerCase();
+    final sCodeLower = subjectCode.toLowerCase();
 
-    // 2. Direct exact or substring matching on key fields
-    if (title.toLowerCase().contains(q) ||
-        subtitle.toLowerCase().contains(q) ||
-        subjectName.toLowerCase().contains(q) ||
-        subjectCode.toLowerCase().contains(q) ||
-        semester.toLowerCase().contains(q) ||
-        year.toLowerCase().contains(q) ||
-        category.toLowerCase().contains(q)) {
-      return true;
+    // Tier 1: Exact Match (Score = 100)
+    if (tLower == q || sCodeLower == q || sNameLower == q) {
+      return 100;
     }
 
-    // 3. Common abbreviations and acronym mapping
-    if (q == 'c' && (subjectCode.toLowerCase() == 'cs1104' || subjectName.toLowerCase().contains('c programming') || subjectName.toLowerCase().contains('using c'))) return true;
-    if (q == 'os' && (subjectName.toLowerCase().contains('operating system') || subjectCode.toLowerCase().contains('1105') || subjectCode.toLowerCase().contains('2105'))) return true;
-    if (q == 'dbms' && (subjectName.toLowerCase().contains('database') || subjectName.toLowerCase().contains('dbms'))) return true;
-    if (q == 'dld' && (subjectName.toLowerCase().contains('digital logic') || subjectCode.toLowerCase() == 'cs1204')) return true;
-    if (q == 'coa' && (subjectName.toLowerCase().contains('organization') || subjectName.toLowerCase().contains('architecture'))) return true;
-    if (q == 'ai' && (subjectName.toLowerCase().contains('artificial intelligence') || subjectName.toLowerCase().contains('ai'))) return true;
-    if (q == 'ml' && (subjectName.toLowerCase().contains('machine learning') || subjectName.toLowerCase().contains('ml'))) return true;
+    // Tier 2: Prefix Match (Score = 85)
+    if (tLower.startsWith(q) || sCodeLower.startsWith(q) || sNameLower.startsWith(q)) {
+      return 85;
+    }
 
-    // 4. Match against keywords list
+    // Tier 3: CS Abbreviation expansion match (Score = 80)
+    final expansions = FuzzyMatcher.expandAbbreviations(q);
+    for (final exp in expansions) {
+      if (tLower.contains(exp) || sNameLower.contains(exp) || sCodeLower.contains(exp)) {
+        return 80;
+      }
+      for (final kw in keywords) {
+        if (kw.toLowerCase().contains(exp)) return 75;
+      }
+    }
+
+    // Hardcoded high-priority abbreviations for backwards compatibility
+    if (q == 'c' && (sCodeLower == 'cs1104' || sNameLower.contains('c programming') || sNameLower.contains('using c'))) return 80;
+    if (q == 'os' && (sNameLower.contains('operating system') || sCodeLower.contains('1105') || sCodeLower.contains('2105'))) return 80;
+    if (q == 'dbms' && (sNameLower.contains('database') || sNameLower.contains('dbms'))) return 80;
+    if (q == 'dld' && (sNameLower.contains('digital logic') || sCodeLower == 'cs1204')) return 80;
+    if (q == 'coa' && (sNameLower.contains('organization') || sNameLower.contains('architecture'))) return 80;
+    if (q == 'ai' && (sNameLower.contains('artificial intelligence') || sNameLower.contains('ai'))) return 80;
+    if (q == 'ml' && (sNameLower.contains('machine learning') || sNameLower.contains('ml'))) return 80;
+
+    // Tier 4: Direct Substring Match in title, subjectName or category (Score = 65)
+    if (tLower.contains(q) || sNameLower.contains(q) || category.toLowerCase().contains(q)) {
+      return 65;
+    }
+
+    // Tier 5: Direct Substring in keywords, syllabus, units, notes, or previous papers (Score = 50)
     for (final kw in keywords) {
       if (kw.trim().isEmpty) continue;
       final kwLower = kw.toLowerCase();
-      if (kwLower.contains(q) || (kwLower.length >= 3 && q.contains(kwLower))) return true;
+      if (kwLower.contains(q) || (kwLower.length >= 3 && q.contains(kwLower))) return 50;
     }
 
-    // 5. Match against syllabusTopics list
     for (final topic in syllabusTopics) {
-      final tLower = topic.toLowerCase();
-      if (tLower.contains(q)) return true;
+      if (topic.toLowerCase().contains(q)) return 50;
     }
 
-    // 6. Match against unitTitles list
     for (final unit in unitTitles) {
-      final uLower = unit.toLowerCase();
-      if (uLower.contains(q)) return true;
+      if (unit.toLowerCase().contains(q)) return 50;
     }
 
-    // 7. Match against noteTitles & previousPaperTitles list
     for (final note in noteTitles) {
-      if (note.toLowerCase().contains(q)) return true;
-    }
-    for (final paper in previousPaperTitles) {
-      if (paper.toLowerCase().contains(q)) return true;
+      if (note.toLowerCase().contains(q)) return 50;
     }
 
-    return false;
+    for (final paper in previousPaperTitles) {
+      if (paper.toLowerCase().contains(q)) return 50;
+    }
+
+    // Tier 6: Substring match in subtitle (Score = 40)
+    if (subtitle.toLowerCase().contains(q) || semester.toLowerCase().contains(q) || year.toLowerCase().contains(q)) {
+      return 40;
+    }
+
+    // Tier 7: Fuzzy / Typo Tolerance Match (Score = 25)
+    if (q.length >= 3) {
+      if (FuzzyMatcher.isFuzzyMatch(q, title, threshold: 0.70)) return 25;
+      if (FuzzyMatcher.isFuzzyMatch(q, subjectName, threshold: 0.70)) return 25;
+
+      for (final kw in keywords) {
+        if (kw.length >= 3 && FuzzyMatcher.isFuzzyMatch(q, kw, threshold: 0.72)) {
+          return 25;
+        }
+      }
+    }
+
+    return 0;
   }
 }

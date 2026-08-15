@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../data/models/user_goal_model.dart';
 import '../../data/models/career_models.dart';
+import '../../data/models/personalized_roadmap_models.dart';
+import '../../data/datasources/roadmap_generator_interface.dart';
+import '../../data/datasources/rule_based_roadmap_generator.dart';
 import '../../data/datasources/career_data_mapper.dart';
 import '../../data/datasources/non_academic_data.dart';
 import '../../data/repositories/roadmap_repository.dart';
@@ -67,6 +70,7 @@ class StudentInsightsModel {
 
 class RoadmapProvider extends ChangeNotifier {
   final RoadmapRepository _repository = RoadmapRepository();
+  final RoadmapGenerator _generator = const RuleBasedRoadmapGenerator();
 
   UserGoalProfile? _profile;
   Map<String, TopicProgressModel> _progressMap = {};
@@ -74,6 +78,9 @@ class RoadmapProvider extends ChangeNotifier {
   List<String> _recentTopicIds = [];
   List<String> _bookmarkedTopicIds = [];
   ResumeReadinessModel _resumeChecklist = const ResumeReadinessModel();
+  
+  PersonalizedProfile? _personalizedProfile;
+  PersonalizedRoadmap? _personalizedRoadmap;
   bool _isLoading = true;
 
   UserGoalProfile? get profile => _profile;
@@ -84,6 +91,11 @@ class RoadmapProvider extends ChangeNotifier {
   List<String> get recentTopicIds => List.unmodifiable(_recentTopicIds);
   List<String> get bookmarkedTopicIds => List.unmodifiable(_bookmarkedTopicIds);
   ResumeReadinessModel get resumeChecklist => _resumeChecklist;
+
+  PersonalizedProfile? get personalizedProfile => _personalizedProfile;
+  PersonalizedRoadmap? get personalizedRoadmap => _personalizedRoadmap;
+  bool get hasPersonalizedRoadmap => _personalizedRoadmap != null;
+  double get personalizedOverallProgress => _personalizedRoadmap?.overallProgress ?? 0.0;
 
   // Phase 6 Guidance Engine Methods
   StudentStatus get studentStatus => GuidanceEngine.determineStudentStatus(_profile, _progressMap, getRoadmapStages(), _resumeChecklist);
@@ -101,8 +113,110 @@ class RoadmapProvider extends ChangeNotifier {
     _recentTopicIds = await _repository.loadRecentTopicIds();
     _bookmarkedTopicIds = await _repository.loadBookmarkedTopicIds();
     _resumeChecklist = await _repository.loadResumeChecklist();
+    _personalizedProfile = await _repository.loadPersonalizedProfile();
+    _personalizedRoadmap = await _repository.loadPersonalizedRoadmap();
     _isLoading = false;
     notifyListeners();
+  }
+
+  // --- Personalized Roadmap Engine Operations ---
+
+  Future<void> generatePersonalizedRoadmap(PersonalizedProfile profile) async {
+    _personalizedProfile = profile;
+    _personalizedRoadmap = await _generator.generateRoadmap(
+      profile: profile,
+      existingRoadmap: _personalizedRoadmap,
+    );
+    await _repository.savePersonalizedProfile(profile);
+    if (_personalizedRoadmap != null) {
+      await _repository.savePersonalizedRoadmap(_personalizedRoadmap!);
+    }
+    notifyListeners();
+  }
+
+  Future<void> recalculatePersonalizedRoadmap(PersonalizedProfile updatedProfile) async {
+    _personalizedProfile = updatedProfile;
+    if (_personalizedRoadmap != null) {
+      _personalizedRoadmap = await _generator.recalculateRoadmap(
+        updatedProfile: updatedProfile,
+        currentRoadmap: _personalizedRoadmap!,
+      );
+    } else {
+      _personalizedRoadmap = await _generator.generateRoadmap(
+        profile: updatedProfile,
+      );
+    }
+    await _repository.savePersonalizedProfile(updatedProfile);
+    if (_personalizedRoadmap != null) {
+      await _repository.savePersonalizedRoadmap(_personalizedRoadmap!);
+    }
+    notifyListeners();
+  }
+
+  Future<void> markPersonalizedItemStatus(String itemId, RoadmapItemStatus status) async {
+    if (_personalizedRoadmap == null) return;
+
+    final completedIds = <String>{};
+    for (final phase in _personalizedRoadmap!.phases) {
+      for (final item in phase.items) {
+        if (item.id == itemId) {
+          if (status == RoadmapItemStatus.completed) {
+            completedIds.add(item.id);
+          }
+        } else if (item.isCompleted) {
+          completedIds.add(item.id);
+        }
+      }
+    }
+
+    final updatedPhases = _personalizedRoadmap!.phases.map((phase) {
+      final updatedItems = phase.items.map((item) {
+        if (item.id == itemId) {
+          return item.copyWith(status: status);
+        }
+        if (item.isCompleted) return item;
+
+        // Check if all prerequisites are fulfilled
+        final hasUnmetPrereq = item.prerequisites.any((prereqId) => !completedIds.contains(prereqId));
+        if (hasUnmetPrereq) {
+          return item.copyWith(status: RoadmapItemStatus.locked);
+        } else if (item.isLocked) {
+          return item.copyWith(status: RoadmapItemStatus.notStarted);
+        }
+        return item;
+      }).toList();
+      return phase.copyWith(items: updatedItems);
+    }).toList();
+
+    _personalizedRoadmap = _personalizedRoadmap!.copyWith(
+      phases: updatedPhases,
+      lastUpdatedAt: DateTime.now(),
+    );
+
+    await _repository.savePersonalizedRoadmap(_personalizedRoadmap!);
+    notifyListeners();
+  }
+
+  List<RoadmapItem> getTodaysPersonalizedTasks() {
+    if (_personalizedRoadmap == null) return [];
+
+    final dailyMinutes = _personalizedProfile?.dailyLearningTimeMinutes ?? 60;
+    final List<RoadmapItem> todaysTasks = [];
+    int accumulatedMinutes = 0;
+
+    for (final phase in _personalizedRoadmap!.phases) {
+      for (final item in phase.items) {
+        if (!item.isCompleted && !item.isLocked) {
+          todaysTasks.add(item);
+          accumulatedMinutes += item.estimatedMinutes;
+          if (accumulatedMinutes >= dailyMinutes) {
+            return todaysTasks;
+          }
+        }
+      }
+    }
+
+    return todaysTasks;
   }
 
   Future<void> setGoalProfile(UserGoalProfile profile) async {

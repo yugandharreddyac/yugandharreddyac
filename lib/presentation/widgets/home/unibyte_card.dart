@@ -46,7 +46,7 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
     final provider = context.watch<UniByteProvider>();
     final byte = provider.currentUniByte;
 
-    final orangeAccent = AppColors.primary;
+    const orangeAccent = AppColors.primary;
     final cardColor = isDark ? AppColors.surfaceDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
@@ -81,7 +81,7 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                       color: orangeAccent.withAlpha(25),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(Icons.psychology_rounded, color: orangeAccent, size: 18),
+                    child: const Icon(Icons.psychology_rounded, color: orangeAccent, size: 18),
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -148,7 +148,7 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                       ),
                     ),
                     const SizedBox(width: 4),
-                    Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
+                    const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
                   ],
                 ),
               ),

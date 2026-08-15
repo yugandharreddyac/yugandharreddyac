@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_goal_model.dart';
 import '../models/career_models.dart';
+import '../models/personalized_roadmap_models.dart';
 
 class RoadmapRepository {
   static const String _profileKey = 'cssed_user_goal_profile';
@@ -10,6 +11,9 @@ class RoadmapRepository {
   static const String _lastOpenedKey = 'cssed_last_opened_topic_id';
   static const String _recentTopicsKey = 'cssed_recent_topic_ids';
   static const String _bookmarkedTopicsKey = 'cssed_bookmarked_topic_ids';
+
+  static const String _personalizedProfileKey = 'cssed_personalized_profile';
+  static const String _personalizedRoadmapKey = 'cssed_personalized_roadmap';
 
   Future<UserGoalProfile?> loadGoalProfile() async {
     try {
@@ -124,6 +128,76 @@ class RoadmapRepository {
       final prefs = await SharedPreferences.getInstance();
       final jsonStr = jsonEncode(checklist.toJson());
       await prefs.setString(_resumeChecklistKey, jsonStr);
+    } catch (_) {}
+  }
+
+  // --- Personalized Roadmap Persistence ---
+
+  Future<PersonalizedProfile?> loadPersonalizedProfile() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonStr = prefs.getString(_personalizedProfileKey);
+      if (jsonStr != null && jsonStr.isNotEmpty) {
+        return PersonalizedProfile.fromJson(jsonStr);
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  Future<void> savePersonalizedProfile(PersonalizedProfile profile) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_personalizedProfileKey, profile.toJson());
+    } catch (_) {}
+  }
+
+  Future<PersonalizedRoadmap?> loadPersonalizedRoadmap() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonStr = prefs.getString(_personalizedRoadmapKey);
+      if (jsonStr != null && jsonStr.isNotEmpty) {
+        return PersonalizedRoadmap.fromJson(jsonStr);
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  Future<void> savePersonalizedRoadmap(PersonalizedRoadmap roadmap) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_personalizedRoadmapKey, roadmap.toJson());
+    } catch (_) {}
+  }
+
+  Future<void> clearPersonalizedRoadmap() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_personalizedRoadmapKey);
+      await prefs.remove(_personalizedProfileKey);
+    } catch (_) {}
+  }
+
+  Future<void> updateRoadmapItemStatus(String itemId, RoadmapItemStatus status) async {
+    try {
+      final roadmap = await loadPersonalizedRoadmap();
+      if (roadmap == null) return;
+
+      final updatedPhases = roadmap.phases.map((phase) {
+        final updatedItems = phase.items.map((item) {
+          if (item.id == itemId) {
+            return item.copyWith(status: status);
+          }
+          return item;
+        }).toList();
+        return phase.copyWith(items: updatedItems);
+      }).toList();
+
+      final updatedRoadmap = roadmap.copyWith(
+        phases: updatedPhases,
+        lastUpdatedAt: DateTime.now(),
+      );
+
+      await savePersonalizedRoadmap(updatedRoadmap);
     } catch (_) {}
   }
 }

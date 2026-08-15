@@ -63,6 +63,13 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
         backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
         elevation: 0,
         scrolledUnderElevation: 1,
+        leading: Navigator.canPop(context)
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                tooltip: 'Back',
+                onPressed: () => Navigator.pop(context),
+              )
+            : null,
         title: Text(
           widget.category.title,
           style: GoogleFonts.inter(

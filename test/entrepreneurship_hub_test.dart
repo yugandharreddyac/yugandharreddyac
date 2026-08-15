@@ -7,7 +7,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Entrepreneurship Hub Unit & Integration Tests', () {
-    final hub = NonAcademicData.entrepreneurshipHub;
+    const hub = NonAcademicData.entrepreneurshipHub;
 
     test('Entrepreneurship Hub exists with correct metadata and routes', () {
       expect(hub, isNotNull);

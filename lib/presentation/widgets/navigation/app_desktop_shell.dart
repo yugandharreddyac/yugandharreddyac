@@ -22,6 +22,7 @@ class AppDesktopShell extends StatefulWidget {
 
 class _AppDesktopShellState extends State<AppDesktopShell> {
   bool _isCollapsed = false;
+  bool _isSidebarHidden = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,169 +39,183 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
 
     final sidebarBg = isDark ? const Color(0xFF09090B) : const Color(0xFF18181B);
     final sidebarBorder = isDark ? const Color(0xFF27272A) : const Color(0xFF3F3F46);
-    final sidebarWidth = _isCollapsed ? 72.0 : 250.0;
+    final sidebarWidth = _isSidebarHidden
+        ? 0.0
+        : (_isCollapsed ? 72.0 : 250.0);
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
       body: Row(
         children: [
-          // Sidebar Container
+          // Sidebar Container (Optional & Toggleable)
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: sidebarWidth,
-            decoration: BoxDecoration(
-              color: sidebarBg,
-              border: Border(
-                right: BorderSide(color: sidebarBorder, width: 1),
-              ),
-            ),
-            child: Column(
-              children: [
-                // Sidebar Header
-                Container(
-                  height: 64,
-                  padding: EdgeInsets.symmetric(horizontal: _isCollapsed ? 12 : 18),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(Icons.terminal_rounded, color: Colors.white, size: 20),
+            child: _isSidebarHidden
+                ? const SizedBox.shrink()
+                : Container(
+                    decoration: BoxDecoration(
+                      color: sidebarBg,
+                      border: Border(
+                        right: BorderSide(color: sidebarBorder, width: 1),
                       ),
-                      if (!_isCollapsed) ...[
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    child: Column(
+                      children: [
+                        // Sidebar Header
+                        Container(
+                          height: 64,
+                          padding: EdgeInsets.symmetric(horizontal: _isCollapsed ? 12 : 18),
+                          child: Row(
                             children: [
-                              Text(
-                                AppConstants.appName,
-                                style: GoogleFonts.outfit(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  letterSpacing: -0.3,
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                child: const Icon(Icons.terminal_rounded, color: Colors.white, size: 20),
                               ),
-                              Text(
-                                'CS Learning Platform',
-                                style: GoogleFonts.inter(
-                                  fontSize: 11,
-                                  color: Colors.white60,
-                                  fontWeight: FontWeight.w500,
+                              if (!_isCollapsed) ...[
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        AppConstants.appName,
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          letterSpacing: -0.3,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        'CS Learning Platform',
+                                        style: GoogleFonts.inter(
+                                          fontSize: 11,
+                                          color: Colors.white60,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        const Divider(height: 1, color: Color(0xFF27272A)),
+
+                        // Navigation Items
+                        Expanded(
+                          child: ListView(
+                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                            children: [
+                              _buildSidebarItem(
+                                icon: Icons.grid_view_rounded,
+                                label: 'Home',
+                                route: AppRoutes.home,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.school_rounded,
+                                label: 'Academic Curriculum',
+                                route: AppRoutes.years,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.code_rounded,
+                                label: 'Coding Hub',
+                                route: AppRoutes.codingHub,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.rocket_launch_rounded,
+                                label: 'Career Hub',
+                                route: AppRoutes.careerHub,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.work_history_rounded,
+                                label: 'Placement Hub',
+                                route: AppRoutes.placementHub,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.folder_special_rounded,
+                                label: 'Project Hub',
+                                route: AppRoutes.projectHub,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.auto_graph_rounded,
+                                label: 'Roadmap',
+                                route: AppRoutes.roadmap,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.auto_awesome_rounded,
+                                label: 'UniDocs AI',
+                                route: AppRoutes.ai,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.bookmark_rounded,
+                                label: 'Saved Resources',
+                                route: AppRoutes.bookmarks,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.download_rounded,
+                                label: 'Offline Downloads',
+                                route: AppRoutes.downloads,
+                              ),
+                              _buildSidebarItem(
+                                icon: Icons.person_rounded,
+                                label: 'Profile & Activity',
+                                route: AppRoutes.profile,
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ],
-                  ),
-                ),
-                const Divider(height: 1, color: Color(0xFF27272A)),
 
-                // Navigation Items
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                    children: [
-                      _buildSidebarItem(
-                        icon: Icons.grid_view_rounded,
-                        label: 'Home',
-                        route: AppRoutes.home,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.school_rounded,
-                        label: 'Academic Curriculum',
-                        route: AppRoutes.home,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.code_rounded,
-                        label: 'Coding Hub',
-                        route: AppRoutes.codingHub,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.rocket_launch_rounded,
-                        label: 'Career Hub',
-                        route: AppRoutes.careerHub,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.work_history_rounded,
-                        label: 'Placement Hub',
-                        route: AppRoutes.placementHub,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.folder_special_rounded,
-                        label: 'Project Hub',
-                        route: AppRoutes.projectHub,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.auto_graph_rounded,
-                        label: 'Roadmap',
-                        route: AppRoutes.roadmap,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.bookmark_rounded,
-                        label: 'Saved Resources',
-                        route: AppRoutes.bookmarks,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.download_rounded,
-                        label: 'Offline Downloads',
-                        route: AppRoutes.downloads,
-                      ),
-                      _buildSidebarItem(
-                        icon: Icons.person_rounded,
-                        label: 'Profile & Activity',
-                        route: AppRoutes.profile,
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Collapse Toggle
-                const Divider(height: 1, color: Color(0xFF27272A)),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _isCollapsed = !_isCollapsed;
-                    });
-                  },
-                  child: Container(
-                    height: 48,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: _isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          _isCollapsed ? Icons.chevron_right_rounded : Icons.chevron_left_rounded,
-                          color: Colors.white70,
-                          size: 20,
-                        ),
-                        if (!_isCollapsed) ...[
-                          const SizedBox(width: 12),
-                          Text(
-                            'Collapse Sidebar',
-                            style: GoogleFonts.inter(
-                              color: Colors.white70,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
+                        // Collapse Toggle
+                        const Divider(height: 1, color: Color(0xFF27272A)),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _isCollapsed = !_isCollapsed;
+                            });
+                          },
+                          child: Container(
+                            height: 48,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: _isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  _isCollapsed ? Icons.chevron_right_rounded : Icons.chevron_left_rounded,
+                                  color: Colors.white70,
+                                  size: 20,
+                                ),
+                                if (!_isCollapsed) ...[
+                                  const SizedBox(width: 12),
+                                  Flexible(
+                                    child: Text(
+                                      'Collapse Sidebar',
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white70,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
           ),
 
           // Main Page Content Area
@@ -210,7 +225,7 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                 // Top Header Bar
                 Container(
                   height: 64,
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.surfaceDark : Colors.white,
                     border: Border(
@@ -221,15 +236,33 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                   ),
                   child: Row(
                     children: [
-                      Text(
-                        'Computer Science Learning Workspace',
-                        style: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
+                      // Sidebar Optional Toggle Button
+                      IconButton(
+                        icon: Icon(
+                          _isSidebarHidden ? Icons.menu_rounded : Icons.menu_open_rounded,
                           color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          size: 22,
+                        ),
+                        tooltip: _isSidebarHidden ? 'Show Sidebar' : 'Hide Sidebar',
+                        onPressed: () {
+                          setState(() {
+                            _isSidebarHidden = !_isSidebarHidden;
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          'Computer Science Learning Workspace',
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const Spacer(),
+                      const SizedBox(width: 12),
                       // Search Trigger
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, AppRoutes.search),
@@ -320,7 +353,7 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
     required String route,
   }) {
     final isSelected = widget.currentRoute == route;
-    final primaryColor = AppColors.primary;
+    const primaryColor = AppColors.primary;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),

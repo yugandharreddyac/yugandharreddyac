@@ -7,6 +7,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../providers/placement_provider.dart';
 import '../../widgets/shimmer_loading.dart';
 import 'placement_detail_screen.dart';
+import 'quiz/quiz_hub_screen.dart';
 
 class PlacementHubScreen extends StatefulWidget {
   const PlacementHubScreen({super.key});
@@ -74,7 +75,7 @@ class _PlacementHubScreenState extends State<PlacementHubScreen> {
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
-    final orangeAccent = AppColors.primary;
+    const orangeAccent = AppColors.primary;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -141,6 +142,69 @@ class _PlacementHubScreenState extends State<PlacementHubScreen> {
                   ),
                 ),
               ],
+            ),
+          ),
+
+          // Interactive Mock Test & Quiz Banner Action
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QuizHubScreen(),
+                    ),
+                  );
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withAlpha(30),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.quiz_rounded, color: Colors.white, size: 22),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Interactive Mock Test & Quiz Engine',
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              'Aptitude, Reasoning & CS MCQs with timed simulator & scorecards',
+                              style: GoogleFonts.inter(fontSize: 11, color: Colors.white70),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
 

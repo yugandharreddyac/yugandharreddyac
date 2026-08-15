@@ -36,7 +36,11 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   @override
   void initState() {
     super.initState();
-    _preparePdfFile();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _preparePdfFile();
+      }
+    });
   }
 
   Future<void> _preparePdfFile() async {
@@ -306,9 +310,38 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                               const SizedBox(height: 24),
                               ElevatedButton.icon(
                                 onPressed: () async {
-                                  final Uri uri = Uri.parse(widget.resource.storageUrl);
-                                  if (await canLaunchUrl(uri)) {
-                                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                  try {
+                                    final urlStr = widget.resource.storageUrl.trim();
+                                    if (urlStr.isEmpty) {
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(
+                                            content: Text('No external document URL available for this resource.'),
+                                            backgroundColor: Colors.orange,
+                                          ),
+                                        );
+                                      }
+                                      return;
+                                    }
+                                    final Uri uri = Uri.parse(urlStr);
+                                    final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                    if (!launched && context.mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Could not open document URL: $urlStr'),
+                                          backgroundColor: Colors.redAccent,
+                                        ),
+                                      );
+                                    }
+                                  } catch (e) {
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Error opening document: $e'),
+                                          backgroundColor: Colors.redAccent,
+                                        ),
+                                      );
+                                    }
                                   }
                                 },
                                 icon: const Icon(Icons.open_in_new_rounded, size: 18),

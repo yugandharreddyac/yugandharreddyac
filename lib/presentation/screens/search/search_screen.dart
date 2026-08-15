@@ -96,6 +96,13 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
+        leading: Navigator.canPop(context)
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                tooltip: 'Back',
+                onPressed: () => Navigator.pop(context),
+              )
+            : null,
         title: Text(
           'Global Academic Search',
           style: GoogleFonts.outfit(
@@ -177,6 +184,44 @@ class _SearchScreenState extends State<SearchScreen> {
                             : ListView(
                                 padding: const EdgeInsets.all(20),
                                 children: [
+                                  // 0. Fuzzy Match "Did You Mean" Suggestion Banner
+                                  if (studyProvider.isFuzzyResult && studyProvider.didYouMean != null) ...[
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 16),
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: orangeAccent.withAlpha(isDark ? 30 : 15),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: orangeAccent.withAlpha(60)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.auto_fix_high_rounded, size: 18, color: orangeAccent),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text.rich(
+                                              TextSpan(
+                                                text: 'Did you mean ',
+                                                style: GoogleFonts.inter(fontSize: 13, color: textPrimary),
+                                                children: [
+                                                  TextSpan(
+                                                    text: '"${studyProvider.didYouMean}"',
+                                                    style: GoogleFonts.inter(
+                                                      fontSize: 13,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: orangeAccent,
+                                                    ),
+                                                  ),
+                                                  const TextSpan(text: '? Showing closest matches:'),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+
                                   // 1. Matching Subjects
                                   if (matchingSubjs.isNotEmpty) ...[
                                     Text(
@@ -326,7 +371,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               color: orangeAccent.withAlpha(20),
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Icon(Icons.description_rounded, color: orangeAccent, size: 22),
+                                            child: const Icon(Icons.description_rounded, color: orangeAccent, size: 22),
                                           ),
                                           title: Text(
                                             resource.title,

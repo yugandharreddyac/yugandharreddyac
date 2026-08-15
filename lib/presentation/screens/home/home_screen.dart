@@ -16,6 +16,7 @@ import '../../widgets/home/unibyte_card.dart';
 import '../../widgets/home/academic_year_card.dart';
 import '../../widgets/home/motivational_banner_widget.dart';
 import '../../widgets/navigation/app_desktop_shell.dart';
+import '../../widgets/navigation/app_navigation_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppDesktopShell(
       currentRoute: AppRoutes.home,
       child: Scaffold(
+        drawer: const AppNavigationDrawer(),
         backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
         body: IndexedStack(
           index: _currentIndex,
@@ -187,7 +189,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                               ),
                             ],
                           ),
-                          const MotivationalBannerWidget(),
+                          const SizedBox(width: 16),
+                          const Flexible(
+                            child: MotivationalBannerWidget(),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 16),
@@ -288,6 +293,20 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                     letterSpacing: -0.3,
                                   ),
                                 ),
+                              ),
+                              IconButton(
+                                icon: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Icon(Icons.auto_awesome_rounded, size: 14, color: Colors.white),
+                                ),
+                                tooltip: 'UniDocs AI',
+                                onPressed: () => Navigator.pushNamed(context, AppRoutes.ai),
                               ),
                               IconButton(
                                 icon: Icon(
@@ -415,27 +434,15 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'PERSONAL ROADMAP',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.8,
-                                    color: orangeAccent,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  'Active Path',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                    color: textSubtitle,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              'PERSONAL ROADMAP',
+                              style: GoogleFonts.inter(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.8,
+                                color: orangeAccent,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 2),
                             Text(
@@ -445,6 +452,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 fontWeight: FontWeight.w600,
                                 color: textPrimary,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
@@ -487,16 +496,52 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Academic Curriculum',
-                      style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Academic Curriculum',
+                                style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.3),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                'Explore core computer science courses organized by academic year',
+                                style: GoogleFonts.inter(fontSize: 12, color: textSubtitle, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pushNamed(context, AppRoutes.years),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'View All',
+                                style: GoogleFonts.inter(
+                                  color: orangeAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final isWide = constraints.maxWidth > 700;
-                        final crossAxisCount = isWide ? 4 : (constraints.maxWidth > 480 ? 2 : 1);
-                        final childAspectRatio = isWide ? 3.4 : (constraints.maxWidth > 480 ? 2.8 : 3.8);
+                        final isMedium = constraints.maxWidth > 480;
+                        final crossAxisCount = isWide ? 4 : (isMedium ? 2 : 1);
+                        final childAspectRatio = isWide ? 2.5 : (isMedium ? 2.6 : 3.8);
 
                         return GridView.count(
                           crossAxisCount: crossAxisCount,
@@ -508,8 +553,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           children: const [
                             AcademicYearCard(yearTitle: '1st Year', subtitle: 'Foundation & Basic Concepts', yearId: 'year_1'),
                             AcademicYearCard(yearTitle: '2nd Year', subtitle: 'Core CS & Data Structures', yearId: 'year_2'),
-                            AcademicYearCard(yearTitle: '3rd Year', subtitle: 'Advanced Tech & AI', yearId: 'year_3'),
-                            AcademicYearCard(yearTitle: '4th Year', subtitle: 'Placements & Graduation', yearId: 'year_4'),
+                            AcademicYearCard(yearTitle: '3rd Year', subtitle: 'Advanced Tech & Systems', yearId: 'year_3'),
+                            AcademicYearCard(yearTitle: '4th Year', subtitle: 'Placements & Capstone', yearId: 'year_4'),
                           ],
                         );
                       },
@@ -543,26 +588,35 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Recently Added',
-                          style: GoogleFonts.outfit(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: textPrimary,
-                            letterSpacing: -0.3,
+                        Expanded(
+                          child: Text(
+                            'Recently Added',
+                            style: GoogleFonts.outfit(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: textPrimary,
+                              letterSpacing: -0.3,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        TextButton.icon(
+                        TextButton(
                           onPressed: () => Navigator.pushNamed(context, AppRoutes.search),
-                          icon: Text(
-                            'View All',
-                            style: GoogleFonts.inter(
-                              color: orangeAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'View All',
+                                style: GoogleFonts.inter(
+                                  color: orangeAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
+                            ],
                           ),
-                          label: const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
                         ),
                       ],
                     ),
@@ -711,7 +765,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           builder: (context, constraints) {
             final isWide = constraints.maxWidth > 700;
             final crossAxisCount = isWide ? 4 : 2;
-            final childAspectRatio = isWide ? 3.4 : 2.8;
+            final childAspectRatio = isWide ? 3.4 : (constraints.maxWidth < 360 ? 2.3 : 2.8);
 
             return GridView.count(
               crossAxisCount: crossAxisCount,
@@ -755,11 +809,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   item.title,
                                   style: GoogleFonts.inter(
-                                    fontSize: 13,
+                                    fontSize: 12.5,
                                     fontWeight: FontWeight.bold,
                                     color: textPrimary,
                                   ),
@@ -769,7 +824,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 Text(
                                   item.subtitle,
                                   style: GoogleFonts.inter(
-                                    fontSize: 10,
+                                    fontSize: 9.5,
                                     color: textSubtitle,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -845,7 +900,7 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
       builder: (context, constraints) {
         final isWide = constraints.maxWidth > 700;
         final crossAxisCount = isWide ? 3 : 2;
-        final childAspectRatio = isWide ? 1.4 : 1.18;
+        final childAspectRatio = isWide ? 1.45 : (constraints.maxWidth < 360 ? 1.02 : 1.10);
 
         return GridView.count(
           crossAxisCount: crossAxisCount,
@@ -855,55 +910,59 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           mainAxisSpacing: 12,
           childAspectRatio: childAspectRatio,
           children: hubs.map((hub) {
-            return Material(
-              color: cardColor,
-              borderRadius: BorderRadius.circular(16),
-              child: InkWell(
-                onTap: () => Navigator.pushNamed(context, hub.route),
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: borderColor),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(isDark ? 20 : 4),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: orangeAccent.withAlpha(isDark ? 35 : 18),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(hub.icon, color: orangeAccent, size: 20),
+            return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.pushNamed(context, hub.route);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: cardColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: borderColor),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(isDark ? 20 : 4),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: orangeAccent.withAlpha(isDark ? 35 : 18),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            size: 16,
-                            color: textSubtitle.withAlpha(140),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Column(
+                          child: Icon(hub.icon, color: orangeAccent, size: 26),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_rounded,
+                          size: 16,
+                          color: textSubtitle.withAlpha(180),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Flexible(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             hub.title,
                             style: GoogleFonts.inter(
-                              fontSize: 14,
+                              fontSize: 13.5,
                               fontWeight: FontWeight.bold,
                               color: textPrimary,
                             ),
@@ -914,24 +973,24 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           Text(
                             hub.subtitle,
                             style: GoogleFonts.inter(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 10.5,
                               color: textSubtitle,
+                              fontWeight: FontWeight.w500,
                             ),
-                            maxLines: 2,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
           }).toList(),
         );
       },
-    ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0);
+    );
   }
 
   // --- RECENTLY ADDED FALLBACK ITEMS ---
@@ -971,7 +1030,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
             title: Text(item['title'] as String, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 2),
-              child: Row(
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 6,
+                runSpacing: 2,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -988,8 +1050,11 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Text(item['time'] as String, style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+                  Text(
+                    item['time'] as String,
+                    style: GoogleFonts.inter(fontSize: 11, color: textSubtitle),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),

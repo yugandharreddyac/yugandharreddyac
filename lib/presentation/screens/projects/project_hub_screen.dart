@@ -52,7 +52,7 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
     final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
-    final orangeAccent = AppColors.primary;
+    const orangeAccent = AppColors.primary;
 
     return Scaffold(
       backgroundColor: bgColor,

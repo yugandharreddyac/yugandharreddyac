@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../data/models/user_goal_model.dart';
 import '../../providers/roadmap_provider.dart';
 
@@ -81,11 +82,65 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
               ),
             ),
 
-            const SizedBox(height: 28),
+            const SizedBox(height: 20),
+
+            // Step-by-Step Personalized Wizard CTA
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF1E1B4B) : const Color(0xFFEFF6FF),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.auto_awesome_rounded, color: Color(0xFF2563EB), size: 22),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Comprehensive 14-Step Personalization',
+                          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Build an in-depth profile covering strengths, weaknesses, coding experience, available daily hours, and target companies.',
+                    style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.personalizedWizard);
+                      },
+                      icon: const Icon(Icons.psychology_rounded, size: 18),
+                      label: Text('Launch 14-Step Wizard', style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: royalBlue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 24),
 
             // Step 1: Select Academic Year
             Text(
-              '1. Select Your Current Academic Year',
+              'Quick Setup: Academic Year',
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

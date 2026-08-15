@@ -40,7 +40,7 @@ void main() {
   });
 
   group('Phase 7G - Emerging Technologies Hub Tests', () {
-    final emergingTechHub = NonAcademicData.emergingTechHub;
+    const emergingTechHub = NonAcademicData.emergingTechHub;
 
     test('Emerging Tech Hub has required categories & preserved stable IDs', () {
       expect(emergingTechHub.id, equals('emerging_tech'));

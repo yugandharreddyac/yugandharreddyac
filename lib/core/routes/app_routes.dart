@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../data/models/resource_model.dart';
 import '../../data/models/textbook_model.dart';
+import '../../data/models/personalized_roadmap_models.dart';
 import '../../presentation/screens/splash/splash_screen.dart';
 import '../../presentation/screens/home/home_screen.dart';
+import '../../presentation/screens/years/year_screen.dart';
 import '../../presentation/screens/semesters/semester_screen.dart';
 import '../../presentation/screens/subjects/subject_screen.dart';
 import '../../presentation/screens/resources/resource_screen.dart';
@@ -27,6 +29,7 @@ import '../../presentation/screens/hierarchy/generic_hub_screen.dart';
 
 import '../../presentation/screens/roadmap/my_roadmap_screen.dart';
 import '../../presentation/screens/roadmap/roadmap_onboarding_screen.dart';
+import '../../presentation/screens/roadmap/wizard/personalized_wizard_screen.dart';
 
 import '../../presentation/screens/saved/saved_topics_screen.dart';
 import '../../presentation/screens/insights/student_insights_screen.dart';
@@ -34,12 +37,15 @@ import '../../presentation/screens/career/career_dashboard_screen.dart';
 import '../../presentation/screens/career/career_skills_screen.dart';
 import '../../presentation/screens/career/project_portfolio_screen.dart';
 import '../../presentation/screens/career/resume_readiness_screen.dart';
+import '../../presentation/screens/placement/quiz/quiz_hub_screen.dart';
+import '../../presentation/screens/ai/unidocs_ai_screen.dart';
 
 class AppRoutes {
   AppRoutes._();
 
   static const String splash = '/';
   static const String home = '/home';
+  static const String years = '/years';
   static const String semesters = '/semesters';
   static const String subjects = '/subjects';
   static const String resources = '/resources';
@@ -59,11 +65,13 @@ class AppRoutes {
   static const String careerHub = '/career';
   static const String codingHub = '/coding';
   static const String placementHub = '/placement';
+  static const String quizHub = '/placement/quiz';
   static const String projectHub = '/projects';
   static const String higherEducationHub = '/higher-education';
   static const String entrepreneurshipHub = '/entrepreneurship';
   static const String roadmap = '/roadmap';
   static const String roadmapOnboarding = '/roadmap-onboarding';
+  static const String personalizedWizard = '/roadmap/personalized-wizard';
   static const String savedTopics = '/saved';
   static const String insights = '/insights';
   static const String examDetail = '/exam-detail';
@@ -74,6 +82,7 @@ class AppRoutes {
   static const String careerSkills = '/career-skills';
   static const String projectPortfolio = '/project-portfolio';
   static const String resumeReadiness = '/resume-readiness';
+  static const String ai = '/ai';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -82,6 +91,9 @@ class AppRoutes {
 
       case home:
         return _buildPageRoute(const HomeScreen(), routeSettings);
+
+      case years:
+        return _buildPageRoute(const YearScreen(), routeSettings);
 
       case semesters:
         final args = routeSettings.arguments as Map<String, dynamic>?;
@@ -118,7 +130,10 @@ class AppRoutes {
         );
 
       case pdfViewer:
-        final resource = routeSettings.arguments as ResourceModel;
+        final resource = routeSettings.arguments is ResourceModel ? routeSettings.arguments as ResourceModel : null;
+        if (resource == null) {
+          return _buildPageRoute(const HomeScreen(), routeSettings);
+        }
         return _buildPageRoute(PdfViewerScreen(resource: resource), routeSettings);
 
       case search:
@@ -176,6 +191,13 @@ class AppRoutes {
       case placementHub:
         return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.placementHub), routeSettings);
 
+      case quizHub:
+        final args = routeSettings.arguments as Map<String, dynamic>?;
+        return _buildPageRoute(
+          QuizHubScreen(initialCategory: args?['category'] as String?),
+          routeSettings,
+        );
+
       case projectHub:
         return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.projectsHub), routeSettings);
 
@@ -186,7 +208,12 @@ class AppRoutes {
         return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.entrepreneurshipHub), routeSettings);
 
       case topicDetail:
-        final args = routeSettings.arguments as Map<String, dynamic>;
+        final args = routeSettings.arguments is Map<String, dynamic>
+            ? routeSettings.arguments as Map<String, dynamic>
+            : null;
+        if (args == null || args['topic'] == null || args['topic'] is! TextbookTopicModel) {
+          return _buildPageRoute(const HomeScreen(), routeSettings);
+        }
         return _buildPageRoute(
           TopicDetailScreen(
             topic: args['topic'] as TextbookTopicModel,
@@ -202,6 +229,12 @@ class AppRoutes {
 
       case roadmapOnboarding:
         return _buildPageRoute(const RoadmapOnboardingScreen(), routeSettings);
+
+      case personalizedWizard:
+        final initialProfile = routeSettings.arguments is PersonalizedProfile
+            ? routeSettings.arguments as PersonalizedProfile
+            : null;
+        return _buildPageRoute(PersonalizedWizardScreen(initialProfile: initialProfile), routeSettings);
 
       case savedTopics:
         return _buildPageRoute(const SavedTopicsScreen(), routeSettings);
@@ -221,6 +254,24 @@ class AppRoutes {
         
       case resumeReadiness:
         return _buildPageRoute(const ResumeReadinessScreen(), routeSettings);
+
+      case ai:
+        final args = routeSettings.arguments;
+        Map<String, dynamic>? initialContext;
+        String? initialPrompt;
+        if (args is Map<String, dynamic>) {
+          initialContext = args['context'] as Map<String, dynamic>? ?? args;
+          initialPrompt = args['prompt'] as String?;
+        } else if (args is String) {
+          initialPrompt = args;
+        }
+        return _buildPageRoute(
+          UniDocsAiScreen(
+            initialContext: initialContext,
+            initialPrompt: initialPrompt,
+          ),
+          routeSettings,
+        );
 
       default:
         return _buildPageRoute(

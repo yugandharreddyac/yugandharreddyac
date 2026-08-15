@@ -489,16 +489,22 @@ class SearchIndexEngine {
 
     final query = rawQuery.trim();
 
-    final List<SearchableItem> matchingItems = [];
+    final List<MapEntry<SearchableItem, int>> scoredItems = [];
     final List<SubjectModel> matchingSubjects = [];
     final List<ResourceModel> matchingResources = [];
 
     final Set<String> seenSubjectIds = {};
     final Set<String> seenResourceIds = {};
 
+    int maxScore = 0;
+
     for (final item in _index) {
-      if (item.matches(query)) {
-        matchingItems.add(item);
+      final score = item.matchScore(query);
+      if (score > 0) {
+        scoredItems.add(MapEntry(item, score));
+        if (score > maxScore) {
+          maxScore = score;
+        }
 
         if (item.subject != null && !seenSubjectIds.contains(item.subject!.id)) {
           seenSubjectIds.add(item.subject!.id);
@@ -512,12 +518,28 @@ class SearchIndexEngine {
       }
     }
 
-    debugPrint('[GlobalSearchEngine] User search query: "$query" -> Found ${matchingItems.length} matching items (${matchingSubjects.length} subjects, ${matchingResources.length} resources)');
+    // Sort matching items by score descending
+    scoredItems.sort((a, b) => b.value.compareTo(a.value));
+    final matchingItems = scoredItems.map((e) => e.key).toList();
+
+    // Determine if result is purely fuzzy (e.g. typo match without exact/prefix/substring)
+    final bool isFuzzy = maxScore <= 35 && matchingItems.isNotEmpty;
+    String? didYouMean;
+
+    if (isFuzzy && matchingItems.isNotEmpty) {
+      // Find the cleanest candidate title/subject to suggest
+      final topItem = matchingItems.first;
+      didYouMean = topItem.subjectName.isNotEmpty ? topItem.subjectName : topItem.title;
+    }
+
+    debugPrint('[GlobalSearchEngine] User search query: "$query" -> Found ${matchingItems.length} matching items (${matchingSubjects.length} subjects, ${matchingResources.length} resources) [maxScore=$maxScore]');
 
     return GlobalSearchResult(
       matchingSubjects: matchingSubjects,
       matchingResources: matchingResources,
       matchingItems: matchingItems,
+      didYouMean: didYouMean,
+      isFuzzyResult: isFuzzy,
     );
   }
 

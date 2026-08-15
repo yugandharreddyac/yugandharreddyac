@@ -44,7 +44,7 @@ class _SemesterCardState extends State<SemesterCard> {
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
     final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
     final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
-    final orangeAccent = AppColors.primary;
+    const orangeAccent = AppColors.primary;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
