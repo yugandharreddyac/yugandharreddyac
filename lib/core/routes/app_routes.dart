@@ -21,7 +21,9 @@ import '../../presentation/screens/legal/contact_screen.dart';
 import '../../presentation/screens/admin/admin_upload_screen.dart';
 import '../../presentation/screens/admin/admin_dashboard_screen.dart';
 import '../../presentation/screens/admin/admin_textbook_screen.dart';
-
+import '../../presentation/screens/admin/archive_upload_screen.dart';
+import '../../presentation/screens/auth/login_screen.dart';
+import '../../presentation/screens/auth/signup_screen.dart';
 import '../../presentation/screens/admin/admin_login_screen.dart';
 import '../../presentation/widgets/admin_auth_guard.dart';
 import '../../data/datasources/non_academic_data.dart';
@@ -44,6 +46,8 @@ class AppRoutes {
   AppRoutes._();
 
   static const String splash = '/';
+  static const String login = '/login';
+  static const String signup = '/signup';
   static const String home = '/home';
   static const String years = '/years';
   static const String semesters = '/semesters';
@@ -61,6 +65,7 @@ class AppRoutes {
   static const String adminLogin = '/admin-login';
   static const String adminDashboard = '/admin-dashboard';
   static const String adminUpload = '/admin-upload';
+  static const String archiveUpload = '/archive-upload';
   static const String adminTextbook = '/admin-textbook';
   static const String careerHub = '/career';
   static const String codingHub = '/coding';
@@ -88,6 +93,12 @@ class AppRoutes {
     switch (routeSettings.name) {
       case splash:
         return _buildPageRoute(const SplashScreen(), routeSettings);
+
+      case login:
+        return _buildPageRoute(const LoginScreen(), routeSettings);
+        
+      case signup:
+        return _buildPageRoute(const SignUpScreen(), routeSettings);
 
       case home:
         return _buildPageRoute(const HomeScreen(), routeSettings);
@@ -172,6 +183,12 @@ class AppRoutes {
       case adminUpload:
         return _buildPageRoute(
           const AdminAuthGuard(child: AdminUploadScreen()),
+          routeSettings,
+        );
+
+      case archiveUpload:
+        return _buildPageRoute(
+          const ArchiveUploadScreen(),
           routeSettings,
         );
 

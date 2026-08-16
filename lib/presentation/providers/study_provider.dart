@@ -113,6 +113,7 @@ class StudyProvider extends ChangeNotifier {
   }
 
   Future<void> fetchResources(String subjectId, {String? resourceType}) async {
+    if (subjectId.isEmpty) return;
     _setState(ViewState.loading);
     _selectedResourceType = resourceType ?? '';
     try {
@@ -189,6 +190,7 @@ class StudyProvider extends ChangeNotifier {
   }
 
   Future<void> fetchCourseOverview(String subjectId) async {
+    if (subjectId.isEmpty) return;
     try {
       _courseOverview = await repository.getCourseOverview(subjectId);
       notifyListeners();
@@ -198,6 +200,7 @@ class StudyProvider extends ChangeNotifier {
   }
 
   Future<void> fetchTextbookChapters(String subjectId) async {
+    if (subjectId.isEmpty) return;
     try {
       _textbookChapters = await repository.getTextbookChapters(subjectId);
       notifyListeners();

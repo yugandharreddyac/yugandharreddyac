@@ -41,6 +41,14 @@ class AuthProvider extends ChangeNotifier {
     _authSubscription = _authRepository.authStateChanges.listen((user) async {
       _firebaseUser = user;
       if (user != null) {
+        // Don't overwrite the admin session for the hardcoded admin email.
+        // signInAdmin() already sets _userModel with role 'admin' in memory.
+        if (user.email?.toLowerCase() == 'director@csse.edu.in' &&
+            _userModel != null &&
+            _userModel!.isAdmin) {
+          notifyListeners();
+          return;
+        }
         _userModel = await _authRepository.fetchUserProfile(user.uid);
       } else {
         _userModel = null;
@@ -77,17 +85,53 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> signInWithEmail(String email, String password) async {
     _setState(AuthViewState.loading);
     try {
-      final cred = await _authRepository.signInWithEmail(email, password);
+      final cred = await _authRepository.signInWithEmail(email, password).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () => throw TimeoutException('Connection to authentication server timed out.'),
+      );
       _firebaseUser = cred?.user;
       if (_firebaseUser != null) {
-        _userModel = await _authRepository.fetchUserProfile(_firebaseUser!.uid);
+        _userModel = await _authRepository.fetchUserProfile(_firebaseUser!.uid).timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => null, // Just ignore firestore timeout, allow login
+        );
         _setState(AuthViewState.success);
         return true;
       }
       _setState(AuthViewState.empty, error: 'User not found');
       return false;
     } catch (e) {
-      _setState(AuthViewState.error, error: 'Email sign-in error: $e');
+      _setState(AuthViewState.error, error: 'Email sign-in error: ${e.toString().replaceAll('Exception: ', '')}');
+      return false;
+    }
+  }
+
+  Future<bool> signUpWithEmail(String email, String password) async {
+    _setState(AuthViewState.loading);
+    try {
+      final cred = await _authRepository.registerWithEmail(email, password).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () => throw TimeoutException('Connection to authentication server timed out.'),
+      );
+      _firebaseUser = cred?.user;
+      if (_firebaseUser != null) {
+        _userModel = UserModel(
+          uid: _firebaseUser!.uid,
+          isAnonymous: false,
+          createdAt: DateTime.now(),
+          lastLoginAt: DateTime.now(),
+        );
+        await _authRepository.updateUserProfile(_userModel!).timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => null, // ignore firestore timeout
+        );
+        _setState(AuthViewState.success);
+        return true;
+      }
+      _setState(AuthViewState.empty, error: 'Failed to create user');
+      return false;
+    } catch (e) {
+      _setState(AuthViewState.error, error: 'Sign up error: ${e.toString().replaceAll('Exception: ', '')}');
       return false;
     }
   }
@@ -95,14 +139,36 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> signInAdmin(String email, String password) async {
     _setState(AuthViewState.loading);
     try {
-      final cred = await _authRepository.signInWithEmail(email, password);
+      final cred = await _authRepository.signInWithEmail(email, password).timeout(
+        const Duration(seconds: 10),
+        onTimeout: () => throw TimeoutException('Connection to authentication server timed out.'),
+      );
       _firebaseUser = cred?.user;
       if (_firebaseUser != null) {
+        // Bypass Firestore entirely for the hardcoded admin email
+        if (_firebaseUser!.email?.toLowerCase() == 'director@csse.edu.in') {
+          _userModel = UserModel(
+            uid: _firebaseUser!.uid,
+            email: _firebaseUser!.email,
+            role: 'admin',
+            isActive: true,
+            isAnonymous: false,
+            createdAt: DateTime.now(),
+            lastLoginAt: DateTime.now(),
+          );
+          _setState(AuthViewState.success);
+          return true;
+        }
+
         // Fetch user profile document from Firestore (`users/{uid}`)
-        _userModel = await _authRepository.fetchUserProfile(_firebaseUser!.uid);
+        _userModel = await _authRepository.fetchUserProfile(_firebaseUser!.uid).timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => null,
+        );
         
-        // Verify role == "admin" AND isActive == true
-        if (_userModel != null && _userModel!.role.toLowerCase() == 'admin' && _userModel!.isActive) {
+        final isFirestoreAdmin = _userModel != null && _userModel!.role.toLowerCase() == 'admin' && _userModel!.isActive;
+
+        if (isFirestoreAdmin) {
           _setState(AuthViewState.success);
           return true;
         } else {

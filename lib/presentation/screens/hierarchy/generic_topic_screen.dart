@@ -94,13 +94,17 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
         backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
         elevation: 0,
         scrolledUnderElevation: 1,
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-                tooltip: 'Back',
-                onPressed: () => Navigator.pop(context),
-              )
-            : null,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+          tooltip: 'Back',
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacementNamed(context, '/home');
+            }
+          },
+        ),
         title: Text(
           widget.topic.title,
           style: GoogleFonts.inter(

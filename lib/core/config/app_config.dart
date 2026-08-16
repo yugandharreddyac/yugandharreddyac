@@ -63,6 +63,13 @@ class AppConfig {
   /// App display title
   static const String appTitle = 'CSSE Study Hub';
 
+  // --- Archive.org S3 Configuration ---
+  static const String archiveS3Endpoint = 's3.us.archive.org';
+  static const String archiveS3AccessKey = 'GV6yXXOgB7K7rWEN';
+  static const String archiveS3SecretKey = 'KXwOzdPrlXUltPqE';
+  // This must be a globally unique identifier for your "bucket" (Item in Archive.org)
+  static const String archiveS3BucketName = 'unidocs-csse-study-hub-v1';
+
   /// Application version
   static const String appVersion = '1.0.0+1';
 

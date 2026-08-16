@@ -1,8 +1,7 @@
 import '../models/resource_model.dart';
 
 class AcademicResourceCatalog {
-  /// Base CDN Storage Domain for Cloudflare R2 / CDN object delivery
-  static const String baseCdnUrl = 'https://cdn.csse-study-hub.org/academic';
+  // Firebase Storage paths are used natively now instead of Cloudflare CDN.
 
   /// Centralized Production Academic Resources Catalog
   static List<ResourceModel> get allAcademicResources => [
@@ -23,7 +22,7 @@ class AcademicResourceCatalog {
           chapterId: 'unit_1',
           sectionId: 'topic_c_basics',
           storagePath: 'academic/year_1/sem_1_1/c_prog/unit_1_c_syntax.pdf',
-          storageUrl: '$baseCdnUrl/year_1/sem_1_1/c_prog/unit_1_c_syntax.pdf',
+          storageUrl: 'academic/year_1/sem_1_1/c_prog/unit_1_c_syntax.pdf',
           fileSizeBytes: 2457600, // 2.4 MB
           pageCount: 32,
           lastUpdated: DateTime(2026, 1, 15),
@@ -55,7 +54,7 @@ class AcademicResourceCatalog {
           chapterId: 'all_units',
           sectionId: 'pyq_bank',
           storagePath: 'academic/year_1/sem_1_1/c_prog/c_prog_pyq_bank.pdf',
-          storageUrl: '$baseCdnUrl/year_1/sem_1_1/c_prog/c_prog_pyq_bank.pdf',
+          storageUrl: 'academic/year_1/sem_1_1/c_prog/c_prog_pyq_bank.pdf',
           fileSizeBytes: 4194304, // 4.0 MB
           pageCount: 48,
           lastUpdated: DateTime(2026, 2, 10),
@@ -87,7 +86,7 @@ class AcademicResourceCatalog {
           chapterId: 'unit_4',
           sectionId: 'topic_file_io',
           storagePath: 'academic/year_1/sem_1_1/c_prog/unit_4_file_io.pdf',
-          storageUrl: '$baseCdnUrl/year_1/sem_1_1/c_prog/unit_4_file_io.pdf',
+          storageUrl: 'academic/year_1/sem_1_1/c_prog/unit_4_file_io.pdf',
           fileSizeBytes: 0,
           pageCount: 0,
           lastUpdated: DateTime(2026, 2, 12),
@@ -122,7 +121,7 @@ class AcademicResourceCatalog {
           chapterId: 'unit_2',
           sectionId: 'topic_linked_list',
           storagePath: 'academic/year_2/sem_2_1/ds/unit2_linked_lists.pdf',
-          storageUrl: '$baseCdnUrl/year_2/sem_2_1/ds/unit2_linked_lists.pdf',
+          storageUrl: 'academic/year_2/sem_2_1/ds/unit2_linked_lists.pdf',
           fileSizeBytes: 3145728, // 3.0 MB
           pageCount: 40,
           lastUpdated: DateTime(2026, 1, 20),
@@ -154,7 +153,7 @@ class AcademicResourceCatalog {
           chapterId: 'all_units',
           sectionId: 'os_concepts',
           storagePath: 'academic/year_2/sem_2_1/os/os_concepts_galvin.pdf',
-          storageUrl: '$baseCdnUrl/year_2/sem_2_1/os/os_concepts_galvin.pdf',
+          storageUrl: 'academic/year_2/sem_2_1/os/os_concepts_galvin.pdf',
           fileSizeBytes: 12582912, // 12 MB
           pageCount: 850,
           lastUpdated: DateTime(2025, 11, 5),
@@ -222,7 +221,7 @@ class AcademicResourceCatalog {
           chapterId: 'unit_3',
           sectionId: 'socket_programming',
           storagePath: 'academic/year_3/sem_3_1/cn/cn_lab_manual.pdf',
-          storageUrl: '$baseCdnUrl/year_3/sem_3_1/cn/cn_lab_manual.pdf',
+          storageUrl: 'academic/year_3/sem_3_1/cn/cn_lab_manual.pdf',
           fileSizeBytes: 1835008, // 1.75 MB
           pageCount: 24,
           lastUpdated: DateTime(2026, 2, 1),

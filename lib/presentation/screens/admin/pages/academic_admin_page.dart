@@ -58,12 +58,13 @@ class _AcademicAdminPageState extends State<AcademicAdminPage> {
   }
 
   Future<void> _loadResources() async {
-    final studyRepository = context.read<StudyProvider>().repository;
+    final studyProvider = context.read<StudyProvider>();
     if (_filterSubject != null) {
-      final res = await studyRepository.getResources(_filterSubject!.id, resourceType: _filterType);
+      final res = await studyProvider.repository.getResources(_filterSubject!.id, resourceType: _filterType);
       setState(() => _allResources = res);
     } else {
-      final res = await studyRepository.searchGlobal('');
+      // Fetch all resources from Firestore directly
+      final res = await studyProvider.repository.firebaseDataSource.searchResources('');
       setState(() => _allResources = res);
     }
   }
@@ -345,7 +346,10 @@ class _AcademicAdminPageState extends State<AcademicAdminPage> {
                       DropdownButton<String>(
                         value: _filterType,
                         hint: const Text('All Types'),
-                        items: AppConstants.resourceTypes.map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                        items: [
+                          const DropdownMenuItem<String>(value: null, child: Text('All Types')),
+                          ...AppConstants.resourceTypes.map((t) => DropdownMenuItem(value: t, child: Text(t))),
+                        ],
                         onChanged: (type) {
                           setState(() => _filterType = type);
                           _loadResources();
@@ -412,55 +416,132 @@ class _AcademicAdminPageState extends State<AcademicAdminPage> {
                                 width: isSelected ? 2 : 1,
                               ),
                             ),
-                            child: ListTile(
-                              leading: _isBulkMode
-                                  ? Checkbox(
-                                      value: isSelected,
-                                      onChanged: (_) => adminProvider.toggleResourceSelection(resource),
-                                    )
-                                  : Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.redAccent.withAlpha(20),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(Icons.picture_as_pdf_rounded, color: Colors.redAccent, size: 22),
-                                    ),
-                              title: Text(
-                                resource.title,
-                                style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
-                              ),
-                              subtitle: Text(
-                                '${resource.subjectName} • ${resource.resourceType} • $sizeMb MB • $dateStr',
-                                style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.visibility_outlined, color: royalBlue),
-                                    tooltip: 'Preview PDF',
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (_) => PdfViewerScreen(resource: resource)),
-                                      );
-                                    },
+                                  // Top row: icon + title + actions
+                                  Row(
+                                    children: [
+                                      if (_isBulkMode)
+                                        Checkbox(
+                                          value: isSelected,
+                                          onChanged: (_) => adminProvider.toggleResourceSelection(resource),
+                                        )
+                                      else
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: Colors.redAccent.withAlpha(20),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(Icons.picture_as_pdf_rounded, color: Colors.redAccent, size: 22),
+                                        ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              resource.title,
+                                              style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              '${resource.subjectName} • ${resource.resourceType} • $sizeMb MB',
+                                              style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      // Action buttons
+                                      IconButton(
+                                        icon: const Icon(Icons.visibility_outlined, color: royalBlue, size: 20),
+                                        tooltip: 'Preview PDF',
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (_) => PdfViewerScreen(resource: resource)),
+                                          );
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.edit_outlined, color: Colors.amber, size: 20),
+                                        tooltip: 'Edit Metadata',
+                                        onPressed: () => _showEditMetadataDialog(resource),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.published_with_changes_rounded, color: Colors.blue, size: 20),
+                                        tooltip: 'Replace PDF File',
+                                        onPressed: () => _showReplacePdfDialog(resource),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent, size: 20),
+                                        tooltip: 'Delete PDF',
+                                        onPressed: () => _confirmDeleteResource(resource),
+                                      ),
+                                    ],
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.edit_outlined, color: Colors.amber),
-                                    tooltip: 'Edit Metadata',
-                                    onPressed: () => _showEditMetadataDialog(resource),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.published_with_changes_rounded, color: Colors.blue),
-                                    tooltip: 'Replace PDF File',
-                                    onPressed: () => _showReplacePdfDialog(resource),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
-                                    tooltip: 'Delete PDF',
-                                    onPressed: () => _confirmDeleteResource(resource),
+                                  const SizedBox(height: 8),
+                                  // Bottom row: upload date + Archive.org status
+                                  Row(
+                                    children: [
+                                      Icon(Icons.calendar_today_rounded, size: 13, color: textSubtitle),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        'Uploaded: ${DateFormat('MMM d, yyyy – h:mm a').format(resource.lastUpdated)}',
+                                        style: GoogleFonts.inter(fontSize: 11, color: textSubtitle),
+                                      ),
+                                      const Spacer(),
+                                      // Archive.org processing status
+                                      Builder(builder: (_) {
+                                        final isArchive = resource.storageUrl.contains('archive.org');
+                                        if (!isArchive) {
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Icon(Icons.check_circle_rounded, size: 14, color: Colors.green),
+                                              const SizedBox(width: 4),
+                                              Text('Available', style: GoogleFonts.inter(fontSize: 11, color: Colors.green, fontWeight: FontWeight.bold)),
+                                            ],
+                                          );
+                                        }
+                                        final minutesSinceUpload = DateTime.now().difference(resource.lastUpdated).inMinutes;
+                                        if (minutesSinceUpload < 60) {
+                                          final remainingMin = 60 - minutesSinceUpload;
+                                          return Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.amber.withAlpha(25),
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(color: Colors.amber.withAlpha(80)),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Icon(Icons.schedule_rounded, size: 13, color: Colors.amber),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  'Processing ~$remainingMin min left',
+                                                  style: GoogleFonts.inter(fontSize: 11, color: Colors.amber, fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(Icons.check_circle_rounded, size: 14, color: Colors.green),
+                                            const SizedBox(width: 4),
+                                            Text('Available', style: GoogleFonts.inter(fontSize: 11, color: Colors.green, fontWeight: FontWeight.bold)),
+                                          ],
+                                        );
+                                      }),
+                                    ],
                                   ),
                                 ],
                               ),

@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../providers/auth_provider.dart';
 import 'admin_dashboard_screen.dart';
 
@@ -32,13 +33,13 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
   Future<void> _handleAdminLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
     setState(() => _isLoading = true);
 
     final authProvider = context.read<AuthProvider>();
-    final success = await authProvider.signInAdmin(
-      _emailController.text.trim(),
-      _passwordController.text.trim(),
-    );
+    final success = await authProvider.signInAdmin(email, password);
 
     if (mounted) {
       setState(() => _isLoading = false);
@@ -55,11 +56,17 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
           MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Login Failed'),
             content: Text(authProvider.errorMessage ?? 'Access Denied: Invalid credentials or non-admin account.'),
-            backgroundColor: Colors.redAccent,
-            behavior: SnackBarBehavior.floating,
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('OK'),
+              ),
+            ],
           ),
         );
       }
@@ -195,6 +202,8 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                         TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                           decoration: _buildInputDecoration(isDark, 'Admin Email', Icons.email_rounded),
                           validator: (val) {
                             if (val == null || val.trim().isEmpty) return 'Please enter admin email';
@@ -209,6 +218,8 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => _handleAdminLogin(),
                           decoration: _buildInputDecoration(isDark, 'Password', Icons.lock_rounded).copyWith(
                             suffixIcon: IconButton(
                               icon: Icon(

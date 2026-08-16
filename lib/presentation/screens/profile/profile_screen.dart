@@ -43,6 +43,12 @@ class ProfileScreen extends StatelessWidget {
         centerTitle: false,
         backgroundColor: cardColor,
         elevation: 0,
+        leading: Navigator.canPop(context) 
+            ? IconButton(
+                icon: Icon(Icons.arrow_back_rounded, color: textPrimary),
+                onPressed: () => Navigator.pop(context),
+              )
+            : null,
       ),
       body: ListView(
         padding: const EdgeInsets.all(24),

@@ -265,13 +265,17 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
     return AppBar(
       backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
       elevation: 0,
-      leading: Navigator.canPop(context)
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-              tooltip: 'Back',
-              onPressed: () => Navigator.pop(context),
-            )
-          : null,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+        tooltip: 'Back',
+        onPressed: () {
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          } else {
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+        },
+      ),
       title: LayoutBuilder(
         builder: (context, constraints) {
           return Row(

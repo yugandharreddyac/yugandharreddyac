@@ -61,11 +61,13 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    // Enable Cloud Firestore Offline Persistence
-    FirebaseFirestore.instance.settings = const Settings(
-      persistenceEnabled: true,
-      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
-    );
+    // Enable Cloud Firestore Offline Persistence on Mobile platforms
+    if (!kIsWeb) {
+      FirebaseFirestore.instance.settings = const Settings(
+        persistenceEnabled: true,
+        cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+      );
+    }
   } catch (e) {
     debugPrint('Firebase core initialization notice: $e (Falling back to offline repository dataset)');
   }

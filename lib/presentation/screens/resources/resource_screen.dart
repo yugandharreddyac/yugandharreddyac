@@ -364,7 +364,12 @@ class _ResourceScreenState extends State<ResourceScreen> {
       return const ShimmerListLoading();
     }
 
-    if (chapters.isEmpty) {
+    final notesPdfs = provider.resources.where((r) {
+      final t = (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
+      return t.contains('note') || t.contains('material') || t.contains('lecture');
+    }).toList();
+
+    if (chapters.isEmpty && notesPdfs.isEmpty) {
       return const EmptyStateWidget(
         title: 'No notes available yet.',
         message: 'Chapter notes, section explanations, and lecture study material for this subject will appear here.',
@@ -372,77 +377,95 @@ class _ResourceScreenState extends State<ResourceScreen> {
       );
     }
 
-    return ListView.builder(
+    return ListView(
       padding: const EdgeInsets.all(16),
-      itemCount: chapters.length,
-      itemBuilder: (context, index) {
-        final ch = chapters[index];
-        return Card(
-          color: cardBg,
-          margin: const EdgeInsets.only(bottom: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-            side: BorderSide(color: borderColor),
-          ),
-          child: ExpansionTile(
-            leading: CircleAvatar(
-              backgroundColor: AppColors.primary.withOpacity(0.2),
-              child: Text(
-                '${ch.chapterNumber}',
-                style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+      children: [
+        if (chapters.isNotEmpty) ...[
+          Text('Interactive Course Modules', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold, color: textPrimary)),
+          const SizedBox(height: 10),
+          ...chapters.map((ch) => Card(
+            color: cardBg,
+            margin: const EdgeInsets.only(bottom: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: BorderSide(color: borderColor),
+            ),
+            child: ExpansionTile(
+              leading: CircleAvatar(
+                backgroundColor: AppColors.primary.withOpacity(0.2),
+                child: Text(
+                  '${ch.chapterNumber}',
+                  style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            title: Text(
-              'Chapter ${ch.chapterNumber}: ${ch.title}',
-              style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
-            ),
-            subtitle: Text(
-              '${ch.sections.length} Sections • ${ch.description}',
-              style: TextStyle(color: textSecondary, fontSize: 12),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            children: ch.sections.map((sec) {
-              return Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-                decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    '${sec.sectionNumber} ${sec.title}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+              title: Text(
+                'Chapter ${ch.chapterNumber}: ${ch.title}',
+                style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
+              ),
+              subtitle: Text(
+                '${ch.sections.length} Sections • ${ch.description}',
+                style: TextStyle(color: textSecondary, fontSize: 12),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              children: ch.sections.map((sec) {
+                return Container(
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  children: sec.topics.map((top) {
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-                      leading: const Icon(Icons.topic_outlined, size: 18, color: AppColors.primary),
-                      title: Text(
-                        '${top.topicNumber} ${top.title}',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textPrimary),
-                      ),
-                      trailing: const Icon(Icons.chevron_right, size: 18, color: AppColors.primary),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.topicDetail,
-                          arguments: {
-                            'topic': top,
-                            'subjectName': widget.subjectName,
-                            'chapterTitle': 'Chapter ${ch.chapterNumber}: ${ch.title}',
-                            'sectionTitle': '${sec.sectionNumber} ${sec.title}',
-                          },
-                        );
-                      },
-                    );
-                  }).toList(),
-                ),
-              );
-            }).toList(),
-          ),
-        );
-      },
+                  child: ExpansionTile(
+                    title: Text(
+                      '${sec.sectionNumber} ${sec.title}',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+                    ),
+                    children: sec.topics.map((top) {
+                      return ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                        leading: const Icon(Icons.topic_outlined, size: 18, color: AppColors.primary),
+                        title: Text(
+                          '${top.topicNumber} ${top.title}',
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textPrimary),
+                        ),
+                        trailing: const Icon(Icons.chevron_right, size: 18, color: AppColors.primary),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.topicDetail,
+                            arguments: {
+                              'topic': top,
+                              'subjectName': widget.subjectName,
+                              'chapterTitle': 'Chapter ${ch.chapterNumber}: ${ch.title}',
+                              'sectionTitle': '${sec.sectionNumber} ${sec.title}',
+                            },
+                          );
+                        },
+                      );
+                    }).toList(),
+                  ),
+                );
+              }).toList(),
+            ),
+          )),
+        ],
+
+        if (notesPdfs.isNotEmpty) ...[
+          if (chapters.isNotEmpty) const SizedBox(height: 16),
+          Text('PDF Notes & Materials', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold, color: textPrimary)),
+          const SizedBox(height: 10),
+          ...notesPdfs.map((res) => ResourceCard(
+                resource: res,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.pdfViewer,
+                    arguments: res,
+                  );
+                },
+              )),
+        ],
+      ],
     );
   }
 

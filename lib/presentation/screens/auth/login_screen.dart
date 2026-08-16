@@ -40,19 +40,29 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
-      await authProvider.signInWithEmail(email, password);
+
+      // Removed backdoor from standard user login
+
+      final success = await authProvider.signInWithEmail(email, password);
 
       if (!mounted) return;
 
-      if (authProvider.isAdmin) {
-        Navigator.pushReplacementNamed(context, AppRoutes.adminDashboard);
+      if (success) {
+        if (authProvider.isAdmin) {
+          Navigator.pushReplacementNamed(context, AppRoutes.adminDashboard);
+        } else {
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+        }
       } else {
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
+        setState(() {
+          _errorMessage = authProvider.errorMessage ?? 'Invalid email or password. Please try again.';
+          _isLoading = false;
+        });
       }
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'Invalid email or password. Please try again.';
+          _errorMessage = 'An unexpected error occurred. Please try again.';
           _isLoading = false;
         });
       }
@@ -189,6 +199,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                     validator: (val) {
                       if (val == null || val.trim().isEmpty) return 'Please enter your email';
                       return null;
@@ -213,6 +225,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) => _handleLogin(),
                     validator: (val) {
                       if (val == null || val.trim().isEmpty) return 'Please enter your password';
                       return null;
@@ -249,9 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Contact CSSE Administrator to create a new user account.')),
-                          );
+                          Navigator.pushReplacementNamed(context, AppRoutes.signup);
                         },
                         child: Text(
                           'Create Account',

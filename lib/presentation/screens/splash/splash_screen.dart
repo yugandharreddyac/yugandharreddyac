@@ -5,6 +5,8 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../providers/study_provider.dart';
 import '../home/home_screen.dart';
+import '../auth/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,15 +30,29 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 1800));
 
     if (mounted) {
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 600),
-          pageBuilder: (_, animation, __) => FadeTransition(
-            opacity: animation,
-            child: const HomeScreen(),
+      final user = FirebaseAuth.instance.currentUser;
+      
+      if (user != null) {
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 600),
+            pageBuilder: (_, animation, __) => FadeTransition(
+              opacity: animation,
+              child: const HomeScreen(),
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 600),
+            pageBuilder: (_, animation, __) => FadeTransition(
+              opacity: animation,
+              child: const LoginScreen(),
+            ),
+          ),
+        );
+      }
     }
   }
 

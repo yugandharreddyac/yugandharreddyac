@@ -49,6 +49,7 @@ dependencies:
   firebase_analytics: ^11.0.1
   firebase_crashlytics: ^4.0.1
   file_picker: ^8.0.0
+  minio: ^3.5.8
 
 dev_dependencies:
   flutter_test:

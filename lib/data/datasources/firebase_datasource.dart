@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:minio/minio.dart';
+import 'package:dio/dio.dart';
+import '../../core/config/app_config.dart';
 import '../models/year_model.dart';
 import '../models/semester_model.dart';
 import '../models/subject_model.dart';
@@ -35,6 +38,25 @@ class FirebaseDataSource {
   FirebaseAuth get _auth => _authInstance ?? FirebaseAuth.instance;
   FirebaseAnalytics get _analytics => _analyticsInstance ?? FirebaseAnalytics.instance;
   FirebaseCrashlytics get _crashlytics => _crashlyticsInstance ?? FirebaseCrashlytics.instance;
+
+  final Minio _minio = Minio(
+    endPoint: AppConfig.archiveS3Endpoint,
+    accessKey: AppConfig.archiveS3AccessKey,
+    secretKey: AppConfig.archiveS3SecretKey,
+    useSSL: true,
+  );
+
+  /// Ensure bucket exists in Archive.org
+  Future<void> _ensureBucketExists() async {
+    try {
+      final exists = await _minio.bucketExists(AppConfig.archiveS3BucketName);
+      if (!exists) {
+        await _minio.makeBucket(AppConfig.archiveS3BucketName);
+      }
+    } catch (_) {
+      // Ignore bucket creation errors on Archive.org, sometimes it's restricted
+    }
+  }
 
   /// Checks if Firebase is initialized and accessible
   bool get isAvailable {
@@ -202,25 +224,51 @@ class FirebaseDataSource {
 
   // --- Admin PDF Upload & Firestore Operations ---
 
-  /// Upload PDF to Firebase Storage path: StudyHub/{Year}/{Semester}/{Subject}/{ResourceType}/{filename}.pdf
+  /// Upload PDF to Archive.org path: StudyHub/{Year}/{Semester}/{Subject}/{ResourceType}/{filename}.pdf
+  /// Uses direct HTTP PUT to Archive.org S3 endpoint with proper headers for auto-bucket creation.
   Future<String> uploadPdfToStorage({
     required String storagePath,
     required List<int> bytes,
     required void Function(double progress) onProgress,
   }) async {
-    final ref = _storage.ref().child(storagePath);
-    final metadata = SettableMetadata(contentType: 'application/pdf');
-    final uploadTask = ref.putData(Uint8List.fromList(bytes), metadata);
+    if (AppConfig.archiveS3AccessKey == 'YOUR_ACCESS_KEY_HERE') {
+      throw Exception('Archive.org Access Key is missing! Please configure it in app_config.dart.');
+    }
 
-    uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-      if (snapshot.totalBytes > 0) {
-        final progress = snapshot.bytesTransferred / snapshot.totalBytes;
-        onProgress(progress);
-      }
-    });
+    final objectName = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+    final bucket = AppConfig.archiveS3BucketName;
 
-    final completedSnapshot = await uploadTask;
-    return await completedSnapshot.ref.getDownloadURL();
+    // Use direct HTTP PUT to Archive.org S3 with proper headers.
+    final dio = Dio();
+    final url = 'https://${AppConfig.archiveS3Endpoint}/$bucket/$objectName';
+
+    try {
+      await dio.put(
+        url,
+        data: Stream.fromIterable([bytes]),
+        options: Options(
+          headers: {
+            'Authorization': 'LOW ${AppConfig.archiveS3AccessKey}:${AppConfig.archiveS3SecretKey}',
+            'Content-Type': 'application/pdf',
+            'Content-Length': bytes.length,
+            'x-amz-auto-make-bucket': '1',
+            'x-archive-meta-mediatype': 'texts',
+            'x-archive-meta-collection': 'opensource',
+          },
+          contentType: 'application/pdf',
+        ),
+        onSendProgress: (sent, total) {
+          if (total > 0) {
+            onProgress(sent / total);
+          }
+        },
+      );
+    } catch (e) {
+      debugPrint('Archive.org upload error: $e');
+      rethrow;
+    }
+
+    return 'https://archive.org/download/$bucket/$objectName';
   }
 
   /// Create Firestore resource document in resources collection
@@ -251,18 +299,13 @@ class FirebaseDataSource {
     }
   }
 
-  // --- Firebase Storage URL Resolver ---
+  // --- Archive.org Storage URL Resolver ---
   Future<String> getDownloadUrl(String storagePath) async {
     if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) {
       return storagePath;
     }
-    try {
-      final ref = _storage.ref().child(storagePath);
-      return await ref.getDownloadURL();
-    } catch (e, stack) {
-      await logError(e, stack, reason: 'Firebase Storage URL resolve failed for $storagePath');
-      return storagePath;
-    }
+    final objectName = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+    return 'https://archive.org/download/${AppConfig.archiveS3BucketName}/$objectName';
   }
 
   // --- Firestore Career, Coding, Placement & Project Collections ---
@@ -395,7 +438,9 @@ class FirebaseDataSource {
 
   Future<void> deleteStorageFile(String storagePath) async {
     try {
-      await _storage.ref().child(storagePath).delete();
+      if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) return;
+      final objectName = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+      await _minio.removeObject(AppConfig.archiveS3BucketName, objectName);
     } catch (_) {}
   }
 

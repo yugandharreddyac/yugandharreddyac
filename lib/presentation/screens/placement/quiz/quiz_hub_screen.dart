@@ -80,13 +80,17 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-                tooltip: 'Back',
-                onPressed: () => Navigator.pop(context),
-              )
-            : null,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+          tooltip: 'Back',
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacementNamed(context, '/home');
+            }
+          },
+        ),
         title: Text(
           'Placement Mock Quiz & Test Engine',
           style: GoogleFonts.inter(

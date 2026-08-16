@@ -51,15 +51,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     final savedPage = recentProvider.getLastReadPage(widget.resource.id);
     _currentPage = (savedPage > 0) ? savedPage - 1 : 0;
 
-    if (kIsWeb) {
-      setState(() {
-        _localFilePath = widget.resource.storageUrl;
-        _isLoadingFile = false;
-        _isReady = true;
-      });
-      recentProvider.recordResourceOpened(widget.resource);
-      return;
-    }
+    // For Web, downloadProvider.downloadPdf() instantly resolves the secure Firebase Storage URL and returns it.
 
     // Check if file is downloaded locally
     final isDownloaded = downloadProvider.isResourceDownloaded(widget.resource.id);
@@ -300,18 +292,63 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                'Web PDF Stream Ready. Click below to view in browser tab.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+
+                              // Show Archive.org processing notice for newly uploaded files
+                              if (_isArchiveOrgUrl(_localFilePath ?? widget.resource.storageUrl)) ...[
+                                Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 12),
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber.withAlpha(25),
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(color: Colors.amber.withAlpha(80)),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Icon(Icons.schedule_rounded, color: Colors.amber, size: 22),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              'Recently Uploaded — Processing',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Colors.amber,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'This document was recently uploaded to Archive.org. '
+                                        'New files typically take 30–60 minutes to become available for viewing. '
+                                        'Please try again shortly.',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              ] else ...[
+                                Text(
+                                  'Web PDF Stream Ready. Click below to view in browser tab.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                  ),
+                                ),
+                              ],
+
                               const SizedBox(height: 24),
                               ElevatedButton.icon(
                                 onPressed: () async {
                                   try {
-                                    final urlStr = widget.resource.storageUrl.trim();
+                                    final urlStr = (_localFilePath ?? widget.resource.storageUrl).trim();
                                     if (urlStr.isEmpty) {
                                       if (context.mounted) {
                                         ScaffoldMessenger.of(context).showSnackBar(
@@ -345,7 +382,11 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                                   }
                                 },
                                 icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                                label: const Text('Open PDF Document'),
+                                label: Text(
+                                  _isArchiveOrgUrl(_localFilePath ?? widget.resource.storageUrl)
+                                      ? 'Try Opening PDF'
+                                      : 'Open PDF Document',
+                                ),
                               ),
                             ],
                           ),
@@ -535,5 +576,10 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
         ),
       ),
     );
+  }
+
+  /// Check if the URL is from Archive.org (processing delay applies)
+  bool _isArchiveOrgUrl(String url) {
+    return url.contains('archive.org');
   }
 }

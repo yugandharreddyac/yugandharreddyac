@@ -260,16 +260,12 @@ class StudyRepository {
 
     // 3. Upload PDF bytes to Firebase Storage with live progress callback
     String downloadUrl = '';
-    try {
-      if (firebaseDataSource.isAvailable) {
-        downloadUrl = await _storageRepository.uploadPdf(
-          storagePath: storagePath,
-          bytes: pdfBytes,
-          onProgress: onProgress,
-        );
-      }
-    } catch (e) {
-      debugPrint('Storage upload notice: $e');
+    if (firebaseDataSource.isAvailable) {
+      downloadUrl = await _storageRepository.uploadPdf(
+        storagePath: storagePath,
+        bytes: pdfBytes,
+        onProgress: onProgress,
+      );
     }
 
     // 4. Create ResourceModel instance
