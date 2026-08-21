@@ -4,7 +4,8 @@ import 'non_academic_data.dart';
 /// Resolved UniDocs Resource reference connecting roadmap items to real existing content
 class ResolvedResource {
   final String resourceReference;
-  final String resourceType; // 'hub_topic', 'quiz', 'subject', 'coding_hub', 'project_hub', 'higher_ed'
+  final String
+      resourceType; // 'hub_topic', 'quiz', 'subject', 'coding_hub', 'project_hub', 'higher_ed'
   final String deepRoute;
   final Map<String, dynamic>? routeArguments;
   final bool isAvailable;
@@ -30,7 +31,8 @@ class RoadmapResourceResolver {
   RoadmapResourceResolver._();
 
   /// Resolves a technical skill into a real UniDocs entity or returns unavailable safely
-  static ResolvedResource resolve(String targetSkill, {String? category, String? hintId}) {
+  static ResolvedResource resolve(String targetSkill,
+      {String? category, String? hintId}) {
     final skillLower = targetSkill.toLowerCase().trim();
 
     // 1. Direct Non-Academic Hub Match

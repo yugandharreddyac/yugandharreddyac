@@ -21,18 +21,21 @@ void main() {
 
     test('All 7 Entrepreneurship categories exist with stable IDs', () {
       final categoryIds = hub.categories.map((c) => c.id).toList();
-      expect(categoryIds, containsAll([
-        'startup_ideation',
-        'market_customer',
-        'business_models',
-        'lean_startup',
-        'startup_finance',
-        'fundraising_pitch',
-        'student_startups',
-      ]));
+      expect(
+          categoryIds,
+          containsAll([
+            'startup_ideation',
+            'market_customer',
+            'business_models',
+            'lean_startup',
+            'startup_finance',
+            'fundraising_pitch',
+            'student_startups',
+          ]));
     });
 
-    test('Preserves stable topic IDs and maps all 13 beginner-first topics', () {
+    test('Preserves stable topic IDs and maps all 13 beginner-first topics',
+        () {
       final allTopics = hub.categories.expand((c) => c.topics).toList();
       final topicIds = allTopics.map((t) => t.id).toList();
 
@@ -42,18 +45,20 @@ void main() {
       expect(topicIds, contains('pitch_decks'));
 
       // New educational topics
-      expect(topicIds, containsAll([
-        'entrepreneurship_basics',
-        'idea_generation',
-        'market_research_basics',
-        'value_proposition_design',
-        'business_model_canvas',
-        'validation_experimentation',
-        'startup_finance_basics',
-        'growth_marketing',
-        'student_entrepreneurship',
-        'four_year_startup_roadmap',
-      ]));
+      expect(
+          topicIds,
+          containsAll([
+            'entrepreneurship_basics',
+            'idea_generation',
+            'market_research_basics',
+            'value_proposition_design',
+            'business_model_canvas',
+            'validation_experimentation',
+            'startup_finance_basics',
+            'growth_marketing',
+            'student_entrepreneurship',
+            'four_year_startup_roadmap',
+          ]));
 
       expect(allTopics.length, equals(13));
     });
@@ -79,12 +84,14 @@ void main() {
         expect(
           topic.description.length,
           greaterThan(150),
-          reason: 'Topic ${topic.id} description must be >150 chars for educational clarity.',
+          reason:
+              'Topic ${topic.id} description must be >150 chars for educational clarity.',
         );
       }
     });
 
-    test('All external resources use valid HTTPS schemes with no empty URLs', () {
+    test('All external resources use valid HTTPS schemes with no empty URLs',
+        () {
       final allResources = hub.categories
           .expand((c) => c.topics)
           .expand((t) => [
@@ -103,15 +110,21 @@ void main() {
       }
     });
 
-    test('Practice and project resources exist across all Entrepreneurship categories', () {
+    test(
+        'Practice and project resources exist across all Entrepreneurship categories',
+        () {
       for (final category in hub.categories) {
-        final categoryResources = category.topics.expand((t) => [
-              ...t.resources,
-              ...t.subtopics.expand((s) => s.resources),
-            ]).toList();
+        final categoryResources = category.topics
+            .expand((t) => [
+                  ...t.resources,
+                  ...t.subtopics.expand((s) => s.resources),
+                ])
+            .toList();
 
-        final hasPractice = categoryResources.any((r) => r.type == HierarchyResourceType.practice);
-        final hasProject = categoryResources.any((r) => r.type == HierarchyResourceType.project);
+        final hasPractice = categoryResources
+            .any((r) => r.type == HierarchyResourceType.practice);
+        final hasProject = categoryResources
+            .any((r) => r.type == HierarchyResourceType.project);
 
         expect(
           hasPractice,
@@ -121,28 +134,51 @@ void main() {
         expect(
           hasProject,
           isTrue,
-          reason: 'Category ${category.id} must contain project/build resources.',
+          reason:
+              'Category ${category.id} must contain project/build resources.',
         );
       }
     });
 
-    test('SearchIndexEngine indexes Entrepreneurship Hub topics and matches search terms', () async {
+    test(
+        'SearchIndexEngine indexes Entrepreneurship Hub topics and matches search terms',
+        () async {
       final engine = SearchIndexEngine();
       engine.buildIndex([], []);
 
       expect(engine.isIndexed, isTrue);
 
       final startupResult = engine.search('Startup');
-      expect(startupResult.matchingItems.any((i) => i.title.contains('Startup') || i.subtitle.contains('Startup') || i.keywords.any((k) => k.contains('Startup'))), isTrue);
+      expect(
+          startupResult.matchingItems.any((i) =>
+              i.title.contains('Startup') ||
+              i.subtitle.contains('Startup') ||
+              i.keywords.any((k) => k.contains('Startup'))),
+          isTrue);
 
       final mvpResult = engine.search('MVP');
-      expect(mvpResult.matchingItems.any((i) => i.title.contains('MVP') || i.subtitle.contains('MVP') || i.keywords.any((k) => k.contains('MVP'))), isTrue);
+      expect(
+          mvpResult.matchingItems.any((i) =>
+              i.title.contains('MVP') ||
+              i.subtitle.contains('MVP') ||
+              i.keywords.any((k) => k.contains('MVP'))),
+          isTrue);
 
       final tamResult = engine.search('TAM');
-      expect(tamResult.matchingItems.any((i) => i.title.contains('TAM') || i.subtitle.contains('TAM') || i.keywords.any((k) => k.contains('TAM'))), isTrue);
+      expect(
+          tamResult.matchingItems.any((i) =>
+              i.title.contains('TAM') ||
+              i.subtitle.contains('TAM') ||
+              i.keywords.any((k) => k.contains('TAM'))),
+          isTrue);
 
       final pitchResult = engine.search('Pitch');
-      expect(pitchResult.matchingItems.any((i) => i.title.contains('Pitch') || i.subtitle.contains('Pitch') || i.keywords.any((k) => k.contains('Pitch'))), isTrue);
+      expect(
+          pitchResult.matchingItems.any((i) =>
+              i.title.contains('Pitch') ||
+              i.subtitle.contains('Pitch') ||
+              i.keywords.any((k) => k.contains('Pitch'))),
+          isTrue);
     });
   });
 }

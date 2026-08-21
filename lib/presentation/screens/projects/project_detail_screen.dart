@@ -51,8 +51,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
 
     final checklistItems = [
       'Idea & Problem Statement Understood',
@@ -101,19 +103,24 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withAlpha(40),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           project.category,
-                          style: const TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 11),
+                          style: const TextStyle(
+                              color: Colors.cyanAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: diffColor.withAlpha(50),
                           borderRadius: BorderRadius.circular(8),
@@ -121,12 +128,17 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         ),
                         child: Text(
                           project.difficulty,
-                          style: TextStyle(color: diffColor, fontWeight: FontWeight.bold, fontSize: 11),
+                          style: TextStyle(
+                              color: diffColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11),
                         ),
                       ),
                       const Spacer(),
                       Chip(
-                        label: Text(project.estimatedDuration, style: const TextStyle(fontSize: 10, color: Colors.white)),
+                        label: Text(project.estimatedDuration,
+                            style: const TextStyle(
+                                fontSize: 10, color: Colors.white)),
                         backgroundColor: Colors.white.withAlpha(20),
                       ),
                     ],
@@ -134,7 +146,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                   const SizedBox(height: 10),
                   Text(
                     project.title,
-                    style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -156,8 +171,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 ),
                 labelColor: Colors.white,
                 unselectedLabelColor: textSecondary,
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                labelStyle:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
                 tabs: const [
                   Tab(text: '📌 Blueprint'),
                   Tab(text: '🏗️ Architecture'),
@@ -172,11 +189,16 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildBlueprintTab(context, project, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildArchitectureTab(context, project, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildRoadmapTab(context, project, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildDeploymentTab(context, project, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildResumeInterviewTab(context, project, checklistItems, cardBg, borderColor, textPrimary, textSecondary, isDark),
+                  _buildBlueprintTab(context, project, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildArchitectureTab(context, project, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildRoadmapTab(context, project, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildDeploymentTab(context, project, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildResumeInterviewTab(context, project, checklistItems,
+                      cardBg, borderColor, textPrimary, textSecondary, isDark),
                 ],
               ),
             ),
@@ -187,28 +209,48 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   // TAB 1: BLUEPRINT & OVERVIEW
-  Widget _buildBlueprintTab(BuildContext context, ProjectModel project, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildBlueprintTab(
+      BuildContext context,
+      ProjectModel project,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Problem Statement & Use Case', Icons.assignment_late_rounded),
+        _buildSectionHeader(
+            'Problem Statement & Use Case', Icons.assignment_late_rounded),
         const SizedBox(height: 8),
-        _buildCard(cardBg, borderColor, child: Text(project.problemStatement.isNotEmpty ? project.problemStatement : project.description, style: TextStyle(color: textPrimary, fontSize: 13.5, height: 1.45))),
-
+        _buildCard(cardBg, borderColor,
+            child: Text(
+                project.problemStatement.isNotEmpty
+                    ? project.problemStatement
+                    : project.description,
+                style: TextStyle(
+                    color: textPrimary, fontSize: 13.5, height: 1.45))),
         if (project.realWorldUseCase.isNotEmpty) ...[
           const SizedBox(height: 18),
-          _buildSectionHeader('Real-World Industry Application', Icons.public_rounded),
+          _buildSectionHeader(
+              'Real-World Industry Application', Icons.public_rounded),
           const SizedBox(height: 8),
-          _buildCard(cardBg, borderColor, child: Text(project.realWorldUseCase, style: TextStyle(color: textSecondary, fontSize: 13, height: 1.4))),
+          _buildCard(cardBg, borderColor,
+              child: Text(project.realWorldUseCase,
+                  style: TextStyle(
+                      color: textSecondary, fontSize: 13, height: 1.4))),
         ],
-
         const SizedBox(height: 18),
-        _buildSectionHeader('Prerequisites & Required Skills', Icons.checklist_rtl_rounded),
+        _buildSectionHeader(
+            'Prerequisites & Required Skills', Icons.checklist_rtl_rounded),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: (project.requiredSkills.isNotEmpty ? project.requiredSkills : project.technologies).map((sk) {
+          children: (project.requiredSkills.isNotEmpty
+                  ? project.requiredSkills
+                  : project.technologies)
+              .map((sk) {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
@@ -216,25 +258,42 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.primary.withAlpha(50)),
               ),
-              child: Text(sk, style: const TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.w600)),
+              child: Text(sk,
+                  style: const TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600)),
             );
           }).toList(),
         ),
-
         const SizedBox(height: 18),
         _buildSectionHeader('Technology Stack Selection', Icons.layers_rounded),
         const SizedBox(height: 8),
-        _buildCard(cardBg, borderColor, child: Text(project.whyTheseTechnologies.isNotEmpty ? project.whyTheseTechnologies : project.learningOutcome, style: TextStyle(color: textPrimary, fontSize: 13, height: 1.4))),
+        _buildCard(cardBg, borderColor,
+            child: Text(
+                project.whyTheseTechnologies.isNotEmpty
+                    ? project.whyTheseTechnologies
+                    : project.learningOutcome,
+                style:
+                    TextStyle(color: textPrimary, fontSize: 13, height: 1.4))),
       ],
     );
   }
 
   // TAB 2: SYSTEM ARCHITECTURE & MODULES
-  Widget _buildArchitectureTab(BuildContext context, ProjectModel project, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildArchitectureTab(
+      BuildContext context,
+      ProjectModel project,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('System Architecture Diagram', Icons.account_tree_rounded),
+        _buildSectionHeader(
+            'System Architecture Diagram', Icons.account_tree_rounded),
         const SizedBox(height: 8),
         Container(
           width: double.infinity,
@@ -244,11 +303,18 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
             borderRadius: BorderRadius.circular(14),
           ),
           child: Text(
-            project.systemArchitecture.isNotEmpty ? project.systemArchitecture : (project.architectureNotes.isNotEmpty ? project.architectureNotes : 'Client -> Backend API -> Database'),
-            style: const TextStyle(fontFamily: 'monospace', fontSize: 11.5, color: Colors.cyanAccent, height: 1.45),
+            project.systemArchitecture.isNotEmpty
+                ? project.systemArchitecture
+                : (project.architectureNotes.isNotEmpty
+                    ? project.architectureNotes
+                    : 'Client -> Backend API -> Database'),
+            style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 11.5,
+                color: Colors.cyanAccent,
+                height: 1.45),
           ),
         ),
-
         const SizedBox(height: 18),
         _buildSectionHeader('Major System Modules', Icons.view_module_rounded),
         const SizedBox(height: 8),
@@ -256,27 +322,38 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           cardBg,
           borderColor,
           child: Column(
-            children: (project.majorModules.isNotEmpty ? project.majorModules : project.keyFeatures).map((mod) {
+            children: (project.majorModules.isNotEmpty
+                    ? project.majorModules
+                    : project.keyFeatures)
+                .map((mod) {
               return ListTile(
                 dense: true,
                 contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.check_circle_outline_rounded, color: AppColors.primary, size: 18),
-                title: Text(mod, style: TextStyle(fontSize: 12.5, color: textPrimary, fontWeight: FontWeight.w600)),
+                leading: const Icon(Icons.check_circle_outline_rounded,
+                    color: AppColors.primary, size: 18),
+                title: Text(mod,
+                    style: TextStyle(
+                        fontSize: 12.5,
+                        color: textPrimary,
+                        fontWeight: FontWeight.w600)),
               );
             }).toList(),
           ),
         ),
-
         if (project.databaseDesign.isNotEmpty) ...[
           const SizedBox(height: 18),
-          _buildSectionHeader('Database Design & Schema', Icons.storage_rounded),
+          _buildSectionHeader(
+              'Database Design & Schema', Icons.storage_rounded),
           const SizedBox(height: 8),
-          _buildCard(cardBg, borderColor, child: Text(project.databaseDesign, style: TextStyle(color: textPrimary, fontSize: 12.5, height: 1.4))),
+          _buildCard(cardBg, borderColor,
+              child: Text(project.databaseDesign,
+                  style: TextStyle(
+                      color: textPrimary, fontSize: 12.5, height: 1.4))),
         ],
-
         if (project.folderStructure.isNotEmpty) ...[
           const SizedBox(height: 18),
-          _buildSectionHeader('Suggested Folder Structure', Icons.folder_open_rounded),
+          _buildSectionHeader(
+              'Suggested Folder Structure', Icons.folder_open_rounded),
           const SizedBox(height: 8),
           Container(
             width: double.infinity,
@@ -285,7 +362,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               color: const Color(0xFF0F172A),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Text(project.folderStructure, style: const TextStyle(fontFamily: 'monospace', fontSize: 11, color: Colors.greenAccent, height: 1.4)),
+            child: Text(project.folderStructure,
+                style: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    color: Colors.greenAccent,
+                    height: 1.4)),
           ),
         ],
       ],
@@ -293,17 +375,27 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   // TAB 3: IMPLEMENTATION ROADMAP
-  Widget _buildRoadmapTab(BuildContext context, ProjectModel project, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
-    final roadmapSteps = project.implementationRoadmap.isNotEmpty ? project.implementationRoadmap : project.developmentPhases;
+  Widget _buildRoadmapTab(
+      BuildContext context,
+      ProjectModel project,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
+    final roadmapSteps = project.implementationRoadmap.isNotEmpty
+        ? project.implementationRoadmap
+        : project.developmentPhases;
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Step-by-Step Implementation Roadmap', Icons.map_rounded),
+        _buildSectionHeader(
+            'Step-by-Step Implementation Roadmap', Icons.map_rounded),
         const SizedBox(height: 4),
-        Text('Follow these phased steps to build the project from scratch.', style: TextStyle(color: textSecondary, fontSize: 12)),
+        Text('Follow these phased steps to build the project from scratch.',
+            style: TextStyle(color: textSecondary, fontSize: 12)),
         const SizedBox(height: 14),
-
         if (roadmapSteps.isNotEmpty) ...[
           ...roadmapSteps.asMap().entries.map((entry) {
             final idx = entry.key + 1;
@@ -319,41 +411,75 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               ),
               child: Row(
                 children: [
-                  CircleAvatar(radius: 12, backgroundColor: AppColors.primary, child: Text('$idx', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold))),
+                  CircleAvatar(
+                      radius: 12,
+                      backgroundColor: AppColors.primary,
+                      child: Text('$idx',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold))),
                   const SizedBox(width: 12),
-                  Expanded(child: Text(step, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5, color: textPrimary))),
+                  Expanded(
+                      child: Text(step,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12.5,
+                              color: textPrimary))),
                 ],
               ),
             );
           }),
         ] else ...[
-          _buildCard(cardBg, borderColor, child: Text('Follow standard modular development: Setup -> DB Schema -> REST API -> UI Integration -> Testing.', style: TextStyle(color: textPrimary, fontSize: 13))),
+          _buildCard(cardBg, borderColor,
+              child: Text(
+                  'Follow standard modular development: Setup -> DB Schema -> REST API -> UI Integration -> Testing.',
+                  style: TextStyle(color: textPrimary, fontSize: 13))),
         ],
-
         if (project.testingStrategy.isNotEmpty) ...[
           const SizedBox(height: 18),
           _buildSectionHeader('Testing Strategy', Icons.bug_report_rounded),
           const SizedBox(height: 8),
-          _buildCard(cardBg, borderColor, child: Text(project.testingStrategy, style: TextStyle(color: textSecondary, fontSize: 12.5))),
+          _buildCard(cardBg, borderColor,
+              child: Text(project.testingStrategy,
+                  style: TextStyle(color: textSecondary, fontSize: 12.5))),
         ],
       ],
     );
   }
 
   // TAB 4: DEPLOYMENT & GITHUB
-  Widget _buildDeploymentTab(BuildContext context, ProjectModel project, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildDeploymentTab(
+      BuildContext context,
+      ProjectModel project,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _buildSectionHeader('Deployment Strategy', Icons.cloud_upload_rounded),
         const SizedBox(height: 8),
-        _buildCard(cardBg, borderColor, child: Text(project.deploymentStrategy.isNotEmpty ? project.deploymentStrategy : 'Deploy frontend on Vercel / Netlify and backend server on Render / AWS.', style: TextStyle(color: textPrimary, fontSize: 13, height: 1.4))),
-
+        _buildCard(cardBg, borderColor,
+            child: Text(
+                project.deploymentStrategy.isNotEmpty
+                    ? project.deploymentStrategy
+                    : 'Deploy frontend on Vercel / Netlify and backend server on Render / AWS.',
+                style:
+                    TextStyle(color: textPrimary, fontSize: 13, height: 1.4))),
         const SizedBox(height: 18),
-        _buildSectionHeader('GitHub Repository & README Guidelines', Icons.code_rounded),
+        _buildSectionHeader(
+            'GitHub Repository & README Guidelines', Icons.code_rounded),
         const SizedBox(height: 8),
-        _buildCard(cardBg, borderColor, child: Text(project.readmeRequirements.isNotEmpty ? project.readmeRequirements : 'Include project description, setup commands, architecture diagram, and license.', style: TextStyle(color: textSecondary, fontSize: 12.5, height: 1.4))),
-
+        _buildCard(cardBg, borderColor,
+            child: Text(
+                project.readmeRequirements.isNotEmpty
+                    ? project.readmeRequirements
+                    : 'Include project description, setup commands, architecture diagram, and license.',
+                style: TextStyle(
+                    color: textSecondary, fontSize: 12.5, height: 1.4))),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -362,19 +488,29 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 child: ElevatedButton.icon(
                   onPressed: () => _launchUrl(project.githubUrl),
                   icon: const Icon(Icons.code_rounded, size: 16),
-                  label: const Text('View GitHub Repository', style: TextStyle(fontSize: 12)),
-                  style: ElevatedButton.styleFrom(backgroundColor: isDark ? AppColors.cardDark : Colors.black87, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 12)),
+                  label: const Text('View GitHub Repository',
+                      style: TextStyle(fontSize: 12)),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          isDark ? AppColors.cardDark : Colors.black87,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12)),
                 ),
               ),
-            if (project.githubUrl.isNotEmpty && project.sourceCodeUrl.isNotEmpty)
+            if (project.githubUrl.isNotEmpty &&
+                project.sourceCodeUrl.isNotEmpty)
               const SizedBox(width: 10),
             if (project.sourceCodeUrl.isNotEmpty)
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () => _launchUrl(project.sourceCodeUrl),
                   icon: const Icon(Icons.open_in_new_rounded, size: 16),
-                  label: const Text('View Source Code', style: TextStyle(fontSize: 12)),
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 12)),
+                  label: const Text('View Source Code',
+                      style: TextStyle(fontSize: 12)),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12)),
                 ),
               ),
           ],
@@ -384,24 +520,39 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   }
 
   // TAB 5: RESUME & INTERVIEW PREP
-  Widget _buildResumeInterviewTab(BuildContext context, ProjectModel project, List<String> checklistItems, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildResumeInterviewTab(
+      BuildContext context,
+      ProjectModel project,
+      List<String> checklistItems,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('30-Second Resume Description', Icons.description_rounded),
+        _buildSectionHeader(
+            '30-Second Resume Description', Icons.description_rounded),
         const SizedBox(height: 8),
         _buildCard(
           cardBg,
           borderColor,
           child: SelectableText(
-            project.resumeDescription.isNotEmpty ? project.resumeDescription : 'Built ${project.title} using ${project.technologies.join(", ")} delivering optimal performance and features.',
-            style: TextStyle(color: textPrimary, fontSize: 13, height: 1.4, fontWeight: FontWeight.bold),
+            project.resumeDescription.isNotEmpty
+                ? project.resumeDescription
+                : 'Built ${project.title} using ${project.technologies.join(", ")} delivering optimal performance and features.',
+            style: TextStyle(
+                color: textPrimary,
+                fontSize: 13,
+                height: 1.4,
+                fontWeight: FontWeight.bold),
           ),
         ),
-
         if (project.interviewQuestions.isNotEmpty) ...[
           const SizedBox(height: 18),
-          _buildSectionHeader('Project Interview Questions & Answers', Icons.psychology_rounded),
+          _buildSectionHeader('Project Interview Questions & Answers',
+              Icons.psychology_rounded),
           const SizedBox(height: 8),
           _buildCard(
             cardBg,
@@ -411,26 +562,35 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 return ListTile(
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.help_outline_rounded, color: AppColors.primary, size: 18),
-                  title: Text(q, style: TextStyle(fontSize: 12.5, color: textPrimary, fontWeight: FontWeight.w600)),
+                  leading: const Icon(Icons.help_outline_rounded,
+                      color: AppColors.primary, size: 18),
+                  title: Text(q,
+                      style: TextStyle(
+                          fontSize: 12.5,
+                          color: textPrimary,
+                          fontWeight: FontWeight.w600)),
                 );
               }).toList(),
             ),
           ),
         ],
-
         const SizedBox(height: 18),
-        _buildSectionHeader('Interactive Project Completion Checklist', Icons.task_alt_rounded),
+        _buildSectionHeader(
+            'Interactive Project Completion Checklist', Icons.task_alt_rounded),
         const SizedBox(height: 4),
-        Text('Check off milestones as you build and prepare this project.', style: TextStyle(color: textSecondary, fontSize: 12)),
+        Text('Check off milestones as you build and prepare this project.',
+            style: TextStyle(color: textSecondary, fontSize: 12)),
         const SizedBox(height: 10),
-
         ...checklistItems.map((item) {
           final isChecked = _projectChecklist[item] ?? false;
           return CheckboxListTile(
             value: isChecked,
             dense: true,
-            title: Text(item, style: TextStyle(fontSize: 12.5, color: textPrimary, decoration: isChecked ? TextDecoration.lineThrough : null)),
+            title: Text(item,
+                style: TextStyle(
+                    fontSize: 12.5,
+                    color: textPrimary,
+                    decoration: isChecked ? TextDecoration.lineThrough : null)),
             activeColor: AppColors.primary,
             onChanged: (val) {
               setState(() {
@@ -449,7 +609,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       children: [
         Icon(icon, color: AppColors.primary, size: 18),
         const SizedBox(width: 8),
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        Text(title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
       ],
     );
   }

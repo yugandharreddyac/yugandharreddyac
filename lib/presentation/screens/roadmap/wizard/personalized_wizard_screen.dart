@@ -15,7 +15,8 @@ class PersonalizedWizardScreen extends StatefulWidget {
   });
 
   @override
-  State<PersonalizedWizardScreen> createState() => _PersonalizedWizardScreenState();
+  State<PersonalizedWizardScreen> createState() =>
+      _PersonalizedWizardScreenState();
 }
 
 class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
@@ -61,12 +62,17 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
     super.initState();
     final p = widget.initialProfile;
     _academicStage = p?.academicStage ?? AcademicStage.thirdYear;
-    _goals = p?.goals != null ? List.from(p!.goals) : ['Placement', 'Software Development'];
+    _goals = p?.goals != null
+        ? List.from(p!.goals)
+        : ['Placement', 'Software Development'];
     _primaryCareerDirection = p?.primaryCareerDirection ?? 'AI Engineer';
-    _secondaryCareerDirection = p?.careerDirections.length != null && (p?.careerDirections.length ?? 0) > 1
+    _secondaryCareerDirection = p?.careerDirections.length != null &&
+            (p?.careerDirections.length ?? 0) > 1
         ? p!.careerDirections[1]
         : 'Full Stack Developer';
-    _interestAreas = p?.interestAreas != null ? List.from(p!.interestAreas) : ['AI', 'Machine Learning', 'Python', 'DSA'];
+    _interestAreas = p?.interestAreas != null
+        ? List.from(p!.interestAreas)
+        : ['AI', 'Machine Learning', 'Python', 'DSA'];
     _overallSkillLevel = p?.overallSkillLevel ?? SkillLevel.beginner;
     _skillLevels = p?.skillLevels != null
         ? Map.from(p!.skillLevels)
@@ -94,11 +100,20 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
     _weeklyAvailability = p?.weeklyAvailability ?? 'Weekdays + weekends';
     _targetTimeline = p?.targetTimeline ?? '6 months';
     _learningStyle = p?.learningStyle ?? LearningStyle.balanced;
-    _strengths = p?.strengths != null ? List.from(p!.strengths) : ['Programming', 'Problem Solving'];
-    _weaknesses = p?.weaknesses != null ? List.from(p!.weaknesses) : ['DSA', 'Aptitude'];
+    _strengths = p?.strengths != null
+        ? List.from(p!.strengths)
+        : ['Programming', 'Problem Solving'];
+    _weaknesses =
+        p?.weaknesses != null ? List.from(p!.weaknesses) : ['DSA', 'Aptitude'];
     _placementPreparationAreas = p?.placementPreparationAreas != null
         ? List.from(p!.placementPreparationAreas)
-        : ['Aptitude', 'DSA', 'Technical Interviews', 'DBMS', 'Operating Systems'];
+        : [
+            'Aptitude',
+            'DSA',
+            'Technical Interviews',
+            'DBMS',
+            'Operating Systems'
+          ];
   }
 
   void _nextStep() {
@@ -225,7 +240,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
     const royalBlue = Color(0xFF2563EB);
     final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSecondary = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final textSecondary =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
 
     return Scaffold(
       appBar: AppBar(
@@ -258,7 +274,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           preferredSize: const Size.fromHeight(4),
           child: LinearProgressIndicator(
             value: (_currentStep + 1) / _totalSteps,
-            backgroundColor: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+            backgroundColor:
+                isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
             valueColor: const AlwaysStoppedAnimation<Color>(royalBlue),
             minHeight: 4,
           ),
@@ -273,28 +290,44 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                 Expanded(
                   child: PageView(
                     controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(), // Require button click for validation
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Require button click for validation
                     onPageChanged: (index) {
                       setState(() {
                         _currentStep = index;
                       });
                     },
                     children: [
-                      _buildStep1AcademicStage(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep2PrimaryGoals(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep3CareerDirection(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep4InterestAreas(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep5SkillLevel(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep6ProgrammingLanguages(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep7CoreCsSkills(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep8DomainExperience(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep9PracticalExperience(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep10Strengths(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep11Weaknesses(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep12LearningStyle(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep13TimeAvailability(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep14TimelineAndGoals(isDark, cardBg, textPrimary, textSecondary),
-                      _buildStep15FinalReview(isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep1AcademicStage(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep2PrimaryGoals(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep3CareerDirection(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep4InterestAreas(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep5SkillLevel(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep6ProgrammingLanguages(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep7CoreCsSkills(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep8DomainExperience(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep9PracticalExperience(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep10Strengths(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep11Weaknesses(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep12LearningStyle(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep13TimeAvailability(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep14TimelineAndGoals(
+                          isDark, cardBg, textPrimary, textSecondary),
+                      _buildStep15FinalReview(
+                          isDark, cardBg, textPrimary, textSecondary),
                     ],
                   ),
                 ),
@@ -308,10 +341,12 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 1: Academic Stage ---
-  Widget _buildStep1AcademicStage(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep1AcademicStage(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     return _WizardStepLayout(
       title: 'Current Academic Stage',
-      subtitle: 'Tell us where you are in your academic or professional journey.',
+      subtitle:
+          'Tell us where you are in your academic or professional journey.',
       icon: Icons.school_rounded,
       child: Column(
         children: AcademicStage.values.map((stage) {
@@ -334,7 +369,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 2: Primary Goals ---
-  Widget _buildStep2PrimaryGoals(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep2PrimaryGoals(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final availableGoals = [
       'Placement',
       'Internship',
@@ -377,7 +413,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 3: Career Direction ---
-  Widget _buildStep3CareerDirection(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep3CareerDirection(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final categories = {
       'Software Development': [
         'Software Engineer',
@@ -424,7 +461,10 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   entry.key,
-                  style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textSecondary),
+                  style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: textSecondary),
                 ),
               ),
               Wrap(
@@ -438,13 +478,20 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                       isPrimary ? '★ $role' : role,
                       style: GoogleFonts.inter(
                         fontSize: 13,
-                        fontWeight: isPrimary ? FontWeight.bold : FontWeight.normal,
-                        color: isPrimary || isSecondary ? Colors.white : textPrimary,
+                        fontWeight:
+                            isPrimary ? FontWeight.bold : FontWeight.normal,
+                        color: isPrimary || isSecondary
+                            ? Colors.white
+                            : textPrimary,
                       ),
                     ),
                     selected: isPrimary || isSecondary,
-                    selectedColor: isPrimary ? const Color(0xFF2563EB) : const Color(0xFF059669),
-                    backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                    selectedColor: isPrimary
+                        ? const Color(0xFF2563EB)
+                        : const Color(0xFF059669),
+                    backgroundColor: isDark
+                        ? const Color(0xFF1E293B)
+                        : const Color(0xFFF1F5F9),
                     onSelected: (selected) {
                       setState(() {
                         if (isPrimary) {
@@ -468,7 +515,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 4: Interest Areas ---
-  Widget _buildStep4InterestAreas(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep4InterestAreas(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final areas = [
       'Programming',
       'Data Structures & Algorithms',
@@ -524,10 +572,12 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 5: Overall Skill Level ---
-  Widget _buildStep5SkillLevel(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep5SkillLevel(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     return _WizardStepLayout(
       title: 'Overall Skill Level',
-      subtitle: 'How would you rate your current overall computer science & coding proficiency?',
+      subtitle:
+          'How would you rate your current overall computer science & coding proficiency?',
       icon: Icons.trending_up_rounded,
       child: Column(
         children: SkillLevel.values.map((level) {
@@ -550,7 +600,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 6: Programming Languages ---
-  Widget _buildStep6ProgrammingLanguages(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep6ProgrammingLanguages(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final availableLangs = [
       'Python',
       'C++',
@@ -566,14 +617,16 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
 
     return _WizardStepLayout(
       title: 'Programming Languages',
-      subtitle: 'Select languages you know or want to use. Pick your primary language.',
+      subtitle:
+          'Select languages you know or want to use. Pick your primary language.',
       icon: Icons.code_rounded,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Primary Language (Selected: $_primaryLanguage)',
-            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
           ),
           const SizedBox(height: 8),
           Wrap(
@@ -591,7 +644,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                 ),
                 selected: isPrimary,
                 selectedColor: const Color(0xFF2563EB),
-                backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                backgroundColor:
+                    isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
                 onSelected: (selected) {
                   setState(() {
                     _primaryLanguage = lang;
@@ -606,13 +660,15 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           const SizedBox(height: 20),
           Text(
             'Other Languages Known / Practiced:',
-            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
           ),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: availableLangs.where((l) => l != _primaryLanguage).map((lang) {
+            children:
+                availableLangs.where((l) => l != _primaryLanguage).map((lang) {
               final isKnown = _programmingLanguages.contains(lang);
               return _FilterChipCard(
                 label: lang,
@@ -636,7 +692,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 7: Core CS / DSA Skills ---
-  Widget _buildStep7CoreCsSkills(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep7CoreCsSkills(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final coreSubjects = [
       {'key': 'dsa', 'title': 'Data Structures & Algorithms (DSA)'},
       {'key': 'dbms', 'title': 'Database Management Systems (DBMS)'},
@@ -647,7 +704,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
 
     return _WizardStepLayout(
       title: 'Core CS & DSA Assessment',
-      subtitle: 'Rate your familiarity with fundamental Computer Science pillars.',
+      subtitle:
+          'Rate your familiarity with fundamental Computer Science pillars.',
       icon: Icons.account_tree_rounded,
       child: Column(
         children: coreSubjects.map((sub) {
@@ -662,13 +720,18 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
               color: cardBg,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                color:
+                    isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
               ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 13, color: textPrimary)),
+                Text(title,
+                    style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: textPrimary)),
                 const SizedBox(height: 8),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -692,7 +755,9 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                           ),
                           selected: isSelected,
                           selectedColor: const Color(0xFF2563EB),
-                          backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+                          backgroundColor: isDark
+                              ? const Color(0xFF0F172A)
+                              : const Color(0xFFF8FAFC),
                           onSelected: (selected) {
                             setState(() {
                               _skillLevels[key] = lvl;
@@ -712,11 +777,20 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 8: Domain Experience (Conditional) ---
-  Widget _buildStep8DomainExperience(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
-    final isAi = _primaryCareerDirection.contains('AI') || _primaryCareerDirection.contains('Machine Learning') || _interestAreas.contains('AI');
-    final isWeb = _primaryCareerDirection.contains('Web') || _primaryCareerDirection.contains('Full Stack') || _interestAreas.contains('Web Development');
-    final isSecurity = _primaryCareerDirection.contains('Cyber') || _primaryCareerDirection.contains('Security') || _interestAreas.contains('Cybersecurity');
-    final isCloud = _primaryCareerDirection.contains('Cloud') || _primaryCareerDirection.contains('DevOps') || _interestAreas.contains('Cloud Computing');
+  Widget _buildStep8DomainExperience(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+    final isAi = _primaryCareerDirection.contains('AI') ||
+        _primaryCareerDirection.contains('Machine Learning') ||
+        _interestAreas.contains('AI');
+    final isWeb = _primaryCareerDirection.contains('Web') ||
+        _primaryCareerDirection.contains('Full Stack') ||
+        _interestAreas.contains('Web Development');
+    final isSecurity = _primaryCareerDirection.contains('Cyber') ||
+        _primaryCareerDirection.contains('Security') ||
+        _interestAreas.contains('Cybersecurity');
+    final isCloud = _primaryCareerDirection.contains('Cloud') ||
+        _primaryCareerDirection.contains('DevOps') ||
+        _interestAreas.contains('Cloud Computing');
 
     return _WizardStepLayout(
       title: 'Domain Experience Check',
@@ -728,7 +802,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           if (isAi)
             _buildDomainRatingCard(
               title: 'AI / Machine Learning Experience',
-              description: 'Familiarity with Python libraries (NumPy, Pandas, Scikit-learn, PyTorch)',
+              description:
+                  'Familiarity with Python libraries (NumPy, Pandas, Scikit-learn, PyTorch)',
               current: _aiExperience,
               isDark: isDark,
               cardBg: cardBg,
@@ -738,7 +813,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           if (isWeb)
             _buildDomainRatingCard(
               title: 'Web Development Experience',
-              description: 'Frontend frameworks (React, HTML/CSS) and backend APIs',
+              description:
+                  'Frontend frameworks (React, HTML/CSS) and backend APIs',
               current: _webExperience,
               isDark: isDark,
               cardBg: cardBg,
@@ -748,7 +824,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           if (isSecurity)
             _buildDomainRatingCard(
               title: 'Cybersecurity & Linux Exposure',
-              description: 'Linux command line, networking protocols, security fundamentals',
+              description:
+                  'Linux command line, networking protocols, security fundamentals',
               current: _securityExperience,
               isDark: isDark,
               cardBg: cardBg,
@@ -796,14 +873,24 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+        border: Border.all(
+            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
+          Text(title,
+              style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: textPrimary)),
           const SizedBox(height: 4),
-          Text(description, style: GoogleFonts.inter(fontSize: 12, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B))),
+          Text(description,
+              style: GoogleFonts.inter(
+                  fontSize: 12,
+                  color: isDark
+                      ? const Color(0xFF94A3B8)
+                      : const Color(0xFF64748B))),
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,
@@ -811,10 +898,14 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             children: levels.map((lvl) {
               final isSel = current == lvl;
               return ChoiceChip(
-                label: Text(lvl, style: GoogleFonts.inter(fontSize: 12, color: isSel ? Colors.white : textPrimary)),
+                label: Text(lvl,
+                    style: GoogleFonts.inter(
+                        fontSize: 12,
+                        color: isSel ? Colors.white : textPrimary)),
                 selected: isSel,
                 selectedColor: const Color(0xFF2563EB),
-                backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9),
+                backgroundColor:
+                    isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9),
                 onSelected: (s) => onChanged(lvl),
               );
             }).toList(),
@@ -825,7 +916,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 9: Practical Experience ---
-  Widget _buildStep9PracticalExperience(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep9PracticalExperience(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     return _WizardStepLayout(
       title: 'Practical Experience',
       subtitle: 'Tell us about your hands-on coding and project portfolio.',
@@ -834,7 +926,13 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
         children: [
           _buildExperienceGroup(
             title: 'Project Portfolio',
-            options: ['No projects', 'Academic projects only', '1 personal project', '2–3 personal projects', 'Multiple production projects'],
+            options: [
+              'No projects',
+              'Academic projects only',
+              '1 personal project',
+              '2–3 personal projects',
+              'Multiple production projects'
+            ],
             selected: _projectExperience,
             onSelected: (val) => setState(() => _projectExperience = val),
             isDark: isDark,
@@ -843,7 +941,12 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           const SizedBox(height: 16),
           _buildExperienceGroup(
             title: 'Internship Status',
-            options: ['No internship yet', 'Looking for internship', 'Currently doing internship', 'Internship completed'],
+            options: [
+              'No internship yet',
+              'Looking for internship',
+              'Currently doing internship',
+              'Internship completed'
+            ],
             selected: _internshipStatus,
             onSelected: (val) => setState(() => _internshipStatus = val),
             isDark: isDark,
@@ -852,7 +955,12 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           const SizedBox(height: 16),
           _buildExperienceGroup(
             title: 'Open Source Experience',
-            options: ['Never contributed', 'Interested', 'Beginner contributor', 'Regular contributor'],
+            options: [
+              'Never contributed',
+              'Interested',
+              'Beginner contributor',
+              'Regular contributor'
+            ],
             selected: _openSourceExperience,
             onSelected: (val) => setState(() => _openSourceExperience = val),
             isDark: isDark,
@@ -874,7 +982,9 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
+        Text(title,
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
@@ -882,10 +992,13 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           children: options.map((opt) {
             final isSel = selected == opt;
             return ChoiceChip(
-              label: Text(opt, style: GoogleFonts.inter(fontSize: 12, color: isSel ? Colors.white : textPrimary)),
+              label: Text(opt,
+                  style: GoogleFonts.inter(
+                      fontSize: 12, color: isSel ? Colors.white : textPrimary)),
               selected: isSel,
               selectedColor: const Color(0xFF2563EB),
-              backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+              backgroundColor:
+                  isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
               onSelected: (s) => onSelected(opt),
             );
           }).toList(),
@@ -895,7 +1008,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 10: Strengths ---
-  Widget _buildStep10Strengths(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep10Strengths(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final strengthOptions = [
       'Programming',
       'Mathematics',
@@ -938,7 +1052,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 11: Weaknesses / Improvement Areas ---
-  Widget _buildStep11Weaknesses(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep11Weaknesses(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final weaknessOptions = [
       'DSA',
       'Mathematics',
@@ -954,7 +1069,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
 
     return _WizardStepLayout(
       title: 'What would you like to improve?',
-      subtitle: 'Your roadmap will prioritize guided practice for these focus areas.',
+      subtitle:
+          'Your roadmap will prioritize guided practice for these focus areas.',
       icon: Icons.build_circle_rounded,
       child: Wrap(
         spacing: 8,
@@ -981,7 +1097,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 12: Learning Style ---
-  Widget _buildStep12LearningStyle(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep12LearningStyle(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     return _WizardStepLayout(
       title: 'Learning Style Preference',
       subtitle: 'How do you learn technical concepts most effectively?',
@@ -1007,13 +1124,34 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 13: Time Availability ---
-  Widget _buildStep13TimeAvailability(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep13TimeAvailability(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     final timeOptions = [
-      {'min': 30, 'label': '30 minutes / day', 'desc': 'Light pace • Micro-learning daily'},
-      {'min': 60, 'label': '1 hour / day', 'desc': 'Standard pace • Consistent progress'},
-      {'min': 120, 'label': '2 hours / day', 'desc': 'Accelerated pace • Solid project building'},
-      {'min': 180, 'label': '3 hours / day', 'desc': 'Intensive pace • Rapid mastery'},
-      {'min': 240, 'label': '4+ hours / day', 'desc': 'Bootcamp pace • Placement sprint'},
+      {
+        'min': 30,
+        'label': '30 minutes / day',
+        'desc': 'Light pace • Micro-learning daily'
+      },
+      {
+        'min': 60,
+        'label': '1 hour / day',
+        'desc': 'Standard pace • Consistent progress'
+      },
+      {
+        'min': 120,
+        'label': '2 hours / day',
+        'desc': 'Accelerated pace • Solid project building'
+      },
+      {
+        'min': 180,
+        'label': '3 hours / day',
+        'desc': 'Intensive pace • Rapid mastery'
+      },
+      {
+        'min': 240,
+        'label': '4+ hours / day',
+        'desc': 'Bootcamp pace • Placement sprint'
+      },
     ];
 
     return _WizardStepLayout(
@@ -1042,8 +1180,17 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 14: Timeline & Target Organizations ---
-  Widget _buildStep14TimelineAndGoals(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
-    final timelines = ['1 month', '3 months', '6 months', '9 months', '1 year', '2 years', 'Until graduation'];
+  Widget _buildStep14TimelineAndGoals(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+    final timelines = [
+      '1 month',
+      '3 months',
+      '6 months',
+      '9 months',
+      '1 year',
+      '2 years',
+      'Until graduation'
+    ];
     final orgTypes = [
       'Product-based companies',
       'Service-based companies',
@@ -1054,7 +1201,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
       'Freelancing',
     ];
 
-    final isPlacementGoal = _goals.contains('Placement') || _goals.contains('Internship');
+    final isPlacementGoal =
+        _goals.contains('Placement') || _goals.contains('Internship');
     final placementTopics = [
       'Aptitude',
       'Logical Reasoning',
@@ -1079,7 +1227,11 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Target Timeline:', style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
+          Text('Target Timeline:',
+              style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  color: textPrimary)),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
@@ -1087,16 +1239,24 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             children: timelines.map((t) {
               final isSel = _targetTimeline == t;
               return ChoiceChip(
-                label: Text(t, style: GoogleFonts.inter(fontSize: 12, color: isSel ? Colors.white : textPrimary)),
+                label: Text(t,
+                    style: GoogleFonts.inter(
+                        fontSize: 12,
+                        color: isSel ? Colors.white : textPrimary)),
                 selected: isSel,
                 selectedColor: const Color(0xFF2563EB),
-                backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                backgroundColor:
+                    isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
                 onSelected: (s) => setState(() => _targetTimeline = t),
               );
             }).toList(),
           ),
           const SizedBox(height: 20),
-          Text('Target Organization Types:', style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
+          Text('Target Organization Types:',
+              style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  color: textPrimary)),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
@@ -1121,7 +1281,11 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
           ),
           if (isPlacementGoal) ...[
             const SizedBox(height: 20),
-            Text('Placement Prep Focus Areas:', style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
+            Text('Placement Prep Focus Areas:',
+                style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    color: textPrimary)),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
@@ -1151,7 +1315,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
   }
 
   // --- Step 15: Final Review ---
-  Widget _buildStep15FinalReview(bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
+  Widget _buildStep15FinalReview(
+      bool isDark, Color cardBg, Color textPrimary, Color textSecondary) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -1165,7 +1330,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                   color: Color(0xFF2563EB),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.verified_user_rounded, color: Colors.white, size: 24),
+                child: const Icon(Icons.verified_user_rounded,
+                    color: Colors.white, size: 24),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -1174,11 +1340,15 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
                   children: [
                     Text(
                       'Review Your Profile',
-                      style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 20, color: textPrimary),
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: textPrimary),
                     ),
                     Text(
                       'Verify your selections before generating your personalized roadmap.',
-                      style: GoogleFonts.inter(fontSize: 12, color: textSecondary),
+                      style:
+                          GoogleFonts.inter(fontSize: 12, color: textSecondary),
                     ),
                   ],
                 ),
@@ -1186,15 +1356,34 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             ],
           ),
           const SizedBox(height: 24),
-          _buildReviewSection('Academic Stage', _academicStage.displayName, 0, isDark, cardBg, textPrimary),
-          _buildReviewSection('Primary Goal(s)', _goals.join(', '), 1, isDark, cardBg, textPrimary),
-          _buildReviewSection('Target Career', _primaryCareerDirection, 2, isDark, cardBg, textPrimary),
-          _buildReviewSection('Interest Areas', _interestAreas.join(', '), 3, isDark, cardBg, textPrimary),
-          _buildReviewSection('Primary Language', '$_primaryLanguage (${_overallSkillLevel.displayName})', 5, isDark, cardBg, textPrimary),
-          _buildReviewSection('Daily Commitment', '${_dailyLearningTimeMinutes ~/ 60}h (${_dailyLearningTimeMinutes}m) / day', 12, isDark, cardBg, textPrimary),
-          _buildReviewSection('Target Timeline', _targetTimeline, 13, isDark, cardBg, textPrimary),
-          _buildReviewSection('Learning Style', _learningStyle.displayName, 11, isDark, cardBg, textPrimary),
-          _buildReviewSection('Improvement Areas', _weaknesses.join(', '), 10, isDark, cardBg, textPrimary),
+          _buildReviewSection('Academic Stage', _academicStage.displayName, 0,
+              isDark, cardBg, textPrimary),
+          _buildReviewSection('Primary Goal(s)', _goals.join(', '), 1, isDark,
+              cardBg, textPrimary),
+          _buildReviewSection('Target Career', _primaryCareerDirection, 2,
+              isDark, cardBg, textPrimary),
+          _buildReviewSection('Interest Areas', _interestAreas.join(', '), 3,
+              isDark, cardBg, textPrimary),
+          _buildReviewSection(
+              'Primary Language',
+              '$_primaryLanguage (${_overallSkillLevel.displayName})',
+              5,
+              isDark,
+              cardBg,
+              textPrimary),
+          _buildReviewSection(
+              'Daily Commitment',
+              '${_dailyLearningTimeMinutes ~/ 60}h (${_dailyLearningTimeMinutes}m) / day',
+              12,
+              isDark,
+              cardBg,
+              textPrimary),
+          _buildReviewSection('Target Timeline', _targetTimeline, 13, isDark,
+              cardBg, textPrimary),
+          _buildReviewSection('Learning Style', _learningStyle.displayName, 11,
+              isDark, cardBg, textPrimary),
+          _buildReviewSection('Improvement Areas', _weaknesses.join(', '), 10,
+              isDark, cardBg, textPrimary),
           const SizedBox(height: 24),
           Container(
             width: double.infinity,
@@ -1202,16 +1391,22 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             decoration: BoxDecoration(
               color: isDark ? const Color(0xFF1E1B4B) : const Color(0xFFEFF6FF),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE)),
+              border: Border.all(
+                  color: isDark
+                      ? const Color(0xFF4338CA)
+                      : const Color(0xFFBFDBFE)),
             ),
             child: Row(
               children: [
-                const Icon(Icons.auto_awesome_rounded, color: Color(0xFF2563EB), size: 28),
+                const Icon(Icons.auto_awesome_rounded,
+                    color: Color(0xFF2563EB), size: 28),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'UniDocs will synthesize these selections into a phased, prerequisite-aware roadmap with direct academic and hub links.',
-                    style: GoogleFonts.inter(fontSize: 12, color: isDark ? Colors.white : const Color(0xFF1E3A8A)),
+                    style: GoogleFonts.inter(
+                        fontSize: 12,
+                        color: isDark ? Colors.white : const Color(0xFF1E3A8A)),
                   ),
                 ),
               ],
@@ -1236,7 +1431,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+        border: Border.all(
+            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1245,11 +1441,19 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: GoogleFonts.inter(fontSize: 11, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B))),
+                Text(title,
+                    style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: isDark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF64748B))),
                 const SizedBox(height: 2),
                 Text(
                   value.isEmpty ? 'None' : value,
-                  style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary),
+                  style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: textPrimary),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -1257,7 +1461,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.edit_outlined, size: 18, color: Color(0xFF2563EB)),
+            icon: const Icon(Icons.edit_outlined,
+                size: 18, color: Color(0xFF2563EB)),
             tooltip: 'Edit $title',
             onPressed: () => _goToStep(stepIndex),
           ),
@@ -1275,7 +1480,9 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF0F172A) : Colors.white,
         border: Border(
-          top: BorderSide(color: isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0)),
+          top: BorderSide(
+              color:
+                  isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0)),
         ),
       ),
       child: Row(
@@ -1284,16 +1491,23 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
             OutlinedButton.icon(
               onPressed: _prevStep,
               icon: const Icon(Icons.arrow_back_rounded, size: 18),
-              label: Text('Back', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+              label: Text('Back',
+                  style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             ),
           const Spacer(),
           ElevatedButton.icon(
             onPressed: isLastStep ? _submitProfile : _nextStep,
-            icon: Icon(isLastStep ? Icons.auto_awesome_rounded : Icons.arrow_forward_rounded, size: 18),
+            icon: Icon(
+                isLastStep
+                    ? Icons.auto_awesome_rounded
+                    : Icons.arrow_forward_rounded,
+                size: 18),
             label: Text(
               isLastStep ? 'Generate My Personalized Roadmap' : 'Next',
               style: GoogleFonts.inter(fontWeight: FontWeight.bold),
@@ -1302,7 +1516,8 @@ class _PersonalizedWizardScreenState extends State<PersonalizedWizardScreen> {
               backgroundColor: isLastStep ? AppColors.primary : royalBlue,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
               elevation: 2,
             ),
           ),
@@ -1382,7 +1597,8 @@ class _WizardStepLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSecondary = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final textSecondary =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20.0),
@@ -1406,11 +1622,15 @@ class _WizardStepLayout extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: textPrimary),
                     ),
                     Text(
                       subtitle,
-                      style: GoogleFonts.inter(fontSize: 12, color: textSecondary),
+                      style:
+                          GoogleFonts.inter(fontSize: 12, color: textSecondary),
                     ),
                   ],
                 ),
@@ -1454,11 +1674,15 @@ class _SelectableCard extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: isSelected
-              ? (isDark ? const Color(0xFF1E3A8A).withAlpha(120) : const Color(0xFFEFF6FF))
+              ? (isDark
+                  ? const Color(0xFF1E3A8A).withAlpha(120)
+                  : const Color(0xFFEFF6FF))
               : (isDark ? const Color(0xFF1E293B) : Colors.white),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isSelected ? royalBlue : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+            color: isSelected
+                ? royalBlue
+                : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -1467,10 +1691,18 @@ class _SelectableCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: isSelected ? royalBlue : (isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9)),
+                color: isSelected
+                    ? royalBlue
+                    : (isDark
+                        ? const Color(0xFF0F172A)
+                        : const Color(0xFFF1F5F9)),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, size: 20, color: isSelected ? Colors.white : (isDark ? Colors.white70 : const Color(0xFF475569))),
+              child: Icon(icon,
+                  size: 20,
+                  color: isSelected
+                      ? Colors.white
+                      : (isDark ? Colors.white70 : const Color(0xFF475569))),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -1480,7 +1712,8 @@ class _SelectableCard extends StatelessWidget {
                   Text(
                     title,
                     style: GoogleFonts.inter(
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.w600,
                       fontSize: 14,
                       color: isDark ? Colors.white : const Color(0xFF0F172A),
                     ),
@@ -1490,14 +1723,17 @@ class _SelectableCard extends StatelessWidget {
                     subtitle,
                     style: GoogleFonts.inter(
                       fontSize: 11,
-                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                      color: isDark
+                          ? const Color(0xFF94A3B8)
+                          : const Color(0xFF64748B),
                     ),
                   ),
                 ],
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle_rounded, color: royalBlue, size: 22),
+              const Icon(Icons.check_circle_rounded,
+                  color: royalBlue, size: 22),
           ],
         ),
       ),
@@ -1528,15 +1764,20 @@ class _FilterChipCard extends StatelessWidget {
         style: GoogleFonts.inter(
           fontSize: 12,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          color: isSelected ? Colors.white : (isDark ? Colors.white : const Color(0xFF0F172A)),
+          color: isSelected
+              ? Colors.white
+              : (isDark ? Colors.white : const Color(0xFF0F172A)),
         ),
       ),
       selected: isSelected,
       selectedColor: royalBlue,
       checkmarkColor: Colors.white,
-      backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+      backgroundColor:
+          isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
       side: BorderSide(
-        color: isSelected ? royalBlue : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+        color: isSelected
+            ? royalBlue
+            : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onSelected: (val) => onTap(),

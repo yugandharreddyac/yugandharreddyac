@@ -28,7 +28,8 @@ class EmergingTechProvider extends ChangeNotifier {
 
   List<EmergingTechDetailModel> get filteredItems {
     return _items.where((item) {
-      final matchesCategory = _selectedCategory == 'All' || item.category == _selectedCategory;
+      final matchesCategory =
+          _selectedCategory == 'All' || item.category == _selectedCategory;
       if (!matchesCategory) return false;
 
       if (_searchQuery.trim().isEmpty) return true;
@@ -38,7 +39,8 @@ class EmergingTechProvider extends ChangeNotifier {
       final catMatch = item.category.toLowerCase().contains(query);
       final overviewMatch = item.overview.toLowerCase().contains(query);
       final toolsMatch = item.tools.any((t) => t.toLowerCase().contains(query));
-      final coreMatch = item.coreConcepts.any((c) => c.toLowerCase().contains(query));
+      final coreMatch =
+          item.coreConcepts.any((c) => c.toLowerCase().contains(query));
 
       return titleMatch || catMatch || overviewMatch || toolsMatch || coreMatch;
     }).toList();

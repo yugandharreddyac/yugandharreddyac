@@ -21,8 +21,10 @@ class GenericHubScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
 
@@ -68,7 +70,8 @@ class GenericHubScreen extends StatelessWidget {
                   items: [
                     BreadcrumbItem(
                       label: 'Home',
-                      onTap: () => Navigator.popUntil(context, (route) => route.isFirst),
+                      onTap: () =>
+                          Navigator.popUntil(context, (route) => route.isFirst),
                     ),
                     BreadcrumbItem(label: hub.title),
                   ],
@@ -141,7 +144,8 @@ class GenericHubScreen extends StatelessWidget {
                 // START HERE BEGINNER GUIDANCE BANNER
                 // ==========================================
                 if (hub.hasStartHere) ...[
-                  _buildStartHereCard(context, isDark, cardBg, borderColor, textPrimary, textSubtitle),
+                  _buildStartHereCard(context, isDark, cardBg, borderColor,
+                      textPrimary, textSubtitle),
                   const SizedBox(height: 24),
                 ],
 
@@ -199,7 +203,8 @@ class GenericHubScreen extends StatelessWidget {
                                 color: royalBlue.withAlpha(20),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Icon(category.icon, color: royalBlue, size: 24),
+                              child: Icon(category.icon,
+                                  color: royalBlue, size: 24),
                             ),
                             const SizedBox(width: 14),
                             Expanded(
@@ -228,12 +233,15 @@ class GenericHubScreen extends StatelessWidget {
                                     const SizedBox(height: 8),
                                     Wrap(
                                       spacing: 6,
-                                      children: category.availableLevels!.map((level) {
+                                      children: category.availableLevels!
+                                          .map((level) {
                                         return Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 2),
                                           decoration: BoxDecoration(
                                             color: royalBlue.withAlpha(12),
-                                            borderRadius: BorderRadius.circular(6),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
                                           child: Text(
                                             level.displayName,
@@ -250,11 +258,15 @@ class GenericHubScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
+                            const Icon(Icons.arrow_forward_ios_rounded,
+                                size: 16, color: Colors.grey),
                           ],
                         ),
                       ),
-                    ).animate().fadeIn(delay: (index * 50).ms).slideX(begin: 0.03, end: 0);
+                    )
+                        .animate()
+                        .fadeIn(delay: (index * 50).ms)
+                        .slideX(begin: 0.03, end: 0);
                   },
                 ),
               ],
@@ -274,12 +286,15 @@ class GenericHubScreen extends StatelessWidget {
     Color textSubtitle,
   ) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E293B) : const Color(0xFFECFDF5),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? const Color(0xFF10B981).withAlpha(80) : const Color(0xFFA7F3D0),
+          color: isDark
+              ? const Color(0xFF10B981).withAlpha(80)
+              : const Color(0xFFA7F3D0),
         ),
       ),
       child: Column(
@@ -287,94 +302,119 @@ class GenericHubScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.stars_rounded, color: Color(0xFF10B981), size: 24),
+              const Icon(Icons.stars_rounded,
+                  color: Color(0xFF10B981), size: 24),
               const SizedBox(width: 8),
-              Text(
-                '👋 New to ${hub.title}? Start Here',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF065F46),
+              Expanded(
+                child: Text(
+                  '👋 New to ${hub.title}? Start Here',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : const Color(0xFF065F46),
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Column(
-            children: hub.startHereSteps!.map((step) {
-              final hasTarget = step.targetCategoryId != null;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: InkWell(
-                  onTap: hasTarget
-                      ? () {
-                          final targetCategory = hub.categories.firstWhere(
-                            (cat) => cat.id == step.targetCategoryId,
-                            orElse: () => hub.categories.first,
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => GenericCategoryScreen(
-                                hub: hub,
-                                category: targetCategory,
+          const SizedBox(height: 16),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: hub.startHereSteps!.map((step) {
+                final hasTarget = step.targetCategoryId != null;
+                return Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: InkWell(
+                    onTap: hasTarget
+                        ? () {
+                            final targetCategory = hub.categories.firstWhere(
+                              (cat) => cat.id == step.targetCategoryId,
+                              orElse: () => hub.categories.first,
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => GenericCategoryScreen(
+                                  hub: hub,
+                                  category: targetCategory,
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      : null,
-                  borderRadius: BorderRadius.circular(10),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor: const Color(0xFF10B981),
-                          child: Text(
-                            '${step.stepNumber}',
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
+                            );
+                          }
+                        : null,
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      width: 260,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? const Color(0xFF0F172A).withAlpha(150)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isDark
+                              ? const Color(0xFF10B981).withAlpha(40)
+                              : const Color(0xFFD1FAE5),
                         ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                step.title,
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: textPrimary,
+                              CircleAvatar(
+                                radius: 12,
+                                backgroundColor: const Color(0xFF10B981),
+                                child: Text(
+                                  '${step.stepNumber}',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                              Text(
-                                step.description,
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  color: textSubtitle,
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  step.title,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: textPrimary,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+                              if (hasTarget)
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Icon(Icons.arrow_forward_ios_rounded,
+                                      size: 14, color: Color(0xFF10B981)),
+                                ),
                             ],
                           ),
-                        ),
-                        if (hasTarget)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 4, left: 4),
-                            child: Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFF10B981)),
+                          const SizedBox(height: 8),
+                          Text(
+                            step.description,
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              color: textSubtitle,
+                              height: 1.4,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ],
       ),

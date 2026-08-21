@@ -48,7 +48,8 @@ class SettingsScreen extends StatelessWidget {
                 const Divider(height: 1),
                 RadioListTile<ThemeMode>(
                   title: const Text('Light Mode'),
-                  secondary: const Icon(Icons.light_mode_rounded, color: Colors.amber),
+                  secondary:
+                      const Icon(Icons.light_mode_rounded, color: Colors.amber),
                   value: ThemeMode.light,
                   groupValue: themeProvider.themeMode,
                   onChanged: (mode) {
@@ -58,7 +59,8 @@ class SettingsScreen extends StatelessWidget {
                 const Divider(height: 1),
                 RadioListTile<ThemeMode>(
                   title: const Text('Dark Mode'),
-                  secondary: const Icon(Icons.dark_mode_rounded, color: Colors.indigoAccent),
+                  secondary: const Icon(Icons.dark_mode_rounded,
+                      color: Colors.indigoAccent),
                   value: ThemeMode.dark,
                   groupValue: themeProvider.themeMode,
                   onChanged: (mode) {
@@ -83,15 +85,18 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.info_outline_rounded, color: AppColors.primaryLight),
+                  leading: const Icon(Icons.info_outline_rounded,
+                      color: AppColors.primaryLight),
                   title: const Text('About CSSE Study Hub'),
-                  subtitle: const Text('Version ${AppConstants.appVersion} (Build +1)'),
+                  subtitle: const Text(
+                      'Version ${AppConstants.appVersion} (Build +1)'),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () => Navigator.pushNamed(context, AppRoutes.about),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.email_outlined, color: Colors.green),
+                  leading:
+                      const Icon(Icons.email_outlined, color: Colors.green),
                   title: const Text('Support & Feedback'),
                   subtitle: const Text('FAQs & Direct Support'),
                   trailing: const Icon(Icons.chevron_right_rounded),
@@ -99,11 +104,13 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.privacy_tip_outlined, color: Colors.purpleAccent),
+                  leading: const Icon(Icons.privacy_tip_outlined,
+                      color: Colors.purpleAccent),
                   title: const Text('Privacy Policy'),
                   subtitle: const Text('Data privacy & Firebase terms'),
                   trailing: const Icon(Icons.chevron_right_rounded),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.privacyPolicy),
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.privacyPolicy),
                 ),
               ],
             ),
@@ -124,9 +131,11 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             child: ListTile(
-              leading: const Icon(Icons.admin_panel_settings_rounded, color: Colors.orangeAccent),
+              leading: const Icon(Icons.admin_panel_settings_rounded,
+                  color: Colors.orangeAccent),
               title: const Text('Admin PDF Upload Portal'),
-              subtitle: const Text('Upload official syllabus, notes & past papers'),
+              subtitle:
+                  const Text('Upload official syllabus, notes & past papers'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () => Navigator.pushNamed(context, AppRoutes.adminUpload),
             ),

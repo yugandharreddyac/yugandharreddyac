@@ -14,19 +14,23 @@ import 'package:csse_study_hub/presentation/screens/admin/admin_login_screen.dar
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('AdminLoginScreen renders header and form fields', (WidgetTester tester) async {
+  testWidgets('AdminLoginScreen renders header and form fields',
+      (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
     final localStorage = LocalStorageDataSource(prefs);
     final firebaseDataSource = FirebaseDataSource();
-    final adminRepository = AdminRepository(firebaseDataSource: firebaseDataSource);
+    final adminRepository =
+        AdminRepository(firebaseDataSource: firebaseDataSource);
 
     await tester.pumpWidget(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => ThemeProvider(localStorage)),
-          ChangeNotifierProvider(create: (_) => AuthProvider(firebaseDataSource)),
-          ChangeNotifierProvider(create: (_) => AdminProvider(repository: adminRepository)),
+          ChangeNotifierProvider(
+              create: (_) => AuthProvider(firebaseDataSource)),
+          ChangeNotifierProvider(
+              create: (_) => AdminProvider(repository: adminRepository)),
         ],
         child: const MaterialApp(
           home: AdminLoginScreen(),

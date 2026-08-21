@@ -71,47 +71,59 @@ class CareerModel {
       requiredSkills: List<String>.from(json['requiredSkills'] ?? []),
       learningRoadmap: List<String>.from(json['learningRoadmap'] ?? []),
       learningPhases: (json['learningPhases'] as List<dynamic>?)
-              ?.map((e) => LearningPhaseModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  LearningPhaseModel.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       skillMatrix: (json['skillMatrix'] as List<dynamic>?)
-              ?.map((e) => SkillMatrixModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  SkillMatrixModel.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
-      portfolioRequirements: List<String>.from(json['portfolioRequirements'] ?? []),
+      portfolioRequirements:
+          List<String>.from(json['portfolioRequirements'] ?? []),
       resumeRequirements: List<String>.from(json['resumeRequirements'] ?? []),
       interviewPrepTopics: List<String>.from(json['interviewPrepTopics'] ?? []),
-      entryLevelResponsibilities: List<String>.from(json['entryLevelResponsibilities'] ?? []),
+      entryLevelResponsibilities:
+          List<String>.from(json['entryLevelResponsibilities'] ?? []),
       bestFreeResources: (json['bestFreeResources'] as List<dynamic>?)
-              ?.map((e) => CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       books: (json['books'] as List<dynamic>?)
-              ?.map((e) => CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       certifications: (json['certifications'] as List<dynamic>?)
-              ?.map((e) => CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       youtubePlaylists: (json['youtubePlaylists'] as List<dynamic>?)
-              ?.map((e) => CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       miniProjects: (json['miniProjects'] as List<dynamic>?)
-              ?.map((e) => CareerProjectInfo.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerProjectInfo.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       advancedProjects: (json['advancedProjects'] as List<dynamic>?)
-              ?.map((e) => CareerProjectInfo.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerProjectInfo.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       githubRepos: (json['githubRepos'] as List<dynamic>?)
-              ?.map((e) => CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       subModules: (json['subModules'] as List<dynamic>?)
-              ?.map((e) => CareerSubModule.fromJson(Map<String, dynamic>.from(e)))
+              ?.map(
+                  (e) => CareerSubModule.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       futureScope: json['futureScope'] ?? '',
@@ -227,7 +239,8 @@ class CareerSubModule {
       description: json['description'] ?? '',
       topics: List<String>.from(json['topics'] ?? []),
       links: (json['links'] as List<dynamic>?)
-              ?.map((e) => CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  CareerResourceLink.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
     );
@@ -240,4 +253,3 @@ class CareerSubModule {
         'links': links.map((e) => e.toJson()).toList(),
       };
 }
-

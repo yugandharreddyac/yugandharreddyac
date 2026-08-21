@@ -28,7 +28,9 @@ class AiDocumentCard extends StatelessWidget {
     final borderColor = isError
         ? (isDark ? Colors.redAccent.withAlpha(80) : Colors.red.withAlpha(80))
         : isReady
-            ? (isDark ? AppColors.success.withAlpha(100) : AppColors.primary.withAlpha(80))
+            ? (isDark
+                ? AppColors.success.withAlpha(100)
+                : AppColors.primary.withAlpha(80))
             : (isDark ? Colors.white12 : Colors.black12);
 
     final bgColor = isError
@@ -90,11 +92,13 @@ class AiDocumentCard extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                        color:
+                            isDark ? Colors.white : AppColors.textPrimaryLight,
                       ),
                     ),
                     const SizedBox(height: 2),
-                    _buildStatusSubtitle(context, isDark, isReady, isInProgress, isError),
+                    _buildStatusSubtitle(
+                        context, isDark, isReady, isInProgress, isError),
                   ],
                 ),
               ),
@@ -124,25 +128,29 @@ class AiDocumentCard extends StatelessWidget {
                   _buildQuickActionChip(
                     context,
                     label: '📝 Summarize',
-                    prompt: 'Summarize the key takeaways and main concepts from this document.',
+                    prompt:
+                        'Summarize the key takeaways and main concepts from this document.',
                   ),
                   const SizedBox(width: 6),
                   _buildQuickActionChip(
                     context,
                     label: '❓ Important Questions',
-                    prompt: 'Generate top 5 university exam and placement interview questions from this document.',
+                    prompt:
+                        'Generate top 5 university exam and placement interview questions from this document.',
                   ),
                   const SizedBox(width: 6),
                   _buildQuickActionChip(
                     context,
                     label: '🎯 Practice Quiz',
-                    prompt: 'Create 4 multiple choice questions (MCQs) with explanations based on this document.',
+                    prompt:
+                        'Create 4 multiple choice questions (MCQs) with explanations based on this document.',
                   ),
                   const SizedBox(width: 6),
                   _buildQuickActionChip(
                     context,
                     label: '🗺️ Connect to Roadmap',
-                    prompt: 'How does this document relate to my current study roadmap and weaknesses?',
+                    prompt:
+                        'How does this document relate to my current study roadmap and weaknesses?',
                   ),
                 ],
               ),
@@ -187,7 +195,8 @@ class AiDocumentCard extends StatelessWidget {
     }
 
     if (isReady) {
-      final pagesText = metadata.pageCount > 0 ? '${metadata.pageCount} pages • ' : '';
+      final pagesText =
+          metadata.pageCount > 0 ? '${metadata.pageCount} pages • ' : '';
       return Text(
         '${pagesText}Ready for Q&A',
         style: GoogleFonts.inter(
@@ -232,7 +241,8 @@ class AiDocumentCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          color: isDark ? Colors.white.withAlpha(15) : Colors.black.withAlpha(8),
+          color:
+              isDark ? Colors.white.withAlpha(15) : Colors.black.withAlpha(8),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isDark ? Colors.white12 : Colors.black12,

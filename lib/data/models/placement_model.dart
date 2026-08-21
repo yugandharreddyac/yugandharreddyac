@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PlacementModel {
   final String id;
-  final String category; // Aptitude, Logical Reasoning, Verbal Ability, Technical Interview, HR Interview, Resume Guide, LinkedIn Guide, Company Prep, Roadmaps
+  final String
+      category; // Aptitude, Logical Reasoning, Verbal Ability, Technical Interview, HR Interview, Resume Guide, LinkedIn Guide, Company Prep, Roadmaps
   final String title;
   final String description;
   final List<PlacementQuestionAnswer> questionsAndAnswers;
@@ -33,7 +34,8 @@ class PlacementModel {
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       questionsAndAnswers: (json['questionsAndAnswers'] as List<dynamic>?)
-              ?.map((e) => PlacementQuestionAnswer.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) => PlacementQuestionAnswer.fromJson(
+                  Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       tips: List<String>.from(json['tips'] ?? []),
@@ -42,7 +44,9 @@ class PlacementModel {
     );
   }
 
-  String get resourceLink => resourceUrls.isNotEmpty ? resourceUrls.first : 'https://practice.geeksforgeeks.org/aptitude';
+  String get resourceLink => resourceUrls.isNotEmpty
+      ? resourceUrls.first
+      : 'https://practice.geeksforgeeks.org/aptitude';
   bool get isSaved => false;
 
   Map<String, dynamic> toJson() {
@@ -51,7 +55,8 @@ class PlacementModel {
       'category': category,
       'title': title,
       'description': description,
-      'questionsAndAnswers': questionsAndAnswers.map((e) => e.toJson()).toList(),
+      'questionsAndAnswers':
+          questionsAndAnswers.map((e) => e.toJson()).toList(),
       'tips': tips,
       'resourceUrls': resourceUrls,
       'roadmap': roadmap,

@@ -33,8 +33,10 @@ class StudyRepository {
     FirestoreRepository? firestoreRepository,
     StorageRepository? storageRepository,
   }) {
-    _firestoreRepository = firestoreRepository ?? FirestoreRepository(firebaseDataSource: firebaseDataSource);
-    _storageRepository = storageRepository ?? StorageRepository(firebaseDataSource: firebaseDataSource);
+    _firestoreRepository = firestoreRepository ??
+        FirestoreRepository(firebaseDataSource: firebaseDataSource);
+    _storageRepository = storageRepository ??
+        StorageRepository(firebaseDataSource: firebaseDataSource);
   }
 
   FirestoreRepository get firestore => _firestoreRepository;
@@ -78,7 +80,8 @@ class StudyRepository {
     } catch (e) {
       debugPrint('Firestore fetch failed for semesters: $e');
     }
-    final fallback = MockData.semesters.where((s) => s.yearId == yearId).toList();
+    final fallback =
+        MockData.semesters.where((s) => s.yearId == yearId).toList();
     _cachedSemesters[yearId] = fallback;
     return fallback;
   }
@@ -100,7 +103,8 @@ class StudyRepository {
     } catch (e) {
       debugPrint('Firestore fetch failed for subjects: $e');
     }
-    final fallback = MockData.subjects.where((s) => s.semesterId == semesterId).toList();
+    final fallback =
+        MockData.subjects.where((s) => s.semesterId == semesterId).toList();
     _cachedSubjects[semesterId] = fallback;
     return fallback;
   }
@@ -175,7 +179,8 @@ class StudyRepository {
   }
 
   /// Fetch Resources for a Subject with optional category filter (Memory Cached)
-  Future<List<ResourceModel>> getResources(String subjectId, {String? resourceType}) async {
+  Future<List<ResourceModel>> getResources(String subjectId,
+      {String? resourceType}) async {
     final cacheKey = '${subjectId}_${resourceType ?? "all"}';
     if (_cachedResources.containsKey(cacheKey)) {
       return _cachedResources[cacheKey]!;
@@ -183,11 +188,14 @@ class StudyRepository {
 
     try {
       if (firebaseDataSource.isAvailable) {
-        final list = await _firestoreRepository.fetchResources(subjectId, resourceType: resourceType);
+        final list = await _firestoreRepository.fetchResources(subjectId,
+            resourceType: resourceType);
         if (list.isNotEmpty) {
           final resolvedList = await Future.wait(list.map((res) async {
-            if (res.storageUrl.isNotEmpty && !res.storageUrl.startsWith('http')) {
-              final resolvedUrl = await _storageRepository.resolveDownloadUrl(res.storageUrl);
+            if (res.storageUrl.isNotEmpty &&
+                !res.storageUrl.startsWith('http')) {
+              final resolvedUrl =
+                  await _storageRepository.resolveDownloadUrl(res.storageUrl);
               return res.copyWith(storageUrl: resolvedUrl);
             }
             return res;
@@ -200,7 +208,8 @@ class StudyRepository {
       debugPrint('Firestore fetch failed for resources: $e');
     }
 
-    var list = MockData.resources.where((r) => r.subjectId == subjectId).toList();
+    var list =
+        MockData.resources.where((r) => r.subjectId == subjectId).toList();
     if (resourceType != null && resourceType.isNotEmpty) {
       list = list.where((r) => r.resourceType == resourceType).toList();
     }
@@ -255,7 +264,8 @@ class StudyRepository {
       title: title,
     );
     if (exists) {
-      throw Exception('A document titled "$title" already exists for ${subject.name} under $resourceType.');
+      throw Exception(
+          'A document titled "$title" already exists for ${subject.name} under $resourceType.');
     }
 
     // 3. Upload PDF bytes to Firebase Storage with live progress callback
@@ -273,7 +283,9 @@ class StudyRepository {
     final newResource = ResourceModel(
       id: '',
       title: title,
-      description: description.isNotEmpty ? description : 'Official $resourceType for ${subject.name}',
+      description: description.isNotEmpty
+          ? description
+          : 'Official $resourceType for ${subject.name}',
       subjectId: subject.id,
       subjectName: subject.name,
       yearId: year.id,
@@ -293,7 +305,8 @@ class StudyRepository {
 
     // 5. Store Firestore Document in 'resources' collection
     if (firebaseDataSource.isAvailable) {
-      final docId = await _firestoreRepository.createResourceDocument(newResource);
+      final docId =
+          await _firestoreRepository.createResourceDocument(newResource);
       final finalResource = newResource.copyWith(id: docId);
 
       // Invalidate memory cache so students instantly see the new PDF
@@ -412,14 +425,16 @@ class StudyRepository {
 
     try {
       if (firebaseDataSource.isAvailable) {
-        final remoteOverview = await _firestoreRepository.fetchCourseOverview(subjectId);
+        final remoteOverview =
+            await _firestoreRepository.fetchCourseOverview(subjectId);
         if (remoteOverview != null) {
           _cachedCourseOverviews[subjectId] = remoteOverview;
           return remoteOverview;
         }
       }
     } catch (e) {
-      debugPrint('Firestore fetch failed for courseOverview ($subjectId), using offline fallback: $e');
+      debugPrint(
+          'Firestore fetch failed for courseOverview ($subjectId), using offline fallback: $e');
     }
 
     final fallback = TextbookMockData.getCourseOverview(subjectId);
@@ -428,21 +443,24 @@ class StudyRepository {
   }
 
   /// Fetch Textbook Chapters for a Subject (Firestore Primary -> Offline Fallback)
-  Future<List<TextbookChapterModel>> getTextbookChapters(String subjectId) async {
+  Future<List<TextbookChapterModel>> getTextbookChapters(
+      String subjectId) async {
     if (_cachedTextbookChapters.containsKey(subjectId)) {
       return _cachedTextbookChapters[subjectId]!;
     }
 
     try {
       if (firebaseDataSource.isAvailable) {
-        final remoteChapters = await _firestoreRepository.fetchTextbookChapters(subjectId);
+        final remoteChapters =
+            await _firestoreRepository.fetchTextbookChapters(subjectId);
         if (remoteChapters.isNotEmpty) {
           _cachedTextbookChapters[subjectId] = remoteChapters;
           return remoteChapters;
         }
       }
     } catch (e) {
-      debugPrint('Firestore fetch failed for textbookChapters ($subjectId), using offline fallback: $e');
+      debugPrint(
+          'Firestore fetch failed for textbookChapters ($subjectId), using offline fallback: $e');
     }
 
     final fallback = TextbookMockData.getTextbookChapters(subjectId);
@@ -469,13 +487,17 @@ class StudyRepository {
   }
 
   /// Save / Update Textbook Chapter (Admin)
-  Future<String> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+  Future<String> saveTextbookChapter(
+      String subjectId, TextbookChapterModel chapter) async {
     String assignedId = chapter.id;
     if (firebaseDataSource.isAvailable) {
-      assignedId = await _firestoreRepository.saveTextbookChapter(subjectId, chapter);
+      assignedId =
+          await _firestoreRepository.saveTextbookChapter(subjectId, chapter);
     }
-    
-    final currentList = List<TextbookChapterModel>.from(_cachedTextbookChapters[subjectId] ?? TextbookMockData.getTextbookChapters(subjectId));
+
+    final currentList = List<TextbookChapterModel>.from(
+        _cachedTextbookChapters[subjectId] ??
+            TextbookMockData.getTextbookChapters(subjectId));
     final idx = currentList.indexWhere((c) => c.id == chapter.id);
     if (idx != -1) {
       currentList[idx] = chapter;
@@ -492,15 +514,18 @@ class StudyRepository {
     if (firebaseDataSource.isAvailable) {
       await _firestoreRepository.deleteTextbookChapter(subjectId, chapterId);
     }
-    
-    final currentList = List<TextbookChapterModel>.from(_cachedTextbookChapters[subjectId] ?? TextbookMockData.getTextbookChapters(subjectId));
+
+    final currentList = List<TextbookChapterModel>.from(
+        _cachedTextbookChapters[subjectId] ??
+            TextbookMockData.getTextbookChapters(subjectId));
     currentList.removeWhere((c) => c.id == chapterId);
     _cachedTextbookChapters[subjectId] = currentList;
     invalidateSearchIndex();
   }
 
   /// Reorder Textbook Chapters (Admin)
-  Future<void> reorderTextbookChapters(String subjectId, List<TextbookChapterModel> chapters) async {
+  Future<void> reorderTextbookChapters(
+      String subjectId, List<TextbookChapterModel> chapters) async {
     if (firebaseDataSource.isAvailable) {
       await _firestoreRepository.updateChapterOrders(subjectId, chapters);
     }
@@ -509,12 +534,14 @@ class StudyRepository {
   }
 
   /// Fetch Important Questions for a Subject
-  Future<List<AcademicQuestionModel>> getImportantQuestions(String subjectId) async {
+  Future<List<AcademicQuestionModel>> getImportantQuestions(
+      String subjectId) async {
     return TextbookMockData.getImportantQuestions(subjectId);
   }
 
   /// Fetch Quick Revision Notes for a Subject
-  Future<List<QuickRevisionModel>> getQuickRevisionNotes(String subjectId) async {
+  Future<List<QuickRevisionModel>> getQuickRevisionNotes(
+      String subjectId) async {
     return TextbookMockData.getQuickRevisionNotes(subjectId);
   }
 
@@ -524,12 +551,14 @@ class StudyRepository {
   }
 
   /// Fetch Academic Projects for a Subject
-  Future<List<AcademicProjectModel>> getAcademicProjects(String subjectId) async {
+  Future<List<AcademicProjectModel>> getAcademicProjects(
+      String subjectId) async {
     return TextbookMockData.getAcademicProjects(subjectId);
   }
 
   /// Fetch Additional Resources for a Subject
-  Future<List<ExternalResourceModel>> getAdditionalResources(String subjectId) async {
+  Future<List<ExternalResourceModel>> getAdditionalResources(
+      String subjectId) async {
     return TextbookMockData.getAdditionalResources(subjectId);
   }
 
@@ -549,4 +578,3 @@ class StudyRepository {
     _storageRepository.clearCache();
   }
 }
-

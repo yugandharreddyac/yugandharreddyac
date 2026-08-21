@@ -57,7 +57,8 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
     showDialog(
       context: context,
       builder: (dialogCtx) => AlertDialog(
-        title: Text('Delete Conversation?', style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
+        title: Text('Delete Conversation?',
+            style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
         content: Text(
           'Are you sure you want to delete "${conv.title}"? This action cannot be undone.',
           style: GoogleFonts.inter(fontSize: 14),
@@ -115,7 +116,8 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                             color: AppColors.primary.withOpacity(0.12),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Icon(Icons.forum_outlined, size: 18, color: AppColors.primary),
+                          child: const Icon(Icons.forum_outlined,
+                              size: 18, color: AppColors.primary),
                         ),
                         const SizedBox(width: 10),
                         Flexible(
@@ -125,7 +127,9 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                             style: GoogleFonts.outfit(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF0F172A),
                             ),
                           ),
                         ),
@@ -151,7 +155,8 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [AppColors.primary, AppColors.primaryLight],
@@ -168,7 +173,8 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.add_rounded, size: 20, color: Colors.white),
+                      const Icon(Icons.add_rounded,
+                          size: 20, color: Colors.white),
                       const SizedBox(width: 8),
                       Text(
                         'New Chat',
@@ -187,7 +193,8 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
             // Search Bar
             if (conversations.length > 3)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 child: TextField(
                   controller: _searchController,
                   style: GoogleFonts.inter(fontSize: 13),
@@ -195,7 +202,9 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                     hintText: 'Search chats...',
                     prefixIcon: const Icon(Icons.search_rounded, size: 18),
                     filled: true,
-                    fillColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                    fillColor: isDark
+                        ? const Color(0xFF1E293B)
+                        : const Color(0xFFF1F5F9),
                     contentPadding: const EdgeInsets.symmetric(vertical: 8),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -224,11 +233,15 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              _searchQuery.isEmpty ? 'No past conversations' : 'No conversations match search',
+                              _searchQuery.isEmpty
+                                  ? 'No past conversations'
+                                  : 'No conversations match search',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.inter(
                                 fontSize: 13,
-                                color: isDark ? Colors.white38 : const Color(0xFF94A3B8),
+                                color: isDark
+                                    ? Colors.white38
+                                    : const Color(0xFF94A3B8),
                               ),
                             ),
                           ],
@@ -237,7 +250,8 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                     )
                   : ListView.builder(
                       itemCount: filteredConversations.length,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       itemBuilder: (context, index) {
                         final conv = filteredConversations[index];
                         final isActive = conv.id == activeConvId;
@@ -246,20 +260,29 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                           margin: const EdgeInsets.symmetric(vertical: 2),
                           decoration: BoxDecoration(
                             color: isActive
-                                ? (isDark ? AppColors.primary.withOpacity(0.2) : AppColors.primary.withOpacity(0.08))
+                                ? (isDark
+                                    ? AppColors.primary.withOpacity(0.2)
+                                    : AppColors.primary.withOpacity(0.08))
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(8),
                             border: isActive
-                                ? Border.all(color: AppColors.primary.withOpacity(0.4), width: 1)
+                                ? Border.all(
+                                    color: AppColors.primary.withOpacity(0.4),
+                                    width: 1)
                                 : null,
                           ),
                           child: ListTile(
                             dense: true,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 2),
                             leading: Icon(
                               Icons.chat_outlined,
                               size: 16,
-                              color: isActive ? AppColors.primary : (isDark ? Colors.white54 : const Color(0xFF64748B)),
+                              color: isActive
+                                  ? AppColors.primary
+                                  : (isDark
+                                      ? Colors.white54
+                                      : const Color(0xFF64748B)),
                             ),
                             title: Text(
                               conv.title,
@@ -267,22 +290,31 @@ class _AiConversationDrawerState extends State<AiConversationDrawer> {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.inter(
                                 fontSize: 13.5,
-                                fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                                fontWeight: isActive
+                                    ? FontWeight.w600
+                                    : FontWeight.w500,
                                 color: isActive
                                     ? AppColors.primary
-                                    : (isDark ? Colors.white.withOpacity(0.9) : const Color(0xFF1E293B)),
+                                    : (isDark
+                                        ? Colors.white.withOpacity(0.9)
+                                        : const Color(0xFF1E293B)),
                               ),
                             ),
                             subtitle: Text(
                               _formatDate(conv.updatedAt),
                               style: GoogleFonts.inter(
                                 fontSize: 11,
-                                color: isDark ? Colors.white38 : const Color(0xFF94A3B8),
+                                color: isDark
+                                    ? Colors.white38
+                                    : const Color(0xFF94A3B8),
                               ),
                             ),
                             trailing: IconButton(
-                              icon: const Icon(Icons.delete_outline_rounded, size: 16),
-                              color: isDark ? Colors.white38 : const Color(0xFF94A3B8),
+                              icon: const Icon(Icons.delete_outline_rounded,
+                                  size: 16),
+                              color: isDark
+                                  ? Colors.white38
+                                  : const Color(0xFF94A3B8),
                               tooltip: 'Delete chat',
                               onPressed: () => _confirmDelete(context, conv),
                             ),

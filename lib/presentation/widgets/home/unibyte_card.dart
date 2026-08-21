@@ -12,7 +12,8 @@ class UniByteCard extends StatefulWidget {
   State<UniByteCard> createState() => _UniByteCardState();
 }
 
-class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStateMixin {
+class _UniByteCardState extends State<UniByteCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _rotationAnimation;
 
@@ -49,8 +50,10 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
     const orangeAccent = AppColors.primary;
     final cardColor = isDark ? AppColors.surfaceDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
@@ -81,7 +84,8 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                       color: orangeAccent.withAlpha(25),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.psychology_rounded, color: orangeAccent, size: 18),
+                    child: const Icon(Icons.psychology_rounded,
+                        color: orangeAccent, size: 18),
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -102,7 +106,8 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                   padding: const EdgeInsets.all(4),
                   child: RotationTransition(
                     turns: _rotationAnimation,
-                    child: Icon(Icons.refresh_rounded, size: 18, color: textSubtitle),
+                    child: Icon(Icons.refresh_rounded,
+                        size: 18, color: textSubtitle),
                   ),
                 ),
               ),
@@ -148,7 +153,8 @@ class _UniByteCardState extends State<UniByteCard> with SingleTickerProviderStat
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
+                    const Icon(Icons.arrow_forward_rounded,
+                        size: 14, color: orangeAccent),
                   ],
                 ),
               ),

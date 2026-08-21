@@ -64,7 +64,10 @@ class _SearchScreenState extends State<SearchScreen> {
   List<ResourceModel> _filterAndSortResults(List<ResourceModel> results) {
     var list = results;
     if (_selectedCategory != 'All') {
-      list = list.where((r) => r.resourceType.toLowerCase() == _selectedCategory.toLowerCase()).toList();
+      list = list
+          .where((r) =>
+              r.resourceType.toLowerCase() == _selectedCategory.toLowerCase())
+          .toList();
     }
     return ResourceSorter.sort(list, _currentSort);
   }
@@ -81,13 +84,17 @@ class _SearchScreenState extends State<SearchScreen> {
     final processedResults = _filterAndSortResults(rawResults);
 
     final bool hasSearchQuery = _searchController.text.trim().isNotEmpty;
-    final bool hasResults = matchingSubjs.isNotEmpty || processedResults.isNotEmpty || matchingItems.isNotEmpty;
+    final bool hasResults = matchingSubjs.isNotEmpty ||
+        processedResults.isNotEmpty ||
+        matchingItems.isNotEmpty;
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
     const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
@@ -151,7 +158,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         cat,
                         style: GoogleFonts.inter(
                           color: isSelected ? Colors.white : textPrimary,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
                           fontSize: 13,
                         ),
                       ),
@@ -160,7 +168,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
+                        side: BorderSide(
+                            color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (selected) {
                         if (selected) {
@@ -180,43 +189,72 @@ class _SearchScreenState extends State<SearchScreen> {
             child: studyProvider.isLoading
                 ? _buildLoadingState(orangeAccent, textSubtitle)
                 : studyProvider.isError
-                    ? _buildErrorState(textPrimary, textSubtitle, orangeAccent, studyProvider)
+                    ? _buildErrorState(
+                        textPrimary, textSubtitle, orangeAccent, studyProvider)
                     : !hasSearchQuery
-                        ? _buildRecentSearchSuggestions(context, orangeAccent, textPrimary, textSubtitle, cardColor, borderColor, isDark, studyProvider)
+                        ? _buildRecentSearchSuggestions(
+                            context,
+                            orangeAccent,
+                            textPrimary,
+                            textSubtitle,
+                            cardColor,
+                            borderColor,
+                            isDark,
+                            studyProvider)
                         : !hasResults
-                            ? _buildNoResultsState(_searchController.text.trim(), textPrimary, textSubtitle, orangeAccent, isDark, cardColor, borderColor)
+                            ? _buildNoResultsState(
+                                _searchController.text.trim(),
+                                textPrimary,
+                                textSubtitle,
+                                orangeAccent,
+                                isDark,
+                                cardColor,
+                                borderColor)
                             : ListView(
                                 padding: const EdgeInsets.all(20),
                                 children: [
                                   // 0. Fuzzy Match "Did You Mean" Suggestion Banner
-                                  if (studyProvider.isFuzzyResult && studyProvider.didYouMean != null) ...[
+                                  if (studyProvider.isFuzzyResult &&
+                                      studyProvider.didYouMean != null) ...[
                                     Container(
                                       margin: const EdgeInsets.only(bottom: 16),
-                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 14, vertical: 10),
                                       decoration: BoxDecoration(
-                                        color: orangeAccent.withAlpha(isDark ? 30 : 15),
+                                        color: orangeAccent
+                                            .withAlpha(isDark ? 30 : 15),
                                         borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: orangeAccent.withAlpha(60)),
+                                        border: Border.all(
+                                            color: orangeAccent.withAlpha(60)),
                                       ),
                                       child: Row(
                                         children: [
-                                          const Icon(Icons.auto_fix_high_rounded, size: 18, color: orangeAccent),
+                                          const Icon(
+                                              Icons.auto_fix_high_rounded,
+                                              size: 18,
+                                              color: orangeAccent),
                                           const SizedBox(width: 10),
                                           Expanded(
                                             child: Text.rich(
                                               TextSpan(
                                                 text: 'Did you mean ',
-                                                style: GoogleFonts.inter(fontSize: 13, color: textPrimary),
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 13,
+                                                    color: textPrimary),
                                                 children: [
                                                   TextSpan(
-                                                    text: '"${studyProvider.didYouMean}"',
+                                                    text:
+                                                        '"${studyProvider.didYouMean}"',
                                                     style: GoogleFonts.inter(
                                                       fontSize: 13,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: orangeAccent,
                                                     ),
                                                   ),
-                                                  const TextSpan(text: '? Showing closest matches:'),
+                                                  const TextSpan(
+                                                      text:
+                                                          '? Showing closest matches:'),
                                                 ],
                                               ),
                                             ),
@@ -239,11 +277,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                     const SizedBox(height: 10),
                                     ...matchingSubjs.map((subj) {
                                       return Container(
-                                        margin: const EdgeInsets.only(bottom: 10),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         decoration: BoxDecoration(
                                           color: cardColor,
-                                          borderRadius: BorderRadius.circular(18),
-                                          border: Border.all(color: borderColor),
+                                          borderRadius:
+                                              BorderRadius.circular(18),
+                                          border:
+                                              Border.all(color: borderColor),
                                         ),
                                         child: ListTile(
                                           leading: Container(
@@ -252,11 +293,25 @@ class _SearchScreenState extends State<SearchScreen> {
                                               color: emeraldGreen.withAlpha(20),
                                               shape: BoxShape.circle,
                                             ),
-                                            child: const Icon(Icons.book_rounded, color: emeraldGreen, size: 20),
+                                            child: const Icon(
+                                                Icons.book_rounded,
+                                                color: emeraldGreen,
+                                                size: 20),
                                           ),
-                                          title: Text(subj.name, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16, color: textPrimary)),
-                                          subtitle: Text('${subj.subjectCode ?? subj.code} • ${subj.creditHours} Credits', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-                                          trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+                                          title: Text(subj.name,
+                                              style: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                  color: textPrimary)),
+                                          subtitle: Text(
+                                              '${subj.subjectCode ?? subj.code} • ${subj.creditHours} Credits',
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 12,
+                                                  color: textSubtitle)),
+                                          trailing: const Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 14,
+                                              color: Colors.grey),
                                           onTap: () {
                                             Navigator.pushNamed(
                                               context,
@@ -274,10 +329,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ],
 
                                   // 2. Matching Textbook Topics, Chapters & Academic Sections
-                                  if (matchingItems.where((i) => i.category.contains('Textbook') || i.topicModel != null || i.sectionIndex != null).isNotEmpty) ...[
+                                  if (matchingItems
+                                      .where((i) =>
+                                          i.category.contains('Textbook') ||
+                                          i.topicModel != null ||
+                                          i.sectionIndex != null)
+                                      .isNotEmpty) ...[
                                     Text(
                                       'Notes & Academic Topics (${matchingItems.where((i) => i.category.contains('Textbook') || i.category.contains('Notes') || i.topicModel != null || i.sectionIndex != null).length})',
-
                                       style: GoogleFonts.inter(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -285,13 +344,22 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 10),
-                                    ...matchingItems.where((i) => i.category.contains('Textbook') || i.topicModel != null || i.sectionIndex != null).take(15).map((item) {
+                                    ...matchingItems
+                                        .where((i) =>
+                                            i.category.contains('Textbook') ||
+                                            i.topicModel != null ||
+                                            i.sectionIndex != null)
+                                        .take(15)
+                                        .map((item) {
                                       return Container(
-                                        margin: const EdgeInsets.only(bottom: 10),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         decoration: BoxDecoration(
                                           color: cardColor,
-                                          borderRadius: BorderRadius.circular(16),
-                                          border: Border.all(color: borderColor),
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          border:
+                                              Border.all(color: borderColor),
                                         ),
                                         child: ListTile(
                                           leading: Container(
@@ -301,14 +369,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: Icon(
-                                              item.topicModel != null ? Icons.article_rounded : Icons.topic_rounded,
+                                              item.topicModel != null
+                                                  ? Icons.article_rounded
+                                                  : Icons.topic_rounded,
                                               color: purpleAccent,
                                               size: 20,
                                             ),
                                           ),
-                                          title: Text(item.title, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14.5, color: textPrimary)),
-                                          subtitle: Text(item.subtitle, style: GoogleFonts.inter(fontSize: 11.5, color: textSubtitle)),
-                                          trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+                                          title: Text(item.title,
+                                              style: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14.5,
+                                                  color: textPrimary)),
+                                          subtitle: Text(item.subtitle,
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 11.5,
+                                                  color: textSubtitle)),
+                                          trailing: const Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 14,
+                                              color: Colors.grey),
                                           onTap: () {
                                             if (item.topicModel != null) {
                                               // Direct Deep Navigation to TopicDetailScreen
@@ -317,9 +397,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 AppRoutes.topicDetail,
                                                 arguments: {
                                                   'topic': item.topicModel!,
-                                                  'subjectName': item.subjectName,
-                                                  'chapterTitle': item.chapterTitle ?? 'Chapter',
-                                                  'sectionTitle': item.sectionTitle ?? 'Section',
+                                                  'subjectName':
+                                                      item.subjectName,
+                                                  'chapterTitle':
+                                                      item.chapterTitle ??
+                                                          'Chapter',
+                                                  'sectionTitle':
+                                                      item.sectionTitle ??
+                                                          'Section',
                                                 },
                                               );
                                             } else {
@@ -328,9 +413,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 context,
                                                 AppRoutes.resources,
                                                 arguments: {
-                                                  'subjectId': item.subject?.id ?? item.subjectCode,
-                                                  'subjectName': item.subjectName,
-                                                  'initialSectionIndex': item.sectionIndex ?? 1,
+                                                  'subjectId':
+                                                      item.subject?.id ??
+                                                          item.subjectCode,
+                                                  'subjectName':
+                                                      item.subjectName,
+                                                  'initialSectionIndex':
+                                                      item.sectionIndex ?? 1,
                                                 },
                                               );
                                             }
@@ -354,49 +443,68 @@ class _SearchScreenState extends State<SearchScreen> {
                                     const SizedBox(height: 10),
                                     ...processedResults.map((resource) {
                                       return Container(
-                                        margin: const EdgeInsets.only(bottom: 12),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 12),
                                         decoration: BoxDecoration(
                                           color: cardColor,
-                                          borderRadius: BorderRadius.circular(20),
-                                          border: Border.all(color: borderColor),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border:
+                                              Border.all(color: borderColor),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.black.withAlpha(isDark ? 30 : 6),
+                                              color: Colors.black
+                                                  .withAlpha(isDark ? 30 : 6),
                                               blurRadius: 10,
                                               offset: const Offset(0, 3),
                                             ),
                                           ],
                                         ),
                                         child: ListTile(
-                                          contentPadding: const EdgeInsets.all(16),
+                                          contentPadding:
+                                              const EdgeInsets.all(16),
                                           leading: Container(
                                             padding: const EdgeInsets.all(10),
                                             decoration: BoxDecoration(
                                               color: orangeAccent.withAlpha(20),
                                               shape: BoxShape.circle,
                                             ),
-                                            child: const Icon(Icons.description_rounded, color: orangeAccent, size: 22),
+                                            child: const Icon(
+                                                Icons.description_rounded,
+                                                color: orangeAccent,
+                                                size: 22),
                                           ),
                                           title: Text(
                                             resource.title,
-                                            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16, color: textPrimary),
+                                            style: GoogleFonts.inter(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: textPrimary),
                                           ),
                                           subtitle: Padding(
-                                            padding: const EdgeInsets.only(top: 6),
+                                            padding:
+                                                const EdgeInsets.only(top: 6),
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 2),
                                                   decoration: BoxDecoration(
-                                                    color: orangeAccent.withAlpha(15),
-                                                    borderRadius: BorderRadius.circular(6),
+                                                    color: orangeAccent
+                                                        .withAlpha(15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6),
                                                   ),
                                                   child: Text(
                                                     resource.resourceType,
                                                     style: GoogleFonts.inter(
                                                       color: orangeAccent,
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                 ),
@@ -405,19 +513,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   child: Text(
                                                     resource.subjectName,
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: GoogleFonts.inter(fontSize: 13, color: textSubtitle),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 13,
+                                                        color: textSubtitle),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+                                          trailing: const Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 14,
+                                              color: Colors.grey),
                                           onTap: () {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (_) => PdfViewerScreen(resource: resource),
+                                                builder: (_) => PdfViewerScreen(
+                                                    resource: resource),
                                               ),
                                             );
                                           },
@@ -451,14 +566,16 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildErrorState(Color textPrimary, Color textSubtitle, Color accentColor, StudyProvider studyProvider) {
+  Widget _buildErrorState(Color textPrimary, Color textSubtitle,
+      Color accentColor, StudyProvider studyProvider) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline_rounded, color: Colors.redAccent, size: 48),
+            const Icon(Icons.error_outline_rounded,
+                color: Colors.redAccent, size: 48),
             const SizedBox(height: 16),
             Text(
               'Unable to load resources.',
@@ -470,7 +587,8 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              studyProvider.errorMessage ?? 'Please check your connection and try again.',
+              studyProvider.errorMessage ??
+                  'Please check your connection and try again.',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: 14,
@@ -524,7 +642,8 @@ class _SearchScreenState extends State<SearchScreen> {
               },
               borderRadius: BorderRadius.circular(12),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(12),
@@ -533,7 +652,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.north_west_rounded, size: 14, color: orangeAccent),
+                    Icon(Icons.north_west_rounded,
+                        size: 14, color: orangeAccent),
                     const SizedBox(width: 6),
                     Text(
                       kw,
@@ -588,7 +708,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: orangeAccent.withAlpha(15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.search_off_rounded, color: orangeAccent, size: 48),
+                child: Icon(Icons.search_off_rounded,
+                    color: orangeAccent, size: 48),
               ),
               const SizedBox(height: 16),
               Text(

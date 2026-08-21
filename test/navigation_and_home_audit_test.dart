@@ -68,17 +68,31 @@ Widget _createAuditedApp({
       ChangeNotifierProvider(create: (_) => AuthProvider(firebase)),
       ChangeNotifierProvider(create: (_) => ProfileProvider(firebase)),
       ChangeNotifierProvider(create: (_) => RecentProvider(localStorage)),
-      ChangeNotifierProvider(create: (_) => CareerProvider(CareerRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => CodingProvider(CodingRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => PlacementProvider(PlacementRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => ProjectProvider(ProjectRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => HigherEducationProvider(HigherEducationRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              CareerProvider(CareerRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              CodingProvider(CodingRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => PlacementProvider(
+              PlacementRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              ProjectProvider(ProjectRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => HigherEducationProvider(
+              HigherEducationRepository(firebaseDataSource: firebase))),
       ChangeNotifierProvider(create: (_) => UniByteProvider()),
-      ChangeNotifierProvider(create: (_) => AdminProvider(repository: AdminRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => HierarchyProvider(NonAcademicRepository())),
+      ChangeNotifierProvider(
+          create: (_) => AdminProvider(
+              repository: AdminRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => HierarchyProvider(NonAcademicRepository())),
       ChangeNotifierProvider(create: (_) => RoadmapProvider()),
       ChangeNotifierProvider(create: (_) => QuizProvider()),
-      ChangeNotifierProvider(create: (_) => DocumentProcessingProvider(repository: docRepo)),
+      ChangeNotifierProvider(
+          create: (_) => DocumentProcessingProvider(repository: docRepo)),
       ChangeNotifierProvider(
         create: (_) {
           final aiProv = UniDocsAiProvider();
@@ -107,7 +121,8 @@ void main() {
       firebase = FirebaseDataSource();
     });
 
-    testWidgets('1. HomeScreen renders correctly on mobile viewport (360x780)', (tester) async {
+    testWidgets('1. HomeScreen renders correctly on mobile viewport (360x780)',
+        (tester) async {
       tester.view.physicalSize = const Size(360, 780);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -130,7 +145,9 @@ void main() {
       expect(find.text('Career & Practical Hubs'), findsOneWidget);
     });
 
-    testWidgets('2. HomeScreen renders correctly on desktop viewport (1200x800)', (tester) async {
+    testWidgets(
+        '2. HomeScreen renders correctly on desktop viewport (1200x800)',
+        (tester) async {
       tester.view.physicalSize = const Size(1200, 800);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -149,7 +166,8 @@ void main() {
       expect(find.text('Placement Hub'), findsWidgets);
     });
 
-    testWidgets('3. Mobile Navigation Menu opens AppNavigationDrawer', (tester) async {
+    testWidgets('3. Mobile Navigation Menu opens AppNavigationDrawer',
+        (tester) async {
       tester.view.physicalSize = const Size(380, 800);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -175,7 +193,8 @@ void main() {
       expect(find.text('Academic Curriculum Overview'), findsOneWidget);
     });
 
-    testWidgets('4. All hub routes generate valid screens without exceptions', (tester) async {
+    testWidgets('4. All hub routes generate valid screens without exceptions',
+        (tester) async {
       final routesToTest = [
         AppRoutes.codingHub,
         AppRoutes.careerHub,
@@ -197,22 +216,27 @@ void main() {
       ];
 
       for (final route in routesToTest) {
-        final generatedRoute = AppRoutes.generateRoute(RouteSettings(name: route));
+        final generatedRoute =
+            AppRoutes.generateRoute(RouteSettings(name: route));
         expect(generatedRoute, isNotNull);
       }
     });
 
-    testWidgets('5. Route generator handles null and invalid arguments safely', (tester) async {
+    testWidgets('5. Route generator handles null and invalid arguments safely',
+        (tester) async {
       // pdfViewer with null args falls back to HomeScreen safely
-      final pdfNullRoute = AppRoutes.generateRoute(const RouteSettings(name: AppRoutes.pdfViewer));
+      final pdfNullRoute = AppRoutes.generateRoute(
+          const RouteSettings(name: AppRoutes.pdfViewer));
       expect(pdfNullRoute, isNotNull);
 
       // topicDetail with null args falls back safely
-      final topicNullRoute = AppRoutes.generateRoute(const RouteSettings(name: AppRoutes.topicDetail));
+      final topicNullRoute = AppRoutes.generateRoute(
+          const RouteSettings(name: AppRoutes.topicDetail));
       expect(topicNullRoute, isNotNull);
 
       // semesters with null args falls back safely
-      final semNullRoute = AppRoutes.generateRoute(const RouteSettings(name: AppRoutes.semesters));
+      final semNullRoute = AppRoutes.generateRoute(
+          const RouteSettings(name: AppRoutes.semesters));
       expect(semNullRoute, isNotNull);
     });
   });

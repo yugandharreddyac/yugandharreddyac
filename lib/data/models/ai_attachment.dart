@@ -67,7 +67,9 @@ class AiAttachment {
   int get fileSizeBytes => sizeBytes;
   String? get localPath => localIdentifier;
   String? get extractedTextPreview => extractedTextSnippet;
-  bool get isPdf => mimeType.toLowerCase().contains('pdf') || filename.toLowerCase().endsWith('.pdf');
+  bool get isPdf =>
+      mimeType.toLowerCase().contains('pdf') ||
+      filename.toLowerCase().endsWith('.pdf');
 
   AiAttachment copyWith({
     String? id,
@@ -113,7 +115,8 @@ class AiAttachment {
       filename: map['filename']?.toString() ?? '',
       mimeType: map['mimeType']?.toString() ?? 'application/octet-stream',
       sizeBytes: (map['sizeBytes'] as num?)?.toInt() ?? 0,
-      sourceType: AiAttachmentSourceType.fromString(map['sourceType']?.toString()),
+      sourceType:
+          AiAttachmentSourceType.fromString(map['sourceType']?.toString()),
       localIdentifier: map['localIdentifier']?.toString(),
       status: AiAttachmentStatus.fromString(map['status']?.toString()),
       extractedTextSnippet: map['extractedTextSnippet']?.toString(),

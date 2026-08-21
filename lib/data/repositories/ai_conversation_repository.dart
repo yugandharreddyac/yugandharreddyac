@@ -5,9 +5,11 @@ import '../models/ai_message.dart';
 
 /// Repository interface for persisting AI conversations and message histories
 abstract class AiConversationRepository {
-  Future<List<AiConversation>> listConversations({bool includeArchived = false});
+  Future<List<AiConversation>> listConversations(
+      {bool includeArchived = false});
   Future<AiConversation?> loadConversation(String conversationId);
-  Future<AiConversation> createConversation({String? initialTitle, Map<String, dynamic>? pinnedContext});
+  Future<AiConversation> createConversation(
+      {String? initialTitle, Map<String, dynamic>? pinnedContext});
   Future<void> saveConversation(AiConversation conversation);
   Future<void> saveMessage(String conversationId, AiMessage message);
   Future<void> updateConversationTitle(String conversationId, String newTitle);
@@ -32,7 +34,8 @@ class LocalAiConversationRepository implements AiConversationRepository {
   }
 
   @override
-  Future<List<AiConversation>> listConversations({bool includeArchived = false}) async {
+  Future<List<AiConversation>> listConversations(
+      {bool includeArchived = false}) async {
     try {
       final prefs = await _getPrefs();
       final indexJson = prefs.getString(_indexKey);
@@ -97,7 +100,8 @@ class LocalAiConversationRepository implements AiConversationRepository {
     // 1. Cap messages if needed
     var messages = conversation.messages;
     if (messages.length > _maxMessagesPerConversation) {
-      messages = messages.sublist(messages.length - _maxMessagesPerConversation);
+      messages =
+          messages.sublist(messages.length - _maxMessagesPerConversation);
     }
 
     final updatedConv = conversation.copyWith(
@@ -106,7 +110,8 @@ class LocalAiConversationRepository implements AiConversationRepository {
     );
 
     // 2. Save conversation payload in partitioned key
-    await prefs.setString('$_convPrefix${updatedConv.id}', updatedConv.toJson());
+    await prefs.setString(
+        '$_convPrefix${updatedConv.id}', updatedConv.toJson());
 
     // 3. Update index metadata
     final indexList = await listConversations(includeArchived: true);
@@ -114,7 +119,8 @@ class LocalAiConversationRepository implements AiConversationRepository {
     // Insert at front
     indexList.insert(
       0,
-      updatedConv.copyWith(messages: const []), // Strip full message payload from index to stay lightweight
+      updatedConv.copyWith(
+          messages: const []), // Strip full message payload from index to stay lightweight
     );
 
     if (indexList.length > _maxConversations) {
@@ -136,7 +142,9 @@ class LocalAiConversationRepository implements AiConversationRepository {
       final now = DateTime.now();
       conv = AiConversation(
         id: conversationId,
-        title: message.content.length > 30 ? '${message.content.substring(0, 30)}...' : message.content,
+        title: message.content.length > 30
+            ? '${message.content.substring(0, 30)}...'
+            : message.content,
         createdAt: now,
         updatedAt: now,
       );
@@ -147,7 +155,8 @@ class LocalAiConversationRepository implements AiConversationRepository {
   }
 
   @override
-  Future<void> updateConversationTitle(String conversationId, String newTitle) async {
+  Future<void> updateConversationTitle(
+      String conversationId, String newTitle) async {
     final conv = await loadConversation(conversationId);
     if (conv != null) {
       await saveConversation(conv.copyWith(title: newTitle));

@@ -23,15 +23,18 @@ class FirestoreRepository {
     return await firebaseDataSource.getSubjects(semesterId);
   }
 
-  Future<List<ResourceModel>> fetchResources(String subjectId, {String? resourceType}) async {
-    return await firebaseDataSource.getResources(subjectId, resourceType: resourceType);
+  Future<List<ResourceModel>> fetchResources(String subjectId,
+      {String? resourceType}) async {
+    return await firebaseDataSource.getResources(subjectId,
+        resourceType: resourceType);
   }
 
   Future<CourseOverviewModel?> fetchCourseOverview(String subjectId) async {
     return await firebaseDataSource.getCourseOverview(subjectId);
   }
 
-  Future<List<TextbookChapterModel>> fetchTextbookChapters(String subjectId) async {
+  Future<List<TextbookChapterModel>> fetchTextbookChapters(
+      String subjectId) async {
     return await firebaseDataSource.getTextbookChapters(subjectId);
   }
 
@@ -43,7 +46,8 @@ class FirestoreRepository {
     await firebaseDataSource.deleteCourseOverview(subjectId);
   }
 
-  Future<String> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+  Future<String> saveTextbookChapter(
+      String subjectId, TextbookChapterModel chapter) async {
     return await firebaseDataSource.saveTextbookChapter(subjectId, chapter);
   }
 
@@ -51,7 +55,8 @@ class FirestoreRepository {
     await firebaseDataSource.deleteTextbookChapter(subjectId, chapterId);
   }
 
-  Future<void> updateChapterOrders(String subjectId, List<TextbookChapterModel> chapters) async {
+  Future<void> updateChapterOrders(
+      String subjectId, List<TextbookChapterModel> chapters) async {
     await firebaseDataSource.updateChapterOrders(subjectId, chapters);
   }
 

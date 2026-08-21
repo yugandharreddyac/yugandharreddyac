@@ -28,8 +28,10 @@ class TopicDetailScreen extends StatelessWidget {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -46,16 +48,22 @@ class TopicDetailScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark ? AppColors.surfaceDark : const Color(0xFFFFF7ED),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFFFEDD5)),
+              border: Border.all(
+                  color:
+                      isDark ? AppColors.borderDark : const Color(0xFFFFEDD5)),
             ),
             child: Row(
               children: [
-                const Icon(Icons.school_rounded, size: 16, color: AppColors.primary),
+                const Icon(Icons.school_rounded,
+                    size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     '$subjectName  →  $chapterTitle  →  $sectionTitle  →  ${topic.topicNumber}',
-                    style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: AppColors.primary),
+                    style: const TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -84,20 +92,27 @@ class TopicDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withAlpha(25),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     'TOPIC ${topic.topicNumber}',
-                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 11),
+                    style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   topic.title,
-                  style: TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: textPrimary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -106,35 +121,43 @@ class TopicDetailScreen extends StatelessWidget {
           const SizedBox(height: 20),
 
           // 1. Definition
-          _buildSectionHeader('1. Formal Academic Definition', Icons.menu_book_rounded),
+          _buildSectionHeader(
+              '1. Formal Academic Definition', Icons.menu_book_rounded),
           const SizedBox(height: 8),
           _buildCard(
             cardBg,
             borderColor,
             child: Text(
               topic.definition,
-              style: TextStyle(color: textPrimary, fontSize: 14, height: 1.5, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  color: textPrimary,
+                  fontSize: 14,
+                  height: 1.5,
+                  fontWeight: FontWeight.w500),
             ),
           ),
 
           const SizedBox(height: 20),
 
           // 2. Intuition
-          _buildSectionHeader('2. Intuition & Concept', Icons.lightbulb_outline_rounded),
+          _buildSectionHeader(
+              '2. Intuition & Concept', Icons.lightbulb_outline_rounded),
           const SizedBox(height: 8),
           _buildCard(
             cardBg,
             borderColor,
             child: Text(
               topic.intuition,
-              style: TextStyle(color: textSecondary, fontSize: 13.5, height: 1.5),
+              style:
+                  TextStyle(color: textSecondary, fontSize: 13.5, height: 1.5),
             ),
           ),
 
           const SizedBox(height: 20),
 
           // 3. Working Principle
-          _buildSectionHeader('3. Working Principle', Icons.settings_suggest_rounded),
+          _buildSectionHeader(
+              '3. Working Principle', Icons.settings_suggest_rounded),
           const SizedBox(height: 8),
           _buildCard(
             cardBg,
@@ -147,14 +170,19 @@ class TopicDetailScreen extends StatelessWidget {
 
           if (topic.algorithm != null && topic.algorithm!.isNotEmpty) ...[
             const SizedBox(height: 20),
-            _buildSectionHeader('4. Algorithm & Steps', Icons.alt_route_rounded),
+            _buildSectionHeader(
+                '4. Algorithm & Steps', Icons.alt_route_rounded),
             const SizedBox(height: 8),
             _buildCard(
               cardBg,
               borderColor,
               child: Text(
                 topic.algorithm!,
-                style: TextStyle(color: textPrimary, fontSize: 13, height: 1.4, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    color: textPrimary,
+                    fontSize: 13,
+                    height: 1.4,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           ],
@@ -166,9 +194,13 @@ class TopicDetailScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF0F172A) : const Color(0xFF1E293B),
+                color:
+                    isDark ? const Color(0xFF0F172A) : const Color(0xFF1E293B),
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFF334155)),
+                border: Border.all(
+                    color: isDark
+                        ? AppColors.borderDark
+                        : const Color(0xFF334155)),
               ),
               child: Text(
                 topic.pseudocode!,
@@ -182,14 +214,17 @@ class TopicDetailScreen extends StatelessWidget {
             ),
           ],
 
-          if (topic.codeImplementation != null && topic.codeImplementation!.isNotEmpty) ...[
+          if (topic.codeImplementation != null &&
+              topic.codeImplementation!.isNotEmpty) ...[
             const SizedBox(height: 20),
-            _buildSectionHeader('6. Code Implementation', Icons.terminal_rounded),
+            _buildSectionHeader(
+                '6. Code Implementation', Icons.terminal_rounded),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF0F172A) : const Color(0xFF0F172A),
+                color:
+                    isDark ? const Color(0xFF0F172A) : const Color(0xFF0F172A),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: const Color(0xFF334155)),
               ),
@@ -205,7 +240,8 @@ class TopicDetailScreen extends StatelessWidget {
             ),
           ],
 
-          if (topic.timeComplexity != null || topic.spaceComplexity != null) ...[
+          if (topic.timeComplexity != null ||
+              topic.spaceComplexity != null) ...[
             const SizedBox(height: 20),
             _buildSectionHeader('7. Complexity Analysis', Icons.timer_outlined),
             const SizedBox(height: 8),
@@ -223,14 +259,22 @@ class TopicDetailScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Time Complexity', style: TextStyle(fontSize: 11, color: Colors.blue, fontWeight: FontWeight.bold)),
+                          const Text('Time Complexity',
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold)),
                           const SizedBox(height: 4),
-                          Text(topic.timeComplexity!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                          Text(topic.timeComplexity!,
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
                   ),
-                if (topic.timeComplexity != null && topic.spaceComplexity != null) const SizedBox(width: 10),
+                if (topic.timeComplexity != null &&
+                    topic.spaceComplexity != null)
+                  const SizedBox(width: 10),
                 if (topic.spaceComplexity != null)
                   Expanded(
                     child: Container(
@@ -238,14 +282,21 @@ class TopicDetailScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.purple.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.purple.withOpacity(0.3)),
+                        border:
+                            Border.all(color: Colors.purple.withOpacity(0.3)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Space Complexity', style: TextStyle(fontSize: 11, color: Colors.purple, fontWeight: FontWeight.bold)),
+                          const Text('Space Complexity',
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.purple,
+                                  fontWeight: FontWeight.bold)),
                           const SizedBox(height: 4),
-                          Text(topic.spaceComplexity!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                          Text(topic.spaceComplexity!,
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
@@ -254,35 +305,49 @@ class TopicDetailScreen extends StatelessWidget {
             ),
           ],
 
-          if (topic.advantages.isNotEmpty || topic.disadvantages.isNotEmpty) ...[
+          if (topic.advantages.isNotEmpty ||
+              topic.disadvantages.isNotEmpty) ...[
             const SizedBox(height: 20),
-            _buildSectionHeader('8. Trade-offs & Evaluation', Icons.thumbs_up_down_rounded),
+            _buildSectionHeader(
+                '8. Trade-offs & Evaluation', Icons.thumbs_up_down_rounded),
             const SizedBox(height: 8),
             if (topic.advantages.isNotEmpty)
-              _buildListCard('Advantages', topic.advantages, Colors.green, cardBg, borderColor, textPrimary),
+              _buildListCard('Advantages', topic.advantages, Colors.green,
+                  cardBg, borderColor, textPrimary),
             if (topic.disadvantages.isNotEmpty) ...[
               const SizedBox(height: 8),
-              _buildListCard('Disadvantages', topic.disadvantages, Colors.red, cardBg, borderColor, textPrimary),
+              _buildListCard('Disadvantages', topic.disadvantages, Colors.red,
+                  cardBg, borderColor, textPrimary),
             ],
           ],
 
           if (topic.practiceQuestions.isNotEmpty) ...[
             const SizedBox(height: 20),
-            _buildSectionHeader('9. Practice Problems', Icons.assignment_outlined),
+            _buildSectionHeader(
+                '9. Practice Problems', Icons.assignment_outlined),
             const SizedBox(height: 8),
-            _buildListCard('Self-Assessment Questions', topic.practiceQuestions, AppColors.primary, cardBg, borderColor, textPrimary),
+            _buildListCard('Self-Assessment Questions', topic.practiceQuestions,
+                AppColors.primary, cardBg, borderColor, textPrimary),
           ],
 
           if (topic.examQuestions.isNotEmpty) ...[
             const SizedBox(height: 20),
-            _buildSectionHeader('10. University Exam Questions', Icons.workspace_premium_rounded),
+            _buildSectionHeader('10. University Exam Questions',
+                Icons.workspace_premium_rounded),
             const SizedBox(height: 8),
-            _buildListCard('High-Probability Exam Questions', topic.examQuestions, Colors.orange, cardBg, borderColor, textPrimary),
+            _buildListCard(
+                'High-Probability Exam Questions',
+                topic.examQuestions,
+                Colors.orange,
+                cardBg,
+                borderColor,
+                textPrimary),
           ],
 
           if (topic.attachedResource != null) ...[
             const SizedBox(height: 20),
-            _buildSectionHeader('11. Attached Reference PDF', Icons.picture_as_pdf_rounded),
+            _buildSectionHeader(
+                '11. Attached Reference PDF', Icons.picture_as_pdf_rounded),
             const SizedBox(height: 8),
             ResourceCard(
               resource: topic.attachedResource!,
@@ -327,7 +392,8 @@ class TopicDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListCard(String title, List<String> items, Color accentColor, Color cardBg, Color borderColor, Color textPrimary) {
+  Widget _buildListCard(String title, List<String> items, Color accentColor,
+      Color cardBg, Color borderColor, Color textPrimary) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -338,7 +404,11 @@ class TopicDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: accentColor)),
+          Text(title,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  color: accentColor)),
           const SizedBox(height: 8),
           ...items.map((item) {
             return Padding(
@@ -349,7 +419,9 @@ class TopicDetailScreen extends StatelessWidget {
                   CircleAvatar(radius: 4, backgroundColor: accentColor),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(item, style: TextStyle(fontSize: 12.5, color: textPrimary, height: 1.35)),
+                    child: Text(item,
+                        style: TextStyle(
+                            fontSize: 12.5, color: textPrimary, height: 1.35)),
                   ),
                 ],
               ),

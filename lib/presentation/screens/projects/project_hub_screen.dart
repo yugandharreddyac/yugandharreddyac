@@ -50,8 +50,10 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
     const orangeAccent = AppColors.primary;
 
     return Scaffold(
@@ -99,7 +101,8 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                     color: const Color(0xFF8B5CF6).withOpacity(0.2),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.folder_special_rounded, color: Color(0xFFA78BFA), size: 30),
+                  child: const Icon(Icons.folder_special_rounded,
+                      color: Color(0xFFA78BFA), size: 30),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -108,12 +111,16 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                     children: [
                       const Text(
                         'Project-Learning & Building Ecosystem',
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         'Complete 27-point blueprints with Architecture, Tech Stack, Folder Structure, & Resume Pitch.',
-                        style: TextStyle(color: Colors.grey.shade400, fontSize: 11.5),
+                        style: TextStyle(
+                            color: Colors.grey.shade400, fontSize: 11.5),
                       ),
                     ],
                   ),
@@ -137,7 +144,8 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                         cat,
                         style: GoogleFonts.inter(
                           color: isSelected ? Colors.white : textPrimary,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
                           fontSize: 12,
                         ),
                       ),
@@ -146,7 +154,8 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
+                        side: BorderSide(
+                            color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (_) => provider.selectCategory(cat),
                     ),
@@ -167,11 +176,13 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                         ),
                       )
                     : ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         itemCount: provider.filteredProjects.length,
                         itemBuilder: (context, index) {
                           final project = provider.filteredProjects[index];
-                          final diffColor = _getDifficultyColor(project.difficulty);
+                          final diffColor =
+                              _getDifficultyColor(project.difficulty);
 
                           return Container(
                             margin: const EdgeInsets.only(bottom: 14),
@@ -193,7 +204,8 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => ProjectDetailScreen(project: project),
+                                    builder: (_) =>
+                                        ProjectDetailScreen(project: project),
                                   ),
                                 );
                               },
@@ -205,10 +217,13 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                                     Row(
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 3),
                                           decoration: BoxDecoration(
-                                            color: AppColors.primary.withAlpha(20),
-                                            borderRadius: BorderRadius.circular(6),
+                                            color:
+                                                AppColors.primary.withAlpha(20),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
                                           child: Text(
                                             project.category,
@@ -221,10 +236,12 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                                         ),
                                         const SizedBox(width: 8),
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 3),
                                           decoration: BoxDecoration(
                                             color: diffColor.withAlpha(20),
-                                            borderRadius: BorderRadius.circular(6),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
                                           child: Text(
                                             project.difficulty,
@@ -238,7 +255,9 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                                         const Spacer(),
                                         Text(
                                           project.estimatedDuration,
-                                          style: TextStyle(fontSize: 11, color: textSubtitle),
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: textSubtitle),
                                         ),
                                       ],
                                     ),
@@ -256,22 +275,33 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                                       project.description,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(fontSize: 12.5, color: textSubtitle, height: 1.35),
+                                      style: TextStyle(
+                                          fontSize: 12.5,
+                                          color: textSubtitle,
+                                          height: 1.35),
                                     ),
                                     const SizedBox(height: 12),
                                     Wrap(
                                       spacing: 6,
                                       runSpacing: 4,
-                                      children: project.technologies.take(4).map((tech) {
+                                      children: project.technologies
+                                          .take(4)
+                                          .map((tech) {
                                         return Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 2),
                                           decoration: BoxDecoration(
-                                            color: isDark ? AppColors.surfaceDark : const Color(0xFFF1F5F9),
-                                            borderRadius: BorderRadius.circular(6),
+                                            color: isDark
+                                                ? AppColors.surfaceDark
+                                                : const Color(0xFFF1F5F9),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
                                           child: Text(
                                             tech,
-                                            style: TextStyle(fontSize: 10.5, color: textPrimary),
+                                            style: TextStyle(
+                                                fontSize: 10.5,
+                                                color: textPrimary),
                                           ),
                                         );
                                       }).toList(),
@@ -280,7 +310,10 @@ class _ProjectHubScreenState extends State<ProjectHubScreen> {
                                 ),
                               ),
                             ),
-                          ).animate().fadeIn(delay: (index * 50).ms).slideY(begin: 0.05, end: 0);
+                          )
+                              .animate()
+                              .fadeIn(delay: (index * 50).ms)
+                              .slideY(begin: 0.05, end: 0);
                         },
                       ),
           ),

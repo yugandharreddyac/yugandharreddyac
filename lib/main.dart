@@ -69,7 +69,8 @@ void main() async {
       );
     }
   } catch (e) {
-    debugPrint('Firebase core initialization notice: $e (Falling back to offline repository dataset)');
+    debugPrint(
+        'Firebase core initialization notice: $e (Falling back to offline repository dataset)');
   }
 
   // Defer Crashlytics & non-essential telemetry until after first frame paint
@@ -88,12 +89,18 @@ void main() async {
     firebaseDataSource: firebaseDataSource,
     localStorageDataSource: localStorageDataSource,
   );
-  final careerRepository = CareerRepository(firebaseDataSource: firebaseDataSource);
-  final codingRepository = CodingRepository(firebaseDataSource: firebaseDataSource);
-  final placementRepository = PlacementRepository(firebaseDataSource: firebaseDataSource);
-  final projectRepository = ProjectRepository(firebaseDataSource: firebaseDataSource);
-  final higherEducationRepository = HigherEducationRepository(firebaseDataSource: firebaseDataSource);
-  final adminRepository = AdminRepository(firebaseDataSource: firebaseDataSource);
+  final careerRepository =
+      CareerRepository(firebaseDataSource: firebaseDataSource);
+  final codingRepository =
+      CodingRepository(firebaseDataSource: firebaseDataSource);
+  final placementRepository =
+      PlacementRepository(firebaseDataSource: firebaseDataSource);
+  final projectRepository =
+      ProjectRepository(firebaseDataSource: firebaseDataSource);
+  final higherEducationRepository =
+      HigherEducationRepository(firebaseDataSource: firebaseDataSource);
+  final adminRepository =
+      AdminRepository(firebaseDataSource: firebaseDataSource);
 
   runApp(
     CSSEStudyHubApp(
@@ -196,9 +203,11 @@ class CSSEStudyHubApp extends StatelessWidget {
           create: (_) => QuizProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) => DocumentProcessingProvider(repository: InMemoryDocumentRepository()),
+          create: (_) => DocumentProcessingProvider(
+              repository: InMemoryDocumentRepository()),
         ),
-        ChangeNotifierProxyProvider<DocumentProcessingProvider, UniDocsAiProvider>(
+        ChangeNotifierProxyProvider<DocumentProcessingProvider,
+            UniDocsAiProvider>(
           create: (ctx) {
             final aiService = AiService(
               provider: GeminiProvider(

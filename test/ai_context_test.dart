@@ -91,19 +91,25 @@ void main() {
       expect(ctx.recommendedDailyMinutes, equals(90));
     });
 
-    test('UniDocsResourceContextProvider retrieves verified topics from NonAcademicData', () {
+    test(
+        'UniDocsResourceContextProvider retrieves verified topics from NonAcademicData',
+        () {
       final queryMatches = resourceProvider.buildFromQuery('Python');
       expect(queryMatches, isNotEmpty);
-      expect(queryMatches.any((r) => r.title.toLowerCase().contains('python')), isTrue);
+      expect(queryMatches.any((r) => r.title.toLowerCase().contains('python')),
+          isTrue);
 
-      final idMatches = resourceProvider.buildFromTopicIds(['python', 'web_react', 'devops_docker']);
+      final idMatches = resourceProvider
+          .buildFromTopicIds(['python', 'web_react', 'devops_docker']);
       expect(idMatches.length, equals(3));
       expect(idMatches[0].id, equals('python'));
       expect(idMatches[1].id, equals('web_react'));
       expect(idMatches[2].id, equals('devops_docker'));
     });
 
-    test('AiContextComposer unifies all context sources with strict priority rules', () {
+    test(
+        'AiContextComposer unifies all context sources with strict priority rules',
+        () {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement'],
@@ -117,7 +123,8 @@ void main() {
 
       final fullContext = composer.compose(
         profile: profile,
-        userQuery: 'What are the main libraries for Machine Learning in Python?',
+        userQuery:
+            'What are the main libraries for Machine Learning in Python?',
         topicIds: ['python', 'machine_learning'],
         attachments: [
           const AiAttachment(
@@ -132,7 +139,8 @@ void main() {
       expect(fullContext.hasResources, isTrue);
       expect(fullContext.hasDocuments, isTrue);
       expect(fullContext.unidocsResources.length, equals(2));
-      expect(fullContext.attachedDocuments.first.filename, equals('ai_syllabus.pdf'));
+      expect(fullContext.attachedDocuments.first.filename,
+          equals('ai_syllabus.pdf'));
       expect(fullContext.systemInstructions, contains('UniDocs AI'));
       expect(fullContext.precedenceRules.length, equals(5));
     });

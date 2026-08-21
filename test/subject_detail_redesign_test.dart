@@ -39,8 +39,10 @@ void main() {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<StudyProvider>.value(value: studyProvider),
-        ChangeNotifierProvider(create: (_) => DownloadProvider(localStorageDataSource)),
-        ChangeNotifierProvider(create: (_) => BookmarkProvider(localStorageDataSource)),
+        ChangeNotifierProvider(
+            create: (_) => DownloadProvider(localStorageDataSource)),
+        ChangeNotifierProvider(
+            create: (_) => BookmarkProvider(localStorageDataSource)),
       ],
       child: MaterialApp(
         home: ResourceScreen(
@@ -53,7 +55,9 @@ void main() {
   }
 
   group('Subject Detail Page Redesign Requirement H Verification Tests', () {
-    testWidgets('1 & 2. Exactly 3 Subject Detail tabs exist: Syllabus, Notes, Previous Papers', (tester) async {
+    testWidgets(
+        '1 & 2. Exactly 3 Subject Detail tabs exist: Syllabus, Notes, Previous Papers',
+        (tester) async {
       await tester.pumpWidget(createSubjectDetailScreen(
         subjectId: 'subj_1_1_1',
         subjectName: 'Green Chemistry & Sustainability',
@@ -65,7 +69,9 @@ void main() {
       expect(find.text('Previous Papers'), findsWidgets);
     });
 
-    testWidgets('3 & 4. Textbook and removed section titles are NOT displayed as tabs', (tester) async {
+    testWidgets(
+        '3 & 4. Textbook and removed section titles are NOT displayed as tabs',
+        (tester) async {
       await tester.pumpWidget(createSubjectDetailScreen(
         subjectId: 'subj_1_1_1',
         subjectName: 'Green Chemistry & Sustainability',
@@ -74,15 +80,18 @@ void main() {
 
       expect(find.widgetWithText(ChoiceChip, 'Course Overview'), findsNothing);
       expect(find.widgetWithText(ChoiceChip, 'Textbook'), findsNothing);
-      expect(find.widgetWithText(ChoiceChip, 'Important Questions'), findsNothing);
+      expect(
+          find.widgetWithText(ChoiceChip, 'Important Questions'), findsNothing);
       expect(find.widgetWithText(ChoiceChip, 'Quick Revision'), findsNothing);
       expect(find.widgetWithText(ChoiceChip, 'Practical / Lab'), findsNothing);
       expect(find.widgetWithText(ChoiceChip, 'Assignments'), findsNothing);
       expect(find.widgetWithText(ChoiceChip, 'Projects'), findsNothing);
-      expect(find.widgetWithText(ChoiceChip, 'Additional Resources'), findsNothing);
+      expect(find.widgetWithText(ChoiceChip, 'Additional Resources'),
+          findsNothing);
     });
 
-    test('5. SearchIndexEngine produces ONLY section indexes 0, 1, or 2', () async {
+    test('5. SearchIndexEngine produces ONLY section indexes 0, 1, or 2',
+        () async {
       final engine = SearchIndexEngine();
       final subjects = await studyRepository.getSubjects('sem_1_1');
 
@@ -100,11 +109,13 @@ void main() {
           .toSet();
 
       for (final index in sectionIndexes) {
-        expect(index, inInclusiveRange(0, 2), reason: 'Section index $index must be 0, 1, or 2.');
+        expect(index, inInclusiveRange(0, 2),
+            reason: 'Section index $index must be 0, 1, or 2.');
       }
     });
 
-    testWidgets('6. Legacy indexes cannot cause RangeError or blank screens', (tester) async {
+    testWidgets('6. Legacy indexes cannot cause RangeError or blank screens',
+        (tester) async {
       await tester.pumpWidget(createSubjectDetailScreen(
         subjectId: 'subj_1_1_1',
         subjectName: 'Green Chemistry & Sustainability',
@@ -116,7 +127,9 @@ void main() {
       expect(find.text('Green Chemistry & Sustainability'), findsWidgets);
     });
 
-    testWidgets('8. Notes still exposes textbook chapter/section/topic functionality', (tester) async {
+    testWidgets(
+        '8. Notes still exposes textbook chapter/section/topic functionality',
+        (tester) async {
       await tester.pumpWidget(createSubjectDetailScreen(
         subjectId: 'subj_1_1_4',
         subjectName: 'Computer Programming in C',
@@ -127,7 +140,9 @@ void main() {
       expect(find.text('Notes'), findsWidgets);
     });
 
-    testWidgets('9. Previous Papers opens correctly and displays past examination heading', (tester) async {
+    testWidgets(
+        '9. Previous Papers opens correctly and displays past examination heading',
+        (tester) async {
       await tester.pumpWidget(createSubjectDetailScreen(
         subjectId: 'subj_1_1_4',
         subjectName: 'Computer Programming in C',
@@ -138,7 +153,8 @@ void main() {
       expect(find.text('Previous Papers'), findsWidgets);
     });
 
-    testWidgets('10. Empty states are shown correctly when content is absent', (tester) async {
+    testWidgets('10. Empty states are shown correctly when content is absent',
+        (tester) async {
       await tester.pumpWidget(createSubjectDetailScreen(
         subjectId: 'subj_non_existent',
         subjectName: 'Empty Subject Test',

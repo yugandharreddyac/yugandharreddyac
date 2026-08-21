@@ -42,8 +42,10 @@ class _SemesterCardState extends State<SemesterCard> {
 
     final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
     const orangeAccent = AppColors.primary;
 
     return MouseRegion(
@@ -52,7 +54,9 @@ class _SemesterCardState extends State<SemesterCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         curve: Curves.easeOutCubic,
-        transform: _isHovered ? (Matrix4.identity()..translate(0, -2)) : Matrix4.identity(),
+        transform: _isHovered
+            ? (Matrix4.identity()..translate(0, -2))
+            : Matrix4.identity(),
         decoration: BoxDecoration(
           color: cardBg,
           borderRadius: BorderRadius.circular(18),
@@ -127,7 +131,9 @@ class _SemesterCardState extends State<SemesterCard> {
                   const SizedBox(width: 8),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
-                    color: _isHovered ? orangeAccent : textSecondary.withAlpha(160),
+                    color: _isHovered
+                        ? orangeAccent
+                        : textSecondary.withAlpha(160),
                     size: 18,
                   ),
                 ],

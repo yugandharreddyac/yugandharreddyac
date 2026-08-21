@@ -18,8 +18,10 @@ class QuizQuestionModel {
   final List<String> options;
   final int correctOptionIndex;
   final String explanation;
-  final String category; // 'Quantitative Aptitude', 'Logical Reasoning', 'Technical MCQs'
-  final String topic; // e.g. 'Percentages', 'Blood Relations', 'Data Structures'
+  final String
+      category; // 'Quantitative Aptitude', 'Logical Reasoning', 'Technical MCQs'
+  final String
+      topic; // e.g. 'Percentages', 'Blood Relations', 'Data Structures'
   final QuizDifficulty difficulty;
   final int timeLimitSeconds;
 

@@ -57,8 +57,10 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const orangeAccent = AppColors.primary;
     const royalBlue = Color(0xFF2563EB);
@@ -127,7 +129,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                     color: Colors.white.withAlpha(30),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.fact_check_rounded, color: Colors.white, size: 28),
+                  child: const Icon(Icons.fact_check_rounded,
+                      color: Colors.white, size: 28),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -145,7 +148,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                       const SizedBox(height: 4),
                       Text(
                         'Practice Aptitude, Reasoning & CS MCQs with instant feedback or timed mock exams.',
-                        style: GoogleFonts.inter(fontSize: 12, color: Colors.white70),
+                        style: GoogleFonts.inter(
+                            fontSize: 12, color: Colors.white70),
                       ),
                     ],
                   ),
@@ -159,12 +163,14 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
           // 1. Select Category
           Text(
             '1. Select Assessment Track',
-            style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
           ),
           const SizedBox(height: 12),
           Column(
             children: categories.map((cat) {
-              final isSelected = _selectedCategory.toLowerCase() == cat.title.toLowerCase();
+              final isSelected =
+                  _selectedCategory.toLowerCase() == cat.title.toLowerCase();
               return Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
@@ -176,7 +182,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                   ),
                 ),
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   leading: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -199,7 +206,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                   ),
                   trailing: isSelected
                       ? Icon(Icons.check_circle_rounded, color: cat.accentColor)
-                      : const Icon(Icons.radio_button_unchecked_rounded, color: Colors.grey),
+                      : const Icon(Icons.radio_button_unchecked_rounded,
+                          color: Colors.grey),
                   onTap: () {
                     setState(() {
                       _selectedCategory = cat.title;
@@ -216,7 +224,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
           // 2. Select Quiz Mode
           Text(
             '2. Select Evaluation Mode',
-            style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
           ),
           const SizedBox(height: 12),
           Row(
@@ -256,7 +265,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
           // 3. Sub-topic Filter
           Text(
             '3. Topic Focus',
-            style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
           ),
           const SizedBox(height: 10),
           SingleChildScrollView(
@@ -271,7 +281,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                       top,
                       style: GoogleFonts.inter(
                         color: isSelected ? Colors.white : textPrimary,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.w500,
                         fontSize: 13,
                       ),
                     ),
@@ -280,7 +291,10 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                     backgroundColor: cardColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(color: isSelected ? currentCatInfo.accentColor : borderColor),
+                      side: BorderSide(
+                          color: isSelected
+                              ? currentCatInfo.accentColor
+                              : borderColor),
                     ),
                     onSelected: (val) {
                       if (val) {
@@ -306,7 +320,8 @@ class _QuizHubScreenState extends State<QuizHubScreen> {
                 _selectedMode == QuizMode.mockTest
                     ? 'Start Timed Mock Exam'
                     : 'Start Interactive Practice Session',
-                style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold),
+                style: GoogleFonts.inter(
+                    fontSize: 15, fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: currentCatInfo.accentColor,

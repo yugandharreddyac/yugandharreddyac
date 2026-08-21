@@ -12,7 +12,8 @@ class AcademicResourceCatalog {
         ResourceModel(
           id: 'pdf_c_prog_start_here_unit1',
           title: '⭐ Unit 1: C Programming Syntax, Compilers & Control Flow',
-          description: 'Beginner-first introductory guide to C compilers, variables, data types, printf/scanf syntax, and conditional loops.',
+          description:
+              'Beginner-first introductory guide to C compilers, variables, data types, printf/scanf syntax, and conditional loops.',
           subjectId: 'subj_1_1_4',
           subjectName: 'Computer Programming Using C',
           yearId: 'year_1',
@@ -30,21 +31,30 @@ class AcademicResourceCatalog {
           version: '1.0',
           sourceProvider: 'JNTUH Academic Council',
           isFeatured: true,
-          whatIsThis: 'Introductory notes covering C programming foundation, variable declarations, and loops.',
-          whyUseIt: 'Start here! Essential reading for 1st-year students before writing C code in laboratory sessions.',
+          whatIsThis:
+              'Introductory notes covering C programming foundation, variable declarations, and loops.',
+          whyUseIt:
+              'Start here! Essential reading for 1st-year students before writing C code in laboratory sessions.',
           estimatedStudyTime: '20 mins',
           isOfficial: true,
           language: 'English',
           ordering: 1,
           availabilityStatus: 'available',
           copyrightTier: 'officially_provided',
-          tags: ['C Programming', 'Start Here', 'Variables', 'Loops', 'Lecture Notes'],
+          tags: [
+            'C Programming',
+            'Start Here',
+            'Variables',
+            'Loops',
+            'Lecture Notes'
+          ],
         ),
         // 2. Computer Programming Using C - PYQ Bank
         ResourceModel(
           id: 'pdf_c_prog_pyq_2023_2025',
           title: 'C Programming Solved Examination PYQs (2022 - 2025)',
-          description: 'Previous year university examination questions with step-by-step solved C programs and scoring keys.',
+          description:
+              'Previous year university examination questions with step-by-step solved C programs and scoring keys.',
           subjectId: 'subj_1_1_4',
           subjectName: 'Computer Programming Using C',
           yearId: 'year_1',
@@ -62,8 +72,10 @@ class AcademicResourceCatalog {
           version: '2.0',
           sourceProvider: 'University Examination Cell',
           isFeatured: false,
-          whatIsThis: '3-year solved question paper collection for C programming exams.',
-          whyUseIt: 'Helps students identify high-frequency exam questions and scoring patterns.',
+          whatIsThis:
+              '3-year solved question paper collection for C programming exams.',
+          whyUseIt:
+              'Helps students identify high-frequency exam questions and scoring patterns.',
           estimatedStudyTime: '45 mins',
           isOfficial: true,
           language: 'English',
@@ -76,7 +88,8 @@ class AcademicResourceCatalog {
         ResourceModel(
           id: 'pdf_c_prog_unit4_coming_soon',
           title: 'Unit 4: Dynamic Memory Allocation & File I/O Notes',
-          description: 'Upcoming comprehensive notes on malloc, free, pointer arithmetic, and binary file streams.',
+          description:
+              'Upcoming comprehensive notes on malloc, free, pointer arithmetic, and binary file streams.',
           subjectId: 'subj_1_1_4',
           subjectName: 'Computer Programming Using C',
           yearId: 'year_1',
@@ -94,8 +107,10 @@ class AcademicResourceCatalog {
           version: '0.9',
           sourceProvider: 'CSSED Department Notes',
           availabilityStatus: 'coming_soon',
-          whatIsThis: 'Notes for this unit are currently being formatted and proofread.',
-          whyUseIt: 'Will provide clear code examples for file operations in C.',
+          whatIsThis:
+              'Notes for this unit are currently being formatted and proofread.',
+          whyUseIt:
+              'Will provide clear code examples for file operations in C.',
           estimatedStudyTime: '30 mins',
           isOfficial: true,
           language: 'English',
@@ -111,7 +126,8 @@ class AcademicResourceCatalog {
         ResourceModel(
           id: 'pdf_ds_start_here_unit2',
           title: '⭐ Unit 2: Singly, Doubly & Circular Linked Lists Guide',
-          description: 'Detailed structural notes on pointer memory allocation, linked list node insertion, deletion, and LRU cache implementation.',
+          description:
+              'Detailed structural notes on pointer memory allocation, linked list node insertion, deletion, and LRU cache implementation.',
           subjectId: 'subj_2_1_1',
           subjectName: 'Data Structures',
           yearId: 'year_2',
@@ -129,21 +145,30 @@ class AcademicResourceCatalog {
           version: '1.2',
           sourceProvider: 'IIT Madras NPTEL Notes',
           isFeatured: true,
-          whatIsThis: 'Complete conceptual and code walkthrough of dynamic linked data structures.',
-          whyUseIt: 'Start here! Crucial for 2nd-year CSE students preparing for data structure lab exams and coding interviews.',
+          whatIsThis:
+              'Complete conceptual and code walkthrough of dynamic linked data structures.',
+          whyUseIt:
+              'Start here! Crucial for 2nd-year CSE students preparing for data structure lab exams and coding interviews.',
           estimatedStudyTime: '35 mins',
           isOfficial: true,
           language: 'English',
           ordering: 1,
           availabilityStatus: 'available',
           copyrightTier: 'open_licensed',
-          tags: ['Data Structures', 'Start Here', 'Linked Lists', 'Pointers', 'Lab Manual'],
+          tags: [
+            'Data Structures',
+            'Start Here',
+            'Linked Lists',
+            'Pointers',
+            'Lab Manual'
+          ],
         ),
         // 5. Operating Systems (CSSE2104) - Galvin Textbook Reference
         ResourceModel(
           id: 'pdf_os_textbook_galvin',
           title: 'Operating System Concepts (Silberschatz & Galvin)',
-          description: 'Standard reference textbook covering process management, CPU scheduling, deadlocks, and virtual memory.',
+          description:
+              'Standard reference textbook covering process management, CPU scheduling, deadlocks, and virtual memory.',
           subjectId: 'subj_2_1_4',
           subjectName: 'Operating Systems',
           yearId: 'year_2',
@@ -162,7 +187,8 @@ class AcademicResourceCatalog {
           sourceProvider: 'Wiley Global Higher Education',
           isFeatured: true,
           whatIsThis: 'Gold-standard Operating Systems reference textbook.',
-          whyUseIt: 'Provides deep theoretical foundations for OS core algorithms and system design interviews.',
+          whyUseIt:
+              'Provides deep theoretical foundations for OS core algorithms and system design interviews.',
           estimatedStudyTime: '60 mins',
           isOfficial: true,
           language: 'English',
@@ -175,7 +201,8 @@ class AcademicResourceCatalog {
         ResourceModel(
           id: 'pdf_os_official_docs_kernel',
           title: 'Official Linux Kernel Scheduler Documentation',
-          description: 'Official Linux kernel documentation for process memory mapping and Completely Fair Scheduler (CFS).',
+          description:
+              'Official Linux kernel documentation for process memory mapping and Completely Fair Scheduler (CFS).',
           subjectId: 'subj_2_1_4',
           subjectName: 'Operating Systems',
           yearId: 'year_2',
@@ -185,7 +212,8 @@ class AcademicResourceCatalog {
           chapterId: 'unit_3',
           sectionId: 'kernel_scheduler',
           storagePath: '',
-          storageUrl: 'https://www.kernel.org/doc/html/latest/scheduler/sched-design-CFS.html',
+          storageUrl:
+              'https://www.kernel.org/doc/html/latest/scheduler/sched-design-CFS.html',
           fileSizeBytes: 0,
           pageCount: 0,
           lastUpdated: DateTime(2026, 1, 30),
@@ -195,8 +223,10 @@ class AcademicResourceCatalog {
           isOfficial: true,
           copyrightTier: 'external_copyrighted',
           isDownloadable: false,
-          whatIsThis: 'Official reference documentation maintained by kernel core developers.',
-          whyUseIt: 'Deep-dive reference for understanding real-world operating system schedulers.',
+          whatIsThis:
+              'Official reference documentation maintained by kernel core developers.',
+          whyUseIt:
+              'Deep-dive reference for understanding real-world operating system schedulers.',
           estimatedStudyTime: '25 mins',
           language: 'English',
           ordering: 2,
@@ -211,7 +241,8 @@ class AcademicResourceCatalog {
         ResourceModel(
           id: 'pdf_cn_lab_manual',
           title: 'Computer Networks Socket Programming Lab Manual',
-          description: 'Step-by-step experiment guide for Wireshark packet capture, TCP 3-way handshake, and C socket programming.',
+          description:
+              'Step-by-step experiment guide for Wireshark packet capture, TCP 3-way handshake, and C socket programming.',
           subjectId: 'subj_3_1_1',
           subjectName: 'Data Communication & Computer Networks',
           yearId: 'year_3',
@@ -229,8 +260,10 @@ class AcademicResourceCatalog {
           version: '1.0',
           sourceProvider: 'CSSED Department Labs',
           isFeatured: true,
-          whatIsThis: 'Hands-on practical guide for network protocol experiments.',
-          whyUseIt: 'Required for completing semester lab assignments and viva voce examination.',
+          whatIsThis:
+              'Hands-on practical guide for network protocol experiments.',
+          whyUseIt:
+              'Required for completing semester lab assignments and viva voce examination.',
           estimatedStudyTime: '30 mins',
           isOfficial: true,
           language: 'English',
@@ -243,18 +276,24 @@ class AcademicResourceCatalog {
 
   /// Get Resources for a specific Subject ID
   static List<ResourceModel> getResourcesForSubject(String subjectId) {
-    return allAcademicResources.where((res) => res.subjectId == subjectId).toList();
+    return allAcademicResources
+        .where((res) => res.subjectId == subjectId)
+        .toList();
   }
 
   /// Get Featured "Start Here / Recommended" Resource for a Subject
   static ResourceModel? getRecommendedResource(String subjectId) {
     try {
       return allAcademicResources.firstWhere(
-        (res) => res.subjectId == subjectId && res.isFeatured && res.availabilityStatus == 'available',
+        (res) =>
+            res.subjectId == subjectId &&
+            res.isFeatured &&
+            res.availabilityStatus == 'available',
       );
     } catch (_) {
       try {
-        return allAcademicResources.firstWhere((res) => res.subjectId == subjectId);
+        return allAcademicResources
+            .firstWhere((res) => res.subjectId == subjectId);
       } catch (_) {
         return null;
       }

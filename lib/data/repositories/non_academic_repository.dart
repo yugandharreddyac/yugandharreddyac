@@ -20,13 +20,15 @@ class NonAcademicRepository {
     }
   }
 
-  HierarchicalTopicModel? getTopicById(String hubId, String categoryId, String topicId) {
+  HierarchicalTopicModel? getTopicById(
+      String hubId, String categoryId, String topicId) {
     final cat = getCategoryById(hubId, categoryId);
     if (cat == null) return null;
     return _findTopicInList(cat.topics, topicId);
   }
 
-  HierarchicalTopicModel? _findTopicInList(List<HierarchicalTopicModel> topics, String topicId) {
+  HierarchicalTopicModel? _findTopicInList(
+      List<HierarchicalTopicModel> topics, String topicId) {
     for (final topic in topics) {
       if (topic.id == topicId) return topic;
       if (topic.hasSubtopics) {

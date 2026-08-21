@@ -34,8 +34,10 @@ class CodingProvider extends ChangeNotifier {
 
   List<CodingResourceModel> get filteredResources {
     return _resources.where((item) {
-      final matchesPlatform = _selectedPlatform == 'All' || item.platform == _selectedPlatform;
-      final matchesDifficulty = _selectedDifficulty == 'All' || item.difficulty == _selectedDifficulty;
+      final matchesPlatform =
+          _selectedPlatform == 'All' || item.platform == _selectedPlatform;
+      final matchesDifficulty = _selectedDifficulty == 'All' ||
+          item.difficulty == _selectedDifficulty;
       return matchesPlatform && matchesDifficulty;
     }).toList();
   }
@@ -71,7 +73,8 @@ class CodingProvider extends ChangeNotifier {
   void toggleFavorite(String resourceId) {
     final index = _resources.indexWhere((r) => r.id == resourceId);
     if (index != -1) {
-      final updated = _resources[index].copyWith(isFavorite: !_resources[index].isFavorite);
+      final updated =
+          _resources[index].copyWith(isFavorite: !_resources[index].isFavorite);
       _resources[index] = updated;
       notifyListeners();
     }

@@ -29,7 +29,8 @@ void main() {
 
       final listAfter = await repo.listConversations();
       expect(listAfter.length, equals(2));
-      expect(listAfter.first.id, equals(conv2.id)); // Most recently updated is first
+      expect(listAfter.first.id,
+          equals(conv2.id)); // Most recently updated is first
     });
 
     test('Save and load messages inside conversation', () async {
@@ -57,8 +58,10 @@ void main() {
       final loaded = await repo.loadConversation(conv.id);
       expect(loaded, isNotNull);
       expect(loaded!.messages.length, equals(2));
-      expect(loaded.messages[0].content, equals('How to reverse a linked list?'));
-      expect(loaded.messages[1].content, equals('Use three pointers: prev, current, next.'));
+      expect(
+          loaded.messages[0].content, equals('How to reverse a linked list?'));
+      expect(loaded.messages[1].content,
+          equals('Use three pointers: prev, current, next.'));
     });
 
     test('Update title and delete conversation', () async {

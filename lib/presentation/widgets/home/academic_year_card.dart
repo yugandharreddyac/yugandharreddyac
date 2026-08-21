@@ -32,7 +32,8 @@ class AcademicYearCard extends StatefulWidget {
 class _AcademicYearCardState extends State<AcademicYearCard> {
   bool _isHovered = false;
 
-  ({String emoji, IconData icon, String semText, Color accentColor}) _getYearMetadata(String title, String yearId) {
+  ({String emoji, IconData icon, String semText, Color accentColor})
+      _getYearMetadata(String title, String yearId) {
     if (title.contains('1st') || yearId == 'year_1') {
       return (
         emoji: '🌱',
@@ -91,8 +92,10 @@ class _AcademicYearCardState extends State<AcademicYearCard> {
     final isDark = theme.brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
     final borderCol = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textCol = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final subtitleCol = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textCol =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final subtitleCol =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
     final activeAccent = widget.primaryColor ?? meta.accentColor;
 
     return MouseRegion(
@@ -104,7 +107,9 @@ class _AcademicYearCardState extends State<AcademicYearCard> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           curve: Curves.easeOutCubic,
-          transform: _isHovered ? (Matrix4.identity()..translate(0, -3)) : Matrix4.identity(),
+          transform: _isHovered
+              ? (Matrix4.identity()..translate(0, -3))
+              : Matrix4.identity(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
             color: cardBg,
@@ -187,11 +192,13 @@ class _AcademicYearCardState extends State<AcademicYearCard> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
                               color: activeAccent.withAlpha(isDark ? 30 : 15),
                               borderRadius: BorderRadius.circular(6),
-                              border: Border.all(color: activeAccent.withAlpha(40)),
+                              border:
+                                  Border.all(color: activeAccent.withAlpha(40)),
                             ),
                             child: Text(
                               meta.semText,
@@ -225,7 +232,9 @@ class _AcademicYearCardState extends State<AcademicYearCard> {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: _isHovered ? activeAccent.withAlpha(20) : Colors.transparent,
+                  color: _isHovered
+                      ? activeAccent.withAlpha(20)
+                      : Colors.transparent,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(

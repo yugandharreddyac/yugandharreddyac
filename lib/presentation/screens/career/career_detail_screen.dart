@@ -67,8 +67,10 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
 
     return DefaultTabController(
       length: 5,
@@ -128,7 +130,8 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                         ),
                         const SizedBox(height: 4),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(8),
@@ -165,8 +168,10 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                 ),
                 labelColor: Colors.white,
                 unselectedLabelColor: textSecondary,
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5),
-                unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12.5),
+                labelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 12.5),
+                unselectedLabelStyle: const TextStyle(
+                    fontWeight: FontWeight.w500, fontSize: 12.5),
                 tabs: const [
                   Tab(text: '📌 Overview'),
                   Tab(text: '🗺️ Roadmap'),
@@ -181,11 +186,16 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildOverviewTab(context, career, isDark, textPrimary, textSecondary),
-                  _buildRoadmapTab(context, career, isDark, textPrimary, textSecondary),
-                  _buildSkillMatrixTab(context, career, isDark, textPrimary, textSecondary),
-                  _buildProjectsTab(context, career, isDark, textPrimary, textSecondary),
-                  _buildInterviewPrepTab(context, career, isDark, textPrimary, textSecondary),
+                  _buildOverviewTab(
+                      context, career, isDark, textPrimary, textSecondary),
+                  _buildRoadmapTab(
+                      context, career, isDark, textPrimary, textSecondary),
+                  _buildSkillMatrixTab(
+                      context, career, isDark, textPrimary, textSecondary),
+                  _buildProjectsTab(
+                      context, career, isDark, textPrimary, textSecondary),
+                  _buildInterviewPrepTab(
+                      context, career, isDark, textPrimary, textSecondary),
                 ],
               ),
             ),
@@ -196,11 +206,13 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
   }
 
   // TAB 1: OVERVIEW & SCOPE
-  Widget _buildOverviewTab(BuildContext context, CareerModel career, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildOverviewTab(BuildContext context, CareerModel career,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Overview & Role Definition', Icons.info_outline_rounded),
+        _buildSectionHeader(
+            'Overview & Role Definition', Icons.info_outline_rounded),
         const SizedBox(height: 8),
         _buildCard(
           context,
@@ -214,20 +226,24 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
               const SizedBox(height: 14),
               const Text(
                 'Why Pursue This Master Career Path?',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 14),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                    fontSize: 14),
               ),
               const SizedBox(height: 6),
               Text(
                 career.whyLearn,
-                style: TextStyle(color: textSecondary, fontSize: 13, height: 1.4),
+                style:
+                    TextStyle(color: textSecondary, fontSize: 13, height: 1.4),
               ),
             ],
           ),
         ),
-
         if (career.entryLevelResponsibilities.isNotEmpty) ...[
           const SizedBox(height: 20),
-          _buildSectionHeader('Day-to-Day Entry Level Responsibilities', Icons.work_history_rounded),
+          _buildSectionHeader('Day-to-Day Entry Level Responsibilities',
+              Icons.work_history_rounded),
           const SizedBox(height: 8),
           _buildCard(
             context,
@@ -238,9 +254,15 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.arrow_right_rounded, color: AppColors.primary, size: 20),
+                      const Icon(Icons.arrow_right_rounded,
+                          color: AppColors.primary, size: 20),
                       const SizedBox(width: 4),
-                      Expanded(child: Text(resp, style: TextStyle(color: textPrimary, fontSize: 12.5, height: 1.35))),
+                      Expanded(
+                          child: Text(resp,
+                              style: TextStyle(
+                                  color: textPrimary,
+                                  fontSize: 12.5,
+                                  height: 1.35))),
                     ],
                   ),
                 );
@@ -248,9 +270,9 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
             ),
           ),
         ],
-
         const SizedBox(height: 20),
-        _buildSectionHeader('Target Industry Roles', Icons.work_outline_rounded),
+        _buildSectionHeader(
+            'Target Industry Roles', Icons.work_outline_rounded),
         const SizedBox(height: 8),
         _buildCard(
           context,
@@ -266,21 +288,28 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                 ),
                 title: Text(
                   role,
-                  style: TextStyle(fontWeight: FontWeight.w600, color: textPrimary, fontSize: 13),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: textPrimary,
+                      fontSize: 13),
                 ),
               );
             }).toList(),
           ),
         ),
-
         const SizedBox(height: 20),
-        _buildSectionHeader('Future Industry Outlook', Icons.trending_up_rounded),
+        _buildSectionHeader(
+            'Future Industry Outlook', Icons.trending_up_rounded),
         const SizedBox(height: 8),
         _buildCard(
           context,
           child: Text(
             career.futureScope,
-            style: TextStyle(color: textSecondary, fontSize: 13, height: 1.4, fontStyle: FontStyle.italic),
+            style: TextStyle(
+                color: textSecondary,
+                fontSize: 13,
+                height: 1.4,
+                fontStyle: FontStyle.italic),
           ),
         ),
       ],
@@ -288,35 +317,54 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
   }
 
   // TAB 2: STEP-BY-STEP ROADMAP (Interactive Stepper Node Tree)
-  Widget _buildRoadmapTab(BuildContext context, CareerModel career, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildRoadmapTab(BuildContext context, CareerModel career, bool isDark,
+      Color textPrimary, Color textSecondary) {
     if (career.learningPhases.isNotEmpty) {
       return ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildSectionHeader('Structured 8-Phase Learning Path', Icons.map_rounded),
+          _buildSectionHeader(
+              'Structured 8-Phase Learning Path', Icons.map_rounded),
           const SizedBox(height: 4),
-          Text('Follow these structured phases from fundamentals to industry deployment.', style: TextStyle(color: textSecondary, fontSize: 12)),
+          Text(
+              'Follow these structured phases from fundamentals to industry deployment.',
+              style: TextStyle(color: textSecondary, fontSize: 12)),
           const SizedBox(height: 16),
-
           ...career.learningPhases.map((phase) {
             return Container(
               margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(
                 color: isDark ? AppColors.cardDark : Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                border: Border.all(
+                    color: isDark
+                        ? AppColors.borderDark
+                        : const Color(0xFFE2E8F0)),
               ),
               child: ExpansionTile(
                 initiallyExpanded: phase.phaseNumber <= 2,
                 leading: CircleAvatar(
                   radius: 14,
                   backgroundColor: AppColors.primary,
-                  child: Text('${phase.phaseNumber}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                  child: Text('${phase.phaseNumber}',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12)),
                 ),
-                title: Text(phase.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
-                subtitle: Text(phase.subtitle, style: TextStyle(fontSize: 11.5, color: textSecondary)),
+                title: Text(phase.title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: textPrimary)),
+                subtitle: Text(phase.subtitle,
+                    style: TextStyle(fontSize: 11.5, color: textSecondary)),
                 trailing: Chip(
-                  label: Text(phase.estimatedDuration, style: const TextStyle(fontSize: 10, color: AppColors.primary, fontWeight: FontWeight.bold)),
+                  label: Text(phase.estimatedDuration,
+                      style: const TextStyle(
+                          fontSize: 10,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold)),
                   backgroundColor: AppColors.primary.withAlpha(20),
                 ),
                 children: [
@@ -325,21 +373,39 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(phase.description, style: TextStyle(fontSize: 12.5, color: textPrimary, height: 1.4)),
+                        Text(phase.description,
+                            style: TextStyle(
+                                fontSize: 12.5,
+                                color: textPrimary,
+                                height: 1.4)),
                         const SizedBox(height: 10),
-                        const Text('Key Learning Topics:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.primary)),
+                        const Text('Key Learning Topics:',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: AppColors.primary)),
                         const SizedBox(height: 4),
                         ...phase.topics.map((t) => Padding(
                               padding: const EdgeInsets.only(bottom: 4),
-                              child: Text('• $t', style: TextStyle(fontSize: 12, color: textSecondary)),
+                              child: Text('• $t',
+                                  style: TextStyle(
+                                      fontSize: 12, color: textSecondary)),
                             )),
                         if (phase.milestones.isNotEmpty) ...[
                           const SizedBox(height: 10),
-                          const Text('Phase Milestones:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Color(0xFF10B981))),
+                          const Text('Phase Milestones:',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                  color: Color(0xFF10B981))),
                           const SizedBox(height: 4),
                           ...phase.milestones.map((m) => Padding(
                                 padding: const EdgeInsets.only(bottom: 4),
-                                child: Text('✓ $m', style: TextStyle(fontSize: 12, color: textPrimary, fontWeight: FontWeight.w600)),
+                                child: Text('✓ $m',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: textPrimary,
+                                        fontWeight: FontWeight.w600)),
                               )),
                         ],
                       ],
@@ -378,7 +444,10 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                     backgroundColor: AppColors.primary,
                     child: Text(
                       '$idx',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
                     ),
                   ),
                   if (!isLast)
@@ -397,11 +466,18 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : Colors.white,
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                    border: Border.all(
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE2E8F0)),
                   ),
                   child: Text(
                     stepText,
-                    style: TextStyle(fontWeight: FontWeight.w600, color: textPrimary, fontSize: 13, height: 1.4),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: textPrimary,
+                        fontSize: 13,
+                        height: 1.4),
                   ),
                 ),
               ),
@@ -413,15 +489,17 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
   }
 
   // TAB 3: SKILL MATRIX & CHECKLIST
-  Widget _buildSkillMatrixTab(BuildContext context, CareerModel career, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildSkillMatrixTab(BuildContext context, CareerModel career,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _buildSectionHeader('Required Skill Matrix', Icons.tune_rounded),
         const SizedBox(height: 4),
-        Text('Categorized proficiency levels and importance tags for this role.', style: TextStyle(color: textSecondary, fontSize: 12)),
+        Text(
+            'Categorized proficiency levels and importance tags for this role.',
+            style: TextStyle(color: textSecondary, fontSize: 12)),
         const SizedBox(height: 14),
-
         if (career.skillMatrix.isNotEmpty) ...[
           ...career.skillMatrix.map((sk) {
             return Container(
@@ -430,22 +508,39 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
               decoration: BoxDecoration(
                 color: isDark ? AppColors.cardDark : Colors.white,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                border: Border.all(
+                    color: isDark
+                        ? AppColors.borderDark
+                        : const Color(0xFFE2E8F0)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text(sk.skillName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5, color: textPrimary))),
-                      Chip(label: Text(sk.level, style: const TextStyle(fontSize: 10, color: AppColors.primary)), backgroundColor: AppColors.primary.withAlpha(20)),
+                      Expanded(
+                          child: Text(sk.skillName,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13.5,
+                                  color: textPrimary))),
+                      Chip(
+                          label: Text(sk.level,
+                              style: const TextStyle(
+                                  fontSize: 10, color: AppColors.primary)),
+                          backgroundColor: AppColors.primary.withAlpha(20)),
                       const SizedBox(width: 6),
-                      Chip(label: Text(sk.importance, style: const TextStyle(fontSize: 10, color: Colors.orange)), backgroundColor: Colors.orange.withAlpha(20)),
+                      Chip(
+                          label: Text(sk.importance,
+                              style: const TextStyle(
+                                  fontSize: 10, color: Colors.orange)),
+                          backgroundColor: Colors.orange.withAlpha(20)),
                     ],
                   ),
                   if (sk.description.isNotEmpty) ...[
                     const SizedBox(height: 4),
-                    Text(sk.description, style: TextStyle(fontSize: 11.5, color: textSecondary)),
+                    Text(sk.description,
+                        style: TextStyle(fontSize: 11.5, color: textSecondary)),
                   ],
                 ],
               ),
@@ -457,9 +552,12 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
             runSpacing: 8,
             children: career.requiredSkills.map((skill) {
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.primary.withOpacity(0.18) : AppColors.primary.withOpacity(0.1),
+                  color: isDark
+                      ? AppColors.primary.withOpacity(0.18)
+                      : AppColors.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: AppColors.primary.withOpacity(0.3)),
                 ),
@@ -475,19 +573,23 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
             }).toList(),
           ),
         ],
-
         const SizedBox(height: 20),
-        _buildSectionHeader('Interactive Progress Checklist', Icons.task_alt_rounded),
+        _buildSectionHeader(
+            'Interactive Progress Checklist', Icons.task_alt_rounded),
         const SizedBox(height: 6),
-        Text('Check off skills as you learn and practice them.', style: TextStyle(color: textSecondary, fontSize: 12)),
+        Text('Check off skills as you learn and practice them.',
+            style: TextStyle(color: textSecondary, fontSize: 12)),
         const SizedBox(height: 10),
-
         ...career.requiredSkills.map((skill) {
           final isChecked = _userChecklist[skill] ?? false;
           return CheckboxListTile(
             value: isChecked,
             dense: true,
-            title: Text(skill, style: TextStyle(fontSize: 12.5, color: textPrimary, decoration: isChecked ? TextDecoration.lineThrough : null)),
+            title: Text(skill,
+                style: TextStyle(
+                    fontSize: 12.5,
+                    color: textPrimary,
+                    decoration: isChecked ? TextDecoration.lineThrough : null)),
             activeColor: AppColors.primary,
             onChanged: (val) {
               setState(() {
@@ -501,12 +603,14 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
   }
 
   // TAB 4: PROJECTS & PORTFOLIO
-  Widget _buildProjectsTab(BuildContext context, CareerModel career, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildProjectsTab(BuildContext context, CareerModel career,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         if (career.portfolioRequirements.isNotEmpty) ...[
-          _buildSectionHeader('Portfolio & GitHub Guidelines', Icons.badge_rounded),
+          _buildSectionHeader(
+              'Portfolio & GitHub Guidelines', Icons.badge_rounded),
           const SizedBox(height: 8),
           _buildCard(
             context,
@@ -518,9 +622,15 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+                      const Icon(Icons.star_rounded,
+                          color: Colors.amber, size: 16),
                       const SizedBox(width: 6),
-                      Expanded(child: Text(p, style: TextStyle(color: textPrimary, fontSize: 12.5, height: 1.35))),
+                      Expanded(
+                          child: Text(p,
+                              style: TextStyle(
+                                  color: textPrimary,
+                                  fontSize: 12.5,
+                                  height: 1.35))),
                     ],
                   ),
                 );
@@ -529,32 +639,44 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
           ),
           const SizedBox(height: 20),
         ],
-
-        _buildSectionHeader('Hands-On Portfolio Projects', Icons.folder_special_rounded),
+        _buildSectionHeader(
+            'Hands-On Portfolio Projects', Icons.folder_special_rounded),
         const SizedBox(height: 6),
-        Text('Build real-world applications to demonstrate industry engineering capability.', style: TextStyle(color: textSecondary, fontSize: 12)),
+        Text(
+            'Build real-world applications to demonstrate industry engineering capability.',
+            style: TextStyle(color: textSecondary, fontSize: 12)),
         const SizedBox(height: 14),
-
-        ...career.miniProjects.map((p) => _buildProjectTile(context, p, isAdvanced: false, isDark: isDark, textPrimary: textPrimary, textSecondary: textSecondary)),
-        ...career.advancedProjects.map((p) => _buildProjectTile(context, p, isAdvanced: true, isDark: isDark, textPrimary: textPrimary, textSecondary: textSecondary)),
-
+        ...career.miniProjects.map((p) => _buildProjectTile(context, p,
+            isAdvanced: false,
+            isDark: isDark,
+            textPrimary: textPrimary,
+            textSecondary: textSecondary)),
+        ...career.advancedProjects.map((p) => _buildProjectTile(context, p,
+            isAdvanced: true,
+            isDark: isDark,
+            textPrimary: textPrimary,
+            textSecondary: textSecondary)),
         if (career.githubRepos.isNotEmpty) ...[
           const SizedBox(height: 20),
-          _buildSectionHeader('Official Reference Repositories', Icons.code_rounded),
+          _buildSectionHeader(
+              'Official Reference Repositories', Icons.code_rounded),
           const SizedBox(height: 10),
-          ...career.githubRepos.map((repo) => _buildResourceTile(context, repo, isDark, textPrimary, textSecondary)),
+          ...career.githubRepos.map((repo) => _buildResourceTile(
+              context, repo, isDark, textPrimary, textSecondary)),
         ],
       ],
     );
   }
 
   // TAB 5: INTERVIEW PREPARATION & VERIFIED LINKS
-  Widget _buildInterviewPrepTab(BuildContext context, CareerModel career, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildInterviewPrepTab(BuildContext context, CareerModel career,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         if (career.interviewPrepTopics.isNotEmpty) ...[
-          _buildSectionHeader('Key Technical Interview Topics', Icons.psychology_rounded),
+          _buildSectionHeader(
+              'Key Technical Interview Topics', Icons.psychology_rounded),
           const SizedBox(height: 8),
           _buildCard(
             context,
@@ -563,24 +685,34 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                 return ListTile(
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.help_outline_rounded, color: AppColors.primary, size: 18),
-                  title: Text(top, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5, color: textPrimary)),
+                  leading: const Icon(Icons.help_outline_rounded,
+                      color: AppColors.primary, size: 18),
+                  title: Text(top,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.5,
+                          color: textPrimary)),
                 );
               }).toList(),
             ),
           ),
           const SizedBox(height: 20),
         ],
-
-        _buildSectionHeader('Verified Learning Resources', Icons.verified_rounded),
+        _buildSectionHeader(
+            'Verified Learning Resources', Icons.verified_rounded),
         const SizedBox(height: 6),
-        Text('Hand-curated documentation, roadmap.sh paths, YouTube playlists, & books.', style: TextStyle(color: textSecondary, fontSize: 12)),
+        Text(
+            'Hand-curated documentation, roadmap.sh paths, YouTube playlists, & books.',
+            style: TextStyle(color: textSecondary, fontSize: 12)),
         const SizedBox(height: 12),
-
-        ...career.bestFreeResources.map((link) => _buildResourceTile(context, link, isDark, textPrimary, textSecondary)),
-        ...career.youtubePlaylists.map((link) => _buildResourceTile(context, link, isDark, textPrimary, textSecondary)),
-        ...career.books.map((link) => _buildResourceTile(context, link, isDark, textPrimary, textSecondary)),
-        ...career.certifications.map((link) => _buildResourceTile(context, link, isDark, textPrimary, textSecondary)),
+        ...career.bestFreeResources.map((link) => _buildResourceTile(
+            context, link, isDark, textPrimary, textSecondary)),
+        ...career.youtubePlaylists.map((link) => _buildResourceTile(
+            context, link, isDark, textPrimary, textSecondary)),
+        ...career.books.map((link) => _buildResourceTile(
+            context, link, isDark, textPrimary, textSecondary)),
+        ...career.certifications.map((link) => _buildResourceTile(
+            context, link, isDark, textPrimary, textSecondary)),
       ],
     );
   }
@@ -615,7 +747,11 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
     );
   }
 
-  Widget _buildProjectTile(BuildContext context, CareerProjectInfo project, {required bool isAdvanced, required bool isDark, required Color textPrimary, required Color textSecondary}) {
+  Widget _buildProjectTile(BuildContext context, CareerProjectInfo project,
+      {required bool isAdvanced,
+      required bool isDark,
+      required Color textPrimary,
+      required Color textSecondary}) {
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
 
@@ -633,7 +769,9 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: isAdvanced ? Colors.orange.withOpacity(0.15) : AppColors.primary.withOpacity(0.15),
+              color: isAdvanced
+                  ? Colors.orange.withOpacity(0.15)
+                  : AppColors.primary.withOpacity(0.15),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -652,13 +790,19 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                     Expanded(
                       child: Text(
                         project.title,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5, color: textPrimary),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13.5,
+                            color: textPrimary),
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: isAdvanced ? Colors.orange.withOpacity(0.2) : AppColors.primary.withOpacity(0.2),
+                        color: isAdvanced
+                            ? Colors.orange.withOpacity(0.2)
+                            : AppColors.primary.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -675,7 +819,8 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                 const SizedBox(height: 6),
                 Text(
                   project.description,
-                  style: TextStyle(fontSize: 12, color: textSecondary, height: 1.35),
+                  style: TextStyle(
+                      fontSize: 12, color: textSecondary, height: 1.35),
                 ),
                 if (project.url.isNotEmpty) ...[
                   const SizedBox(height: 8),
@@ -684,9 +829,14 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('View Project Reference', style: TextStyle(color: AppColors.primary, fontSize: 11.5, fontWeight: FontWeight.bold)),
+                        Text('View Project Reference',
+                            style: TextStyle(
+                                color: AppColors.primary,
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.bold)),
                         SizedBox(width: 4),
-                        Icon(Icons.open_in_new_rounded, color: AppColors.primary, size: 12),
+                        Icon(Icons.open_in_new_rounded,
+                            color: AppColors.primary, size: 12),
                       ],
                     ),
                   ),
@@ -699,7 +849,8 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
     );
   }
 
-  Widget _buildResourceTile(BuildContext context, CareerResourceLink link, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildResourceTile(BuildContext context, CareerResourceLink link,
+      bool isDark, Color textPrimary, Color textSecondary) {
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
 
@@ -718,11 +869,18 @@ class _CareerDetailScreenState extends State<CareerDetailScreen> {
             color: AppColors.primary.withOpacity(0.12),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.open_in_new_rounded, color: AppColors.primary, size: 16),
+          child: const Icon(Icons.open_in_new_rounded,
+              color: AppColors.primary, size: 16),
         ),
-        title: Text(link.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, color: textPrimary)),
-        subtitle: Text('${link.platform} • ${link.type}', style: TextStyle(fontSize: 11, color: textSecondary)),
-        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.grey),
+        title: Text(link.title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12.5,
+                color: textPrimary)),
+        subtitle: Text('${link.platform} • ${link.type}',
+            style: TextStyle(fontSize: 11, color: textSecondary)),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded,
+            size: 12, color: Colors.grey),
         onTap: () => _launchUrl(link.url),
       ),
     );

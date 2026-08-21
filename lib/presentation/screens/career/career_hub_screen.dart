@@ -68,8 +68,10 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
     const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
@@ -94,7 +96,6 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
           // Value Proposition Banner
           Container(
             margin: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: isDark ? AppColors.surfaceDark : Colors.white,
               borderRadius: BorderRadius.circular(16),
@@ -107,40 +108,57 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                 ),
               ],
             ),
-            child: Row(
+            clipBehavior: Clip.hardEdge,
+            child: Stack(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: orangeAccent.withAlpha(20),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.verified_rounded,
-                    color: orangeAccent,
-                    size: 28,
+                Positioned(
+                  right: -20,
+                  bottom: -20,
+                  child: Icon(
+                    Icons.work_outline_rounded,
+                    size: 140,
+                    color: orangeAccent.withAlpha(isDark ? 15 : 10),
                   ),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
                     children: [
-                      Text(
-                        'Why CSSE Hub vs 10,000+ Web Books?',
-                        style: GoogleFonts.inter(
-                          color: textPrimary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: orangeAccent.withAlpha(20),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.verified_rounded,
+                          color: orangeAccent,
+                          size: 28,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Zero fluff. Structured step-by-step master paths with direct links to GeeksforGeeks, W3Schools, roadmap.sh, & official docs.',
-                        style: GoogleFonts.inter(
-                          color: textSubtitle,
-                          fontSize: 12,
-                          height: 1.3,
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Why CSSE Hub vs 10,000+ Web Books?',
+                              style: GoogleFonts.inter(
+                                color: textPrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Zero fluff. Structured step-by-step master paths with direct links to GeeksforGeeks, W3Schools, roadmap.sh, & official docs.',
+                              style: GoogleFonts.inter(
+                                color: textSubtitle,
+                                fontSize: 12,
+                                height: 1.3,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -165,7 +183,8 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                         cat,
                         style: GoogleFonts.inter(
                           color: isSelected ? Colors.white : textPrimary,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
                           fontSize: 13,
                         ),
                       ),
@@ -174,7 +193,8 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
+                        side: BorderSide(
+                            color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (_) => provider.selectCategory(cat),
                     ),
@@ -191,15 +211,26 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                     ? Center(
                         child: Text(
                           'No technologies found for "${provider.selectedCategory}"',
-                          style: GoogleFonts.inter(color: textSubtitle, fontSize: 14),
+                          style: GoogleFonts.inter(
+                              color: textSubtitle, fontSize: 14),
                         ),
                       )
                     : ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 8),
                         itemCount: provider.filteredTechnologies.length,
                         itemBuilder: (context, index) {
                           final tech = provider.filteredTechnologies[index];
-                          return _buildTechCard(context, tech, orangeAccent, emeraldGreen, cardColor, borderColor, textPrimary, textSubtitle, isDark)
+                          return _buildTechCard(
+                                  context,
+                                  tech,
+                                  orangeAccent,
+                                  emeraldGreen,
+                                  cardColor,
+                                  borderColor,
+                                  textPrimary,
+                                  textSubtitle,
+                                  isDark)
                               .animate()
                               .fadeIn(delay: (30 * index).ms)
                               .slideY(begin: 0.05, end: 0);
@@ -281,7 +312,8 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: emeraldGreen.withAlpha(15),
                             borderRadius: BorderRadius.circular(6),
@@ -311,7 +343,8 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
                             color: orangeAccent.withAlpha(15),
                             borderRadius: BorderRadius.circular(8),
@@ -340,7 +373,8 @@ class _CareerHubScreenState extends State<CareerHubScreen> {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+              const Icon(Icons.arrow_forward_ios_rounded,
+                  size: 14, color: Colors.grey),
             ],
           ),
         ),

@@ -14,7 +14,9 @@ void main() {
       repository = PlacementQuizRepository();
     });
 
-    test('getCategories returns 3 primary placement tracks with valid subtopics', () {
+    test(
+        'getCategories returns 3 primary placement tracks with valid subtopics',
+        () {
       final categories = repository.getCategories();
       expect(categories.length, equals(3));
       expect(categories.any((c) => c.title == 'Quantitative Aptitude'), isTrue);
@@ -27,19 +29,25 @@ void main() {
     });
 
     test('getQuestions filters by category correctly', () async {
-      final aptQuestions = await repository.getQuestions(category: 'Quantitative Aptitude');
+      final aptQuestions =
+          await repository.getQuestions(category: 'Quantitative Aptitude');
       expect(aptQuestions.isNotEmpty, isTrue);
-      expect(aptQuestions.every((q) => q.category == 'Quantitative Aptitude'), isTrue);
+      expect(aptQuestions.every((q) => q.category == 'Quantitative Aptitude'),
+          isTrue);
 
-      final techQuestions = await repository.getQuestions(category: 'Technical MCQs');
+      final techQuestions =
+          await repository.getQuestions(category: 'Technical MCQs');
       expect(techQuestions.isNotEmpty, isTrue);
-      expect(techQuestions.every((q) => q.category == 'Technical MCQs'), isTrue);
+      expect(
+          techQuestions.every((q) => q.category == 'Technical MCQs'), isTrue);
     });
 
     test('getQuestions filters by topic correctly', () async {
-      final percentageQuestions = await repository.getQuestions(topic: 'Percentages');
+      final percentageQuestions =
+          await repository.getQuestions(topic: 'Percentages');
       expect(percentageQuestions.isNotEmpty, isTrue);
-      expect(percentageQuestions.every((q) => q.topic == 'Percentages'), isTrue);
+      expect(
+          percentageQuestions.every((q) => q.topic == 'Percentages'), isTrue);
     });
 
     test('getQuestions respects limit parameter', () async {
@@ -47,7 +55,9 @@ void main() {
       expect(limited.length, equals(3));
     });
 
-    test('evaluateQuiz computes accurate scores, accuracy, and weak area recommendations', () {
+    test(
+        'evaluateQuiz computes accurate scores, accuracy, and weak area recommendations',
+        () {
       final testQuestions = [
         const QuizQuestionModel(
           id: 'q1',
@@ -134,7 +144,9 @@ void main() {
       expect(provider.markedForReview.isEmpty, isTrue);
     });
 
-    test('selectOption records answer and toggleMarkForReview modifies review set', () async {
+    test(
+        'selectOption records answer and toggleMarkForReview modifies review set',
+        () async {
       await provider.startQuiz(
         category: 'Technical MCQs',
         mode: QuizMode.practice,
@@ -167,7 +179,8 @@ void main() {
       expect(provider.currentQuestionIndex, equals(3));
     });
 
-    test('submitQuiz generates valid QuizResultModel and resets timer', () async {
+    test('submitQuiz generates valid QuizResultModel and resets timer',
+        () async {
       await provider.startQuiz(
         category: 'Technical MCQs',
         mode: QuizMode.mockTest,

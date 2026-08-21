@@ -9,13 +9,16 @@ void main() {
   group('Phase 8 - Academic PDF & Document System Tests', () {
     final catalog = PdfRepository.sampleAcademicPdfCatalog;
 
-    test('Verify sample academic PDF catalog contains high quality remote HTTPS resources', () {
+    test(
+        'Verify sample academic PDF catalog contains high quality remote HTTPS resources',
+        () {
       expect(catalog, isNotEmpty);
       expect(catalog.length, greaterThanOrEqualTo(5));
 
       for (final doc in catalog) {
         expect(doc.storageUrl.startsWith('https://'), isTrue,
-            reason: 'PDF resource ${doc.id} must use valid remote HTTPS scheme');
+            reason:
+                'PDF resource ${doc.id} must use valid remote HTTPS scheme');
         expect(doc.subjectId, isNotEmpty,
             reason: 'PDF resource ${doc.id} must map to a valid subjectId');
         expect(doc.yearId, isNotEmpty);
@@ -44,37 +47,49 @@ void main() {
       expect(doc.isComingSoon, isFalse);
     });
 
-    test('Verify Availability Status (Coming Soon) & Copyright Safety classification', () {
-      final comingSoonDoc = catalog.firstWhere((d) => d.id == 'pdf_c_prog_unit4_coming_soon');
+    test(
+        'Verify Availability Status (Coming Soon) & Copyright Safety classification',
+        () {
+      final comingSoonDoc =
+          catalog.firstWhere((d) => d.id == 'pdf_c_prog_unit4_coming_soon');
       expect(comingSoonDoc.isComingSoon, isTrue);
       expect(comingSoonDoc.availabilityStatus, equals('coming_soon'));
 
-      final copyrightDoc = catalog.firstWhere((d) => d.id == 'pdf_os_official_docs_kernel');
+      final copyrightDoc =
+          catalog.firstWhere((d) => d.id == 'pdf_os_official_docs_kernel');
       expect(copyrightDoc.isExternalCopyrighted, isTrue);
       expect(copyrightDoc.copyrightTier, equals('external_copyrighted'));
       expect(copyrightDoc.isDownloadable, isFalse);
     });
 
-    test('Verify Protected Academic Hierarchy (Years 1-4, Semesters 1-8, Subjects)', () {
+    test(
+        'Verify Protected Academic Hierarchy (Years 1-4, Semesters 1-8, Subjects)',
+        () {
       expect(MockData.years.length, equals(4));
       expect(MockData.semesters.length, equals(8));
       expect(MockData.subjects.length, greaterThanOrEqualTo(30));
 
-      final cProgSubj = MockData.subjects.firstWhere((s) => s.id == 'subj_1_1_4');
+      final cProgSubj =
+          MockData.subjects.firstWhere((s) => s.id == 'subj_1_1_4');
       expect(cProgSubj.name, contains('C'));
       expect(cProgSubj.semesterId, equals('sem_1_1'));
       expect(cProgSubj.yearId, equals('year_1'));
     });
 
-    test('Verify PdfRepository URL validation returns zero scheme errors and zero duplicates', () {
+    test(
+        'Verify PdfRepository URL validation returns zero scheme errors and zero duplicates',
+        () {
       final pdfRepo = PdfRepository();
       final validationErrors = pdfRepo.validateDocumentUrls(catalog);
 
       expect(validationErrors, isEmpty,
-          reason: 'All academic PDF resources must have valid HTTPS schemes and unique IDs');
+          reason:
+              'All academic PDF resources must have valid HTTPS schemes and unique IDs');
     });
 
-    test('Verify PdfRepository filtering by Subject, Semester, and Document Type', () {
+    test(
+        'Verify PdfRepository filtering by Subject, Semester, and Document Type',
+        () {
       final pdfRepo = PdfRepository();
 
       final cProgDocs = pdfRepo.filterDocuments(

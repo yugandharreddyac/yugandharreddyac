@@ -14,7 +14,8 @@ void main() {
       adminRepository = AdminRepository(firebaseDataSource: firebaseDataSource);
     });
 
-    test('getDashboardMetrics returns default/fallback metrics dictionary', () async {
+    test('getDashboardMetrics returns default/fallback metrics dictionary',
+        () async {
       final metrics = await adminRepository.getDashboardMetrics();
       expect(metrics.containsKey('totalSubjects'), true);
       expect(metrics.containsKey('totalResources'), true);

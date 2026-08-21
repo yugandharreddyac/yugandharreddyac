@@ -96,7 +96,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                       runSpacing: 4,
                       children: widget.message.attachments.map((att) {
                         return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(6),
@@ -104,11 +105,13 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.description_outlined, size: 14, color: Colors.white),
+                              const Icon(Icons.description_outlined,
+                                  size: 14, color: Colors.white),
                               const SizedBox(width: 4),
                               Text(
                                 att.fileName,
-                                style: GoogleFonts.inter(fontSize: 11.5, color: Colors.white),
+                                style: GoogleFonts.inter(
+                                    fontSize: 11.5, color: Colors.white),
                               ),
                             ],
                           ),
@@ -154,7 +157,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                   borderRadius: BorderRadius.circular(7),
                 ),
                 child: const Center(
-                  child: Icon(Icons.auto_awesome_rounded, size: 14, color: Colors.white),
+                  child: Icon(Icons.auto_awesome_rounded,
+                      size: 14, color: Colors.white),
                 ),
               ),
               const SizedBox(width: 8),
@@ -163,7 +167,9 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                 style: GoogleFonts.outfit(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white.withOpacity(0.9) : const Color(0xFF1E293B),
+                  color: isDark
+                      ? Colors.white.withOpacity(0.9)
+                      : const Color(0xFF1E293B),
                 ),
               ),
             ],
@@ -182,7 +188,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                 bottomRight: Radius.circular(18),
               ),
               border: Border.all(
-                color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                color:
+                    isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
                 width: 1,
               ),
               boxShadow: [
@@ -208,14 +215,17 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      const Icon(Icons.menu_book_rounded, size: 14, color: AppColors.primary),
+                      const Icon(Icons.menu_book_rounded,
+                          size: 14, color: AppColors.primary),
                       const SizedBox(width: 6),
                       Text(
                         'Verified UniDocs Curriculum Resources',
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white.withOpacity(0.8) : const Color(0xFF475569),
+                          color: isDark
+                              ? Colors.white.withOpacity(0.8)
+                              : const Color(0xFF475569),
                         ),
                       ),
                     ],
@@ -237,14 +247,20 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(Icons.description_outlined, size: 14, color: isDark ? AppColors.success : Colors.teal.shade700),
+                      Icon(Icons.description_outlined,
+                          size: 14,
+                          color: isDark
+                              ? AppColors.success
+                              : Colors.teal.shade700),
                       const SizedBox(width: 6),
                       Text(
                         'Document Citations & Page References',
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white.withOpacity(0.8) : const Color(0xFF475569),
+                          color: isDark
+                              ? Colors.white.withOpacity(0.8)
+                              : const Color(0xFF475569),
                         ),
                       ),
                     ],
@@ -253,7 +269,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                   Wrap(
                     spacing: 6,
                     runSpacing: 6,
-                    children: _extractDocumentCitations(widget.message).map((cit) {
+                    children:
+                        _extractDocumentCitations(widget.message).map((cit) {
                       return _buildCitationChip(context, cit, isDark);
                     }).toList(),
                   ),
@@ -271,7 +288,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                 tooltip: 'Copy response',
                 color: isDark ? Colors.white60 : Colors.black54,
                 onPressed: () {
-                  Clipboard.setData(ClipboardData(text: widget.message.content));
+                  Clipboard.setData(
+                      ClipboardData(text: widget.message.content));
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Response copied to clipboard!'),
@@ -290,9 +308,13 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
                 ),
               IconButton(
                 icon: Icon(
-                  _isHelpful == true ? Icons.thumb_up_rounded : Icons.thumb_up_outlined,
+                  _isHelpful == true
+                      ? Icons.thumb_up_rounded
+                      : Icons.thumb_up_outlined,
                   size: 15,
-                  color: _isHelpful == true ? AppColors.primary : (isDark ? Colors.white60 : Colors.black54),
+                  color: _isHelpful == true
+                      ? AppColors.primary
+                      : (isDark ? Colors.white60 : Colors.black54),
                 ),
                 tooltip: 'Helpful',
                 onPressed: () {
@@ -301,13 +323,18 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
               ),
               IconButton(
                 icon: Icon(
-                  _isHelpful == false ? Icons.thumb_down_rounded : Icons.thumb_down_outlined,
+                  _isHelpful == false
+                      ? Icons.thumb_down_rounded
+                      : Icons.thumb_down_outlined,
                   size: 15,
-                  color: _isHelpful == false ? Colors.redAccent : (isDark ? Colors.white60 : Colors.black54),
+                  color: _isHelpful == false
+                      ? Colors.redAccent
+                      : (isDark ? Colors.white60 : Colors.black54),
                 ),
                 tooltip: 'Not helpful',
                 onPressed: () {
-                  setState(() => _isHelpful = _isHelpful == false ? null : false);
+                  setState(
+                      () => _isHelpful = _isHelpful == false ? null : false);
                 },
               ),
             ],
@@ -320,11 +347,13 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
     );
   }
 
-  Widget _buildResourceChip(BuildContext context, AiResourceReference ref, bool isDark) {
+  Widget _buildResourceChip(
+      BuildContext context, AiResourceReference ref, bool isDark) {
     return InkWell(
       onTap: () {
         if (ref.route != null && ref.route!.isNotEmpty) {
-          Navigator.pushNamed(context, ref.route!, arguments: ref.routeArguments);
+          Navigator.pushNamed(context, ref.route!,
+              arguments: ref.routeArguments);
         } else {
           // Navigate to topic detail or hub
           Navigator.pushNamed(
@@ -351,7 +380,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.open_in_new_rounded, size: 12, color: AppColors.primary),
+            const Icon(Icons.open_in_new_rounded,
+                size: 12, color: AppColors.primary),
             const SizedBox(width: 4),
             Text(
               ref.title,
@@ -369,7 +399,9 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
 
   bool _hasDocumentCitations(AiMessage msg) {
     if (msg.metadata.containsKey('citations')) return true;
-    if (msg.attachments.any((a) => a.isPdf || a.status == AiAttachmentStatus.processed)) return true;
+    if (msg.attachments
+        .any((a) => a.isPdf || a.status == AiAttachmentStatus.processed))
+      return true;
     return false;
   }
 
@@ -393,7 +425,8 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
     return results;
   }
 
-  Widget _buildCitationChip(BuildContext context, Map<String, dynamic> cit, bool isDark) {
+  Widget _buildCitationChip(
+      BuildContext context, Map<String, dynamic> cit, bool isDark) {
     final title = cit['sourceTitle']?.toString() ?? 'Document';
     final ref = cit['sourceReference']?.toString() ?? '';
     final label = ref.isNotEmpty ? '$title • $ref' : title;
@@ -411,7 +444,9 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.picture_as_pdf_outlined, size: 12, color: isDark ? AppColors.success : Colors.teal.shade800),
+          Icon(Icons.picture_as_pdf_outlined,
+              size: 12,
+              color: isDark ? AppColors.success : Colors.teal.shade800),
           const SizedBox(width: 4),
           Text(
             label,
@@ -454,26 +489,33 @@ class _AiMessageBubbleState extends State<AiMessageBubble> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (isRoadmapAction) ...[
-                  const Icon(Icons.add_task_rounded, size: 12, color: AppColors.primary),
+                  const Icon(Icons.add_task_rounded,
+                      size: 12, color: AppColors.primary),
                   const SizedBox(width: 4),
                 ],
                 Text(
                   chipText,
                   style: GoogleFonts.inter(
                     fontSize: 11.5,
-                    fontWeight: isRoadmapAction ? FontWeight.w600 : FontWeight.w500,
+                    fontWeight:
+                        isRoadmapAction ? FontWeight.w600 : FontWeight.w500,
                     color: isRoadmapAction
                         ? AppColors.primary
-                        : (isDark ? Colors.white.withOpacity(0.85) : const Color(0xFF334155)),
+                        : (isDark
+                            ? Colors.white.withOpacity(0.85)
+                            : const Color(0xFF334155)),
                   ),
                 ),
               ],
             ),
-            backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+            backgroundColor:
+                isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
             side: BorderSide(
               color: isRoadmapAction
                   ? AppColors.primary.withOpacity(0.5)
-                  : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+                  : (isDark
+                      ? const Color(0xFF334155)
+                      : const Color(0xFFE2E8F0)),
               width: 0.8,
             ),
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),

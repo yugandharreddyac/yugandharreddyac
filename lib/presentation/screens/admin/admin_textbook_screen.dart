@@ -96,7 +96,8 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final backgroundColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
+    final backgroundColor =
+        isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
@@ -128,23 +129,33 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
                   padding: const EdgeInsets.all(16),
                   children: [
                     // 1. Selector Bar (Year -> Semester -> Subject)
-                    _buildSelectorCard(cardColor, borderColor, textPrimary, textSecondary),
+                    _buildSelectorCard(
+                        cardColor, borderColor, textPrimary, textSecondary),
 
                     const SizedBox(height: 16),
 
                     // 2. Metrics Header
-                    _buildMetricsHeader(chapters.length, totalSections, totalTopics, cardColor, borderColor, textPrimary, textSecondary),
+                    _buildMetricsHeader(
+                        chapters.length,
+                        totalSections,
+                        totalTopics,
+                        cardColor,
+                        borderColor,
+                        textPrimary,
+                        textSecondary),
 
                     const SizedBox(height: 16),
 
                     if (_selectedSubject != null) ...[
                       // 3. Course Overview Manager
-                      _buildOverviewCard(overview, cardColor, borderColor, textPrimary, textSecondary),
+                      _buildOverviewCard(overview, cardColor, borderColor,
+                          textPrimary, textSecondary),
 
                       const SizedBox(height: 16),
 
                       // 4. Chapter & Topic Tree Manager
-                      _buildChaptersCard(chapters, cardColor, borderColor, textPrimary, textSecondary),
+                      _buildChaptersCard(chapters, cardColor, borderColor,
+                          textPrimary, textSecondary),
                     ] else
                       Center(
                         child: Text(
@@ -159,7 +170,8 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  Widget _buildSelectorCard(Color cardColor, Color borderColor, Color textPrimary, Color textSecondary) {
+  Widget _buildSelectorCard(Color cardColor, Color borderColor,
+      Color textPrimary, Color textSecondary) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -174,7 +186,11 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
             children: [
               Icon(Icons.tune_rounded, color: AppColors.primary, size: 18),
               SizedBox(width: 8),
-              Text('SELECT ACADEMIC SUBJECT', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5)),
+              Text('SELECT ACADEMIC SUBJECT',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      letterSpacing: 0.5)),
             ],
           ),
           const SizedBox(height: 12),
@@ -210,8 +226,16 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
   Widget _buildYearDropdown(Color textPrimary) {
     return DropdownButtonFormField<YearModel>(
       value: _selectedYear,
-      decoration: const InputDecoration(labelText: 'Year', border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8)),
-      items: _years.map((y) => DropdownMenuItem(value: y, child: Text(y.title, style: TextStyle(color: textPrimary, fontSize: 13)))).toList(),
+      decoration: const InputDecoration(
+          labelText: 'Year',
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8)),
+      items: _years
+          .map((y) => DropdownMenuItem(
+              value: y,
+              child: Text(y.title,
+                  style: TextStyle(color: textPrimary, fontSize: 13))))
+          .toList(),
       onChanged: (val) {
         if (val != null) {
           setState(() {
@@ -227,8 +251,16 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
   Widget _buildSemesterDropdown(Color textPrimary) {
     return DropdownButtonFormField<SemesterModel>(
       value: _selectedSemester,
-      decoration: const InputDecoration(labelText: 'Semester', border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8)),
-      items: _semesters.map((s) => DropdownMenuItem(value: s, child: Text(s.title, style: TextStyle(color: textPrimary, fontSize: 13)))).toList(),
+      decoration: const InputDecoration(
+          labelText: 'Semester',
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8)),
+      items: _semesters
+          .map((s) => DropdownMenuItem(
+              value: s,
+              child: Text(s.title,
+                  style: TextStyle(color: textPrimary, fontSize: 13))))
+          .toList(),
       onChanged: (val) {
         if (val != null) {
           setState(() {
@@ -244,8 +276,17 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
   Widget _buildSubjectDropdown(Color textPrimary) {
     return DropdownButtonFormField<SubjectModel>(
       value: _selectedSubject,
-      decoration: const InputDecoration(labelText: 'Subject', border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8)),
-      items: _subjects.map((s) => DropdownMenuItem(value: s, child: Text(s.name, overflow: TextOverflow.ellipsis, style: TextStyle(color: textPrimary, fontSize: 13)))).toList(),
+      decoration: const InputDecoration(
+          labelText: 'Subject',
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8)),
+      items: _subjects
+          .map((s) => DropdownMenuItem(
+              value: s,
+              child: Text(s.name,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: textPrimary, fontSize: 13))))
+          .toList(),
       onChanged: (val) {
         if (val != null) {
           setState(() => _selectedSubject = val);
@@ -255,7 +296,14 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  Widget _buildMetricsHeader(int chaptersCount, int sectionsCount, int topicsCount, Color cardColor, Color borderColor, Color textPrimary, Color textSecondary) {
+  Widget _buildMetricsHeader(
+      int chaptersCount,
+      int sectionsCount,
+      int topicsCount,
+      Color cardColor,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -266,22 +314,28 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildMetricBadge('Chapters', '$chaptersCount', Icons.bookmark_border_rounded, AppColors.primary),
-          _buildMetricBadge('Sections', '$sectionsCount', Icons.account_tree_outlined, Colors.amber),
-          _buildMetricBadge('Topics', '$topicsCount', Icons.article_outlined, Colors.purpleAccent),
+          _buildMetricBadge('Chapters', '$chaptersCount',
+              Icons.bookmark_border_rounded, AppColors.primary),
+          _buildMetricBadge('Sections', '$sectionsCount',
+              Icons.account_tree_outlined, Colors.amber),
+          _buildMetricBadge('Topics', '$topicsCount', Icons.article_outlined,
+              Colors.purpleAccent),
         ],
       ),
     );
   }
 
-  Widget _buildMetricBadge(String label, String value, IconData icon, Color color) {
+  Widget _buildMetricBadge(
+      String label, String value, IconData icon, Color color) {
     return Column(
       children: [
         Row(
           children: [
             Icon(icon, color: color, size: 16),
             const SizedBox(width: 4),
-            Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color)),
+            Text(value,
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold, color: color)),
           ],
         ),
         const SizedBox(height: 2),
@@ -290,7 +344,8 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  Widget _buildOverviewCard(CourseOverviewModel? overview, Color cardColor, Color borderColor, Color textPrimary, Color textSecondary) {
+  Widget _buildOverviewCard(CourseOverviewModel? overview, Color cardColor,
+      Color borderColor, Color textPrimary, Color textSecondary) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -303,35 +358,56 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.description_outlined, color: AppColors.primary, size: 18),
+              const Icon(Icons.description_outlined,
+                  color: AppColors.primary, size: 18),
               const SizedBox(width: 8),
-              const Text('COURSE OVERVIEW', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5)),
+              const Text('COURSE OVERVIEW',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      letterSpacing: 0.5)),
               const Spacer(),
               ElevatedButton.icon(
                 onPressed: () => _showOverviewDialog(overview),
                 icon: const Icon(Icons.edit_rounded, size: 14),
-                label: Text(overview == null ? 'Create Overview' : 'Edit Overview', style: const TextStyle(fontSize: 12)),
+                label: Text(
+                    overview == null ? 'Create Overview' : 'Edit Overview',
+                    style: const TextStyle(fontSize: 12)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
           if (overview == null)
-            Text('No custom course overview defined yet. Tap "Create Overview" to add syllabus metadata.', style: TextStyle(color: textSecondary, fontSize: 12))
+            Text(
+                'No custom course overview defined yet. Tap "Create Overview" to add syllabus metadata.',
+                style: TextStyle(color: textSecondary, fontSize: 12))
           else ...[
-            Text(overview.description, style: TextStyle(color: textPrimary, fontSize: 13)),
+            Text(overview.description,
+                style: TextStyle(color: textPrimary, fontSize: 13)),
             const SizedBox(height: 8),
             Wrap(
               spacing: 6,
               runSpacing: 6,
               children: [
-                Chip(label: Text('Difficulty: ${overview.estimatedDifficulty}', style: const TextStyle(fontSize: 11)), backgroundColor: AppColors.primary.withAlpha(20)),
-                Chip(label: Text('Time: ${overview.estimatedStudyTime}', style: const TextStyle(fontSize: 11)), backgroundColor: Colors.amber.withAlpha(20)),
-                Chip(label: Text('${overview.prerequisites.length} Prerequisites', style: const TextStyle(fontSize: 11)), backgroundColor: Colors.purple.withAlpha(20)),
+                Chip(
+                    label: Text('Difficulty: ${overview.estimatedDifficulty}',
+                        style: const TextStyle(fontSize: 11)),
+                    backgroundColor: AppColors.primary.withAlpha(20)),
+                Chip(
+                    label: Text('Time: ${overview.estimatedStudyTime}',
+                        style: const TextStyle(fontSize: 11)),
+                    backgroundColor: Colors.amber.withAlpha(20)),
+                Chip(
+                    label: Text(
+                        '${overview.prerequisites.length} Prerequisites',
+                        style: const TextStyle(fontSize: 11)),
+                    backgroundColor: Colors.purple.withAlpha(20)),
               ],
             ),
           ],
@@ -340,7 +416,12 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  Widget _buildChaptersCard(List<TextbookChapterModel> chapters, Color cardColor, Color borderColor, Color textPrimary, Color textSecondary) {
+  Widget _buildChaptersCard(
+      List<TextbookChapterModel> chapters,
+      Color cardColor,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -353,25 +434,37 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.format_list_numbered_rounded, color: AppColors.primary, size: 18),
+              const Icon(Icons.format_list_numbered_rounded,
+                  color: AppColors.primary, size: 18),
               const SizedBox(width: 8),
-              const Text('TEXTBOOK CHAPTERS & TOPICS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5)),
+              const Text('TEXTBOOK CHAPTERS & TOPICS',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      letterSpacing: 0.5)),
               const Spacer(),
               ElevatedButton.icon(
                 onPressed: () => _showChapterDialog(null, chapters.length + 1),
                 icon: const Icon(Icons.add_rounded, size: 16),
-                label: const Text('Add Chapter', style: TextStyle(fontSize: 12)),
+                label:
+                    const Text('Add Chapter', style: TextStyle(fontSize: 12)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 12),
           if (chapters.isEmpty)
-            Center(child: Padding(padding: const EdgeInsets.all(20), child: Text('No textbook chapters found. Tap "Add Chapter" to build the subject textbook hierarchy.', style: TextStyle(color: textSecondary, fontSize: 12))))
+            Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                        'No textbook chapters found. Tap "Add Chapter" to build the subject textbook hierarchy.',
+                        style: TextStyle(color: textSecondary, fontSize: 12))))
           else
             ListView.builder(
               shrinkWrap: true,
@@ -379,7 +472,8 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
               itemCount: chapters.length,
               itemBuilder: (context, index) {
                 final ch = chapters[index];
-                return _buildChapterTile(ch, index, chapters, cardColor, borderColor, textPrimary, textSecondary);
+                return _buildChapterTile(ch, index, chapters, cardColor,
+                    borderColor, textPrimary, textSecondary);
               },
             ),
         ],
@@ -387,7 +481,14 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  Widget _buildChapterTile(TextbookChapterModel ch, int index, List<TextbookChapterModel> allChapters, Color cardColor, Color borderColor, Color textPrimary, Color textSecondary) {
+  Widget _buildChapterTile(
+      TextbookChapterModel ch,
+      int index,
+      List<TextbookChapterModel> allChapters,
+      Color cardColor,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -396,12 +497,21 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
         color: cardColor,
       ),
       child: ExpansionTile(
-        title: Text('Chapter ${ch.chapterNumber}: ${ch.title}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
-        subtitle: Text('${ch.sections.length} Sections • ${ch.description}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 11, color: textSecondary)),
+        title: Text('Chapter ${ch.chapterNumber}: ${ch.title}',
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
+        subtitle: Text('${ch.sections.length} Sections • ${ch.description}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 11, color: textSecondary)),
         leading: CircleAvatar(
           radius: 14,
           backgroundColor: AppColors.primary.withAlpha(30),
-          child: Text('${ch.chapterNumber}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary)),
+          child: Text('${ch.chapterNumber}',
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: AppColors.primary)),
         ),
         childrenPadding: const EdgeInsets.all(12),
         trailing: Row(
@@ -409,21 +519,27 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_upward_rounded, size: 16),
-              onPressed: index > 0 ? () => _reorderChapter(index, index - 1, allChapters) : null,
+              onPressed: index > 0
+                  ? () => _reorderChapter(index, index - 1, allChapters)
+                  : null,
               tooltip: 'Move Up',
             ),
             IconButton(
               icon: const Icon(Icons.arrow_downward_rounded, size: 16),
-              onPressed: index < allChapters.length - 1 ? () => _reorderChapter(index, index + 1, allChapters) : null,
+              onPressed: index < allChapters.length - 1
+                  ? () => _reorderChapter(index, index + 1, allChapters)
+                  : null,
               tooltip: 'Move Down',
             ),
             IconButton(
-              icon: const Icon(Icons.edit_rounded, size: 16, color: Colors.blueAccent),
+              icon: const Icon(Icons.edit_rounded,
+                  size: 16, color: Colors.blueAccent),
               onPressed: () => _showChapterDialog(ch, ch.chapterNumber),
               tooltip: 'Edit Chapter',
             ),
             IconButton(
-              icon: const Icon(Icons.delete_outline_rounded, size: 16, color: Colors.redAccent),
+              icon: const Icon(Icons.delete_outline_rounded,
+                  size: 16, color: Colors.redAccent),
               onPressed: () => _confirmDeleteChapter(ch),
               tooltip: 'Delete Chapter',
             ),
@@ -432,26 +548,41 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
         children: [
           Row(
             children: [
-              const Text('SECTIONS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, letterSpacing: 0.5, color: Colors.grey)),
+              const Text('SECTIONS',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                      letterSpacing: 0.5,
+                      color: Colors.grey)),
               const Spacer(),
               TextButton.icon(
-                onPressed: () => _showSectionDialog(ch, null, ch.sections.length + 1),
+                onPressed: () =>
+                    _showSectionDialog(ch, null, ch.sections.length + 1),
                 icon: const Icon(Icons.add_rounded, size: 14),
-                label: const Text('Add Section', style: TextStyle(fontSize: 11)),
+                label:
+                    const Text('Add Section', style: TextStyle(fontSize: 11)),
               ),
             ],
           ),
           const SizedBox(height: 6),
           if (ch.sections.isEmpty)
-            Text('No sections in this chapter yet.', style: TextStyle(color: textSecondary, fontSize: 11))
+            Text('No sections in this chapter yet.',
+                style: TextStyle(color: textSecondary, fontSize: 11))
           else
-            ...ch.sections.map((sec) => _buildSectionTile(ch, sec, cardColor, borderColor, textPrimary, textSecondary)),
+            ...ch.sections.map((sec) => _buildSectionTile(
+                ch, sec, cardColor, borderColor, textPrimary, textSecondary)),
         ],
       ),
     );
   }
 
-  Widget _buildSectionTile(TextbookChapterModel ch, TextbookSectionModel sec, Color cardColor, Color borderColor, Color textPrimary, Color textSecondary) {
+  Widget _buildSectionTile(
+      TextbookChapterModel ch,
+      TextbookSectionModel sec,
+      Color cardColor,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(10),
@@ -465,20 +596,28 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
         children: [
           Row(
             children: [
-              Text('${sec.sectionNumber} ${sec.title}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
+              Text('${sec.sectionNumber} ${sec.title}',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: textPrimary)),
               const Spacer(),
               IconButton(
-                icon: const Icon(Icons.add_circle_outline_rounded, size: 16, color: AppColors.primary),
-                onPressed: () => _showTopicDialog(ch, sec, null, sec.topics.length + 1),
+                icon: const Icon(Icons.add_circle_outline_rounded,
+                    size: 16, color: AppColors.primary),
+                onPressed: () =>
+                    _showTopicDialog(ch, sec, null, sec.topics.length + 1),
                 tooltip: 'Add Topic',
               ),
               IconButton(
-                icon: const Icon(Icons.edit_rounded, size: 15, color: Colors.blueAccent),
+                icon: const Icon(Icons.edit_rounded,
+                    size: 15, color: Colors.blueAccent),
                 onPressed: () => _showSectionDialog(ch, sec, sec.order),
                 tooltip: 'Edit Section',
               ),
               IconButton(
-                icon: const Icon(Icons.delete_outline_rounded, size: 15, color: Colors.redAccent),
+                icon: const Icon(Icons.delete_outline_rounded,
+                    size: 15, color: Colors.redAccent),
                 onPressed: () => _confirmDeleteSection(ch, sec),
                 tooltip: 'Delete Section',
               ),
@@ -490,18 +629,25 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
                   padding: const EdgeInsets.only(left: 12, top: 4, bottom: 4),
                   child: Row(
                     children: [
-                      const Icon(Icons.article_outlined, size: 14, color: Colors.purpleAccent),
+                      const Icon(Icons.article_outlined,
+                          size: 14, color: Colors.purpleAccent),
                       const SizedBox(width: 6),
-                      Expanded(child: Text('${top.topicNumber} ${top.title}', style: TextStyle(fontSize: 12, color: textPrimary))),
+                      Expanded(
+                          child: Text('${top.topicNumber} ${top.title}',
+                              style:
+                                  TextStyle(fontSize: 12, color: textPrimary))),
                       IconButton(
-                        icon: const Icon(Icons.edit_rounded, size: 14, color: Colors.blueAccent),
-                        onPressed: () => _showTopicDialog(ch, sec, top, top.order),
+                        icon: const Icon(Icons.edit_rounded,
+                            size: 14, color: Colors.blueAccent),
+                        onPressed: () =>
+                            _showTopicDialog(ch, sec, top, top.order),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
                       const SizedBox(width: 8),
                       IconButton(
-                        icon: const Icon(Icons.delete_outline_rounded, size: 14, color: Colors.redAccent),
+                        icon: const Icon(Icons.delete_outline_rounded,
+                            size: 14, color: Colors.redAccent),
                         onPressed: () => _confirmDeleteTopic(ch, sec, top),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
@@ -517,13 +663,16 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
 
   // --- Reordering & Deletion Handlers ---
 
-  void _reorderChapter(int oldIndex, int newIndex, List<TextbookChapterModel> chapters) async {
+  void _reorderChapter(
+      int oldIndex, int newIndex, List<TextbookChapterModel> chapters) async {
     final List<TextbookChapterModel> updated = List.from(chapters);
     final moved = updated.removeAt(oldIndex);
     updated.insert(newIndex, moved);
 
     if (_selectedSubject != null) {
-      await context.read<StudyProvider>().reorderTextbookChapters(_selectedSubject!.id, updated);
+      await context
+          .read<StudyProvider>()
+          .reorderTextbookChapters(_selectedSubject!.id, updated);
     }
   }
 
@@ -537,12 +686,17 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Delete Chapter?'),
-        content: Text('This chapter contains ${ch.sections.length} sections and $topicCount topics. Deleting it will permanently remove all associated textbook hierarchy.'),
+        content: Text(
+            'This chapter contains ${ch.sections.length} sections and $topicCount topics. Deleting it will permanently remove all associated textbook hierarchy.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white),
             child: const Text('Delete Chapter'),
           ),
         ],
@@ -551,21 +705,29 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
 
     if (confirm == true && _selectedSubject != null) {
       if (!mounted) return;
-      await context.read<StudyProvider>().deleteTextbookChapter(_selectedSubject!.id, ch.id);
+      await context
+          .read<StudyProvider>()
+          .deleteTextbookChapter(_selectedSubject!.id, ch.id);
     }
   }
 
-  void _confirmDeleteSection(TextbookChapterModel ch, TextbookSectionModel sec) async {
+  void _confirmDeleteSection(
+      TextbookChapterModel ch, TextbookSectionModel sec) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Delete Section?'),
-        content: Text('This section contains ${sec.topics.length} topics. Are you sure you want to delete it?'),
+        content: Text(
+            'This section contains ${sec.topics.length} topics. Are you sure you want to delete it?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white),
             child: const Text('Delete Section'),
           ),
         ],
@@ -576,21 +738,28 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
       final updatedSections = ch.sections.where((s) => s.id != sec.id).toList();
       final updatedChapter = ch.copyWith(sections: updatedSections);
       if (!mounted) return;
-      await context.read<StudyProvider>().saveTextbookChapter(_selectedSubject!.id, updatedChapter);
+      await context
+          .read<StudyProvider>()
+          .saveTextbookChapter(_selectedSubject!.id, updatedChapter);
     }
   }
 
-  void _confirmDeleteTopic(TextbookChapterModel ch, TextbookSectionModel sec, TextbookTopicModel top) async {
+  void _confirmDeleteTopic(TextbookChapterModel ch, TextbookSectionModel sec,
+      TextbookTopicModel top) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Delete Topic?'),
         content: Text('Are you sure you want to delete topic "${top.title}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white),
             child: const Text('Delete Topic'),
           ),
         ],
@@ -600,10 +769,13 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     if (confirm == true && _selectedSubject != null) {
       final updatedTopics = sec.topics.where((t) => t.id != top.id).toList();
       final updatedSection = sec.copyWith(topics: updatedTopics);
-      final updatedSections = ch.sections.map((s) => s.id == sec.id ? updatedSection : s).toList();
+      final updatedSections =
+          ch.sections.map((s) => s.id == sec.id ? updatedSection : s).toList();
       final updatedChapter = ch.copyWith(sections: updatedSections);
       if (!mounted) return;
-      await context.read<StudyProvider>().saveTextbookChapter(_selectedSubject!.id, updatedChapter);
+      await context
+          .read<StudyProvider>()
+          .saveTextbookChapter(_selectedSubject!.id, updatedChapter);
     }
   }
 
@@ -612,44 +784,87 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
   void _showOverviewDialog(CourseOverviewModel? overview) {
     final descCtrl = TextEditingController(text: overview?.description ?? '');
     final whyCtrl = TextEditingController(text: overview?.whyItMatters ?? '');
-    final prereqCtrl = TextEditingController(text: overview?.prerequisites.join(', ') ?? '');
-    final objCtrl = TextEditingController(text: overview?.learningObjectives.join(', ') ?? '');
-    final outcomesCtrl = TextEditingController(text: overview?.learningOutcomes.join(', ') ?? '');
-    final timeCtrl = TextEditingController(text: overview?.estimatedStudyTime ?? '45 Study Hours');
-    final diffCtrl = TextEditingController(text: overview?.estimatedDifficulty ?? 'Intermediate');
+    final prereqCtrl =
+        TextEditingController(text: overview?.prerequisites.join(', ') ?? '');
+    final objCtrl = TextEditingController(
+        text: overview?.learningObjectives.join(', ') ?? '');
+    final outcomesCtrl = TextEditingController(
+        text: overview?.learningOutcomes.join(', ') ?? '');
+    final timeCtrl = TextEditingController(
+        text: overview?.estimatedStudyTime ?? '45 Study Hours');
+    final diffCtrl = TextEditingController(
+        text: overview?.estimatedDifficulty ?? 'Intermediate');
 
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(overview == null ? 'Create Course Overview' : 'Edit Course Overview'),
+        title: Text(overview == null
+            ? 'Create Course Overview'
+            : 'Edit Course Overview'),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(controller: descCtrl, decoration: const InputDecoration(labelText: 'Description'), maxLines: 2),
-              TextField(controller: whyCtrl, decoration: const InputDecoration(labelText: 'Why It Matters'), maxLines: 2),
-              TextField(controller: prereqCtrl, decoration: const InputDecoration(labelText: 'Prerequisites (comma-separated)')),
-              TextField(controller: objCtrl, decoration: const InputDecoration(labelText: 'Objectives (comma-separated)')),
-              TextField(controller: outcomesCtrl, decoration: const InputDecoration(labelText: 'Outcomes (comma-separated)')),
-              TextField(controller: timeCtrl, decoration: const InputDecoration(labelText: 'Estimated Study Time')),
-              TextField(controller: diffCtrl, decoration: const InputDecoration(labelText: 'Estimated Difficulty')),
+              TextField(
+                  controller: descCtrl,
+                  decoration: const InputDecoration(labelText: 'Description'),
+                  maxLines: 2),
+              TextField(
+                  controller: whyCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Why It Matters'),
+                  maxLines: 2),
+              TextField(
+                  controller: prereqCtrl,
+                  decoration: const InputDecoration(
+                      labelText: 'Prerequisites (comma-separated)')),
+              TextField(
+                  controller: objCtrl,
+                  decoration: const InputDecoration(
+                      labelText: 'Objectives (comma-separated)')),
+              TextField(
+                  controller: outcomesCtrl,
+                  decoration: const InputDecoration(
+                      labelText: 'Outcomes (comma-separated)')),
+              TextField(
+                  controller: timeCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Estimated Study Time')),
+              TextField(
+                  controller: diffCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Estimated Difficulty')),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () async {
-              if (_selectedSubject == null || descCtrl.text.trim().isEmpty) return;
+              if (_selectedSubject == null || descCtrl.text.trim().isEmpty)
+                return;
 
               final model = CourseOverviewModel(
                 subjectId: _selectedSubject!.id,
                 subjectName: _selectedSubject!.name,
                 description: descCtrl.text.trim(),
                 whyItMatters: whyCtrl.text.trim(),
-                prerequisites: prereqCtrl.text.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
-                learningObjectives: objCtrl.text.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
-                learningOutcomes: outcomesCtrl.text.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
+                prerequisites: prereqCtrl.text
+                    .split(',')
+                    .map((s) => s.trim())
+                    .where((s) => s.isNotEmpty)
+                    .toList(),
+                learningObjectives: objCtrl.text
+                    .split(',')
+                    .map((s) => s.trim())
+                    .where((s) => s.isNotEmpty)
+                    .toList(),
+                learningOutcomes: outcomesCtrl.text
+                    .split(',')
+                    .map((s) => s.trim())
+                    .where((s) => s.isNotEmpty)
+                    .toList(),
                 estimatedStudyTime: timeCtrl.text.trim(),
                 estimatedDifficulty: diffCtrl.text.trim(),
               );
@@ -667,25 +882,37 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
   void _showChapterDialog(TextbookChapterModel? ch, int nextOrder) {
     final titleCtrl = TextEditingController(text: ch?.title ?? '');
     final descCtrl = TextEditingController(text: ch?.description ?? '');
-    final numCtrl = TextEditingController(text: '${ch?.chapterNumber ?? nextOrder}');
+    final numCtrl =
+        TextEditingController(text: '${ch?.chapterNumber ?? nextOrder}');
 
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(ch == null ? 'Add Textbook Chapter' : 'Edit Textbook Chapter'),
+        title:
+            Text(ch == null ? 'Add Textbook Chapter' : 'Edit Textbook Chapter'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: numCtrl, decoration: const InputDecoration(labelText: 'Chapter Number'), keyboardType: TextInputType.number),
-            TextField(controller: titleCtrl, decoration: const InputDecoration(labelText: 'Title')),
-            TextField(controller: descCtrl, decoration: const InputDecoration(labelText: 'Description'), maxLines: 2),
+            TextField(
+                controller: numCtrl,
+                decoration: const InputDecoration(labelText: 'Chapter Number'),
+                keyboardType: TextInputType.number),
+            TextField(
+                controller: titleCtrl,
+                decoration: const InputDecoration(labelText: 'Title')),
+            TextField(
+                controller: descCtrl,
+                decoration: const InputDecoration(labelText: 'Description'),
+                maxLines: 2),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () async {
-              if (_selectedSubject == null || titleCtrl.text.trim().isEmpty) return;
+              if (_selectedSubject == null || titleCtrl.text.trim().isEmpty)
+                return;
 
               final chapterNum = int.tryParse(numCtrl.text.trim()) ?? nextOrder;
               final model = TextbookChapterModel(
@@ -698,7 +925,9 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
                 sections: ch?.sections ?? [],
               );
 
-              await context.read<StudyProvider>().saveTextbookChapter(_selectedSubject!.id, model);
+              await context
+                  .read<StudyProvider>()
+                  .saveTextbookChapter(_selectedSubject!.id, model);
               if (ctx.mounted) Navigator.pop(ctx);
             },
             child: const Text('Save Chapter'),
@@ -708,8 +937,10 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  void _showSectionDialog(TextbookChapterModel ch, TextbookSectionModel? sec, int nextOrder) {
-    final numCtrl = TextEditingController(text: sec?.sectionNumber ?? '${ch.chapterNumber}.$nextOrder');
+  void _showSectionDialog(
+      TextbookChapterModel ch, TextbookSectionModel? sec, int nextOrder) {
+    final numCtrl = TextEditingController(
+        text: sec?.sectionNumber ?? '${ch.chapterNumber}.$nextOrder');
     final titleCtrl = TextEditingController(text: sec?.title ?? '');
     final descCtrl = TextEditingController(text: sec?.description ?? '');
 
@@ -720,16 +951,25 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: numCtrl, decoration: const InputDecoration(labelText: 'Section Number (e.g. 1.1)')),
-            TextField(controller: titleCtrl, decoration: const InputDecoration(labelText: 'Title')),
-            TextField(controller: descCtrl, decoration: const InputDecoration(labelText: 'Description')),
+            TextField(
+                controller: numCtrl,
+                decoration: const InputDecoration(
+                    labelText: 'Section Number (e.g. 1.1)')),
+            TextField(
+                controller: titleCtrl,
+                decoration: const InputDecoration(labelText: 'Title')),
+            TextField(
+                controller: descCtrl,
+                decoration: const InputDecoration(labelText: 'Description')),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () async {
-              if (_selectedSubject == null || titleCtrl.text.trim().isEmpty) return;
+              if (_selectedSubject == null || titleCtrl.text.trim().isEmpty)
+                return;
 
               final newSection = TextbookSectionModel(
                 id: sec?.id ?? 'sec_${DateTime.now().millisecondsSinceEpoch}',
@@ -741,7 +981,8 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
                 topics: sec?.topics ?? [],
               );
 
-              final List<TextbookSectionModel> updatedSections = List.from(ch.sections);
+              final List<TextbookSectionModel> updatedSections =
+                  List.from(ch.sections);
               if (sec != null) {
                 final idx = updatedSections.indexWhere((s) => s.id == sec.id);
                 if (idx != -1) updatedSections[idx] = newSection;
@@ -750,7 +991,9 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
               }
 
               final updatedChapter = ch.copyWith(sections: updatedSections);
-              await context.read<StudyProvider>().saveTextbookChapter(_selectedSubject!.id, updatedChapter);
+              await context
+                  .read<StudyProvider>()
+                  .saveTextbookChapter(_selectedSubject!.id, updatedChapter);
               if (ctx.mounted) Navigator.pop(ctx);
             },
             child: const Text('Save Section'),
@@ -760,8 +1003,10 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
     );
   }
 
-  void _showTopicDialog(TextbookChapterModel ch, TextbookSectionModel sec, TextbookTopicModel? top, int nextOrder) {
-    final numCtrl = TextEditingController(text: top?.topicNumber ?? '${sec.sectionNumber}.$nextOrder');
+  void _showTopicDialog(TextbookChapterModel ch, TextbookSectionModel sec,
+      TextbookTopicModel? top, int nextOrder) {
+    final numCtrl = TextEditingController(
+        text: top?.topicNumber ?? '${sec.sectionNumber}.$nextOrder');
     final titleCtrl = TextEditingController(text: top?.title ?? '');
     final defCtrl = TextEditingController(text: top?.definition ?? '');
     final intuCtrl = TextEditingController(text: top?.intuition ?? '');
@@ -780,24 +1025,57 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(controller: numCtrl, decoration: const InputDecoration(labelText: 'Topic Number (e.g. 1.1.1)')),
-              TextField(controller: titleCtrl, decoration: const InputDecoration(labelText: 'Title')),
-              TextField(controller: defCtrl, decoration: const InputDecoration(labelText: 'Definition'), maxLines: 2),
-              TextField(controller: intuCtrl, decoration: const InputDecoration(labelText: 'Intuition'), maxLines: 2),
-              TextField(controller: workCtrl, decoration: const InputDecoration(labelText: 'Working Principle'), maxLines: 2),
-              TextField(controller: algoCtrl, decoration: const InputDecoration(labelText: 'Algorithm Name')),
-              TextField(controller: pseudoCtrl, decoration: const InputDecoration(labelText: 'Pseudocode'), maxLines: 2),
-              TextField(controller: codeCtrl, decoration: const InputDecoration(labelText: 'Code Implementation'), maxLines: 2),
-              TextField(controller: timeCtrl, decoration: const InputDecoration(labelText: 'Time Complexity (e.g. O(V+E))')),
-              TextField(controller: spaceCtrl, decoration: const InputDecoration(labelText: 'Space Complexity (e.g. O(V))')),
+              TextField(
+                  controller: numCtrl,
+                  decoration: const InputDecoration(
+                      labelText: 'Topic Number (e.g. 1.1.1)')),
+              TextField(
+                  controller: titleCtrl,
+                  decoration: const InputDecoration(labelText: 'Title')),
+              TextField(
+                  controller: defCtrl,
+                  decoration: const InputDecoration(labelText: 'Definition'),
+                  maxLines: 2),
+              TextField(
+                  controller: intuCtrl,
+                  decoration: const InputDecoration(labelText: 'Intuition'),
+                  maxLines: 2),
+              TextField(
+                  controller: workCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Working Principle'),
+                  maxLines: 2),
+              TextField(
+                  controller: algoCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Algorithm Name')),
+              TextField(
+                  controller: pseudoCtrl,
+                  decoration: const InputDecoration(labelText: 'Pseudocode'),
+                  maxLines: 2),
+              TextField(
+                  controller: codeCtrl,
+                  decoration:
+                      const InputDecoration(labelText: 'Code Implementation'),
+                  maxLines: 2),
+              TextField(
+                  controller: timeCtrl,
+                  decoration: const InputDecoration(
+                      labelText: 'Time Complexity (e.g. O(V+E))')),
+              TextField(
+                  controller: spaceCtrl,
+                  decoration: const InputDecoration(
+                      labelText: 'Space Complexity (e.g. O(V))')),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () async {
-              if (_selectedSubject == null || titleCtrl.text.trim().isEmpty) return;
+              if (_selectedSubject == null || titleCtrl.text.trim().isEmpty)
+                return;
 
               final newTopic = TextbookTopicModel(
                 id: top?.id ?? 'top_${DateTime.now().millisecondsSinceEpoch}',
@@ -807,15 +1085,23 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
                 definition: defCtrl.text.trim(),
                 intuition: intuCtrl.text.trim(),
                 workingPrinciple: workCtrl.text.trim(),
-                algorithm: algoCtrl.text.trim().isEmpty ? null : algoCtrl.text.trim(),
-                pseudocode: pseudoCtrl.text.trim().isEmpty ? null : pseudoCtrl.text.trim(),
-                codeImplementation: codeCtrl.text.trim().isEmpty ? null : codeCtrl.text.trim(),
-                timeComplexity: timeCtrl.text.trim().isEmpty ? null : timeCtrl.text.trim(),
-                spaceComplexity: spaceCtrl.text.trim().isEmpty ? null : spaceCtrl.text.trim(),
+                algorithm:
+                    algoCtrl.text.trim().isEmpty ? null : algoCtrl.text.trim(),
+                pseudocode: pseudoCtrl.text.trim().isEmpty
+                    ? null
+                    : pseudoCtrl.text.trim(),
+                codeImplementation:
+                    codeCtrl.text.trim().isEmpty ? null : codeCtrl.text.trim(),
+                timeComplexity:
+                    timeCtrl.text.trim().isEmpty ? null : timeCtrl.text.trim(),
+                spaceComplexity: spaceCtrl.text.trim().isEmpty
+                    ? null
+                    : spaceCtrl.text.trim(),
                 order: nextOrder,
               );
 
-              final List<TextbookTopicModel> updatedTopics = List.from(sec.topics);
+              final List<TextbookTopicModel> updatedTopics =
+                  List.from(sec.topics);
               if (top != null) {
                 final idx = updatedTopics.indexWhere((t) => t.id == top.id);
                 if (idx != -1) updatedTopics[idx] = newTopic;
@@ -824,10 +1110,14 @@ class _AdminTextbookScreenState extends State<AdminTextbookScreen> {
               }
 
               final updatedSection = sec.copyWith(topics: updatedTopics);
-              final List<TextbookSectionModel> updatedSections = ch.sections.map((s) => s.id == sec.id ? updatedSection : s).toList();
+              final List<TextbookSectionModel> updatedSections = ch.sections
+                  .map((s) => s.id == sec.id ? updatedSection : s)
+                  .toList();
               final updatedChapter = ch.copyWith(sections: updatedSections);
 
-              await context.read<StudyProvider>().saveTextbookChapter(_selectedSubject!.id, updatedChapter);
+              await context
+                  .read<StudyProvider>()
+                  .saveTextbookChapter(_selectedSubject!.id, updatedChapter);
               if (ctx.mounted) Navigator.pop(ctx);
             },
             child: const Text('Save Topic'),

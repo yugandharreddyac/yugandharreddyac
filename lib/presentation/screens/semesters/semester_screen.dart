@@ -45,8 +45,10 @@ class _SemesterScreenState extends State<SemesterScreen> {
           : semesters.isEmpty
               ? EmptyStateWidget(
                   title: 'No Semesters Found',
-                  message: 'No active semesters listed under ${widget.yearTitle}.',
-                  onActionTap: () => studyProvider.fetchSemesters(widget.yearId),
+                  message:
+                      'No active semesters listed under ${widget.yearTitle}.',
+                  onActionTap: () =>
+                      studyProvider.fetchSemesters(widget.yearId),
                   actionLabel: 'Retry',
                 )
               : ListView.separated(
@@ -64,7 +66,8 @@ class _SemesterScreenState extends State<SemesterScreen> {
                           AppRoutes.subjects,
                           arguments: {
                             'semesterId': sem.id,
-                            'semesterTitle': '${widget.yearTitle} • ${sem.title}',
+                            'semesterTitle':
+                                '${widget.yearTitle} • ${sem.title}',
                           },
                         );
                       },

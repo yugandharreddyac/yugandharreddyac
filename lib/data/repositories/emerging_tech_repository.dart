@@ -10,7 +10,9 @@ class EmergingTechRepository {
     try {
       final data = await firebaseDataSource.getEmergingTechs();
       if (data.isNotEmpty) {
-        return data.map((json) => EmergingTechDetailModel.fromJson(json)).toList();
+        return data
+            .map((json) => EmergingTechDetailModel.fromJson(json))
+            .toList();
       }
     } catch (_) {}
 
@@ -21,7 +23,8 @@ class EmergingTechRepository {
     return _getFallbackData();
   }
 
-  static List<EmergingTechDetailModel> get fallbackEmergingTechs => _getFallbackData();
+  static List<EmergingTechDetailModel> get fallbackEmergingTechs =>
+      _getFallbackData();
 
   static List<EmergingTechDetailModel> _getFallbackData() {
     return const [
@@ -32,7 +35,11 @@ class EmergingTechRepository {
         icon: 'psychology_rounded',
         overview: 'Transformers, Large Language Models, RAG, and AI agents.',
         whyItMatters: 'Revolutionizing software development and automation.',
-        prerequisites: ['Python Programming', 'Linear Algebra', 'Deep Learning Basics'],
+        prerequisites: [
+          'Python Programming',
+          'Linear Algebra',
+          'Deep Learning Basics'
+        ],
         coreConcepts: ['Self-Attention', 'RAG', 'Vector DBs'],
         futureDirection: 'Autonomous Multi-Agent AI Workflows',
       ),
@@ -41,9 +48,14 @@ class EmergingTechRepository {
         title: 'Cloud Native & DevOps',
         category: 'Infrastructure & Cloud',
         icon: 'cloud_rounded',
-        overview: 'Docker containerization, Kubernetes orchestration, and CI/CD pipelines.',
+        overview:
+            'Docker containerization, Kubernetes orchestration, and CI/CD pipelines.',
         whyItMatters: 'Standard infrastructure stack for modern microservices.',
-        prerequisites: ['Linux Commands', 'Networking Basics', 'Shell Scripting'],
+        prerequisites: [
+          'Linux Commands',
+          'Networking Basics',
+          'Shell Scripting'
+        ],
         coreConcepts: ['Containers', 'Kubernetes Pods', 'CI/CD Pipelines'],
         futureDirection: 'GitOps & Platform Engineering',
       ),

@@ -2,7 +2,8 @@ class AppConstants {
   AppConstants._();
 
   static const String appName = 'UNIDOCS';
-  static const String appTagline = 'Academic & Career Learning Management Platform';
+  static const String appTagline =
+      'Academic & Career Learning Management Platform';
   static const String appVersion = '1.0.0';
 
   // Local storage keys
@@ -24,6 +25,7 @@ class AppConstants {
 
   // Contact & About Information
   static const String contactEmail = 'support@cssestudyhub.edu';
-  static const String departmentName = 'Department of Computer Science & Software Engineering';
+  static const String departmentName =
+      'Department of Computer Science & Software Engineering';
   static const String privacyPolicyUrl = 'https://cssestudyhub.web.app/privacy';
 }

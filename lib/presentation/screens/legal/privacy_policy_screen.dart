@@ -58,7 +58,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(ThemeData theme, bool isDark, {required String title, required String content}) {
+  Widget _buildSection(ThemeData theme, bool isDark,
+      {required String title, required String content}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(18),
@@ -84,7 +85,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
             content,
             style: theme.textTheme.bodyMedium?.copyWith(
               height: 1.5,
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
             ),
           ),
         ],

@@ -72,7 +72,16 @@ class _AiComposerState extends State<AiComposer> {
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['pdf', 'txt', 'dart', 'py', 'java', 'cpp', 'json', 'md'],
+        allowedExtensions: [
+          'pdf',
+          'txt',
+          'dart',
+          'py',
+          'java',
+          'cpp',
+          'json',
+          'md'
+        ],
         allowMultiple: false,
       );
 
@@ -82,8 +91,12 @@ class _AiComposerState extends State<AiComposer> {
         final isPdf = extension == 'pdf';
 
         AiAttachment attachment;
-        if (isPdf && pickedFile.path != null && pickedFile.path!.isNotEmpty && docProc != null) {
-          final processed = await docProc.processFile(pickedFile.path!, pickedFile.name);
+        if (isPdf &&
+            pickedFile.path != null &&
+            pickedFile.path!.isNotEmpty &&
+            docProc != null) {
+          final processed =
+              await docProc.processFile(pickedFile.path!, pickedFile.name);
           attachment = processed ?? _buildDefaultAttachment(pickedFile, isPdf);
         } else {
           attachment = _buildDefaultAttachment(pickedFile, isPdf);
@@ -124,7 +137,9 @@ class _AiComposerState extends State<AiComposer> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final canSend = (_textController.text.trim().isNotEmpty || widget.pendingAttachments.isNotEmpty) && !widget.isLoading;
+    final canSend = (_textController.text.trim().isNotEmpty ||
+            widget.pendingAttachments.isNotEmpty) &&
+        !widget.isLoading;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -152,12 +167,17 @@ class _AiComposerState extends State<AiComposer> {
                   runSpacing: 6,
                   children: widget.pendingAttachments.map((att) {
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                        color: isDark
+                            ? const Color(0xFF1E293B)
+                            : const Color(0xFFF1F5F9),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: isDark ? const Color(0xFF334155) : const Color(0xFFCBD5E1),
+                          color: isDark
+                              ? const Color(0xFF334155)
+                              : const Color(0xFFCBD5E1),
                           width: 1,
                         ),
                       ),
@@ -165,9 +185,13 @@ class _AiComposerState extends State<AiComposer> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            att.mimeType.contains('pdf') ? Icons.picture_as_pdf_rounded : Icons.description_rounded,
+                            att.mimeType.contains('pdf')
+                                ? Icons.picture_as_pdf_rounded
+                                : Icons.description_rounded,
                             size: 14,
-                            color: att.mimeType.contains('pdf') ? Colors.redAccent : AppColors.primary,
+                            color: att.mimeType.contains('pdf')
+                                ? Colors.redAccent
+                                : AppColors.primary,
                           ),
                           const SizedBox(width: 6),
                           ConstrainedBox(
@@ -178,7 +202,9 @@ class _AiComposerState extends State<AiComposer> {
                               style: GoogleFonts.inter(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                color: isDark
+                                    ? Colors.white
+                                    : const Color(0xFF1E293B),
                               ),
                             ),
                           ),
@@ -191,7 +217,8 @@ class _AiComposerState extends State<AiComposer> {
                             },
                             child: const Padding(
                               padding: EdgeInsets.all(2),
-                              child: Icon(Icons.close_rounded, size: 14, color: Colors.grey),
+                              child: Icon(Icons.close_rounded,
+                                  size: 14, color: Colors.grey),
                             ),
                           ),
                         ],
@@ -218,12 +245,17 @@ class _AiComposerState extends State<AiComposer> {
                 // Text Input Area
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC),
+                      color: isDark
+                          ? const Color(0xFF1E293B)
+                          : const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                        color: isDark
+                            ? const Color(0xFF334155)
+                            : const Color(0xFFE2E8F0),
                         width: 1,
                       ),
                     ),
@@ -236,20 +268,29 @@ class _AiComposerState extends State<AiComposer> {
                           minLines: 1,
                           maxLines: 5,
                           maxLength: _maxChars,
-                          buildCounter: (context, {required currentLength, required isFocused, maxLength}) => null,
+                          buildCounter: (context,
+                                  {required currentLength,
+                                  required isFocused,
+                                  maxLength}) =>
+                              null,
                           style: GoogleFonts.inter(
                             fontSize: 14.5,
-                            color: isDark ? Colors.white : const Color(0xFF0F172A),
+                            color:
+                                isDark ? Colors.white : const Color(0xFF0F172A),
                           ),
                           decoration: InputDecoration(
-                            hintText: 'Ask anything about CS, topics, roadmap, or placement...',
+                            hintText:
+                                'Ask anything about CS, topics, roadmap, or placement...',
                             hintStyle: GoogleFonts.inter(
                               fontSize: 13.5,
-                              color: isDark ? Colors.white38 : const Color(0xFF94A3B8),
+                              color: isDark
+                                  ? Colors.white38
+                                  : const Color(0xFF94A3B8),
                             ),
                             border: InputBorder.none,
                             isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 8),
                           ),
                           onSubmitted: (_) {
                             _handleSend();
@@ -262,7 +303,9 @@ class _AiComposerState extends State<AiComposer> {
                               '$_charCount / $_maxChars',
                               style: GoogleFonts.inter(
                                 fontSize: 10.5,
-                                color: _charCount > 3800 ? Colors.redAccent : Colors.orangeAccent,
+                                color: _charCount > 3800
+                                    ? Colors.redAccent
+                                    : Colors.orangeAccent,
                               ),
                             ),
                           ),
@@ -275,7 +318,11 @@ class _AiComposerState extends State<AiComposer> {
                 // Send Button
                 Container(
                   decoration: BoxDecoration(
-                    color: canSend ? AppColors.primary : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+                    color: canSend
+                        ? AppColors.primary
+                        : (isDark
+                            ? const Color(0xFF334155)
+                            : const Color(0xFFE2E8F0)),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -285,7 +332,8 @@ class _AiComposerState extends State<AiComposer> {
                             height: 18,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : const Icon(Icons.arrow_upward_rounded),

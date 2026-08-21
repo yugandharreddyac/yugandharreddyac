@@ -11,9 +11,11 @@ class CareerDashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
+    final backgroundColor =
+        isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final textSubtitle =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
     final whiteCardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
     const royalBlue = Color(0xFF2563EB);
 
@@ -22,7 +24,8 @@ class CareerDashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Career Dashboard',
-          style: GoogleFonts.outfit(fontWeight: FontWeight.w600, color: textPrimary),
+          style: GoogleFonts.outfit(
+              fontWeight: FontWeight.w600, color: textPrimary),
         ),
         backgroundColor: backgroundColor,
         elevation: 0,
@@ -47,13 +50,17 @@ class CareerDashboardScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildGoalHeader(profile.goal.title, textPrimary, textSubtitle, royalBlue),
+                _buildGoalHeader(
+                    profile.goal.title, textPrimary, textSubtitle, royalBlue),
                 const SizedBox(height: 24),
-                _buildReadinessGrid(readiness, textPrimary, textSubtitle, whiteCardColor, isDark),
+                _buildReadinessGrid(readiness, textPrimary, textSubtitle,
+                    whiteCardColor, isDark),
                 const SizedBox(height: 24),
-                _buildQuickLinks(context, textPrimary, textSubtitle, whiteCardColor, royalBlue),
+                _buildQuickLinks(context, textPrimary, textSubtitle,
+                    whiteCardColor, royalBlue),
                 const SizedBox(height: 24),
-                _buildCareerGaps(context, gaps, textPrimary, textSubtitle, whiteCardColor, royalBlue),
+                _buildCareerGaps(context, gaps, textPrimary, textSubtitle,
+                    whiteCardColor, royalBlue),
               ],
             ),
           );
@@ -62,7 +69,8 @@ class CareerDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGoalHeader(String goalTitle, Color textPrimary, Color textSubtitle, Color royalBlue) {
+  Widget _buildGoalHeader(String goalTitle, Color textPrimary,
+      Color textSubtitle, Color royalBlue) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -185,7 +193,8 @@ class CareerDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickLinks(BuildContext context, Color textPrimary, Color textSubtitle, Color whiteCardColor, Color royalBlue) {
+  Widget _buildQuickLinks(BuildContext context, Color textPrimary,
+      Color textSubtitle, Color whiteCardColor, Color royalBlue) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -198,16 +207,52 @@ class CareerDashboardScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        _buildActionTile(context, 'Skill Matrix', 'View your proven skills', Icons.radar_rounded, AppRoutes.careerSkills, whiteCardColor, textPrimary, textSubtitle, royalBlue),
+        _buildActionTile(
+            context,
+            'Skill Matrix',
+            'View your proven skills',
+            Icons.radar_rounded,
+            AppRoutes.careerSkills,
+            whiteCardColor,
+            textPrimary,
+            textSubtitle,
+            royalBlue),
         const SizedBox(height: 8),
-        _buildActionTile(context, 'Project Portfolio', 'Track project completions', Icons.folder_special_rounded, AppRoutes.projectPortfolio, whiteCardColor, textPrimary, textSubtitle, royalBlue),
+        _buildActionTile(
+            context,
+            'Project Portfolio',
+            'Track project completions',
+            Icons.folder_special_rounded,
+            AppRoutes.projectPortfolio,
+            whiteCardColor,
+            textPrimary,
+            textSubtitle,
+            royalBlue),
         const SizedBox(height: 8),
-        _buildActionTile(context, 'Resume Readiness', 'Checklist for career assets', Icons.description_rounded, AppRoutes.resumeReadiness, whiteCardColor, textPrimary, textSubtitle, royalBlue),
+        _buildActionTile(
+            context,
+            'Resume Readiness',
+            'Checklist for career assets',
+            Icons.description_rounded,
+            AppRoutes.resumeReadiness,
+            whiteCardColor,
+            textPrimary,
+            textSubtitle,
+            royalBlue),
       ],
     );
   }
 
-  Widget _buildActionTile(BuildContext context, String title, String subtitle, IconData icon, String route, Color whiteCardColor, Color textPrimary, Color textSubtitle, Color royalBlue) {
+  Widget _buildActionTile(
+      BuildContext context,
+      String title,
+      String subtitle,
+      IconData icon,
+      String route,
+      Color whiteCardColor,
+      Color textPrimary,
+      Color textSubtitle,
+      Color royalBlue) {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, route),
       borderRadius: BorderRadius.circular(16),
@@ -222,7 +267,8 @@ class CareerDashboardScreen extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(color: royalBlue.withAlpha(20), shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                  color: royalBlue.withAlpha(20), shape: BoxShape.circle),
               child: Icon(icon, color: royalBlue),
             ),
             const SizedBox(width: 16),
@@ -230,8 +276,14 @@ class CareerDashboardScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16, color: textPrimary)),
-                  Text(subtitle, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+                  Text(title,
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: textPrimary)),
+                  Text(subtitle,
+                      style:
+                          GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
                 ],
               ),
             ),
@@ -242,7 +294,13 @@ class CareerDashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCareerGaps(BuildContext context, List<dynamic> gaps, Color textPrimary, Color textSubtitle, Color whiteCardColor, Color royalBlue) {
+  Widget _buildCareerGaps(
+      BuildContext context,
+      List<dynamic> gaps,
+      Color textPrimary,
+      Color textSubtitle,
+      Color whiteCardColor,
+      Color royalBlue) {
     if (gaps.isEmpty) return const SizedBox.shrink();
 
     return Column(
@@ -268,7 +326,8 @@ class CareerDashboardScreen extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.warning_amber_rounded, color: Colors.red.shade400, size: 28),
+                Icon(Icons.warning_amber_rounded,
+                    color: Colors.red.shade400, size: 28),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
@@ -276,12 +335,16 @@ class CareerDashboardScreen extends StatelessWidget {
                     children: [
                       Text(
                         gap.title,
-                        style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: textPrimary),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         gap.description,
-                        style: GoogleFonts.inter(fontSize: 13, color: textSubtitle),
+                        style: GoogleFonts.inter(
+                            fontSize: 13, color: textSubtitle),
                       ),
                     ],
                   ),
@@ -289,19 +352,26 @@ class CareerDashboardScreen extends StatelessWidget {
                 const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () {
-                     if (gap.actionRoute == '/topic_detail' && gap.actionArguments != null) {
-                        // Navigation is handled via arguments directly below.
-                     }
-                     Navigator.pushNamed(context, gap.actionRoute, arguments: gap.actionArguments);
+                    if (gap.actionRoute == '/topic_detail' &&
+                        gap.actionArguments != null) {
+                      // Navigation is handled via arguments directly below.
+                    }
+                    Navigator.pushNamed(context, gap.actionRoute,
+                        arguments: gap.actionArguments);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: royalBlue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
                   child: Text(
                     gap.actionLabel,
-                    style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 12),
+                    style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 12),
                   ),
                 ),
               ],

@@ -15,6 +15,11 @@ class RoadmapRepository {
   static const String _personalizedProfileKey = 'cssed_personalized_profile';
   static const String _personalizedRoadmapKey = 'cssed_personalized_roadmap';
 
+  static const String _dailyPlanDateKey = 'cssed_daily_plan_date';
+  static const String _dailyPlanTopicsKey = 'cssed_daily_plan_topics';
+  static const String _dailyPlanPersonalizedKey =
+      'cssed_daily_plan_personalized';
+
   Future<UserGoalProfile?> loadGoalProfile() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -53,10 +58,8 @@ class RoadmapRepository {
     return {};
   }
 
-  Future<void> saveTopicProgress(TopicProgressModel progress) async {
+  Future<void> saveTopicProgressMap(Map<String, TopicProgressModel> map) async {
     try {
-      final map = await loadTopicProgressMap();
-      map[progress.topicId] = progress;
       final prefs = await SharedPreferences.getInstance();
       final Map<String, dynamic> encodable = {};
       map.forEach((k, v) => encodable[k] = v.toJson());
@@ -177,7 +180,8 @@ class RoadmapRepository {
     } catch (_) {}
   }
 
-  Future<void> updateRoadmapItemStatus(String itemId, RoadmapItemStatus status) async {
+  Future<void> updateRoadmapItemStatus(
+      String itemId, RoadmapItemStatus status) async {
     try {
       final roadmap = await loadPersonalizedRoadmap();
       if (roadmap == null) return;
@@ -198,6 +202,53 @@ class RoadmapRepository {
       );
 
       await savePersonalizedRoadmap(updatedRoadmap);
+    } catch (_) {}
+  }
+
+  // --- Daily Plan Persistence ---
+
+  Future<String?> loadDailyPlanDate() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString(_dailyPlanDateKey);
+    } catch (_) {}
+    return null;
+  }
+
+  Future<void> saveDailyPlanDate(String dateStr) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_dailyPlanDateKey, dateStr);
+    } catch (_) {}
+  }
+
+  Future<List<String>> loadDailyStandardTopics() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getStringList(_dailyPlanTopicsKey) ?? [];
+    } catch (_) {}
+    return [];
+  }
+
+  Future<void> saveDailyStandardTopics(List<String> topics) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList(_dailyPlanTopicsKey, topics);
+    } catch (_) {}
+  }
+
+  Future<List<String>> loadDailyPersonalizedItems() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getStringList(_dailyPlanPersonalizedKey) ?? [];
+    } catch (_) {}
+    return [];
+  }
+
+  Future<void> saveDailyPersonalizedItems(List<String> items) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList(_dailyPlanPersonalizedKey, items);
     } catch (_) {}
   }
 }

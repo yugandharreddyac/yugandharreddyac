@@ -38,14 +38,19 @@ class _UserAdminPageState extends State<UserAdminPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(user.isAdmin ? 'Revoke Admin Role?' : 'Promote to Administrator?'),
-        content: Text('Are you sure you want to change role for "${user.email}" to "$newRole"?'),
+        title: Text(
+            user.isAdmin ? 'Revoke Admin Role?' : 'Promote to Administrator?'),
+        content: Text(
+            'Are you sure you want to change role for "${user.email}" to "$newRole"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: user.isAdmin ? Colors.orangeAccent : const Color(0xFF2563EB),
+              backgroundColor:
+                  user.isAdmin ? Colors.orangeAccent : const Color(0xFF2563EB),
               foregroundColor: Colors.white,
             ),
             child: Text(user.isAdmin ? 'Revoke' : 'Promote'),
@@ -74,8 +79,10 @@ class _UserAdminPageState extends State<UserAdminPage> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
@@ -87,7 +94,8 @@ class _UserAdminPageState extends State<UserAdminPage> {
       appBar: AppBar(
         title: Text(
           '👥 User & Permissions Management',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
         ),
         backgroundColor: cardColor,
         elevation: 0,
@@ -111,7 +119,8 @@ class _UserAdminPageState extends State<UserAdminPage> {
                   onChanged: (query) => adminProvider.setUserSearchQuery(query),
                   decoration: InputDecoration(
                     hintText: 'Search users by name, email or role...',
-                    prefixIcon: const Icon(Icons.search_rounded, color: royalBlue),
+                    prefixIcon:
+                        const Icon(Icons.search_rounded, color: royalBlue),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
                             icon: const Icon(Icons.clear_rounded),
@@ -122,7 +131,9 @@ class _UserAdminPageState extends State<UserAdminPage> {
                           )
                         : null,
                     filled: true,
-                    fillColor: isDark ? AppColors.surfaceDark : const Color(0xFFF9FAFB),
+                    fillColor: isDark
+                        ? AppColors.surfaceDark
+                        : const Color(0xFFF9FAFB),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: borderColor),
@@ -139,7 +150,8 @@ class _UserAdminPageState extends State<UserAdminPage> {
                 ? const Center(child: CircularProgressIndicator())
                 : users.isEmpty
                     ? Center(
-                        child: Text('No users match search criteria.', style: GoogleFonts.inter(color: textSubtitle)),
+                        child: Text('No users match search criteria.',
+                            style: GoogleFonts.inter(color: textSubtitle)),
                       )
                     : ListView.separated(
                         padding: const EdgeInsets.all(16),
@@ -147,8 +159,10 @@ class _UserAdminPageState extends State<UserAdminPage> {
                         separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final user = users[index];
-                          final lastLogin = DateFormat('MMM d, yyyy').format(user.lastLoginAt);
-                          final displayName = (user.displayName != null && user.displayName!.isNotEmpty)
+                          final lastLogin = DateFormat('MMM d, yyyy')
+                              .format(user.lastLoginAt);
+                          final displayName = (user.displayName != null &&
+                                  user.displayName!.isNotEmpty)
                               ? user.displayName!
                               : (user.email ?? 'Student User');
 
@@ -160,10 +174,15 @@ class _UserAdminPageState extends State<UserAdminPage> {
                             ),
                             child: ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: user.isAdmin ? royalBlue.withAlpha(20) : emeraldGreen.withAlpha(20),
+                                backgroundColor: user.isAdmin
+                                    ? royalBlue.withAlpha(20)
+                                    : emeraldGreen.withAlpha(20),
                                 child: Icon(
-                                  user.isAdmin ? Icons.admin_panel_settings_rounded : Icons.person_rounded,
-                                  color: user.isAdmin ? royalBlue : emeraldGreen,
+                                  user.isAdmin
+                                      ? Icons.admin_panel_settings_rounded
+                                      : Icons.person_rounded,
+                                  color:
+                                      user.isAdmin ? royalBlue : emeraldGreen,
                                 ),
                               ),
                               title: Row(
@@ -171,14 +190,21 @@ class _UserAdminPageState extends State<UserAdminPage> {
                                   Expanded(
                                     child: Text(
                                       displayName,
-                                      style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
+                                      style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: textPrimary),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 3),
                                     decoration: BoxDecoration(
-                                      color: (user.isAdmin ? royalBlue : emeraldGreen).withAlpha(20),
+                                      color: (user.isAdmin
+                                              ? royalBlue
+                                              : emeraldGreen)
+                                          .withAlpha(20),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
@@ -186,7 +212,9 @@ class _UserAdminPageState extends State<UserAdminPage> {
                                       style: GoogleFonts.inter(
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold,
-                                        color: user.isAdmin ? royalBlue : emeraldGreen,
+                                        color: user.isAdmin
+                                            ? royalBlue
+                                            : emeraldGreen,
                                       ),
                                     ),
                                   ),
@@ -194,14 +222,21 @@ class _UserAdminPageState extends State<UserAdminPage> {
                               ),
                               subtitle: Text(
                                 '${user.email} • Last Active: $lastLogin',
-                                style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
+                                style: GoogleFonts.inter(
+                                    fontSize: 12, color: textSubtitle),
                               ),
                               trailing: IconButton(
                                 icon: Icon(
-                                  user.isAdmin ? Icons.shield_outlined : Icons.verified_user_outlined,
-                                  color: user.isAdmin ? Colors.orangeAccent : royalBlue,
+                                  user.isAdmin
+                                      ? Icons.shield_outlined
+                                      : Icons.verified_user_outlined,
+                                  color: user.isAdmin
+                                      ? Colors.orangeAccent
+                                      : royalBlue,
                                 ),
-                                tooltip: user.isAdmin ? 'Revoke Admin Role' : 'Promote to Admin',
+                                tooltip: user.isAdmin
+                                    ? 'Revoke Admin Role'
+                                    : 'Promote to Admin',
                                 onPressed: () => _confirmPromoteAdmin(user),
                               ),
                             ),

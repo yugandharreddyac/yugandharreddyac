@@ -43,7 +43,8 @@ class RecentResourceModel {
       openedAt: openedAt ?? this.openedAt,
       lastReadPage: lastReadPage ?? this.lastReadPage,
       totalPages: totalPages ?? this.totalPages,
-      readingProgressPercentage: readingProgressPercentage ?? this.readingProgressPercentage,
+      readingProgressPercentage:
+          readingProgressPercentage ?? this.readingProgressPercentage,
     );
   }
 
@@ -73,7 +74,8 @@ class RecentResourceModel {
           : DateTime.now(),
       lastReadPage: json['lastReadPage'] ?? 1,
       totalPages: json['totalPages'] ?? 1,
-      readingProgressPercentage: (json['readingProgressPercentage'] as num?)?.toDouble() ?? 0.0,
+      readingProgressPercentage:
+          (json['readingProgressPercentage'] as num?)?.toDouble() ?? 0.0,
     );
   }
 
@@ -94,5 +96,3 @@ class RecentResourceModel {
     );
   }
 }
-
-

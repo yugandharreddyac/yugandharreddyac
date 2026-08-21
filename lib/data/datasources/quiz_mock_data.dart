@@ -8,7 +8,8 @@ class QuizMockData {
     QuizCategoryInfo(
       id: 'aptitude',
       title: 'Quantitative Aptitude',
-      description: 'Percentages, Time & Work, Speed & Distance, Profit & Loss, Probability',
+      description:
+          'Percentages, Time & Work, Speed & Distance, Profit & Loss, Probability',
       icon: Icons.calculate_rounded,
       accentColor: Color(0xFFF59E0B),
       subTopics: [
@@ -25,7 +26,8 @@ class QuizMockData {
     QuizCategoryInfo(
       id: 'reasoning',
       title: 'Logical Reasoning',
-      description: 'Number Series, Blood Relations, Syllogisms, Coding-Decoding, Puzzles',
+      description:
+          'Number Series, Blood Relations, Syllogisms, Coding-Decoding, Puzzles',
       icon: Icons.psychology_rounded,
       accentColor: Color(0xFF8B5CF6),
       subTopics: [
@@ -41,7 +43,8 @@ class QuizMockData {
     QuizCategoryInfo(
       id: 'technical',
       title: 'Technical MCQs',
-      description: 'C, C++, Java, Python, Data Structures, Algorithms, DBMS, OS, Networks',
+      description:
+          'C, C++, Java, Python, Data Structures, Algorithms, DBMS, OS, Networks',
       icon: Icons.code_rounded,
       accentColor: Color(0xFF10B981),
       subTopics: [
@@ -67,10 +70,12 @@ class QuizMockData {
       id: 'apt_01',
       category: 'Quantitative Aptitude',
       topic: 'Percentages',
-      question: 'If the price of sugar increases by 25%, by how much percentage must a household reduce its consumption so that total expenditure remains unchanged?',
+      question:
+          'If the price of sugar increases by 25%, by how much percentage must a household reduce its consumption so that total expenditure remains unchanged?',
       options: ['15%', '20%', '25%', '30%'],
       correctOptionIndex: 1,
-      explanation: 'Reduction in consumption = [R / (100 + R)] * 100% = [25 / 125] * 100% = 20%.',
+      explanation:
+          'Reduction in consumption = [R / (100 + R)] * 100% = [25 / 125] * 100% = 20%.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -78,10 +83,12 @@ class QuizMockData {
       id: 'apt_02',
       category: 'Quantitative Aptitude',
       topic: 'Profit & Loss',
-      question: 'A shopkeeper sells an article at \$240 with a profit of 20%. What was the cost price of the article?',
+      question:
+          'A shopkeeper sells an article at \$240 with a profit of 20%. What was the cost price of the article?',
       options: ['\$180', '\$190', '\$200', '\$220'],
       correctOptionIndex: 2,
-      explanation: 'Selling Price = Cost Price * (1 + Profit/100). Thus, CP = 240 / 1.20 = \$200.',
+      explanation:
+          'Selling Price = Cost Price * (1 + Profit/100). Thus, CP = 240 / 1.20 = \$200.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -89,10 +96,12 @@ class QuizMockData {
       id: 'apt_03',
       category: 'Quantitative Aptitude',
       topic: 'Time & Work',
-      question: 'A can complete a project in 12 days and B can complete the same project in 24 days. Working together, how many days will they take to finish the project?',
+      question:
+          'A can complete a project in 12 days and B can complete the same project in 24 days. Working together, how many days will they take to finish the project?',
       options: ['6 days', '8 days', '10 days', '18 days'],
       correctOptionIndex: 1,
-      explanation: '1 day work = (1/12) + (1/24) = 3/24 = 1/8. Hence, together they take 8 days.',
+      explanation:
+          '1 day work = (1/12) + (1/24) = 3/24 = 1/8. Hence, together they take 8 days.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -100,10 +109,12 @@ class QuizMockData {
       id: 'apt_04',
       category: 'Quantitative Aptitude',
       topic: 'Time, Speed & Distance',
-      question: 'A train 180 meters long is travelling at 72 km/h. How many seconds will it take to cross an electric pole?',
+      question:
+          'A train 180 meters long is travelling at 72 km/h. How many seconds will it take to cross an electric pole?',
       options: ['6 seconds', '7.5 seconds', '9 seconds', '12 seconds'],
       correctOptionIndex: 2,
-      explanation: 'Speed in m/s = 72 * (5/18) = 20 m/s. Time taken = Distance / Speed = 180 / 20 = 9 seconds.',
+      explanation:
+          'Speed in m/s = 72 * (5/18) = 20 m/s. Time taken = Distance / Speed = 180 / 20 = 9 seconds.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -111,10 +122,12 @@ class QuizMockData {
       id: 'apt_05',
       category: 'Quantitative Aptitude',
       topic: 'Ratios & Proportions',
-      question: 'Two numbers are in the ratio 3 : 5. If 6 is added to both numbers, the ratio becomes 2 : 3. What are the original numbers?',
+      question:
+          'Two numbers are in the ratio 3 : 5. If 6 is added to both numbers, the ratio becomes 2 : 3. What are the original numbers?',
       options: ['12 and 20', '18 and 30', '15 and 25', '9 and 15'],
       correctOptionIndex: 1,
-      explanation: '(3x + 6) / (5x + 6) = 2 / 3 => 3(3x + 6) = 2(5x + 6) => 9x + 18 = 10x + 12 => x = 6. Original numbers = 3*6 = 18 and 5*6 = 30.',
+      explanation:
+          '(3x + 6) / (5x + 6) = 2 / 3 => 3(3x + 6) = 2(5x + 6) => 9x + 18 = 10x + 12 => x = 6. Original numbers = 3*6 = 18 and 5*6 = 30.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 90,
     ),
@@ -122,10 +135,12 @@ class QuizMockData {
       id: 'apt_06',
       category: 'Quantitative Aptitude',
       topic: 'Probability',
-      question: 'Two dice are rolled simultaneously. What is the probability that the sum of the numbers appearing on both dice is 7?',
+      question:
+          'Two dice are rolled simultaneously. What is the probability that the sum of the numbers appearing on both dice is 7?',
       options: ['1/6', '1/12', '5/36', '7/36'],
       correctOptionIndex: 0,
-      explanation: 'Possible pairs for sum 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) -> 6 outcomes out of 36 total. Probability = 6/36 = 1/6.',
+      explanation:
+          'Possible pairs for sum 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) -> 6 outcomes out of 36 total. Probability = 6/36 = 1/6.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 60,
     ),
@@ -136,7 +151,8 @@ class QuizMockData {
       question: 'What is the remainder when 2^50 is divided by 7?',
       options: ['1', '2', '4', '6'],
       correctOptionIndex: 2,
-      explanation: '2^3 = 8 = 1 (mod 7). 2^50 = (2^3)^16 * 2^2 = 1^16 * 4 = 4 (mod 7). Remainder is 4.',
+      explanation:
+          '2^3 = 8 = 1 (mod 7). 2^50 = (2^3)^16 * 2^2 = 1^16 * 4 = 4 (mod 7). Remainder is 4.',
       difficulty: QuizDifficulty.advanced,
       timeLimitSeconds: 90,
     ),
@@ -151,7 +167,8 @@ class QuizMockData {
       question: 'Find the missing number in the sequence: 4, 9, 19, 39, 79, ?',
       options: ['119', '139', '149', '159'],
       correctOptionIndex: 3,
-      explanation: 'The pattern is: * 2 + 1. (4*2+1=9, 9*2+1=19, 19*2+1=39, 39*2+1=79, 79*2+1=159).',
+      explanation:
+          'The pattern is: * 2 + 1. (4*2+1=9, 9*2+1=19, 19*2+1=39, 39*2+1=79, 79*2+1=159).',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -159,10 +176,12 @@ class QuizMockData {
       id: 'reas_02',
       category: 'Logical Reasoning',
       topic: 'Coding-Decoding',
-      question: 'If "CLOUD" is coded as "ENQWF", how will "RIVER" be coded in the same language?',
+      question:
+          'If "CLOUD" is coded as "ENQWF", how will "RIVER" be coded in the same language?',
       options: ['TKXGT', 'TKWFS', 'SKWGS', 'TJXFT'],
       correctOptionIndex: 0,
-      explanation: 'Each letter is shifted by +2 positions: R(+2)->T, I(+2)->K, V(+2)->X, E(+2)->G, R(+2)->T => "TKXGT".',
+      explanation:
+          'Each letter is shifted by +2 positions: R(+2)->T, I(+2)->K, V(+2)->X, E(+2)->G, R(+2)->T => "TKXGT".',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -170,10 +189,12 @@ class QuizMockData {
       id: 'reas_03',
       category: 'Logical Reasoning',
       topic: 'Blood Relations',
-      question: 'Pointing to a photograph, Rahul said, "She is the only daughter of my grandfather\'s only son." How is the person in the photo related to Rahul?',
+      question:
+          'Pointing to a photograph, Rahul said, "She is the only daughter of my grandfather\'s only son." How is the person in the photo related to Rahul?',
       options: ['Mother', 'Sister', 'Aunt', 'Cousin'],
       correctOptionIndex: 1,
-      explanation: 'Grandfather\'s only son = Rahul\'s father. Only daughter of Rahul\'s father = Rahul\'s sister.',
+      explanation:
+          'Grandfather\'s only son = Rahul\'s father. Only daughter of Rahul\'s father = Rahul\'s sister.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 60,
     ),
@@ -181,10 +202,12 @@ class QuizMockData {
       id: 'reas_04',
       category: 'Logical Reasoning',
       topic: 'Direction Sense',
-      question: 'A person walks 10 km North, turns right and walks 6 km, then turns right again and walks 10 km. How far and in what direction is he from his starting point?',
+      question:
+          'A person walks 10 km North, turns right and walks 6 km, then turns right again and walks 10 km. How far and in what direction is he from his starting point?',
       options: ['6 km East', '6 km West', '10 km South', '16 km East'],
       correctOptionIndex: 0,
-      explanation: 'The North and South movements of 10 km cancel out, leaving the person 6 km East of the starting point.',
+      explanation:
+          'The North and South movements of 10 km cancel out, leaving the person 6 km East of the starting point.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 60,
     ),
@@ -192,10 +215,17 @@ class QuizMockData {
       id: 'reas_05',
       category: 'Logical Reasoning',
       topic: 'Syllogisms',
-      question: 'Statements: All trees are green. Some green things are apples.\nConclusions:\nI. Some trees are apples.\nII. Some green things are trees.',
-      options: ['Only I follows', 'Only II follows', 'Both I and II follow', 'Neither I nor II follows'],
+      question:
+          'Statements: All trees are green. Some green things are apples.\nConclusions:\nI. Some trees are apples.\nII. Some green things are trees.',
+      options: [
+        'Only I follows',
+        'Only II follows',
+        'Both I and II follow',
+        'Neither I nor II follows'
+      ],
       correctOptionIndex: 1,
-      explanation: 'Since all trees are green, some green things must be trees (Conversion of A statement). However, trees and apples have no definite overlap. Only II follows.',
+      explanation:
+          'Since all trees are green, some green things must be trees (Conversion of A statement). However, trees and apples have no definite overlap. Only II follows.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 75,
     ),
@@ -207,10 +237,12 @@ class QuizMockData {
       id: 'tech_01',
       category: 'Technical MCQs',
       topic: 'Data Structures',
-      question: 'What is the worst-case time complexity of searching for an element in a balanced Binary Search Tree (AVL Tree)?',
+      question:
+          'What is the worst-case time complexity of searching for an element in a balanced Binary Search Tree (AVL Tree)?',
       options: ['O(1)', 'O(log N)', 'O(N)', 'O(N log N)'],
       correctOptionIndex: 1,
-      explanation: 'In an AVL tree, the height is strictly bounded by O(log N) through tree rotations, ensuring O(log N) worst-case search time.',
+      explanation:
+          'In an AVL tree, the height is strictly bounded by O(log N) through tree rotations, ensuring O(log N) worst-case search time.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 45,
     ),
@@ -218,10 +250,12 @@ class QuizMockData {
       id: 'tech_02',
       category: 'Technical MCQs',
       topic: 'Data Structures',
-      question: 'Which data structure is primarily used for implementing Breadth-First Search (BFS) on a graph?',
+      question:
+          'Which data structure is primarily used for implementing Breadth-First Search (BFS) on a graph?',
       options: ['Stack', 'Queue', 'Priority Queue', 'Binary Heap'],
       correctOptionIndex: 1,
-      explanation: 'BFS explores vertices level by level, following FIFO order implemented using a Queue.',
+      explanation:
+          'BFS explores vertices level by level, following FIFO order implemented using a Queue.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 45,
     ),
@@ -229,10 +263,12 @@ class QuizMockData {
       id: 'tech_03',
       category: 'Technical MCQs',
       topic: 'Algorithms',
-      question: 'Which sorting algorithm has a guaranteed worst-case time complexity of O(N log N) and is not in-place in its standard formulation?',
+      question:
+          'Which sorting algorithm has a guaranteed worst-case time complexity of O(N log N) and is not in-place in its standard formulation?',
       options: ['Quick Sort', 'Heap Sort', 'Merge Sort', 'Insertion Sort'],
       correctOptionIndex: 2,
-      explanation: 'Merge Sort always operates in O(N log N) time in best, average, and worst cases, requiring O(N) auxiliary memory.',
+      explanation:
+          'Merge Sort always operates in O(N log N) time in best, average, and worst cases, requiring O(N) auxiliary memory.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 60,
     ),
@@ -240,10 +276,17 @@ class QuizMockData {
       id: 'tech_04',
       category: 'Technical MCQs',
       topic: 'Operating Systems',
-      question: 'Which of the following is NOT one of Coffman\'s four necessary conditions for deadlock in an Operating System?',
-      options: ['Mutual Exclusion', 'Hold and Wait', 'Preemption Allowed', 'Circular Wait'],
+      question:
+          'Which of the following is NOT one of Coffman\'s four necessary conditions for deadlock in an Operating System?',
+      options: [
+        'Mutual Exclusion',
+        'Hold and Wait',
+        'Preemption Allowed',
+        'Circular Wait'
+      ],
       correctOptionIndex: 2,
-      explanation: 'The condition is "No Preemption". Allowing preemption breaks deadlock and resolves resource conflicts.',
+      explanation:
+          'The condition is "No Preemption". Allowing preemption breaks deadlock and resolves resource conflicts.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 60,
     ),
@@ -251,10 +294,12 @@ class QuizMockData {
       id: 'tech_05',
       category: 'Technical MCQs',
       topic: 'DBMS & SQL',
-      question: 'In relational database theory, which Normal Form guarantees that every non-prime attribute is fully functionally dependent on the primary key (no partial dependencies)?',
+      question:
+          'In relational database theory, which Normal Form guarantees that every non-prime attribute is fully functionally dependent on the primary key (no partial dependencies)?',
       options: ['1NF', '2NF', '3NF', 'BCNF'],
       correctOptionIndex: 1,
-      explanation: 'Second Normal Form (2NF) eliminates partial functional dependencies on composite candidate keys.',
+      explanation:
+          'Second Normal Form (2NF) eliminates partial functional dependencies on composite candidate keys.',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 60,
     ),
@@ -262,10 +307,17 @@ class QuizMockData {
       id: 'tech_06',
       category: 'Technical MCQs',
       topic: 'Computer Networks',
-      question: 'At which layer of the OSI model does the Address Resolution Protocol (ARP) operate?',
-      options: ['Application Layer', 'Transport Layer', 'Network / Data Link Layer', 'Physical Layer'],
+      question:
+          'At which layer of the OSI model does the Address Resolution Protocol (ARP) operate?',
+      options: [
+        'Application Layer',
+        'Transport Layer',
+        'Network / Data Link Layer',
+        'Physical Layer'
+      ],
       correctOptionIndex: 2,
-      explanation: 'ARP resolves 32-bit IP addresses (Network Layer) into 48-bit MAC addresses (Data Link Layer).',
+      explanation:
+          'ARP resolves 32-bit IP addresses (Network Layer) into 48-bit MAC addresses (Data Link Layer).',
       difficulty: QuizDifficulty.intermediate,
       timeLimitSeconds: 60,
     ),
@@ -273,10 +325,12 @@ class QuizMockData {
       id: 'tech_07',
       category: 'Technical MCQs',
       topic: 'C Programming',
-      question: 'What is the output of the following C statement: printf("%d", sizeof(\'A\')); on a standard 32/64-bit compiler?',
+      question:
+          'What is the output of the following C statement: printf("%d", sizeof(\'A\')); on a standard 32/64-bit compiler?',
       options: ['1', '4', '2', 'Undefined Behavior'],
       correctOptionIndex: 1,
-      explanation: 'In C, character constants like \'A\' are promoted to `int` type (which is 4 bytes). In C++, it would be `char` (1 byte).',
+      explanation:
+          'In C, character constants like \'A\' are promoted to `int` type (which is 4 bytes). In C++, it would be `char` (1 byte).',
       difficulty: QuizDifficulty.advanced,
       timeLimitSeconds: 60,
     ),
@@ -284,10 +338,12 @@ class QuizMockData {
       id: 'tech_08',
       category: 'Technical MCQs',
       topic: 'Java',
-      question: 'In Java, what is the default capacity of an `ArrayList` when instantiated without specifying initial capacity?',
+      question:
+          'In Java, what is the default capacity of an `ArrayList` when instantiated without specifying initial capacity?',
       options: ['0', '8', '10', '16'],
       correctOptionIndex: 2,
-      explanation: 'An empty `ArrayList` initializes with a default buffer capacity of 10 elements when the first element is added.',
+      explanation:
+          'An empty `ArrayList` initializes with a default buffer capacity of 10 elements when the first element is added.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 45,
     ),
@@ -295,10 +351,12 @@ class QuizMockData {
       id: 'tech_09',
       category: 'Technical MCQs',
       topic: 'Python',
-      question: 'In Python, which built-in data type is mutable and does NOT maintain duplicate values?',
+      question:
+          'In Python, which built-in data type is mutable and does NOT maintain duplicate values?',
       options: ['Tuple', 'List', 'Set', 'Dictionary'],
       correctOptionIndex: 2,
-      explanation: 'A Python `set` is a mutable, unordered collection of unique elements with O(1) lookup via hashing.',
+      explanation:
+          'A Python `set` is a mutable, unordered collection of unique elements with O(1) lookup via hashing.',
       difficulty: QuizDifficulty.beginner,
       timeLimitSeconds: 45,
     ),

@@ -32,12 +32,15 @@ class HigherEducationProvider extends ChangeNotifier {
   }
 
   List<HigherEducationModel> get governmentItems {
-    return _items.where((i) => i.category == 'Government & Public Sector').toList();
+    return _items
+        .where((i) => i.category == 'Government & Public Sector')
+        .toList();
   }
 
   List<HigherEducationModel> get filteredItems {
     return _items.where((item) {
-      final matchesCat = _selectedCategory == 'All' || item.category == _selectedCategory;
+      final matchesCat =
+          _selectedCategory == 'All' || item.category == _selectedCategory;
       if (!matchesCat) return false;
       if (_searchQuery.trim().isEmpty) return true;
       final q = _searchQuery.toLowerCase();

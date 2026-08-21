@@ -54,9 +54,11 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
       final topicTitle = widget.initialContext!['topicTitle']?.toString();
       final roadmapTitle = widget.initialContext!['roadmapTitle']?.toString();
       if (topicTitle != null) {
-        _sendMessage('Explain the topic "$topicTitle" from UniDocs and provide key concepts, code examples, and placement interview questions.');
+        _sendMessage(
+            'Explain the topic "$topicTitle" from UniDocs and provide key concepts, code examples, and placement interview questions.');
       } else if (roadmapTitle != null) {
-        _sendMessage('Review my current learning track "$roadmapTitle" and tell me what I should focus on today.');
+        _sendMessage(
+            'Review my current learning track "$roadmapTitle" and tell me what I should focus on today.');
       }
     }
   }
@@ -86,11 +88,11 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
     });
 
     context.read<UniDocsAiProvider>().sendMessage(
-      text,
-      profile: profile,
-      roadmap: roadmap,
-      attachments: attachmentsToSend,
-    );
+          text,
+          profile: profile,
+          roadmap: roadmap,
+          attachments: attachmentsToSend,
+        );
 
     _scrollToBottom();
   }
@@ -101,9 +103,11 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
       builder: (dialogCtx) => AlertDialog(
         title: Row(
           children: [
-            const Icon(Icons.add_task_rounded, color: AppColors.primary, size: 20),
+            const Icon(Icons.add_task_rounded,
+                color: AppColors.primary, size: 20),
             const SizedBox(width: 8),
-            Text('Add to Roadmap', style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
+            Text('Add to Roadmap',
+                style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
           ],
         ),
         content: Text(
@@ -121,13 +125,15 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
               Navigator.pop(dialogCtx);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Topic "$topicTitle" added to your learning goals!'),
+                  content:
+                      Text('Topic "$topicTitle" added to your learning goals!'),
                   duration: const Duration(seconds: 2),
                   behavior: SnackBarBehavior.floating,
                 ),
               );
             },
-            child: const Text('Add Task', style: TextStyle(color: Colors.white)),
+            child:
+                const Text('Add Task', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -150,7 +156,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: isDark ? const Color(0xFF090D16) : const Color(0xFFF8FAFC),
+      backgroundColor:
+          isDark ? const Color(0xFF090D16) : const Color(0xFFF8FAFC),
       drawer: const AiConversationDrawer(),
       appBar: _buildAppBar(context, isDark, aiProvider),
       body: SafeArea(
@@ -177,7 +184,9 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                               return AiMessageBubble(
                                 message: msg,
                                 onRegenerate: () {
-                                  final userMsgs = messages.where((m) => m.role.name == 'user').toList();
+                                  final userMsgs = messages
+                                      .where((m) => m.role.name == 'user')
+                                      .toList();
                                   if (userMsgs.isNotEmpty) {
                                     _sendMessage(userMsgs.last.content);
                                   }
@@ -218,17 +227,21 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                                     fileName: att.filename,
                                     fileSizeBytes: att.sizeBytes,
                                     createdAt: DateTime.now(),
-                                    processingStatus: att.status == AiAttachmentStatus.processed
+                                    processingStatus: att.status ==
+                                            AiAttachmentStatus.processed
                                         ? DocumentProcessingStatus.ready
-                                        : (att.status == AiAttachmentStatus.unsupported
-                                            ? DocumentProcessingStatus.unsupported
+                                        : (att.status ==
+                                                AiAttachmentStatus.unsupported
+                                            ? DocumentProcessingStatus
+                                                .unsupported
                                             : DocumentProcessingStatus.idle),
                                   );
 
                               return AiDocumentCard(
                                 metadata: meta,
                                 onRemove: () {
-                                  setState(() => _composerAttachments.removeWhere((a) => a.id == att.id));
+                                  setState(() => _composerAttachments
+                                      .removeWhere((a) => a.id == att.id));
                                   docProc.removeDocument(att.id);
                                 },
                                 onActionSelected: (prompt) {
@@ -247,7 +260,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                         setState(() => _composerAttachments.add(att));
                       },
                       onAttachmentRemoved: (att) {
-                        setState(() => _composerAttachments.removeWhere((a) => a.id == att.id));
+                        setState(() => _composerAttachments
+                            .removeWhere((a) => a.id == att.id));
                       },
                       onSend: _sendMessage,
                     ),
@@ -261,7 +275,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context, bool isDark, UniDocsAiProvider aiProvider) {
+  PreferredSizeWidget _buildAppBar(
+      BuildContext context, bool isDark, UniDocsAiProvider aiProvider) {
     return AppBar(
       backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
       elevation: 0,
@@ -289,7 +304,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(Icons.auto_awesome_rounded, size: 16, color: Colors.white),
+                child: const Icon(Icons.auto_awesome_rounded,
+                    size: 16, color: Colors.white),
               ),
               const SizedBox(width: 8),
               Flexible(
@@ -313,7 +329,9 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                           width: 6,
                           height: 6,
                           decoration: BoxDecoration(
-                            color: aiProvider.isLoading ? Colors.amber : const Color(0xFF10B981),
+                            color: aiProvider.isLoading
+                                ? Colors.amber
+                                : const Color(0xFF10B981),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -323,7 +341,9 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                           style: GoogleFonts.inter(
                             fontSize: 10.5,
                             fontWeight: FontWeight.w500,
-                            color: isDark ? Colors.white60 : const Color(0xFF64748B),
+                            color: isDark
+                                ? Colors.white60
+                                : const Color(0xFF64748B),
                           ),
                         ),
                       ],
@@ -369,7 +389,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Center(
-              child: Icon(Icons.auto_awesome_rounded, size: 13, color: Colors.white),
+              child: Icon(Icons.auto_awesome_rounded,
+                  size: 13, color: Colors.white),
             ),
           ),
           const SizedBox(width: 10),
@@ -379,7 +400,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
               color: isDark ? const Color(0xFF1E293B) : Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                color:
+                    isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
               ),
             ),
             child: Row(
@@ -388,7 +410,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                 const SizedBox(
                   width: 12,
                   height: 12,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                  child: CircularProgressIndicator(
+                      strokeWidth: 2, color: AppColors.primary),
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -413,11 +436,13 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
       color: Colors.redAccent.withOpacity(0.12),
       child: Row(
         children: [
-          const Icon(Icons.error_outline_rounded, size: 18, color: Colors.redAccent),
+          const Icon(Icons.error_outline_rounded,
+              size: 18, color: Colors.redAccent),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              error.message?.toString() ?? 'An error occurred during AI processing.',
+              error.message?.toString() ??
+                  'An error occurred during AI processing.',
               style: GoogleFonts.inter(
                 fontSize: 12.5,
                 color: isDark ? Colors.red.shade200 : Colors.red.shade800,
@@ -427,12 +452,14 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
           TextButton(
             onPressed: () {
               final messages = context.read<UniDocsAiProvider>().messages;
-              final userMsgs = messages.where((m) => m.role.name == 'user').toList();
+              final userMsgs =
+                  messages.where((m) => m.role.name == 'user').toList();
               if (userMsgs.isNotEmpty) {
                 _sendMessage(userMsgs.last.content);
               }
             },
-            child: const Text('Retry', style: TextStyle(fontWeight: FontWeight.w600)),
+            child: const Text('Retry',
+                style: TextStyle(fontWeight: FontWeight.w600)),
           ),
         ],
       ),
@@ -472,7 +499,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                     ),
                   ],
                 ),
-                child: const Icon(Icons.auto_awesome_rounded, size: 36, color: Colors.white),
+                child: const Icon(Icons.auto_awesome_rounded,
+                    size: 36, color: Colors.white),
               ),
               const SizedBox(height: 16),
               Text(
@@ -499,7 +527,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
               // Active Student Context Card
               if (roadmap != null || profile != null) ...[
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(isDark ? 0.15 : 0.08),
                     borderRadius: BorderRadius.circular(12),
@@ -511,7 +540,8 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.trending_up_rounded, size: 16, color: AppColors.primary),
+                      const Icon(Icons.trending_up_rounded,
+                          size: 16, color: AppColors.primary),
                       const SizedBox(width: 8),
                       Flexible(
                         child: Text(
@@ -599,12 +629,15 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
                   color: isDark ? const Color(0xFF1E293B) : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                    color: isDark
+                        ? const Color(0xFF334155)
+                        : const Color(0xFFE2E8F0),
                     width: 1,
                   ),
                 ),
@@ -621,7 +654,9 @@ class _UniDocsAiScreenState extends State<UniDocsAiScreen> {
                         prompt,
                         style: GoogleFonts.inter(
                           fontSize: 12.5,
-                          color: isDark ? Colors.white.withOpacity(0.9) : const Color(0xFF1E293B),
+                          color: isDark
+                              ? Colors.white.withOpacity(0.9)
+                              : const Color(0xFF1E293B),
                         ),
                       ),
                     ),

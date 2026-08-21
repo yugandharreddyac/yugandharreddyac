@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:typed_data';
 import 'package:minio/minio.dart';
 import 'package:dio/dio.dart';
 import '../../core/config/app_config.dart';
@@ -33,11 +34,14 @@ class FirebaseDataSource {
         _analyticsInstance = analytics,
         _crashlyticsInstance = crashlytics;
 
-  FirebaseFirestore get _firestore => _firestoreInstance ?? FirebaseFirestore.instance;
+  FirebaseFirestore get _firestore =>
+      _firestoreInstance ?? FirebaseFirestore.instance;
   FirebaseStorage get _storage => _storageInstance ?? FirebaseStorage.instance;
   FirebaseAuth get _auth => _authInstance ?? FirebaseAuth.instance;
-  FirebaseAnalytics get _analytics => _analyticsInstance ?? FirebaseAnalytics.instance;
-  FirebaseCrashlytics get _crashlytics => _crashlyticsInstance ?? FirebaseCrashlytics.instance;
+  FirebaseAnalytics get _analytics =>
+      _analyticsInstance ?? FirebaseAnalytics.instance;
+  FirebaseCrashlytics get _crashlytics =>
+      _crashlyticsInstance ?? FirebaseCrashlytics.instance;
 
   final Minio _minio = Minio(
     endPoint: AppConfig.archiveS3Endpoint,
@@ -99,7 +103,8 @@ class FirebaseDataSource {
   /// Modular Email Sign-In (Structure prepared for future expansion)
   Future<UserCredential?> signInWithEmail(String email, String password) async {
     try {
-      return await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
     } catch (e, stack) {
       await logError(e, stack, reason: 'Email sign-in failed');
       rethrow;
@@ -107,9 +112,11 @@ class FirebaseDataSource {
   }
 
   /// Modular Email Registration (Structure prepared for future expansion)
-  Future<UserCredential?> registerWithEmail(String email, String password) async {
+  Future<UserCredential?> registerWithEmail(
+      String email, String password) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      return await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } catch (e, stack) {
       await logError(e, stack, reason: 'Email registration failed');
       rethrow;
@@ -153,8 +160,11 @@ class FirebaseDataSource {
   // --- Firestore Academic Collections ---
 
   Future<List<YearModel>> getYears() async {
-    final snapshot = await _firestore.collection('years').orderBy('yearNumber').get();
-    return snapshot.docs.map((doc) => YearModel.fromFirestore(doc.data(), doc.id)).toList();
+    final snapshot =
+        await _firestore.collection('years').orderBy('yearNumber').get();
+    return snapshot.docs
+        .map((doc) => YearModel.fromFirestore(doc.data(), doc.id))
+        .toList();
   }
 
   Future<List<SemesterModel>> getSemesters(String yearId) async {
@@ -163,7 +173,9 @@ class FirebaseDataSource {
         .where('yearId', isEqualTo: yearId)
         .orderBy('semesterNumber')
         .get();
-    return snapshot.docs.map((doc) => SemesterModel.fromFirestore(doc.data(), doc.id)).toList();
+    return snapshot.docs
+        .map((doc) => SemesterModel.fromFirestore(doc.data(), doc.id))
+        .toList();
   }
 
   Future<List<SubjectModel>> getSubjects(String semesterId) async {
@@ -171,17 +183,23 @@ class FirebaseDataSource {
         .collection('subjects')
         .where('semesterId', isEqualTo: semesterId)
         .get();
-    return snapshot.docs.map((doc) => SubjectModel.fromFirestore(doc.data(), doc.id)).toList();
+    return snapshot.docs
+        .map((doc) => SubjectModel.fromFirestore(doc.data(), doc.id))
+        .toList();
   }
 
-  Future<List<ResourceModel>> getResources(String subjectId, {String? resourceType}) async {
-    Query query = _firestore.collection('resources').where('subjectId', isEqualTo: subjectId);
+  Future<List<ResourceModel>> getResources(String subjectId,
+      {String? resourceType}) async {
+    Query query = _firestore
+        .collection('resources')
+        .where('subjectId', isEqualTo: subjectId);
     if (resourceType != null && resourceType.isNotEmpty) {
       query = query.where('resourceType', isEqualTo: resourceType);
     }
     final snapshot = await query.get();
     return snapshot.docs
-        .map((doc) => ResourceModel.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => ResourceModel.fromFirestore(
+            doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 
@@ -231,26 +249,33 @@ class FirebaseDataSource {
     required List<int> bytes,
     required void Function(double progress) onProgress,
   }) async {
-    if (AppConfig.archiveS3AccessKey == 'YOUR_ACCESS_KEY_HERE') {
-      throw Exception('Archive.org Access Key is missing! Please configure it in app_config.dart.');
-    }
-
-    final objectName = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+    final rawPath =
+        storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+    final parts = rawPath.split('/');
+    final cleanParts = parts.map((part) {
+      return part
+          .replaceAll(RegExp(r'[^a-zA-Z0-9_\-\.]'), '_')
+          .replaceAll(RegExp(r'_+'), '_');
+    }).toList();
+    final objectName = cleanParts.join('/');
     final bucket = AppConfig.archiveS3BucketName;
 
-    // Use direct HTTP PUT to Archive.org S3 with proper headers.
+    final uint8Bytes = bytes is Uint8List ? bytes : Uint8List.fromList(bytes);
+
+    // Direct HTTP PUT to Archive.org S3 (100% Free, No Credit Card Required)
     final dio = Dio();
     final url = 'https://${AppConfig.archiveS3Endpoint}/$bucket/$objectName';
 
     try {
       await dio.put(
         url,
-        data: Stream.fromIterable([bytes]),
+        data: uint8Bytes,
         options: Options(
           headers: {
-            'Authorization': 'LOW ${AppConfig.archiveS3AccessKey}:${AppConfig.archiveS3SecretKey}',
+            'Authorization':
+                'LOW ${AppConfig.archiveS3AccessKey}:${AppConfig.archiveS3SecretKey}',
             'Content-Type': 'application/pdf',
-            'Content-Length': bytes.length,
+            'Content-Length': uint8Bytes.length,
             'x-amz-auto-make-bucket': '1',
             'x-archive-meta-mediatype': 'texts',
             'x-archive-meta-collection': 'opensource',
@@ -263,12 +288,11 @@ class FirebaseDataSource {
           }
         },
       );
+      return 'https://archive.org/download/$bucket/$objectName';
     } catch (e) {
       debugPrint('Archive.org upload error: $e');
       rethrow;
     }
-
-    return 'https://archive.org/download/$bucket/$objectName';
   }
 
   /// Create Firestore resource document in resources collection
@@ -301,10 +325,12 @@ class FirebaseDataSource {
 
   // --- Archive.org Storage URL Resolver ---
   Future<String> getDownloadUrl(String storagePath) async {
-    if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) {
+    if (storagePath.startsWith('http://') ||
+        storagePath.startsWith('https://')) {
       return storagePath;
     }
-    final objectName = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+    final objectName =
+        storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
     return 'https://archive.org/download/${AppConfig.archiveS3BucketName}/$objectName';
   }
 
@@ -355,13 +381,15 @@ class FirebaseDataSource {
     }
   }
 
-  Future<String> createHigherEducationDocument(Map<String, dynamic> data) async {
+  Future<String> createHigherEducationDocument(
+      Map<String, dynamic> data) async {
     final docRef = _firestore.collection('higher_education').doc();
     await docRef.set({'id': docRef.id, ...data});
     return docRef.id;
   }
 
-  Future<void> updateHigherEducationDocument(String id, Map<String, dynamic> data) async {
+  Future<void> updateHigherEducationDocument(
+      String id, Map<String, dynamic> data) async {
     await _firestore.collection('higher_education').doc(id).update(data);
   }
 
@@ -375,7 +403,8 @@ class FirebaseDataSource {
     return docRef.id;
   }
 
-  Future<void> updateCareerDocument(String id, Map<String, dynamic> data) async {
+  Future<void> updateCareerDocument(
+      String id, Map<String, dynamic> data) async {
     await _firestore.collection('career').doc(id).update(data);
   }
 
@@ -389,7 +418,8 @@ class FirebaseDataSource {
     return docRef.id;
   }
 
-  Future<void> updateCodingDocument(String id, Map<String, dynamic> data) async {
+  Future<void> updateCodingDocument(
+      String id, Map<String, dynamic> data) async {
     await _firestore.collection('coding').doc(id).update(data);
   }
 
@@ -403,7 +433,8 @@ class FirebaseDataSource {
     return docRef.id;
   }
 
-  Future<void> updatePlacementDocument(String id, Map<String, dynamic> data) async {
+  Future<void> updatePlacementDocument(
+      String id, Map<String, dynamic> data) async {
     await _firestore.collection('placements').doc(id).update(data);
   }
 
@@ -417,7 +448,8 @@ class FirebaseDataSource {
     return docRef.id;
   }
 
-  Future<void> updateProjectDocument(String id, Map<String, dynamic> data) async {
+  Future<void> updateProjectDocument(
+      String id, Map<String, dynamic> data) async {
     await _firestore.collection('projects').doc(id).update(data);
   }
 
@@ -426,10 +458,14 @@ class FirebaseDataSource {
   }
 
   Future<void> updateResourceDocument(ResourceModel resource) async {
-    await _firestore.collection('resources').doc(resource.id).update(resource.toFirestore());
+    await _firestore
+        .collection('resources')
+        .doc(resource.id)
+        .update(resource.toFirestore());
   }
 
-  Future<void> deleteResourceDocument(String resourceId, String? storagePath) async {
+  Future<void> deleteResourceDocument(
+      String resourceId, String? storagePath) async {
     if (storagePath != null && storagePath.isNotEmpty) {
       await deleteStorageFile(storagePath);
     }
@@ -438,8 +474,10 @@ class FirebaseDataSource {
 
   Future<void> deleteStorageFile(String storagePath) async {
     try {
-      if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) return;
-      final objectName = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+      if (storagePath.startsWith('http://') ||
+          storagePath.startsWith('https://')) return;
+      final objectName =
+          storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
       await _minio.removeObject(AppConfig.archiveS3BucketName, objectName);
     } catch (_) {}
   }
@@ -454,7 +492,8 @@ class FirebaseDataSource {
       int totalDownloads = 0;
       for (var doc in res.docs) {
         final data = doc.data();
-        totalDownloads += ((data['downloadCount'] ?? data['downloads'] ?? 0) as num).toInt();
+        totalDownloads +=
+            ((data['downloadCount'] ?? data['downloads'] ?? 0) as num).toInt();
       }
 
       return {
@@ -477,7 +516,9 @@ class FirebaseDataSource {
   Future<List<UserModel>> getUsers() async {
     try {
       final snapshot = await _firestore.collection('users').get();
-      return snapshot.docs.map((doc) => UserModel.fromFirestore(doc.data(), doc.id)).toList();
+      return snapshot.docs
+          .map((doc) => UserModel.fromFirestore(doc.data(), doc.id))
+          .toList();
     } catch (_) {
       return [
         UserModel(
@@ -521,14 +562,18 @@ class FirebaseDataSource {
   // --- Firestore Academic Hierarchy CRUD Operations ---
 
   Future<String> createYearDocument(YearModel year) async {
-    final docRef = _firestore.collection('years').doc(year.id.isNotEmpty ? year.id : null);
+    final docRef =
+        _firestore.collection('years').doc(year.id.isNotEmpty ? year.id : null);
     final data = year.toFirestore();
     await docRef.set(data);
     return docRef.id;
   }
 
   Future<void> updateYearDocument(YearModel year) async {
-    await _firestore.collection('years').doc(year.id).update(year.toFirestore());
+    await _firestore
+        .collection('years')
+        .doc(year.id)
+        .update(year.toFirestore());
   }
 
   Future<void> deleteYearDocument(String yearId) async {
@@ -536,13 +581,18 @@ class FirebaseDataSource {
   }
 
   Future<String> createSemesterDocument(SemesterModel semester) async {
-    final docRef = _firestore.collection('semesters').doc(semester.id.isNotEmpty ? semester.id : null);
+    final docRef = _firestore
+        .collection('semesters')
+        .doc(semester.id.isNotEmpty ? semester.id : null);
     await docRef.set(semester.toFirestore());
     return docRef.id;
   }
 
   Future<void> updateSemesterDocument(SemesterModel semester) async {
-    await _firestore.collection('semesters').doc(semester.id).update(semester.toFirestore());
+    await _firestore
+        .collection('semesters')
+        .doc(semester.id)
+        .update(semester.toFirestore());
   }
 
   Future<void> deleteSemesterDocument(String semesterId) async {
@@ -550,13 +600,18 @@ class FirebaseDataSource {
   }
 
   Future<String> createSubjectDocument(SubjectModel subject) async {
-    final docRef = _firestore.collection('subjects').doc(subject.id.isNotEmpty ? subject.id : null);
+    final docRef = _firestore
+        .collection('subjects')
+        .doc(subject.id.isNotEmpty ? subject.id : null);
     await docRef.set(subject.toFirestore());
     return docRef.id;
   }
 
   Future<void> updateSubjectDocument(SubjectModel subject) async {
-    await _firestore.collection('subjects').doc(subject.id).update(subject.toFirestore());
+    await _firestore
+        .collection('subjects')
+        .doc(subject.id)
+        .update(subject.toFirestore());
   }
 
   Future<void> deleteSubjectDocument(String subjectId) async {
@@ -568,18 +623,21 @@ class FirebaseDataSource {
   /// Fetch Course Overview Document from 'courseOverviews/{subjectId}'
   Future<CourseOverviewModel?> getCourseOverview(String subjectId) async {
     try {
-      final doc = await _firestore.collection('courseOverviews').doc(subjectId).get();
+      final doc =
+          await _firestore.collection('courseOverviews').doc(subjectId).get();
       if (doc.exists && doc.data() != null) {
         return CourseOverviewModel.fromJson(doc.data()!, subjectId);
       }
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to fetch courseOverview for $subjectId');
+      await logError(e, stack,
+          reason: 'Failed to fetch courseOverview for $subjectId');
     }
     return null;
   }
 
   /// Fetch Textbook Chapters from 'subjects/{subjectId}/chapters' ordered by 'order'
-  Future<List<TextbookChapterModel>> getTextbookChapters(String subjectId) async {
+  Future<List<TextbookChapterModel>> getTextbookChapters(
+      String subjectId) async {
     try {
       final query = await _firestore
           .collection('subjects')
@@ -596,7 +654,8 @@ class FirebaseDataSource {
         }).toList();
       }
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to fetch textbook chapters for $subjectId');
+      await logError(e, stack,
+          reason: 'Failed to fetch textbook chapters for $subjectId');
     }
     return [];
   }
@@ -609,7 +668,8 @@ class FirebaseDataSource {
           .doc(overview.subjectId)
           .set(overview.toJson(), SetOptions(merge: true));
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to save courseOverview for ${overview.subjectId}');
+      await logError(e, stack,
+          reason: 'Failed to save courseOverview for ${overview.subjectId}');
       rethrow;
     }
   }
@@ -619,13 +679,15 @@ class FirebaseDataSource {
     try {
       await _firestore.collection('courseOverviews').doc(subjectId).delete();
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to delete courseOverview for $subjectId');
+      await logError(e, stack,
+          reason: 'Failed to delete courseOverview for $subjectId');
       rethrow;
     }
   }
 
   /// Save / Update Textbook Chapter in 'subjects/{subjectId}/chapters/{chapterId}'
-  Future<String> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+  Future<String> saveTextbookChapter(
+      String subjectId, TextbookChapterModel chapter) async {
     try {
       final docRef = _firestore
           .collection('subjects')
@@ -640,7 +702,8 @@ class FirebaseDataSource {
       await docRef.set(data, SetOptions(merge: true));
       return docRef.id;
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to save textbook chapter for $subjectId');
+      await logError(e, stack,
+          reason: 'Failed to save textbook chapter for $subjectId');
       rethrow;
     }
   }
@@ -655,13 +718,15 @@ class FirebaseDataSource {
           .doc(chapterId)
           .delete();
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to delete chapter $chapterId from $subjectId');
+      await logError(e, stack,
+          reason: 'Failed to delete chapter $chapterId from $subjectId');
       rethrow;
     }
   }
 
   /// Update Chapter Order Ranks
-  Future<void> updateChapterOrders(String subjectId, List<TextbookChapterModel> chapters) async {
+  Future<void> updateChapterOrders(
+      String subjectId, List<TextbookChapterModel> chapters) async {
     try {
       final batch = _firestore.batch();
       for (int i = 0; i < chapters.length; i++) {
@@ -675,12 +740,11 @@ class FirebaseDataSource {
       }
       await batch.commit();
     } catch (e, stack) {
-      await logError(e, stack, reason: 'Failed to update chapter orders for $subjectId');
+      await logError(e, stack,
+          reason: 'Failed to update chapter orders for $subjectId');
       rethrow;
     }
   }
-
-
 
   // --- Analytics & Crashlytics ---
 
@@ -690,11 +754,11 @@ class FirebaseDataSource {
     } catch (_) {}
   }
 
-  Future<void> logError(dynamic exception, StackTrace? stack, {String? reason}) async {
+  Future<void> logError(dynamic exception, StackTrace? stack,
+      {String? reason}) async {
     try {
       debugPrint('Firebase Error [$reason]: $exception');
       await _crashlytics.recordError(exception, stack, reason: reason);
     } catch (_) {}
   }
 }
-

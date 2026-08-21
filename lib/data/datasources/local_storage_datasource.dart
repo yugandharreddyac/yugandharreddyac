@@ -28,7 +28,9 @@ class LocalStorageDataSource {
     if (raw == null || raw.isEmpty) return [];
     try {
       final List<dynamic> list = jsonDecode(raw);
-      return list.map((item) => BookmarkModel.fromJson(item as Map<String, dynamic>)).toList();
+      return list
+          .map((item) => BookmarkModel.fromJson(item as Map<String, dynamic>))
+          .toList();
     } catch (_) {
       return [];
     }
@@ -46,7 +48,8 @@ class LocalStorageDataSource {
     try {
       final List<dynamic> list = jsonDecode(raw);
       return list
-          .map((item) => ResourceModel.fromFirestore(item as Map<String, dynamic>, item['id']))
+          .map((item) => ResourceModel.fromFirestore(
+              item as Map<String, dynamic>, item['id']))
           .toList();
     } catch (_) {
       return [];
@@ -54,7 +57,8 @@ class LocalStorageDataSource {
   }
 
   Future<void> saveDownloadedResources(List<ResourceModel> downloads) async {
-    final String raw = jsonEncode(downloads.map((d) => d.toFirestore()).toList());
+    final String raw =
+        jsonEncode(downloads.map((d) => d.toFirestore()).toList());
     await _prefs.setString('downloaded_resources', raw);
   }
 
@@ -71,12 +75,17 @@ class LocalStorageDataSource {
     final baseDir = await getApplicationDocumentsDirectory();
 
     final cleanYear = _sanitizeFolderName(year.isEmpty ? 'GeneralYear' : year);
-    final cleanSemester = _sanitizeFolderName(semester.isEmpty ? 'GeneralSemester' : semester);
-    final cleanSubject = _sanitizeFolderName(subject.isEmpty ? 'GeneralSubject' : subject);
-    final cleanCategory = _sanitizeFolderName(resourceType.isEmpty ? 'GeneralType' : resourceType);
-    final cleanFileName = fileName.endsWith('.pdf') ? fileName : '$fileName.pdf';
+    final cleanSemester =
+        _sanitizeFolderName(semester.isEmpty ? 'GeneralSemester' : semester);
+    final cleanSubject =
+        _sanitizeFolderName(subject.isEmpty ? 'GeneralSubject' : subject);
+    final cleanCategory = _sanitizeFolderName(
+        resourceType.isEmpty ? 'GeneralType' : resourceType);
+    final cleanFileName =
+        fileName.endsWith('.pdf') ? fileName : '$fileName.pdf';
 
-    final fullDirPath = '${baseDir.path}/StudyHub/Downloads/$cleanYear/$cleanSemester/$cleanSubject/$cleanCategory';
+    final fullDirPath =
+        '${baseDir.path}/StudyHub/Downloads/$cleanYear/$cleanSemester/$cleanSubject/$cleanCategory';
     final directory = Directory(fullDirPath);
     if (!await directory.exists()) {
       await directory.create(recursive: true);
@@ -101,7 +110,10 @@ class LocalStorageDataSource {
     if (raw == null || raw.isEmpty) return [];
     try {
       final List<dynamic> list = jsonDecode(raw);
-      return list.map((item) => RecentResourceModel.fromJson(item as Map<String, dynamic>)).toList();
+      return list
+          .map((item) =>
+              RecentResourceModel.fromJson(item as Map<String, dynamic>))
+          .toList();
     } catch (_) {
       return [];
     }

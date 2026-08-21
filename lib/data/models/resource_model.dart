@@ -23,7 +23,8 @@ class ResourceModel {
   final int? chapterNumber;
   final String? sectionId;
   final String? sectionNumber;
-  final String? sectionType; // e.g., 'Textbook', 'Important Questions', 'Previous Papers', 'Quick Revision', 'Labs', 'Assignments', 'Projects', 'Additional Resources'
+  final String?
+      sectionType; // e.g., 'Textbook', 'Important Questions', 'Previous Papers', 'Quick Revision', 'Labs', 'Assignments', 'Projects', 'Additional Resources'
   final String difficultyLevel; // e.g., 'Beginner', 'Intermediate', 'Advanced'
   final String version;
   final String sourceProvider;
@@ -35,8 +36,10 @@ class ResourceModel {
   final bool isOfficial;
   final String language;
   final int ordering;
-  final String availabilityStatus; // 'available', 'coming_soon', 'external', 'unavailable'
-  final String copyrightTier; // 'created_by_cssed', 'open_licensed', 'public_domain', 'officially_provided', 'external_copyrighted'
+  final String
+      availabilityStatus; // 'available', 'coming_soon', 'external', 'unavailable'
+  final String
+      copyrightTier; // 'created_by_cssed', 'open_licensed', 'public_domain', 'officially_provided', 'external_copyrighted'
 
   const ResourceModel({
     required this.id,
@@ -230,11 +233,18 @@ class ResourceModel {
       semesterId: data['semesterId'] ?? data['semester'] ?? '',
       resourceType: data['resourceType'] ?? '',
       storagePath: data['storagePath'] ?? '',
-      storageUrl: data['downloadUrl'] ?? data['storageUrl'] ?? data['firebaseStorageURL'] ?? '',
+      storageUrl: data['downloadUrl'] ??
+          data['storageUrl'] ??
+          data['firebaseStorageURL'] ??
+          '',
       thumbnailUrl: data['thumbnailUrl'] ?? data['thumbnailURL'],
-      fileSizeBytes: data['fileSize'] as int? ?? data['fileSizeBytes'] as int? ?? 0,
+      fileSizeBytes:
+          data['fileSize'] as int? ?? data['fileSizeBytes'] as int? ?? 0,
       pageCount: data['pageCount'] as int? ?? 0,
-      downloadCount: data['downloads'] as int? ?? data['downloadCount'] as int? ?? data['downloadsCount'] as int? ?? 0,
+      downloadCount: data['downloads'] as int? ??
+          data['downloadCount'] as int? ??
+          data['downloadsCount'] as int? ??
+          0,
       tags: List<String>.from(data['tags'] ?? []),
       lastUpdated: data['lastUpdated'] != null
           ? DateTime.tryParse(data['lastUpdated'].toString()) ?? DateTime.now()
@@ -246,14 +256,19 @@ class ResourceModel {
       sectionId: data['sectionId'],
       sectionNumber: data['sectionNumber'],
       sectionType: data['sectionType'],
-      difficultyLevel: data['difficultyLevel'] ?? data['difficulty'] ?? 'Beginner',
+      difficultyLevel:
+          data['difficultyLevel'] ?? data['difficulty'] ?? 'Beginner',
       version: data['version'] ?? '1.0',
-      sourceProvider: data['sourceProvider'] ?? data['source'] ?? data['provider'] ?? 'CSSED Curated',
+      sourceProvider: data['sourceProvider'] ??
+          data['source'] ??
+          data['provider'] ??
+          'CSSED Curated',
       isDownloadable: data['isDownloadable'] ?? true,
       isAvailable: data['isAvailable'] ?? true,
       whatIsThis: data['whatIsThis'],
       whyUseIt: data['whyUseIt'],
-      estimatedStudyTime: data['estimatedStudyTime'] ?? data['studyTime'] ?? '15 mins',
+      estimatedStudyTime:
+          data['estimatedStudyTime'] ?? data['studyTime'] ?? '15 mins',
       isOfficial: data['isOfficial'] ?? true,
       language: data['language'] ?? 'English',
       ordering: data['ordering'] as int? ?? 1,

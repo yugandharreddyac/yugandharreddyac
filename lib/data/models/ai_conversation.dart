@@ -82,9 +82,11 @@ class AiConversation {
               .map((m) => AiMessage.fromMap(m))
               .toList() ??
           const [],
-      modelMetadata: (map['modelMetadata'] as Map<String, dynamic>?) ?? const {},
+      modelMetadata:
+          (map['modelMetadata'] as Map<String, dynamic>?) ?? const {},
       isArchived: map['isArchived'] == true,
-      pinnedContext: (map['pinnedContext'] as Map<String, dynamic>?) ?? const {},
+      pinnedContext:
+          (map['pinnedContext'] as Map<String, dynamic>?) ?? const {},
       totalTokensUsed: (map['totalTokensUsed'] as num?)?.toInt() ?? 0,
     );
   }

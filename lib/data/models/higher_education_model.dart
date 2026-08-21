@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HigherEducationModel {
   final String id;
-  final String title; // GATE, CAT, GRE, GMAT, IELTS, TOEFL, UPSC, SSC, Banking, RRB, PSU
+  final String
+      title; // GATE, CAT, GRE, GMAT, IELTS, TOEFL, UPSC, SSC, Banking, RRB, PSU
   final String category; // 'Higher Studies' or 'Government & Public Sector'
   final String subtitle;
   final String overview;
@@ -72,7 +73,8 @@ class HigherEducationModel {
       youtubeChannels: List<String>.from(json['youtubeChannels'] ?? []),
       officialWebsites: List<String>.from(json['officialWebsites'] ?? []),
       latestNotifications: (json['latestNotifications'] as List<dynamic>?)
-              ?.map((e) => ExamNotificationItem.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  ExamNotificationItem.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       faqs: (json['faqs'] as List<dynamic>?)
@@ -105,7 +107,8 @@ class HigherEducationModel {
       'recommendedBooks': recommendedBooks,
       'youtubeChannels': youtubeChannels,
       'officialWebsites': officialWebsites,
-      'latestNotifications': latestNotifications.map((e) => e.toJson()).toList(),
+      'latestNotifications':
+          latestNotifications.map((e) => e.toJson()).toList(),
       'faqs': faqs.map((e) => e.toJson()).toList(),
       'salaryRange': salaryRange,
       'careerOpportunities': careerOpportunities,

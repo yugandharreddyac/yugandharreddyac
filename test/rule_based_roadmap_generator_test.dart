@@ -15,7 +15,9 @@ void main() {
   const generator = RuleBasedRoadmapGenerator();
 
   group('RuleBasedRoadmapGenerator — Track Generation & Domain Tests', () {
-    test('A. AI/ML Beginner generates structured 4-phase AI learning path with Python and Math', () async {
+    test(
+        'A. AI/ML Beginner generates structured 4-phase AI learning path with Python and Math',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement', 'Software Development'],
@@ -43,10 +45,13 @@ void main() {
       final mathItem = roadmap.findItemById('ai_p1_math');
       expect(mathItem, isNotNull);
       expect(mathItem!.priority, equals(RoadmapItemPriority.critical));
-      expect(mathItem.recommendationReason, contains('Mathematics was selected as a focus improvement area'));
+      expect(mathItem.recommendationReason,
+          contains('Mathematics was selected as a focus improvement area'));
     });
 
-    test('B. AI/ML Profile with already completed Python skips/completes foundation', () async {
+    test(
+        'B. AI/ML Profile with already completed Python skips/completes foundation',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement'],
@@ -64,7 +69,9 @@ void main() {
       expect(pythonItem!.isCompleted, isTrue);
     });
 
-    test('C. Web Development profile generates HTML/CSS, JS, React, Backend, and DB phases', () async {
+    test(
+        'C. Web Development profile generates HTML/CSS, JS, React, Backend, and DB phases',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.secondYear,
         goals: const ['Internship'],
@@ -89,7 +96,9 @@ void main() {
       expect(reactItem.status, equals(RoadmapItemStatus.locked));
     });
 
-    test('D. Cybersecurity profile generates Networking, Linux, OWASP, and Defense phases', () async {
+    test(
+        'D. Cybersecurity profile generates Networking, Linux, OWASP, and Defense phases',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.fourthYear,
         goals: const ['Placement'],
@@ -111,7 +120,9 @@ void main() {
       expect(netItem!.targetSkill, equals('Computer Networks'));
     });
 
-    test('E. Cloud/DevOps profile generates Git, Docker, and Kubernetes deployment phases', () async {
+    test(
+        'E. Cloud/DevOps profile generates Git, Docker, and Kubernetes deployment phases',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement'],
@@ -130,7 +141,9 @@ void main() {
       expect(roadmap.phases[2].title, contains('Kubernetes'));
     });
 
-    test('F. Placement Sprint Profile generates High-Yield DSA & Timed Mock Assessments', () async {
+    test(
+        'F. Placement Sprint Profile generates High-Yield DSA & Timed Mock Assessments',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.fourthYear,
         goals: const ['Placement'],
@@ -151,7 +164,9 @@ void main() {
       expect(aptItem.deepRoute, equals('/placement'));
     });
 
-    test('G. Higher Studies profile generates Discrete Math and Core Systems phases', () async {
+    test(
+        'G. Higher Studies profile generates Discrete Math and Core Systems phases',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Higher Studies', 'Competitive Exams'],
@@ -171,7 +186,9 @@ void main() {
   });
 
   group('RoadmapResourceResolver & Grounding Tests', () {
-    test('H. Resolves real UniDocs resources correctly for Aptitude, DSA, and Projects', () {
+    test(
+        'H. Resolves real UniDocs resources correctly for Aptitude, DSA, and Projects',
+        () {
       final aptRes = RoadmapResourceResolver.resolve('Placement Quiz');
       expect(aptRes.isAvailable, isTrue);
       expect(aptRes.deepRoute, equals('/placement/quiz'));
@@ -188,15 +205,21 @@ void main() {
       expect(projRes.resourceType, equals('project_hub'));
     });
 
-    test('I. Returns safe unavailable status for unmapped skills without broken links', () {
+    test(
+        'I. Returns safe unavailable status for unmapped skills without broken links',
+        () {
       final unmapped = RoadmapResourceResolver.resolve('Quantum Computing 99');
       expect(unmapped.isAvailable, isFalse);
       expect(unmapped.deepRoute, isEmpty);
     });
   });
 
-  group('Roadmap Recalculation, Progress Preservation & Provider Integration Tests', () {
-    test('J. Recalculation preserves completed tasks and increments roadmap version', () async {
+  group(
+      'Roadmap Recalculation, Progress Preservation & Provider Integration Tests',
+      () {
+    test(
+        'J. Recalculation preserves completed tasks and increments roadmap version',
+        () async {
       final initialProfile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement'],
@@ -207,17 +230,23 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
-      final initialRoadmap = await generator.generateRoadmap(profile: initialProfile);
+      final initialRoadmap =
+          await generator.generateRoadmap(profile: initialProfile);
       expect(initialRoadmap.roadmapVersion, equals(1));
 
       // Mark Python completed in the initial roadmap
-      final completedItem = initialRoadmap.findItemById('ai_p1_lang')!.copyWith(status: RoadmapItemStatus.completed);
+      final completedItem = initialRoadmap
+          .findItemById('ai_p1_lang')!
+          .copyWith(status: RoadmapItemStatus.completed);
       final updatedPhases = initialRoadmap.phases.map((p) {
         return p.copyWith(
-          items: p.items.map((i) => i.id == 'ai_p1_lang' ? completedItem : i).toList(),
+          items: p.items
+              .map((i) => i.id == 'ai_p1_lang' ? completedItem : i)
+              .toList(),
         );
       }).toList();
-      final partiallyCompletedRoadmap = initialRoadmap.copyWith(phases: updatedPhases);
+      final partiallyCompletedRoadmap =
+          initialRoadmap.copyWith(phases: updatedPhases);
 
       // User updates timeline to 1 year
       final updatedProfile = initialProfile.copyWith(targetTimeline: '1 year');
@@ -234,7 +263,9 @@ void main() {
       expect(preservedItem!.isCompleted, isTrue);
     });
 
-    test('K. RoadmapProvider generates, updates status, and balances daily tasks', () async {
+    test(
+        'K. RoadmapProvider generates, updates status, and balances daily tasks',
+        () async {
       final provider = RoadmapProvider();
 
       final profile = PersonalizedProfile(
@@ -255,17 +286,22 @@ void main() {
       // Check daily tasks fit within 90 minutes
       final dailyTasks = provider.getTodaysPersonalizedTasks();
       expect(dailyTasks, isNotEmpty);
-      int totalDailyMin = dailyTasks.fold(0, (sum, t) => sum + t.estimatedMinutes);
+      int totalDailyMin =
+          dailyTasks.fold(0, (sum, t) => sum + t.estimatedMinutes);
       expect(totalDailyMin, greaterThan(0));
 
       // Mark first task completed
       final firstTask = dailyTasks.first;
-      await provider.markPersonalizedItemStatus(firstTask.id, RoadmapItemStatus.completed);
-      expect(provider.personalizedRoadmap?.findItemById(firstTask.id)?.isCompleted, isTrue);
+      await provider.markPersonalizedItemStatus(
+          firstTask.id, RoadmapItemStatus.completed);
+      expect(
+          provider.personalizedRoadmap?.findItemById(firstTask.id)?.isCompleted,
+          isTrue);
       expect(provider.personalizedOverallProgress, greaterThan(0.0));
     });
 
-    test('L. Minimal profile safety: Handles empty fields without crashing', () async {
+    test('L. Minimal profile safety: Handles empty fields without crashing',
+        () async {
       final minimal = PersonalizedProfile(
         academicStage: AcademicStage.firstYear,
         goals: const [],

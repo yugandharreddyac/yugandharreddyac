@@ -42,16 +42,20 @@ class ContactScreen extends StatelessWidget {
                 Text(
                   'Have feedback or need to request additional study materials for your semester? Reach out directly via email.',
                   style: TextStyle(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
                     height: 1.4,
                   ),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () async {
-                    final Uri emailUri = Uri.parse('mailto:support@cssestudyhub.org?subject=CSSE%20Study%20Hub%20Support');
+                    final Uri emailUri = Uri.parse(
+                        'mailto:support@cssestudyhub.org?subject=CSSE%20Study%20Hub%20Support');
                     if (await canLaunchUrl(emailUri)) {
-                      await launchUrl(emailUri, mode: LaunchMode.externalApplication);
+                      await launchUrl(emailUri,
+                          mode: LaunchMode.externalApplication);
                     }
                   },
                   icon: const Icon(Icons.email_outlined),
@@ -61,7 +65,6 @@ class ContactScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-
           Text(
             'Frequently Asked Questions (FAQ)',
             style: theme.textTheme.titleMedium?.copyWith(
@@ -69,7 +72,6 @@ class ContactScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-
           _faqTile(
             theme,
             isDark,
@@ -96,7 +98,8 @@ class ContactScreen extends StatelessWidget {
     );
   }
 
-  Widget _faqTile(ThemeData theme, bool isDark, {required String question, required String answer}) {
+  Widget _faqTile(ThemeData theme, bool isDark,
+      {required String question, required String answer}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -119,7 +122,9 @@ class ContactScreen extends StatelessWidget {
             answer,
             style: TextStyle(
               fontSize: 13,
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
               height: 1.4,
             ),
           ),

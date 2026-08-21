@@ -10,7 +10,8 @@ class QuizSessionScreen extends StatelessWidget {
   const QuizSessionScreen({super.key});
 
   void _confirmSubmit(BuildContext context, QuizProvider quizProvider) async {
-    final unansweredCount = quizProvider.currentQuestions.length - quizProvider.userAnswers.length;
+    final unansweredCount =
+        quizProvider.currentQuestions.length - quizProvider.userAnswers.length;
 
     final confirm = await showDialog<bool>(
       context: context,
@@ -22,10 +23,14 @@ class QuizSessionScreen extends StatelessWidget {
               : 'You have answered all questions. Ready to submit and view your detailed scorecard?',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Keep Practicing')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Keep Practicing')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white),
             child: const Text('Submit Test'),
           ),
         ],
@@ -61,7 +66,8 @@ class QuizSessionScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Question Palette',
-                    style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.inter(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   IconButton(
                     icon: const Icon(Icons.close_rounded),
@@ -73,8 +79,10 @@ class QuizSessionScreen extends StatelessWidget {
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
-                children: List.generate(quizProvider.currentQuestions.length, (index) {
-                  final isAnswered = quizProvider.userAnswers.containsKey(index);
+                children: List.generate(quizProvider.currentQuestions.length,
+                    (index) {
+                  final isAnswered =
+                      quizProvider.userAnswers.containsKey(index);
                   final isMarked = quizProvider.markedForReview.contains(index);
                   final isCurrent = quizProvider.currentQuestionIndex == index;
 
@@ -102,14 +110,17 @@ class QuizSessionScreen extends StatelessWidget {
                         color: bg,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: isCurrent ? AppColors.primary : Colors.transparent,
+                          color: isCurrent
+                              ? AppColors.primary
+                              : Colors.transparent,
                           width: 2,
                         ),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         '${index + 1}',
-                        style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: textCol),
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold, color: textCol),
                       ),
                     ),
                   );
@@ -141,8 +152,10 @@ class QuizSessionScreen extends StatelessWidget {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
     const orangeAccent = AppColors.primary;
 
     final isPractice = quizProvider.currentMode == QuizMode.practice;
@@ -150,15 +163,18 @@ class QuizSessionScreen extends StatelessWidget {
     final isMarked = quizProvider.isCurrentMarkedForReview;
 
     // Timer formatted
-    final minutes = (quizProvider.remainingSeconds ~/ 60).toString().padLeft(2, '0');
-    final seconds = (quizProvider.remainingSeconds % 60).toString().padLeft(2, '0');
+    final minutes =
+        (quizProvider.remainingSeconds ~/ 60).toString().padLeft(2, '0');
+    final seconds =
+        (quizProvider.remainingSeconds % 60).toString().padLeft(2, '0');
 
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         title: Text(
           'Question ${currentIndex + 1} of $totalCount',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 17, color: textPrimary),
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, fontSize: 17, color: textPrimary),
         ),
         centerTitle: false,
         backgroundColor: cardColor,
@@ -169,7 +185,9 @@ class QuizSessionScreen extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: quizProvider.remainingSeconds < 60 ? Colors.red.withAlpha(25) : orangeAccent.withAlpha(20),
+                color: quizProvider.remainingSeconds < 60
+                    ? Colors.red.withAlpha(25)
+                    : orangeAccent.withAlpha(20),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -177,7 +195,9 @@ class QuizSessionScreen extends StatelessWidget {
                   Icon(
                     Icons.timer_outlined,
                     size: 16,
-                    color: quizProvider.remainingSeconds < 60 ? Colors.red : orangeAccent,
+                    color: quizProvider.remainingSeconds < 60
+                        ? Colors.red
+                        : orangeAccent,
                   ),
                   const SizedBox(width: 4),
                   Text(
@@ -185,7 +205,9 @@ class QuizSessionScreen extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
-                      color: quizProvider.remainingSeconds < 60 ? Colors.red : orangeAccent,
+                      color: quizProvider.remainingSeconds < 60
+                          ? Colors.red
+                          : orangeAccent,
                     ),
                   ),
                 ],
@@ -198,7 +220,9 @@ class QuizSessionScreen extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(
-              isMarked ? Icons.bookmark_added_rounded : Icons.bookmark_border_rounded,
+              isMarked
+                  ? Icons.bookmark_added_rounded
+                  : Icons.bookmark_border_rounded,
               color: isMarked ? const Color(0xFFF59E0B) : null,
             ),
             tooltip: isMarked ? 'Marked for Review' : 'Mark for Review',
@@ -224,7 +248,8 @@ class QuizSessionScreen extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
                         color: orangeAccent.withAlpha(isDark ? 35 : 20),
                         borderRadius: BorderRadius.circular(6),
@@ -240,9 +265,11 @@ class QuizSessionScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+                        color:
+                            isDark ? Colors.white12 : const Color(0xFFE2E8F0),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
@@ -293,7 +320,8 @@ class QuizSessionScreen extends StatelessWidget {
                   if (isPractice && isAnswered) {
                     if (optIndex == q.correctOptionIndex) {
                       optBorder = const Color(0xFF10B981);
-                      optBg = const Color(0xFF10B981).withAlpha(isDark ? 30 : 15);
+                      optBg =
+                          const Color(0xFF10B981).withAlpha(isDark ? 30 : 15);
                       optTextCol = const Color(0xFF10B981);
                     } else if (isSelected) {
                       optBorder = Colors.redAccent;
@@ -310,16 +338,22 @@ class QuizSessionScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: optBg,
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: optBorder, width: isSelected ? 1.8 : 1.0),
+                      border: Border.all(
+                          color: optBorder, width: isSelected ? 1.8 : 1.0),
                     ),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 4),
                       leading: Container(
                         width: 32,
                         height: 32,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: isSelected ? orangeAccent : (isDark ? Colors.white10 : const Color(0xFFF1F5F9)),
+                          color: isSelected
+                              ? orangeAccent
+                              : (isDark
+                                  ? Colors.white10
+                                  : const Color(0xFFF1F5F9)),
                         ),
                         alignment: Alignment.center,
                         child: Text(
@@ -396,7 +430,8 @@ class QuizSessionScreen extends StatelessWidget {
                         const SizedBox(height: 6),
                         Text(
                           q.explanation,
-                          style: GoogleFonts.inter(fontSize: 13, height: 1.45, color: textPrimary),
+                          style: GoogleFonts.inter(
+                              fontSize: 13, height: 1.45, color: textPrimary),
                         ),
                       ],
                     ),
@@ -417,7 +452,8 @@ class QuizSessionScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 OutlinedButton.icon(
-                  onPressed: currentIndex > 0 ? quizProvider.previousQuestion : null,
+                  onPressed:
+                      currentIndex > 0 ? quizProvider.previousQuestion : null,
                   icon: const Icon(Icons.arrow_back_rounded, size: 18),
                   label: const Text('Previous'),
                 ),
@@ -434,7 +470,8 @@ class QuizSessionScreen extends StatelessWidget {
                 else
                   ElevatedButton.icon(
                     onPressed: () => _confirmSubmit(context, quizProvider),
-                    icon: const Icon(Icons.check_circle_outline_rounded, size: 18),
+                    icon: const Icon(Icons.check_circle_outline_rounded,
+                        size: 18),
                     label: const Text('Submit Test'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF10B981),

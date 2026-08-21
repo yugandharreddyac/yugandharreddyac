@@ -43,14 +43,18 @@ class BookmarkProvider extends ChangeNotifier {
 
   bool isBookmarked(String resourceId, {int? pageNumber}) {
     return _bookmarks.any((b) =>
-        b.resourceId == resourceId && (pageNumber == null || b.pageNumber == pageNumber));
+        b.resourceId == resourceId &&
+        (pageNumber == null || b.pageNumber == pageNumber));
   }
 
-  Future<void> toggleBookmark(ResourceModel resource, {int? pageNumber, String? note}) async {
+  Future<void> toggleBookmark(ResourceModel resource,
+      {int? pageNumber, String? note}) async {
     try {
       final existingIndex = _bookmarks.indexWhere((b) =>
           b.resourceId == resource.id &&
-          (pageNumber == null ? b.pageNumber == null : b.pageNumber == pageNumber));
+          (pageNumber == null
+              ? b.pageNumber == null
+              : b.pageNumber == pageNumber));
 
       if (existingIndex >= 0) {
         _bookmarks.removeAt(existingIndex);
@@ -75,7 +79,8 @@ class BookmarkProvider extends ChangeNotifier {
         _setState(BookmarkViewState.success);
       }
     } catch (e) {
-      _setState(BookmarkViewState.error, error: 'Failed to update bookmark: $e');
+      _setState(BookmarkViewState.error,
+          error: 'Failed to update bookmark: $e');
     }
   }
 
@@ -89,7 +94,8 @@ class BookmarkProvider extends ChangeNotifier {
         _setState(BookmarkViewState.success);
       }
     } catch (e) {
-      _setState(BookmarkViewState.error, error: 'Failed to remove bookmark: $e');
+      _setState(BookmarkViewState.error,
+          error: 'Failed to remove bookmark: $e');
     }
   }
 

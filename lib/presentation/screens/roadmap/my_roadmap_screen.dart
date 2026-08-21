@@ -22,8 +22,10 @@ class MyRoadmapScreen extends StatelessWidget {
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF059669);
     final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     if (roadmapProvider.isLoading) {
       return const Scaffold(
@@ -104,7 +106,9 @@ class MyRoadmapScreen extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+                  color: isDark
+                      ? const Color(0xFF4338CA)
+                      : const Color(0xFFBFDBFE),
                 ),
               ),
               child: Column(
@@ -130,7 +134,8 @@ class MyRoadmapScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              profile?.goal.title ?? 'Software Engineer Roadmap',
+                              profile?.goal.title ??
+                                  'Software Engineer Roadmap',
                               style: GoogleFonts.inter(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -169,7 +174,8 @@ class MyRoadmapScreen extends StatelessWidget {
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: overallProgress > 0 ? emeraldGreen : orangeAccent,
+                          color:
+                              overallProgress > 0 ? emeraldGreen : orangeAccent,
                         ),
                       ),
                     ],
@@ -180,7 +186,9 @@ class MyRoadmapScreen extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: overallProgress / 100.0,
                       minHeight: 10,
-                      backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFCBD5E1),
+                      backgroundColor: isDark
+                          ? Colors.black.withAlpha(64)
+                          : const Color(0xFFCBD5E1),
                       valueColor: AlwaysStoppedAnimation<Color>(
                         overallProgress > 0 ? emeraldGreen : orangeAccent,
                       ),
@@ -222,7 +230,9 @@ class MyRoadmapScreen extends StatelessWidget {
                         color: cardBg,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                          color: isDark
+                              ? const Color(0xFF334155)
+                              : const Color(0xFFE2E8F0),
                         ),
                       ),
                       child: Row(
@@ -233,7 +243,8 @@ class MyRoadmapScreen extends StatelessWidget {
                               color: royalBlue.withAlpha(20),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Icon(Icons.play_arrow_rounded, color: royalBlue, size: 20),
+                            child: const Icon(Icons.play_arrow_rounded,
+                                color: royalBlue, size: 20),
                           ),
                           const SizedBox(width: 14),
                           Expanded(
@@ -260,7 +271,8 @@ class MyRoadmapScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Icon(Icons.arrow_forward_ios_rounded, size: 14, color: textSubtitle),
+                          Icon(Icons.arrow_forward_ios_rounded,
+                              size: 14, color: textSubtitle),
                         ],
                       ),
                     ),
@@ -294,7 +306,9 @@ class MyRoadmapScreen extends StatelessWidget {
                     color: cardBg,
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                      color: isDark
+                          ? const Color(0xFF334155)
+                          : const Color(0xFFE2E8F0),
                     ),
                   ),
                   child: Column(
@@ -303,7 +317,8 @@ class MyRoadmapScreen extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
                             decoration: BoxDecoration(
                               color: royalBlue,
                               borderRadius: BorderRadius.circular(8),
@@ -336,28 +351,48 @@ class MyRoadmapScreen extends StatelessWidget {
                         Builder(
                           builder: (context) {
                             final stageHealth = stageHealths[index];
-                            final isCurrent = roadmapProvider.roadmapHealth?.currentStageName == stageHealth.name;
+                            final isCurrent = roadmapProvider
+                                    .roadmapHealth?.currentStageName ==
+                                stageHealth.name;
                             return Container(
                               margin: const EdgeInsets.only(bottom: 8),
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
-                                color: isCurrent ? royalBlue.withAlpha(20) : Colors.transparent,
+                                color: isCurrent
+                                    ? royalBlue.withAlpha(20)
+                                    : Colors.transparent,
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: isCurrent ? royalBlue.withAlpha(50) : Colors.transparent),
+                                border: Border.all(
+                                    color: isCurrent
+                                        ? royalBlue.withAlpha(50)
+                                        : Colors.transparent),
                               ),
                               child: Row(
                                 children: [
-                                  Icon(Icons.bar_chart_rounded, size: 14, color: isCurrent ? royalBlue : textSubtitle),
+                                  Icon(Icons.bar_chart_rounded,
+                                      size: 14,
+                                      color:
+                                          isCurrent ? royalBlue : textSubtitle),
                                   const SizedBox(width: 6),
                                   Text(
                                     '${stageHealth.completed} / ${stageHealth.total} completed',
-                                    style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: isCurrent ? royalBlue : textSubtitle),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: isCurrent
+                                            ? royalBlue
+                                            : textSubtitle),
                                   ),
                                   if (isCurrent) ...[
                                     const Spacer(),
                                     Text(
                                       'CURRENT STAGE',
-                                      style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: royalBlue, letterSpacing: 0.5),
+                                      style: GoogleFonts.inter(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: royalBlue,
+                                          letterSpacing: 0.5),
                                     ),
                                   ],
                                 ],
@@ -365,23 +400,32 @@ class MyRoadmapScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        if (roadmapProvider.roadmapHealth?.blockingTopicTitle != null && roadmapProvider.roadmapHealth?.currentStageName == stage.stageTitle)
+                        if (roadmapProvider.roadmapHealth?.blockingTopicTitle !=
+                                null &&
+                            roadmapProvider.roadmapHealth?.currentStageName ==
+                                stage.stageTitle)
                           Container(
                             margin: const EdgeInsets.only(bottom: 8),
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
                             decoration: BoxDecoration(
                               color: Colors.red.withAlpha(20),
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.red.withAlpha(50)),
+                              border:
+                                  Border.all(color: Colors.red.withAlpha(50)),
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.block_rounded, size: 14, color: Colors.red),
+                                const Icon(Icons.block_rounded,
+                                    size: 14, color: Colors.red),
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     'BLOCKING: ${roadmapProvider.roadmapHealth?.blockingTopicTitle ?? ''}',
-                                    style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textPrimary),
                                   ),
                                 ),
                               ],
@@ -403,37 +447,53 @@ class MyRoadmapScreen extends StatelessWidget {
                         children: stage.topicIds.map((tId) {
                           final match = NonAcademicData.findTopicById(tId);
                           final title = match?.topic.title ?? tId;
-                          final progress = roadmapProvider.getProgressForTopic(tId);
+                          final progress =
+                              roadmapProvider.getProgressForTopic(tId);
                           final isDone = progress.isFullyCompleted;
 
                           return InkWell(
                             onTap: () => _navigateToTopic(context, tId),
                             borderRadius: BorderRadius.circular(8),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
                                 color: isDone
                                     ? emeraldGreen.withAlpha(20)
-                                    : progress.isInProgress ? royalBlue.withAlpha(20) : (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
+                                    : progress.isInProgress
+                                        ? royalBlue.withAlpha(20)
+                                        : (isDark
+                                            ? const Color(0xFF334155)
+                                            : const Color(0xFFF1F5F9)),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
                                   color: isDone
                                       ? emeraldGreen
-                                      : progress.isInProgress ? royalBlue : (isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1)),
-                                  width: (isDone || progress.isInProgress) ? 1.5 : 1.0,
+                                      : progress.isInProgress
+                                          ? royalBlue
+                                          : (isDark
+                                              ? const Color(0xFF475569)
+                                              : const Color(0xFFCBD5E1)),
+                                  width: (isDone || progress.isInProgress)
+                                      ? 1.5
+                                      : 1.0,
                                 ),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   if (isDone) ...[
-                                    const Icon(Icons.check_circle_rounded, size: 13, color: emeraldGreen),
+                                    const Icon(Icons.check_circle_rounded,
+                                        size: 13, color: emeraldGreen),
                                     const SizedBox(width: 4),
                                   ] else if (progress.isInProgress) ...[
-                                    const Icon(Icons.arrow_forward_rounded, size: 13, color: royalBlue),
+                                    const Icon(Icons.arrow_forward_rounded,
+                                        size: 13, color: royalBlue),
                                     const SizedBox(width: 4),
                                   ] else ...[
-                                    Icon(Icons.radio_button_unchecked_rounded, size: 13, color: textSubtitle.withOpacity(0.5)),
+                                    Icon(Icons.radio_button_unchecked_rounded,
+                                        size: 13,
+                                        color: textSubtitle.withOpacity(0.5)),
                                     const SizedBox(width: 4),
                                   ],
                                   Flexible(
@@ -443,14 +503,21 @@ class MyRoadmapScreen extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.inter(
                                         fontSize: 12,
-                                        fontWeight: isDone ? FontWeight.bold : FontWeight.w600,
-                                        color: isDone ? emeraldGreen : (progress.isInProgress ? royalBlue : textPrimary),
+                                        fontWeight: isDone
+                                            ? FontWeight.bold
+                                            : FontWeight.w600,
+                                        color: isDone
+                                            ? emeraldGreen
+                                            : (progress.isInProgress
+                                                ? royalBlue
+                                                : textPrimary),
                                       ),
                                     ),
                                   ),
                                   if (!isDone) ...[
                                     const SizedBox(width: 4),
-                                    const Icon(Icons.arrow_forward_rounded, size: 12, color: royalBlue),
+                                    const Icon(Icons.arrow_forward_rounded,
+                                        size: 12, color: royalBlue),
                                   ],
                                 ],
                               ),
@@ -479,7 +546,11 @@ class MyRoadmapScreen extends StatelessWidget {
             hub: match.hub,
             category: match.category,
             topic: match.topic,
-            breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+            breadcrumbTrail: [
+              match.hub.title,
+              match.category.title,
+              match.topic.title
+            ],
           ),
         ),
       );
@@ -557,7 +628,9 @@ class MyRoadmapScreen extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+                  color: isDark
+                      ? const Color(0xFF4338CA)
+                      : const Color(0xFFBFDBFE),
                 ),
               ),
               child: Column(
@@ -571,7 +644,8 @@ class MyRoadmapScreen extends StatelessWidget {
                           color: Color(0xFF2563EB),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 22),
+                        child: const Icon(Icons.auto_awesome_rounded,
+                            color: Colors.white, size: 22),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -605,11 +679,17 @@ class MyRoadmapScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Overall Progress',
-                        style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: textSubtitle),
+                        style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: textSubtitle),
                       ),
                       Text(
                         '${roadmap.overallProgress.toStringAsFixed(0)}% (${roadmap.completedItemsCount}/${roadmap.totalItemsCount})',
-                        style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold, color: textPrimary),
+                        style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: textPrimary),
                       ),
                     ],
                   ),
@@ -619,8 +699,11 @@ class MyRoadmapScreen extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: roadmap.overallProgress / 100.0,
                       minHeight: 8,
-                      backgroundColor: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
-                      valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF2563EB)),
+                      backgroundColor: isDark
+                          ? const Color(0xFF334155)
+                          : const Color(0xFFE2E8F0),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                          Color(0xFF2563EB)),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -631,15 +714,18 @@ class MyRoadmapScreen extends StatelessWidget {
                         AppRoutes.ai,
                         arguments: {
                           'roadmapTitle': roadmap.targetCareer,
-                          'prompt': 'Analyze my active roadmap "${roadmap.targetCareer}" (Phase ${roadmap.currentPhaseIndex + 1}: ${roadmap.currentPhase?.title ?? 'Active Phase'}) and recommend the best strategy to complete today\'s tasks efficiently.',
+                          'prompt':
+                              'Analyze my active roadmap "${roadmap.targetCareer}" (Phase ${roadmap.currentPhaseIndex + 1}: ${roadmap.currentPhase?.title ?? 'Active Phase'}) and recommend the best strategy to complete today\'s tasks efficiently.',
                         },
                       );
                     },
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 7),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF6366F1).withOpacity(isDark ? 0.2 : 0.08),
+                        color: const Color(0xFF6366F1)
+                            .withOpacity(isDark ? 0.2 : 0.08),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: const Color(0xFF6366F1).withOpacity(0.3),
@@ -649,7 +735,8 @@ class MyRoadmapScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.auto_awesome_rounded, size: 14, color: Color(0xFF6366F1)),
+                          const Icon(Icons.auto_awesome_rounded,
+                              size: 14, color: Color(0xFF6366F1)),
                           const SizedBox(width: 6),
                           Text(
                             'Ask UniDocs AI About Roadmap',
@@ -676,17 +763,24 @@ class MyRoadmapScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Today's Learning Plan",
-                    style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+                    style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: textPrimary),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: const Color(0xFF2563EB).withAlpha(20),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       'Target: ${roadmap.dailyMinutes} min',
-                      style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF2563EB)),
+                      style: GoogleFonts.inter(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF2563EB)),
                     ),
                   ),
                 ],
@@ -713,7 +807,10 @@ class MyRoadmapScreen extends StatelessWidget {
             // Phased Learning Tracks
             Text(
               'Roadmap Learning Phases',
-              style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+              style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary),
             ),
             const SizedBox(height: 12),
             Column(
@@ -725,7 +822,9 @@ class MyRoadmapScreen extends StatelessWidget {
                     color: cardBg,
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                      color: isDark
+                          ? const Color(0xFF334155)
+                          : const Color(0xFFE2E8F0),
                     ),
                   ),
                   child: Column(
@@ -737,19 +836,26 @@ class MyRoadmapScreen extends StatelessWidget {
                           Expanded(
                             child: Text(
                               phase.title,
-                              style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
+                              style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: textPrimary),
                             ),
                           ),
                           Text(
                             phase.estimatedDuration,
-                            style: GoogleFonts.inter(fontSize: 11, color: textSubtitle, fontWeight: FontWeight.w600),
+                            style: GoogleFonts.inter(
+                                fontSize: 11,
+                                color: textSubtitle,
+                                fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
                       const SizedBox(height: 4),
                       Text(
                         phase.description,
-                        style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
+                        style: GoogleFonts.inter(
+                            fontSize: 12, color: textSubtitle),
                       ),
                       const SizedBox(height: 12),
                       ClipRRect(
@@ -757,7 +863,9 @@ class MyRoadmapScreen extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: phase.completionPercentage / 100.0,
                           minHeight: 6,
-                          backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9),
+                          backgroundColor: isDark
+                              ? const Color(0xFF0F172A)
+                              : const Color(0xFFF1F5F9),
                           valueColor: AlwaysStoppedAnimation<Color>(
                             phase.isFullyCompleted ? emeraldGreen : royalBlue,
                           ),
@@ -771,7 +879,9 @@ class MyRoadmapScreen extends StatelessWidget {
                             provider,
                             item,
                             isDark,
-                            isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+                            isDark
+                                ? const Color(0xFF0F172A)
+                                : const Color(0xFFF8FAFC),
                             textPrimary,
                             textSubtitle,
                             royalBlue,
@@ -822,8 +932,12 @@ class MyRoadmapScreen extends StatelessWidget {
                 icon: Icon(
                   item.isCompleted
                       ? Icons.check_circle_rounded
-                      : (item.isLocked ? Icons.lock_outline_rounded : Icons.radio_button_unchecked_rounded),
-                  color: item.isCompleted ? emeraldGreen : (item.isLocked ? Colors.grey : royalBlue),
+                      : (item.isLocked
+                          ? Icons.lock_outline_rounded
+                          : Icons.radio_button_unchecked_rounded),
+                  color: item.isCompleted
+                      ? emeraldGreen
+                      : (item.isLocked ? Colors.grey : royalBlue),
                   size: 20,
                 ),
                 padding: EdgeInsets.zero,
@@ -833,7 +947,9 @@ class MyRoadmapScreen extends StatelessWidget {
                     : () {
                         provider.markPersonalizedItemStatus(
                           item.id,
-                          item.isCompleted ? RoadmapItemStatus.notStarted : RoadmapItemStatus.completed,
+                          item.isCompleted
+                              ? RoadmapItemStatus.notStarted
+                              : RoadmapItemStatus.completed,
                         );
                       },
               ),
@@ -842,12 +958,14 @@ class MyRoadmapScreen extends StatelessWidget {
                 child: Text(
                   item.title,
                   style: GoogleFonts.inter(
-                    fontWeight: item.isCompleted ? FontWeight.bold : FontWeight.w600,
+                    fontWeight:
+                        item.isCompleted ? FontWeight.bold : FontWeight.w600,
                     fontSize: 13,
                     color: item.isCompleted
                         ? emeraldGreen
                         : (item.isLocked ? textSubtitle : textPrimary),
-                    decoration: item.isCompleted ? TextDecoration.lineThrough : null,
+                    decoration:
+                        item.isCompleted ? TextDecoration.lineThrough : null,
                   ),
                 ),
               ),
@@ -860,7 +978,11 @@ class MyRoadmapScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 30.0),
               child: Text(
                 '💡 ${item.recommendationReason!}',
-                style: GoogleFonts.inter(fontSize: 11, color: isDark ? const Color(0xFF93C5FD) : const Color(0xFF1E40AF)),
+                style: GoogleFonts.inter(
+                    fontSize: 11,
+                    color: isDark
+                        ? const Color(0xFF93C5FD)
+                        : const Color(0xFF1E40AF)),
               ),
             ),
           ],
@@ -877,15 +999,20 @@ class MyRoadmapScreen extends StatelessWidget {
                 if (item.deepRoute != null && !item.isLocked)
                   TextButton.icon(
                     style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 4),
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     icon: const Icon(Icons.open_in_new_rounded, size: 13),
-                    label: Text('Open Resource', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold)),
+                    label: Text('Open Resource',
+                        style: GoogleFonts.inter(
+                            fontSize: 11, fontWeight: FontWeight.bold)),
                     onPressed: () {
-                      if (item.resourceType == 'hub_topic' && item.resourceReference != null) {
-                        final match = NonAcademicData.findTopicById(item.resourceReference!);
+                      if (item.resourceType == 'hub_topic' &&
+                          item.resourceReference != null) {
+                        final match = NonAcademicData.findTopicById(
+                            item.resourceReference!);
                         if (match != null) {
                           Navigator.push(
                             context,
@@ -894,7 +1021,11 @@ class MyRoadmapScreen extends StatelessWidget {
                                 hub: match.hub,
                                 category: match.category,
                                 topic: match.topic,
-                                breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+                                breadcrumbTrail: [
+                                  match.hub.title,
+                                  match.category.title,
+                                  match.topic.title
+                                ],
                               ),
                             ),
                           );
@@ -949,7 +1080,8 @@ class MyRoadmapScreen extends StatelessWidget {
       ),
       child: Text(
         priority.displayName,
-        style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: fg),
+        style: GoogleFonts.inter(
+            fontSize: 10, fontWeight: FontWeight.bold, color: fg),
       ),
     );
   }

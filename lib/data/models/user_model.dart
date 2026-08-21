@@ -50,8 +50,10 @@ class UserModel {
       isAnonymous: isAnonymous ?? this.isAnonymous,
       createdAt: createdAt ?? this.createdAt,
       lastLoginAt: lastLoginAt ?? this.lastLoginAt,
-      bookmarkedResourceIds: bookmarkedResourceIds ?? this.bookmarkedResourceIds,
-      downloadedResourceIds: downloadedResourceIds ?? this.downloadedResourceIds,
+      bookmarkedResourceIds:
+          bookmarkedResourceIds ?? this.bookmarkedResourceIds,
+      downloadedResourceIds:
+          downloadedResourceIds ?? this.downloadedResourceIds,
     );
   }
 
@@ -73,13 +75,19 @@ class UserModel {
 
   factory UserModel.fromFirestore(Map<String, dynamic> data, String uid) {
     List<String> bookmarks = [];
-    if (data['bookmarkedResourceIds'] != null && data['bookmarkedResourceIds'] is List) {
-      bookmarks = (data['bookmarkedResourceIds'] as List).map((e) => e.toString()).toList();
+    if (data['bookmarkedResourceIds'] != null &&
+        data['bookmarkedResourceIds'] is List) {
+      bookmarks = (data['bookmarkedResourceIds'] as List)
+          .map((e) => e.toString())
+          .toList();
     }
 
     List<String> downloads = [];
-    if (data['downloadedResourceIds'] != null && data['downloadedResourceIds'] is List) {
-      downloads = (data['downloadedResourceIds'] as List).map((e) => e.toString()).toList();
+    if (data['downloadedResourceIds'] != null &&
+        data['downloadedResourceIds'] is List) {
+      downloads = (data['downloadedResourceIds'] as List)
+          .map((e) => e.toString())
+          .toList();
     }
 
     return UserModel(

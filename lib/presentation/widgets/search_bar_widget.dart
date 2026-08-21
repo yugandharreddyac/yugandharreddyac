@@ -48,7 +48,8 @@ class SearchBarWidget extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
-            color: isDark ? AppColors.textSecondaryDark : const Color(0xFF94A3B8),
+            color:
+                isDark ? AppColors.textSecondaryDark : const Color(0xFF94A3B8),
             fontSize: 14,
             fontWeight: FontWeight.normal,
           ),
@@ -60,7 +61,9 @@ class SearchBarWidget extends StatelessWidget {
           suffixIcon: controller != null && controller!.text.isNotEmpty
               ? IconButton(
                   icon: const Icon(Icons.clear_rounded, size: 18),
-                  color: isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B),
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : const Color(0xFF64748B),
                   onPressed: () {
                     controller!.clear();
                     onChanged('');
@@ -69,7 +72,8 @@ class SearchBarWidget extends StatelessWidget {
                 )
               : null,
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
       ),
     );

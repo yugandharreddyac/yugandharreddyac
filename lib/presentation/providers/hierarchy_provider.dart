@@ -17,7 +17,8 @@ class HierarchyProvider extends ChangeNotifier {
   CategoryModel? get currentCategory => _currentCategory;
   LearningLevel? get selectedLevelFilter => _selectedLevelFilter;
   HierarchicalTopicModel? get currentTopic => _currentTopic;
-  List<HierarchicalTopicModel> get topicBreadcrumbStack => List.unmodifiable(_topicBreadcrumbStack);
+  List<HierarchicalTopicModel> get topicBreadcrumbStack =>
+      List.unmodifiable(_topicBreadcrumbStack);
 
   void selectHub(String hubId) {
     _currentHub = _repository.getHubById(hubId);

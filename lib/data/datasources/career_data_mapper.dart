@@ -7,16 +7,46 @@ class CareerDataMapper {
 
   // Maps a skill name (e.g. "Python") to its category and the list of related topic IDs
   static const Map<String, Map<String, dynamic>> _skillDefinitions = {
-    'Python': {'category': 'Programming', 'topics': ['python_basics', 'lists_tuples', 'python_oop', 'python_dsa']},
-    'Java': {'category': 'Programming', 'topics': ['java_intro', 'java_oop', 'java_collections']},
-    'C++': {'category': 'Programming', 'topics': ['cpp_basics', 'cpp_stl', 'cpp_pointers']},
-    'Arrays & Strings': {'category': 'Problem Solving', 'topics': ['arrays_strings_dsa']},
-    'Trees & Graphs': {'category': 'Problem Solving', 'topics': ['trees_bst', 'graph_algorithms']},
-    'Dynamic Programming': {'category': 'Problem Solving', 'topics': ['dp_basics']},
-    'Web Development': {'category': 'Development', 'topics': ['html_css', 'javascript_basics', 'react_intro', 'node_backend']},
-    'Git & GitHub': {'category': 'Development', 'topics': ['git_basics']},
-    'Machine Learning': {'category': 'AI / ML', 'topics': ['ml_intro', 'supervised_learning', 'neural_networks']},
-    'Cloud Computing': {'category': 'Cloud', 'topics': ['cloud_basics', 'aws_intro']},
+    'Python': {
+      'category': 'Programming',
+      'topics': ['python_basics', 'lists_tuples', 'python_oop', 'python_dsa']
+    },
+    'Java': {
+      'category': 'Programming',
+      'topics': ['java_intro', 'java_oop', 'java_collections']
+    },
+    'C++': {
+      'category': 'Programming',
+      'topics': ['cpp_basics', 'cpp_stl', 'cpp_pointers']
+    },
+    'Arrays & Strings': {
+      'category': 'Problem Solving',
+      'topics': ['arrays_strings_dsa']
+    },
+    'Trees & Graphs': {
+      'category': 'Problem Solving',
+      'topics': ['trees_bst', 'graph_algorithms']
+    },
+    'Dynamic Programming': {
+      'category': 'Problem Solving',
+      'topics': ['dp_basics']
+    },
+    'Web Development': {
+      'category': 'Development',
+      'topics': ['html_css', 'javascript_basics', 'react_intro', 'node_backend']
+    },
+    'Git & GitHub': {
+      'category': 'Development',
+      'topics': ['git_basics']
+    },
+    'Machine Learning': {
+      'category': 'AI / ML',
+      'topics': ['ml_intro', 'supervised_learning', 'neural_networks']
+    },
+    'Cloud Computing': {
+      'category': 'Cloud',
+      'topics': ['cloud_basics', 'aws_intro']
+    },
   };
 
   // Dimensions mapping depending on CareerGoal
@@ -24,21 +54,48 @@ class CareerDataMapper {
     switch (goal) {
       case CareerGoal.softwarePlacement:
         return {
-          'Programming': ['python_basics', 'java_intro', 'cpp_basics', 'python_oop'],
-          'DSA': ['arrays_strings_dsa', 'trees_bst', 'graph_algorithms', 'dp_basics'],
+          'Programming': [
+            'python_basics',
+            'java_intro',
+            'cpp_basics',
+            'python_oop'
+          ],
+          'DSA': [
+            'arrays_strings_dsa',
+            'trees_bst',
+            'graph_algorithms',
+            'dp_basics'
+          ],
           'Core CS': ['os_basics', 'dbms_intro', 'networks_basics'],
-          'Projects': ['portfolio_project', 'ecommerce_clone'], // using sample project topic ids
-          'Interview Prep': ['aptitude_basics', 'hr_interview', 'mock_interviews'],
+          'Projects': [
+            'portfolio_project',
+            'ecommerce_clone'
+          ], // using sample project topic ids
+          'Interview Prep': [
+            'aptitude_basics',
+            'hr_interview',
+            'mock_interviews'
+          ],
         };
       case CareerGoal.gateExam:
         return {
-          'Core CS': ['os_basics', 'dbms_intro', 'networks_basics', 'toc_basics'],
+          'Core CS': [
+            'os_basics',
+            'dbms_intro',
+            'networks_basics',
+            'toc_basics'
+          ],
           'DSA': ['arrays_strings_dsa', 'trees_bst', 'graph_algorithms'],
           'Practice': ['gate_mock_test_1', 'gate_pyq'],
         };
       case CareerGoal.msHigherStudies:
         return {
-          'Technical Prep': ['os_basics', 'dbms_intro', 'networks_basics', 'ml_intro'],
+          'Technical Prep': [
+            'os_basics',
+            'dbms_intro',
+            'networks_basics',
+            'ml_intro'
+          ],
           'GRE / TOEFL': ['gre_verbal', 'gre_quant'],
           'Research': ['research_methodology', 'sop_writing'],
         };
@@ -63,7 +120,8 @@ class CareerDataMapper {
     }
   }
 
-  static SkillEvidenceLevel calculateSkillLevel(String skillName, Map<String, TopicProgressModel> progressMap) {
+  static SkillEvidenceLevel calculateSkillLevel(
+      String skillName, Map<String, TopicProgressModel> progressMap) {
     final def = _skillDefinitions[skillName];
     if (def == null) return SkillEvidenceLevel.notStarted;
 
@@ -87,7 +145,8 @@ class CareerDataMapper {
     return SkillEvidenceLevel.notStarted;
   }
 
-  static List<SkillEvidenceModel> getAllSkills(Map<String, TopicProgressModel> progressMap) {
+  static List<SkillEvidenceModel> getAllSkills(
+      Map<String, TopicProgressModel> progressMap) {
     return _skillDefinitions.entries.map((e) {
       final skillName = e.key;
       final category = e.value['category'] as String;
@@ -102,11 +161,15 @@ class CareerDataMapper {
     }).toList();
   }
 
-  static List<SkillEvidenceModel> getSkillsForTopic(String topicId, Map<String, TopicProgressModel> progressMap) {
-    return getAllSkills(progressMap).where((s) => s.relatedTopicIds.contains(topicId)).toList();
+  static List<SkillEvidenceModel> getSkillsForTopic(
+      String topicId, Map<String, TopicProgressModel> progressMap) {
+    return getAllSkills(progressMap)
+        .where((s) => s.relatedTopicIds.contains(topicId))
+        .toList();
   }
 
-  static List<ProjectPortfolioModel> getProjects(Map<String, TopicProgressModel> progressMap) {
+  static List<ProjectPortfolioModel> getProjects(
+      Map<String, TopicProgressModel> progressMap) {
     final List<ProjectPortfolioModel> projects = [];
     final hub = NonAcademicData.getHubById('projects');
     if (hub == null) return projects;
@@ -131,9 +194,13 @@ class CareerDataMapper {
         // Dummy mapping for demonstrated skills based on project topic title
         List<String> skills = [];
         if (topic.title.toLowerCase().contains('python')) skills.add('Python');
-        if (topic.title.toLowerCase().contains('web') || topic.title.toLowerCase().contains('portfolio')) skills.addAll(['HTML', 'CSS', 'JavaScript', 'Web Development']);
+        if (topic.title.toLowerCase().contains('web') ||
+            topic.title.toLowerCase().contains('portfolio'))
+          skills.addAll(['HTML', 'CSS', 'JavaScript', 'Web Development']);
         if (topic.title.toLowerCase().contains('app')) skills.add('Flutter');
-        if (topic.title.toLowerCase().contains('ml') || topic.title.toLowerCase().contains('predictor')) skills.add('Machine Learning');
+        if (topic.title.toLowerCase().contains('ml') ||
+            topic.title.toLowerCase().contains('predictor'))
+          skills.add('Machine Learning');
 
         projects.add(ProjectPortfolioModel(
           topicId: topic.id,
@@ -141,34 +208,39 @@ class CareerDataMapper {
           state: state,
           demonstratedSkills: skills,
         ));
-        
+
         for (final sub in topic.subtopics) {
-            ProjectState subState = ProjectState.notStarted;
-            final subProg = progressMap[sub.id];
+          ProjectState subState = ProjectState.notStarted;
+          final subProg = progressMap[sub.id];
 
-            if (subProg != null) {
-              if (subProg.reviewCompleted) {
-                subState = ProjectState.completed;
-              } else if (subProg.buildCompleted) {
-                subState = ProjectState.testing;
-              } else if (subProg.practiceCompleted) {
-                subState = ProjectState.building;
-              } else if (subProg.learnCompleted) {
-                subState = ProjectState.planning;
-              }
+          if (subProg != null) {
+            if (subProg.reviewCompleted) {
+              subState = ProjectState.completed;
+            } else if (subProg.buildCompleted) {
+              subState = ProjectState.testing;
+            } else if (subProg.practiceCompleted) {
+              subState = ProjectState.building;
+            } else if (subProg.learnCompleted) {
+              subState = ProjectState.planning;
             }
-             List<String> subSkills = [];
-            if (sub.title.toLowerCase().contains('python')) subSkills.add('Python');
-            if (sub.title.toLowerCase().contains('web') || sub.title.toLowerCase().contains('portfolio')) subSkills.addAll(['HTML', 'CSS', 'JavaScript', 'Web Development']);
-            if (sub.title.toLowerCase().contains('app')) subSkills.add('Flutter');
-            if (sub.title.toLowerCase().contains('ml') || sub.title.toLowerCase().contains('predictor')) subSkills.add('Machine Learning');
+          }
+          List<String> subSkills = [];
+          if (sub.title.toLowerCase().contains('python'))
+            subSkills.add('Python');
+          if (sub.title.toLowerCase().contains('web') ||
+              sub.title.toLowerCase().contains('portfolio'))
+            subSkills.addAll(['HTML', 'CSS', 'JavaScript', 'Web Development']);
+          if (sub.title.toLowerCase().contains('app')) subSkills.add('Flutter');
+          if (sub.title.toLowerCase().contains('ml') ||
+              sub.title.toLowerCase().contains('predictor'))
+            subSkills.add('Machine Learning');
 
-            projects.add(ProjectPortfolioModel(
-              topicId: sub.id,
-              projectName: sub.title,
-              state: subState,
-              demonstratedSkills: subSkills,
-            ));
+          projects.add(ProjectPortfolioModel(
+            topicId: sub.id,
+            projectName: sub.title,
+            state: subState,
+            demonstratedSkills: subSkills,
+          ));
         }
       }
     }

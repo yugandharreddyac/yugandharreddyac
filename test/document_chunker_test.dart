@@ -20,7 +20,8 @@ void main() {
         const DocumentPage(pageNumber: 1, extractedText: '   '),
         const DocumentPage(pageNumber: 2, extractedText: ''),
       ];
-      final chunks = chunker.chunkDocument(documentId: 'doc_blank', pages: pages);
+      final chunks =
+          chunker.chunkDocument(documentId: 'doc_blank', pages: pages);
       expect(chunks, isEmpty);
     });
 
@@ -28,11 +29,13 @@ void main() {
       final pages = [
         const DocumentPage(
           pageNumber: 1,
-          extractedText: 'Process synchronization is the task of coordinating process execution.',
+          extractedText:
+              'Process synchronization is the task of coordinating process execution.',
         ),
       ];
 
-      final chunks = chunker.chunkDocument(documentId: 'doc_sync', pages: pages);
+      final chunks =
+          chunker.chunkDocument(documentId: 'doc_sync', pages: pages);
       expect(chunks.length, equals(1));
       expect(chunks.first.pageNumber, equals(1));
       expect(chunks.first.chunkId, equals('doc_sync_p1_c0'));
@@ -48,7 +51,8 @@ void main() {
         DocumentPage(pageNumber: 2, extractedText: page2Words),
       ];
 
-      final chunks = chunker.chunkDocument(documentId: 'doc_multi', pages: pages);
+      final chunks =
+          chunker.chunkDocument(documentId: 'doc_multi', pages: pages);
 
       expect(chunks.length, greaterThanOrEqualTo(2));
       final p1Chunks = chunks.where((c) => c.pageNumber == 1);
@@ -65,11 +69,14 @@ void main() {
       }
     });
 
-    test('Sliding window overlap creates overlapping words between consecutive chunks', () {
+    test(
+        'Sliding window overlap creates overlapping words between consecutive chunks',
+        () {
       final words = List.generate(100, (i) => 'Item$i').join(' ');
       final pages = [DocumentPage(pageNumber: 1, extractedText: words)];
 
-      final chunks = chunker.chunkDocument(documentId: 'doc_overlap', pages: pages);
+      final chunks =
+          chunker.chunkDocument(documentId: 'doc_overlap', pages: pages);
 
       expect(chunks.length, greaterThanOrEqualTo(2));
       // First chunk should have Item0..Item49
@@ -78,8 +85,11 @@ void main() {
       expect(chunks[1].text, contains('Item40'));
     });
 
-    test('Deterministic chunking produces identical output given identical input', () {
-      final text = 'Deterministic algorithm guarantees identical state across multiple runs with exact hashes.';
+    test(
+        'Deterministic chunking produces identical output given identical input',
+        () {
+      final text =
+          'Deterministic algorithm guarantees identical state across multiple runs with exact hashes.';
       final pages = [DocumentPage(pageNumber: 1, extractedText: text)];
 
       final run1 = chunker.chunkDocument(documentId: 'doc_det', pages: pages);

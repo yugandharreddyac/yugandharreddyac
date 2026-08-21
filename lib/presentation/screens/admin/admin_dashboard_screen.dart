@@ -40,12 +40,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Confirm Admin Logout'),
-        content: const Text('Are you sure you want to sign out of the Administrator Control Panel?'),
+        content: const Text(
+            'Are you sure you want to sign out of the Administrator Control Panel?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white),
             child: const Text('Logout'),
           ),
         ],
@@ -71,14 +76,19 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
 
-    final currentDateStr = DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now());
-    final storageMbUsed = (((metrics['storageBytesUsed'] ?? 33600000) as num) / (1024 * 1024)).toStringAsFixed(1);
+    final currentDateStr =
+        DateFormat('EEEE, MMMM d, yyyy').format(DateTime.now());
+    final storageMbUsed =
+        (((metrics['storageBytesUsed'] ?? 33600000) as num) / (1024 * 1024))
+            .toStringAsFixed(1);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -98,7 +108,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
             tooltip: 'Refresh Metrics',
-            onPressed: () => context.read<AdminProvider>().fetchDashboardMetrics(),
+            onPressed: () =>
+                context.read<AdminProvider>().fetchDashboardMetrics(),
           ),
           IconButton(
             icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
@@ -142,7 +153,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       color: Colors.white.withAlpha(35),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.admin_panel_settings_rounded, color: Colors.white, size: 30),
+                    child: const Icon(Icons.admin_panel_settings_rounded,
+                        color: Colors.white, size: 30),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -160,7 +172,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         const SizedBox(height: 2),
                         Text(
                           '$currentDateStr • Firebase System Online',
-                          style: GoogleFonts.inter(color: Colors.white.withAlpha(220), fontSize: 13),
+                          style: GoogleFonts.inter(
+                              color: Colors.white.withAlpha(220), fontSize: 13),
                         ),
                       ],
                     ),
@@ -195,7 +208,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 _buildMetricCard(
                   title: 'Total Registered Users',
                   value: '${metrics['totalUsers'] ?? 450}',
-                  subtitle: '${metrics['adminCount'] ?? 1} Admins • ${metrics['studentCount'] ?? 449} Students',
+                  subtitle:
+                      '${metrics['adminCount'] ?? 1} Admins • ${metrics['studentCount'] ?? 449} Students',
                   icon: Icons.people_alt_rounded,
                   color: const Color(0xFFF59E0B),
                   cardColor: cardColor,
@@ -296,7 +310,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     icon: Icons.school_rounded,
                     iconColor: royalBlue,
                     title: '📚 Academic Resources & PDF Management',
-                    subtitle: 'Full CRUD: Add/Edit/Delete Notes, PYQs & Syllabus',
+                    subtitle:
+                        'Full CRUD: Add/Edit/Delete Notes, PYQs & Syllabus',
                     targetPage: const AcademicAdminPage(),
                     textPrimary: textPrimary,
                     textSubtitle: textSubtitle,
@@ -307,7 +322,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     icon: Icons.menu_book_rounded,
                     iconColor: const Color(0xFF8B5CF6),
                     title: '📖 Textbook & Course Overview Manager',
-                    subtitle: 'Full CRUD: Chapters, Sections, Topics & Syllabus Overviews',
+                    subtitle:
+                        'Full CRUD: Chapters, Sections, Topics & Syllabus Overviews',
                     targetPage: const AdminTextbookScreen(),
                     textPrimary: textPrimary,
                     textSubtitle: textSubtitle,
@@ -318,7 +334,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     icon: Icons.people_alt_rounded,
                     iconColor: const Color(0xFFF59E0B),
                     title: '👥 User & Permissions Management',
-                    subtitle: 'View registered users, change roles & account status',
+                    subtitle:
+                        'View registered users, change roles & account status',
                     targetPage: const UserAdminPage(),
                     textPrimary: textPrimary,
                     textSubtitle: textSubtitle,
@@ -419,9 +436,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
         child: Icon(icon, color: iconColor, size: 20),
       ),
-      title: Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary)),
-      subtitle: Text(subtitle, style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-      trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+      title: Text(title,
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary)),
+      subtitle: Text(subtitle,
+          style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+      trailing: const Icon(Icons.arrow_forward_ios_rounded,
+          size: 14, color: Colors.grey),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) => targetPage));
       },

@@ -11,10 +11,12 @@ class CodingLanguageDetailScreen extends StatefulWidget {
   const CodingLanguageDetailScreen({super.key, required this.language});
 
   @override
-  State<CodingLanguageDetailScreen> createState() => _CodingLanguageDetailScreenState();
+  State<CodingLanguageDetailScreen> createState() =>
+      _CodingLanguageDetailScreenState();
 }
 
-class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen> {
+class _CodingLanguageDetailScreenState
+    extends State<CodingLanguageDetailScreen> {
   Future<void> _launchUrl(String urlString) async {
     if (urlString.isEmpty) return;
     final Uri uri = Uri.parse(urlString);
@@ -32,8 +34,10 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
 
     return DefaultTabController(
       length: 5,
@@ -125,8 +129,10 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
                 ),
                 labelColor: Colors.white,
                 unselectedLabelColor: textSecondary,
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                labelStyle:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
                 tabs: const [
                   Tab(text: '📘 Syntax & Core'),
                   Tab(text: '🧱 Collections & OOP'),
@@ -141,11 +147,16 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildSyntaxTab(context, lang, isDark, textPrimary, textSecondary),
-                  _buildCollectionsTab(context, lang, isDark, textPrimary, textSecondary),
-                  _buildMemoryTab(context, lang, isDark, textPrimary, textSecondary),
-                  _buildProjectsTab(context, lang, isDark, textPrimary, textSecondary),
-                  _buildOfficialDocsTab(context, lang, isDark, textPrimary, textSecondary),
+                  _buildSyntaxTab(
+                      context, lang, isDark, textPrimary, textSecondary),
+                  _buildCollectionsTab(
+                      context, lang, isDark, textPrimary, textSecondary),
+                  _buildMemoryTab(
+                      context, lang, isDark, textPrimary, textSecondary),
+                  _buildProjectsTab(
+                      context, lang, isDark, textPrimary, textSecondary),
+                  _buildOfficialDocsTab(
+                      context, lang, isDark, textPrimary, textSecondary),
                 ],
               ),
             ),
@@ -155,80 +166,114 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
     );
   }
 
-  Widget _buildSyntaxTab(BuildContext context, CodingLanguageModel lang, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildSyntaxTab(BuildContext context, CodingLanguageModel lang,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Why Learn ${lang.name}?', Icons.star_outline_rounded),
+        _buildSectionHeader(
+            'Why Learn ${lang.name}?', Icons.star_outline_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.whyLearn, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.whyLearn, isDark: isDark, textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Syntax & Language Fundamentals', Icons.terminal_rounded),
+        _buildSectionHeader(
+            'Syntax & Language Fundamentals', Icons.terminal_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.syntaxFundamentals, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.syntaxFundamentals,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Variables & Data Types', Icons.data_object_rounded),
+        _buildSectionHeader(
+            'Variables & Data Types', Icons.data_object_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.variablesAndDataTypes, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.variablesAndDataTypes,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Operators & Conditional Logic', Icons.alt_route_rounded),
+        _buildSectionHeader(
+            'Operators & Conditional Logic', Icons.alt_route_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.operatorsAndConditions, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.operatorsAndConditions,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
         _buildSectionHeader('Loops & Control Flow', Icons.loop_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.loopsAndControlFlow, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.loopsAndControlFlow,
+            isDark: isDark,
+            textPrimary: textPrimary),
       ],
     );
   }
 
-  Widget _buildCollectionsTab(BuildContext context, CodingLanguageModel lang, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildCollectionsTab(BuildContext context, CodingLanguageModel lang,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _buildSectionHeader('Functions & Scoping', Icons.functions_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.functionsAndScope, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.functionsAndScope,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Collections, Arrays & Data Structures', Icons.view_module_rounded),
+        _buildSectionHeader(
+            'Collections, Arrays & Data Structures', Icons.view_module_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.collectionsAndArrays, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.collectionsAndArrays,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('String Handling & Manipulations', Icons.short_text_rounded),
+        _buildSectionHeader(
+            'String Handling & Manipulations', Icons.short_text_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.stringHandling, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.stringHandling,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Object-Oriented Programming (OOP) & Paradigms', Icons.account_tree_rounded),
+        _buildSectionHeader('Object-Oriented Programming (OOP) & Paradigms',
+            Icons.account_tree_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.objectOrientedProgramming, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.objectOrientedProgramming,
+            isDark: isDark,
+            textPrimary: textPrimary),
       ],
     );
   }
 
-  Widget _buildMemoryTab(BuildContext context, CodingLanguageModel lang, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildMemoryTab(BuildContext context, CodingLanguageModel lang,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Error Handling, Exceptions & File I/O', Icons.bug_report_rounded),
+        _buildSectionHeader(
+            'Error Handling, Exceptions & File I/O', Icons.bug_report_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: lang.errorAndFileHandling, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: lang.errorAndFileHandling,
+            isDark: isDark,
+            textPrimary: textPrimary),
       ],
     );
   }
 
-  Widget _buildProjectsTab(BuildContext context, CodingLanguageModel lang, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildProjectsTab(BuildContext context, CodingLanguageModel lang,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         if (lang.practiceProblems.isNotEmpty) ...[
-          _buildSectionHeader('Must-Do Practice Problems', Icons.task_alt_rounded),
+          _buildSectionHeader(
+              'Must-Do Practice Problems', Icons.task_alt_rounded),
           const SizedBox(height: 8),
           ...lang.practiceProblems.map((prob) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -237,22 +282,31 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                    border: Border.all(
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE2E8F0)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.code_rounded, color: Color(0xFF0D9488), size: 18),
+                      const Icon(Icons.code_rounded,
+                          color: Color(0xFF0D9488), size: 18),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(prob, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: textPrimary))),
+                      Expanded(
+                          child: Text(prob,
+                              style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary))),
                     ],
                   ),
                 ),
               )),
           const SizedBox(height: 16),
         ],
-
         if (lang.recommendedProjects.isNotEmpty) ...[
-          _buildSectionHeader('Recommended Portfolio Projects', Icons.folder_special_rounded),
+          _buildSectionHeader(
+              'Recommended Portfolio Projects', Icons.folder_special_rounded),
           const SizedBox(height: 8),
           ...lang.recommendedProjects.map((proj) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -261,22 +315,31 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                    border: Border.all(
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE2E8F0)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.rocket_launch_rounded, color: Colors.orange, size: 18),
+                      const Icon(Icons.rocket_launch_rounded,
+                          color: Colors.orange, size: 18),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(proj, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: textPrimary))),
+                      Expanded(
+                          child: Text(proj,
+                              style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary))),
                     ],
                   ),
                 ),
               )),
           const SizedBox(height: 16),
         ],
-
         if (lang.interviewQuestions.isNotEmpty) ...[
-          _buildSectionHeader('Common Interview Questions', Icons.psychology_rounded),
+          _buildSectionHeader(
+              'Common Interview Questions', Icons.psychology_rounded),
           const SizedBox(height: 8),
           ...lang.interviewQuestions.map((q) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -285,13 +348,22 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                    border: Border.all(
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE2E8F0)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.help_outline_rounded, color: AppColors.primary, size: 18),
+                      const Icon(Icons.help_outline_rounded,
+                          color: AppColors.primary, size: 18),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(q, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: textPrimary))),
+                      Expanded(
+                          child: Text(q,
+                              style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary))),
                     ],
                   ),
                 ),
@@ -301,41 +373,63 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
     );
   }
 
-  Widget _buildOfficialDocsTab(BuildContext context, CodingLanguageModel lang, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildOfficialDocsTab(BuildContext context, CodingLanguageModel lang,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Official Documentation & Channels', Icons.verified_rounded),
+        _buildSectionHeader(
+            'Official Documentation & Channels', Icons.verified_rounded),
         const SizedBox(height: 12),
-
         if (lang.officialDocsUrl.isNotEmpty)
           Container(
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               color: isDark ? AppColors.cardDark : Colors.white,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+              border: Border.all(
+                  color:
+                      isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
             ),
             child: ListTile(
-              leading: const CircleAvatar(backgroundColor: Color(0xFF0D9488), radius: 14, child: Icon(Icons.open_in_new_rounded, size: 14, color: Colors.white)),
-              title: Text('Official Documentation Portal', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
-              subtitle: Text(lang.officialDocsUrl, style: TextStyle(fontSize: 11, color: textSecondary)),
+              leading: const CircleAvatar(
+                  backgroundColor: Color(0xFF0D9488),
+                  radius: 14,
+                  child: Icon(Icons.open_in_new_rounded,
+                      size: 14, color: Colors.white)),
+              title: Text('Official Documentation Portal',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: textPrimary)),
+              subtitle: Text(lang.officialDocsUrl,
+                  style: TextStyle(fontSize: 11, color: textSecondary)),
               onTap: () => _launchUrl(lang.officialDocsUrl),
             ),
           ),
-
         if (lang.youtubePlaylistUrl.isNotEmpty)
           Container(
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               color: isDark ? AppColors.cardDark : Colors.white,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+              border: Border.all(
+                  color:
+                      isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
             ),
             child: ListTile(
-              leading: const CircleAvatar(backgroundColor: Colors.red, radius: 14, child: Icon(Icons.play_arrow_rounded, size: 16, color: Colors.white)),
-              title: Text('Recommended YouTube Learning Playlist', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
-              subtitle: Text(lang.youtubePlaylistUrl, style: TextStyle(fontSize: 11, color: textSecondary)),
+              leading: const CircleAvatar(
+                  backgroundColor: Colors.red,
+                  radius: 14,
+                  child: Icon(Icons.play_arrow_rounded,
+                      size: 16, color: Colors.white)),
+              title: Text('Recommended YouTube Learning Playlist',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: textPrimary)),
+              subtitle: Text(lang.youtubePlaylistUrl,
+                  style: TextStyle(fontSize: 11, color: textSecondary)),
               onTap: () => _launchUrl(lang.youtubePlaylistUrl),
             ),
           ),
@@ -348,19 +442,25 @@ class _CodingLanguageDetailScreenState extends State<CodingLanguageDetailScreen>
       children: [
         Icon(icon, color: const Color(0xFF0D9488), size: 20),
         const SizedBox(width: 8),
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5)),
+        Text(title,
+            style:
+                const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5)),
       ],
     );
   }
 
-  Widget _buildCard(BuildContext context, {required String text, required bool isDark, required Color textPrimary}) {
+  Widget _buildCard(BuildContext context,
+      {required String text,
+      required bool isDark,
+      required Color textPrimary}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+        border: Border.all(
+            color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
       ),
       child: Text(
         text.isEmpty ? 'Exhaustive textbook content provided in full.' : text,

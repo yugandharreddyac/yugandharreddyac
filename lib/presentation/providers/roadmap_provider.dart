@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../data/models/hierarchy_node_model.dart';
 import '../../data/models/user_goal_model.dart';
 import '../../data/models/career_models.dart';
 import '../../data/models/personalized_roadmap_models.dart';
@@ -78,10 +79,14 @@ class RoadmapProvider extends ChangeNotifier {
   List<String> _recentTopicIds = [];
   List<String> _bookmarkedTopicIds = [];
   ResumeReadinessModel _resumeChecklist = const ResumeReadinessModel();
-  
+
   PersonalizedProfile? _personalizedProfile;
   PersonalizedRoadmap? _personalizedRoadmap;
   bool _isLoading = true;
+
+  String? _cachedDailyPlanDate;
+  List<String> _cachedDailyStandardTopics = [];
+  List<String> _cachedDailyPersonalizedItems = [];
 
   UserGoalProfile? get profile => _profile;
   bool get hasProfile => _profile != null;
@@ -95,12 +100,22 @@ class RoadmapProvider extends ChangeNotifier {
   PersonalizedProfile? get personalizedProfile => _personalizedProfile;
   PersonalizedRoadmap? get personalizedRoadmap => _personalizedRoadmap;
   bool get hasPersonalizedRoadmap => _personalizedRoadmap != null;
-  double get personalizedOverallProgress => _personalizedRoadmap?.overallProgress ?? 0.0;
+  double get personalizedOverallProgress =>
+      _personalizedRoadmap?.overallProgress ?? 0.0;
 
   // Phase 6 Guidance Engine Methods
-  StudentStatus get studentStatus => GuidanceEngine.determineStudentStatus(_profile, _progressMap, getRoadmapStages(), _resumeChecklist);
-  RoadmapHealthModel? get roadmapHealth => _profile == null ? null : GuidanceEngine.calculateRoadmapHealth(_profile!, _progressMap, getRoadmapStages());
-  NextBestActionModel? get nextBestAction => GuidanceEngine.getNextBestAction(_profile, _progressMap, getRoadmapStages(), _lastOpenedTopicId, _resumeChecklist);
+  StudentStatus get studentStatus => GuidanceEngine.determineStudentStatus(
+      _profile, _progressMap, getRoadmapStages(), _resumeChecklist);
+  RoadmapHealthModel? get roadmapHealth => _profile == null
+      ? null
+      : GuidanceEngine.calculateRoadmapHealth(
+          _profile!, _progressMap, getRoadmapStages());
+  NextBestActionModel? get nextBestAction => GuidanceEngine.getNextBestAction(
+      _profile,
+      _progressMap,
+      getRoadmapStages(),
+      _lastOpenedTopicId,
+      _resumeChecklist);
 
   RoadmapProvider() {
     _init();
@@ -115,6 +130,10 @@ class RoadmapProvider extends ChangeNotifier {
     _resumeChecklist = await _repository.loadResumeChecklist();
     _personalizedProfile = await _repository.loadPersonalizedProfile();
     _personalizedRoadmap = await _repository.loadPersonalizedRoadmap();
+    _cachedDailyPlanDate = await _repository.loadDailyPlanDate();
+    _cachedDailyStandardTopics = await _repository.loadDailyStandardTopics();
+    _cachedDailyPersonalizedItems =
+        await _repository.loadDailyPersonalizedItems();
     _isLoading = false;
     notifyListeners();
   }
@@ -134,7 +153,8 @@ class RoadmapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> recalculatePersonalizedRoadmap(PersonalizedProfile updatedProfile) async {
+  Future<void> recalculatePersonalizedRoadmap(
+      PersonalizedProfile updatedProfile) async {
     _personalizedProfile = updatedProfile;
     if (_personalizedRoadmap != null) {
       _personalizedRoadmap = await _generator.recalculateRoadmap(
@@ -153,7 +173,8 @@ class RoadmapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> markPersonalizedItemStatus(String itemId, RoadmapItemStatus status) async {
+  Future<void> markPersonalizedItemStatus(
+      String itemId, RoadmapItemStatus status) async {
     if (_personalizedRoadmap == null) return;
 
     final completedIds = <String>{};
@@ -177,7 +198,8 @@ class RoadmapProvider extends ChangeNotifier {
         if (item.isCompleted) return item;
 
         // Check if all prerequisites are fulfilled
-        final hasUnmetPrereq = item.prerequisites.any((prereqId) => !completedIds.contains(prereqId));
+        final hasUnmetPrereq = item.prerequisites
+            .any((prereqId) => !completedIds.contains(prereqId));
         if (hasUnmetPrereq) {
           return item.copyWith(status: RoadmapItemStatus.locked);
         } else if (item.isLocked) {
@@ -200,6 +222,22 @@ class RoadmapProvider extends ChangeNotifier {
   List<RoadmapItem> getTodaysPersonalizedTasks() {
     if (_personalizedRoadmap == null) return [];
 
+    final todayStr = DateTime.now().toIso8601String().split('T')[0];
+
+    if (_cachedDailyPlanDate == todayStr &&
+        _cachedDailyPersonalizedItems.isNotEmpty) {
+      List<RoadmapItem> cachedTasks = [];
+      for (final itemId in _cachedDailyPersonalizedItems) {
+        final item = _personalizedRoadmap!.findItemById(itemId);
+        if (item != null) {
+          cachedTasks.add(item);
+        }
+      }
+      if (cachedTasks.isNotEmpty) {
+        return cachedTasks;
+      }
+    }
+
     final dailyMinutes = _personalizedProfile?.dailyLearningTimeMinutes ?? 60;
     final List<RoadmapItem> todaysTasks = [];
     int accumulatedMinutes = 0;
@@ -210,10 +248,20 @@ class RoadmapProvider extends ChangeNotifier {
           todaysTasks.add(item);
           accumulatedMinutes += item.estimatedMinutes;
           if (accumulatedMinutes >= dailyMinutes) {
-            return todaysTasks;
+            break;
           }
         }
       }
+      if (accumulatedMinutes >= dailyMinutes) {
+        break;
+      }
+    }
+
+    if (todaysTasks.isNotEmpty) {
+      _cachedDailyPlanDate = todayStr;
+      _cachedDailyPersonalizedItems = todaysTasks.map((t) => t.id).toList();
+      _repository.saveDailyPlanDate(todayStr);
+      _repository.saveDailyPersonalizedItems(_cachedDailyPersonalizedItems);
     }
 
     return todaysTasks;
@@ -270,7 +318,8 @@ class RoadmapProvider extends ChangeNotifier {
         updated = current.copyWith(learnCompleted: !current.learnCompleted);
         break;
       case ActivityType.practice:
-        updated = current.copyWith(practiceCompleted: !current.practiceCompleted);
+        updated =
+            current.copyWith(practiceCompleted: !current.practiceCompleted);
         break;
       case ActivityType.build:
         updated = current.copyWith(buildCompleted: !current.buildCompleted);
@@ -282,7 +331,7 @@ class RoadmapProvider extends ChangeNotifier {
 
     _progressMap[topicId] = updated;
     notifyListeners();
-    await _repository.saveTopicProgress(updated);
+    await _repository.saveTopicProgressMap(_progressMap);
   }
 
   List<RoadmapStageModel> getRoadmapStages() {
@@ -293,14 +342,22 @@ class RoadmapProvider extends ChangeNotifier {
     // Stage 1: Foundation & Core Programming
     stages.add(const RoadmapStageModel(
       stageTitle: 'FOUNDATION: Programming & Logic',
-      stageDescription: 'Build strong syntax, problem-solving skills, and logic with Python, C++, or Java.',
-      topicIds: ['basics_intro', 'python_basics', 'python_variables', 'c_pointers', 'cpp_stl'],
+      stageDescription:
+          'Build strong syntax, problem-solving skills, and logic with Python, C++, or Java.',
+      topicIds: [
+        'basics_intro',
+        'python_basics',
+        'python_variables',
+        'c_pointers',
+        'cpp_stl'
+      ],
     ));
 
     // Stage 2: Core Computer Science & DSA
     stages.add(const RoadmapStageModel(
       stageTitle: 'CORE: Data Structures & Algorithms',
-      stageDescription: 'Master 23 DSA topics from Big-O complexity to Dynamic Programming & Graphs.',
+      stageDescription:
+          'Master 23 DSA topics from Big-O complexity to Dynamic Programming & Graphs.',
       topicIds: [
         'dsa_complexity',
         'dsa_arrays',
@@ -316,20 +373,37 @@ class RoadmapProvider extends ChangeNotifier {
     if (goal == CareerGoal.entrepreneurship) {
       stages.add(const RoadmapStageModel(
         stageTitle: 'BUILD: Lean MVP & Customer Discovery',
-        stageDescription: 'Uncover customer pain points, build rapid MVPs, and validate business ideas.',
+        stageDescription:
+            'Uncover customer pain points, build rapid MVPs, and validate business ideas.',
         topicIds: ['problem_discovery', 'mvp_development', 'pitch_decks'],
       ));
-    } else if (goal == CareerGoal.gateExam || goal == CareerGoal.msHigherStudies) {
+    } else if (goal == CareerGoal.gateExam ||
+        goal == CareerGoal.msHigherStudies) {
       stages.add(const RoadmapStageModel(
         stageTitle: 'SPECIALIZE: Core CS & Entrance Preparation',
-        stageDescription: 'Prepare for GATE CS, GRE General, SOP/LOR drafting, and university selection.',
-        topicIds: ['exam_gate', 'exam_gre', 'masters_degree', 'choosing_country', 'govt_scholarships'],
+        stageDescription:
+            'Prepare for GATE CS, GRE General, SOP/LOR drafting, and university selection.',
+        topicIds: [
+          'exam_gate',
+          'exam_gre',
+          'masters_degree',
+          'choosing_country',
+          'govt_scholarships'
+        ],
       ));
     } else {
       stages.add(const RoadmapStageModel(
         stageTitle: 'BUILD: Fullstack Web, App & Projects',
-        stageDescription: 'Construct production-ready web and mobile apps with React, Flutter & Node.js.',
-        topicIds: ['web_html_css', 'web_react', 'web_backend_node', 'flutter_basics', 'todo_list_proj', 'house_price_proj'],
+        stageDescription:
+            'Construct production-ready web and mobile apps with React, Flutter & Node.js.',
+        topicIds: [
+          'web_html_css',
+          'web_react',
+          'web_backend_node',
+          'flutter_basics',
+          'todo_list_proj',
+          'house_price_proj'
+        ],
       ));
     }
 
@@ -337,20 +411,29 @@ class RoadmapProvider extends ChangeNotifier {
     if (goal == CareerGoal.entrepreneurship) {
       stages.add(const RoadmapStageModel(
         stageTitle: 'LAUNCH: Business Model & Pitch Deck',
-        stageDescription: 'Formulate revenue models, Sequoia pitch decks, and YC incubator applications.',
+        stageDescription:
+            'Formulate revenue models, Sequoia pitch decks, and YC incubator applications.',
         topicIds: ['pitch_decks', 'mvp_development'],
       ));
     } else if (goal == CareerGoal.gateExam) {
       stages.add(const RoadmapStageModel(
         stageTitle: 'ACHIEVE: GATE CS Master Mock Practice',
-        stageDescription: 'Solve previous year GATE question papers and formula review sheets.',
+        stageDescription:
+            'Solve previous year GATE question papers and formula review sheets.',
         topicIds: ['exam_gate'],
       ));
     } else {
       stages.add(const RoadmapStageModel(
         stageTitle: 'CAREER: Placements, Aptitude & HR Preparation',
-        stageDescription: 'Conquer Striver A2Z sheet, LeetCode 75, Quant Aptitude, and STAR HR interviews.',
-        topicIds: ['placement_dsa', 'quant_aptitude', 'hr_questions', 'resume_building', 'technical_interviews'],
+        stageDescription:
+            'Conquer Striver A2Z sheet, LeetCode 75, Quant Aptitude, and STAR HR interviews.',
+        topicIds: [
+          'placement_dsa',
+          'quant_aptitude',
+          'hr_questions',
+          'resume_building',
+          'technical_interviews'
+        ],
       ));
     }
 
@@ -359,22 +442,21 @@ class RoadmapProvider extends ChangeNotifier {
 
   double calculateOverallProgress() {
     final stages = getRoadmapStages();
-    int totalActivities = 0;
-    int completedActivities = 0;
+    int totalTopics = 0;
+    int completedTopics = 0;
 
     for (final stage in stages) {
       for (final topicId in stage.topicIds) {
-        final progress = getProgressForTopic(topicId);
-        totalActivities += progress.totalActivities;
-        completedActivities += progress.completedCount;
+        totalTopics++;
+        if (getProgressForTopic(topicId).isFullyCompleted) {
+          completedTopics++;
+        }
       }
     }
 
-    if (totalActivities == 0) return 0.0;
-    return (completedActivities / totalActivities) * 100.0;
+    if (totalTopics == 0) return 0.0;
+    return (completedTopics / totalTopics) * 100.0;
   }
-
-
 
   StudentInsightsModel getStudentInsights() {
     final stages = getRoadmapStages();
@@ -390,11 +472,11 @@ class RoadmapProvider extends ChangeNotifier {
 
       for (final topicId in stage.topicIds) {
         final progress = getProgressForTopic(topicId);
-        stageTotal += progress.totalActivities;
-        stageCompleted += progress.completedCount;
+        stageTotal++;
 
         if (progress.isFullyCompleted) {
           completedCount++;
+          stageCompleted++;
         } else if (progress.isInProgress) {
           inProgressCount++;
         } else {
@@ -424,7 +506,36 @@ class RoadmapProvider extends ChangeNotifier {
   }
 
   List<DailyTaskModel> getTodaysPlan() {
+    final todayStr = DateTime.now().toIso8601String().split('T')[0];
     final stages = getRoadmapStages();
+
+    if (_cachedDailyPlanDate == todayStr &&
+        _cachedDailyStandardTopics.isNotEmpty) {
+      List<DailyTaskModel> cachedTasks = [];
+      for (final topicId in _cachedDailyStandardTopics) {
+        String stageTitle = 'Daily Task';
+        for (final stage in stages) {
+          if (stage.topicIds.contains(topicId)) {
+            stageTitle = stage.stageTitle;
+            break;
+          }
+        }
+        final progress = getProgressForTopic(topicId);
+        cachedTasks.add(
+            _createTaskModel(topicId, stageTitle, progress, 'Today\'s Plan'));
+      }
+      if (cachedTasks.isNotEmpty) {
+        return cachedTasks;
+      }
+    }
+
+    int dailyMinutesTarget = 60;
+    if (_profile != null) {
+      dailyMinutesTarget = (_profile!.hoursPerWeek * 60) ~/ 7;
+      if (dailyMinutesTarget < 30) dailyMinutesTarget = 30; // Minimum 30 mins
+    }
+    int accumulatedMinutes = 0;
+
     List<DailyTaskModel> tasks = [];
     Set<String> addedTopics = {};
 
@@ -433,43 +544,58 @@ class RoadmapProvider extends ChangeNotifier {
       for (final topicId in stage.topicIds) {
         final progress = getProgressForTopic(topicId);
         if (progress.isInProgress && !progress.isFullyCompleted) {
-          tasks.add(_createTaskModel(topicId, stage.stageTitle, progress, 'Continue your active session'));
+          final task = _createTaskModel(topicId, stage.stageTitle, progress,
+              'Continue your active session');
+          tasks.add(task);
           addedTopics.add(topicId);
-          if (tasks.length >= 3) return tasks;
+          accumulatedMinutes += task.estimatedMinutes;
+          if (accumulatedMinutes >= dailyMinutesTarget) break;
         }
       }
+      if (accumulatedMinutes >= dailyMinutesTarget) break;
     }
 
     // 2. Career Gaps (Phase 5)
-    final gaps = getCareerGaps();
-    for (final gap in gaps) {
-      if (!addedTopics.contains(gap.actionArguments?['topicId'] ?? gap.actionRoute)) {
-        tasks.add(DailyTaskModel(
-          topicId: gap.actionArguments?['topicId'] ?? 'gap_task',
-          topicTitle: gap.title,
-          actionTitle: gap.actionLabel,
-          type: ActivityType.learn, // Default visual type
-          categoryTitle: 'Career Action',
-          estimatedMinutes: 20,
-          reason: gap.description,
-          actionRoute: gap.actionRoute,
-          actionArguments: gap.actionArguments,
-        ));
-        addedTopics.add(gap.actionArguments?['topicId'] ?? gap.actionRoute);
-        if (tasks.length >= 3) return tasks;
+    if (accumulatedMinutes < dailyMinutesTarget) {
+      final gaps = getCareerGaps();
+      for (final gap in gaps) {
+        if (!addedTopics
+            .contains(gap.actionArguments?['topicId'] ?? gap.actionRoute)) {
+          final task = DailyTaskModel(
+            topicId: gap.actionArguments?['topicId'] ?? 'gap_task',
+            topicTitle: gap.title,
+            actionTitle: gap.actionLabel,
+            type: ActivityType.learn, // Default visual type
+            categoryTitle: 'Career Action',
+            estimatedMinutes: 20,
+            reason: gap.description,
+            actionRoute: gap.actionRoute,
+            actionArguments: gap.actionArguments,
+          );
+          tasks.add(task);
+          addedTopics.add(gap.actionArguments?['topicId'] ?? gap.actionRoute);
+          accumulatedMinutes += task.estimatedMinutes;
+          if (accumulatedMinutes >= dailyMinutesTarget) break;
+        }
       }
     }
 
     // 3. Earliest incomplete prerequisite/roadmap topic
-    for (final stage in stages) {
-      for (final topicId in stage.topicIds) {
-        if (addedTopics.contains(topicId)) continue;
-        final progress = getProgressForTopic(topicId);
-        if (!progress.isInProgress && !progress.isFullyCompleted) {
-          tasks.add(_createTaskModel(topicId, stage.stageTitle, progress, 'Start the next roadmap topic'));
-          addedTopics.add(topicId);
-          if (tasks.length >= 3) return tasks;
+    if (accumulatedMinutes < dailyMinutesTarget) {
+      for (final stage in stages) {
+        for (final topicId in stage.topicIds) {
+          if (addedTopics.contains(topicId)) continue;
+          final progress = getProgressForTopic(topicId);
+          if (!progress.isInProgress && !progress.isFullyCompleted) {
+            final task = _createTaskModel(topicId, stage.stageTitle, progress,
+                'Start the next roadmap topic');
+            tasks.add(task);
+            addedTopics.add(topicId);
+            accumulatedMinutes += task.estimatedMinutes;
+            if (accumulatedMinutes >= dailyMinutesTarget) break;
+          }
         }
+        if (accumulatedMinutes >= dailyMinutesTarget) break;
       }
     }
 
@@ -483,16 +609,23 @@ class RoadmapProvider extends ChangeNotifier {
         categoryTitle: 'Daily Revision',
         progressText: '0 / 4',
         reason: 'Daily Practice',
+        estimatedMinutes: 30,
       ));
     }
+
+    _cachedDailyPlanDate = todayStr;
+    _cachedDailyStandardTopics = tasks.map((t) => t.topicId).toList();
+    _repository.saveDailyPlanDate(todayStr);
+    _repository.saveDailyStandardTopics(_cachedDailyStandardTopics);
 
     return tasks;
   }
 
-  DailyTaskModel _createTaskModel(String topicId, String categoryTitle, TopicProgressModel progress, String reason) {
+  DailyTaskModel _createTaskModel(String topicId, String categoryTitle,
+      TopicProgressModel progress, String reason) {
     String actionTitle = '';
     ActivityType type = ActivityType.learn;
-    
+
     if (!progress.learnCompleted) {
       actionTitle = 'Read concept & documentation';
       type = ActivityType.learn;
@@ -505,6 +638,9 @@ class RoadmapProvider extends ChangeNotifier {
     } else if (!progress.reviewCompleted) {
       actionTitle = 'Review and summarize';
       type = ActivityType.review;
+    } else {
+      actionTitle = 'Completed!';
+      type = ActivityType.review;
     }
 
     return DailyTaskModel(
@@ -513,9 +649,43 @@ class RoadmapProvider extends ChangeNotifier {
       actionTitle: actionTitle,
       type: type,
       categoryTitle: categoryTitle,
+      estimatedMinutes: _calculateEstimatedMinutes(topicId, type),
       progressText: '${progress.completedCount} / ${progress.totalActivities}',
       reason: reason,
     );
+  }
+
+  int _calculateEstimatedMinutes(String topicId, ActivityType type) {
+    int baseMinutes = 20;
+    switch (type) {
+      case ActivityType.learn:
+        baseMinutes = 20;
+        break;
+      case ActivityType.practice:
+        baseMinutes = 30;
+        break;
+      case ActivityType.build:
+        baseMinutes = 45;
+        break;
+      case ActivityType.review:
+        baseMinutes = 15;
+        break;
+    }
+
+    final match = NonAcademicData.findTopicById(topicId);
+    if (match != null && match.topic.level != null) {
+      switch (match.topic.level!) {
+        case LearningLevel.beginner:
+          return (baseMinutes * 1.0).round();
+        case LearningLevel.intermediate:
+          return (baseMinutes * 1.25).round();
+        case LearningLevel.advanced:
+          return (baseMinutes * 1.5).round();
+        case LearningLevel.projects:
+          return (baseMinutes * 2.0).round();
+      }
+    }
+    return baseMinutes;
   }
 
   String? getNextRecommendedTopicId(String currentTopicId) {
@@ -538,23 +708,25 @@ class RoadmapProvider extends ChangeNotifier {
   List<CareerMilestoneModel> getCareerMilestones() {
     List<CareerMilestoneModel> milestones = [];
     final stages = getRoadmapStages();
-    
+
     for (final stage in stages) {
       int stageTotal = 0;
       int stageCompleted = 0;
-      
+
       for (final topicId in stage.topicIds) {
-        final progress = getProgressForTopic(topicId);
-        stageTotal += progress.totalActivities;
-        stageCompleted += progress.completedCount;
+        stageTotal++;
+        if (getProgressForTopic(topicId).isFullyCompleted) {
+          stageCompleted++;
+        }
       }
-      
+
       bool isCompleted = stageTotal > 0 && stageTotal == stageCompleted;
       String title = stage.stageTitle;
       if (title.contains(':')) {
         title = title.split(':').last.trim();
       }
-      milestones.add(CareerMilestoneModel(title: title, isCompleted: isCompleted));
+      milestones
+          .add(CareerMilestoneModel(title: title, isCompleted: isCompleted));
     }
     return milestones;
   }
@@ -576,56 +748,69 @@ class RoadmapProvider extends ChangeNotifier {
     switch (key) {
       case 'technicalSkillsIdentified':
         currentVal = _resumeChecklist.technicalSkillsIdentified;
-        _resumeChecklist = _resumeChecklist.copyWith(technicalSkillsIdentified: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(technicalSkillsIdentified: !currentVal);
         break;
       case 'oneCompletedProject':
         currentVal = _resumeChecklist.oneCompletedProject;
-        _resumeChecklist = _resumeChecklist.copyWith(oneCompletedProject: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(oneCompletedProject: !currentVal);
         break;
       case 'projectDescriptionsPrepared':
         currentVal = _resumeChecklist.projectDescriptionsPrepared;
-        _resumeChecklist = _resumeChecklist.copyWith(projectDescriptionsPrepared: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(projectDescriptionsPrepared: !currentVal);
         break;
       case 'evidenceAvailable':
         currentVal = _resumeChecklist.evidenceAvailable;
-        _resumeChecklist = _resumeChecklist.copyWith(evidenceAvailable: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(evidenceAvailable: !currentVal);
         break;
       case 'educationPrepared':
         currentVal = _resumeChecklist.educationPrepared;
-        _resumeChecklist = _resumeChecklist.copyWith(educationPrepared: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(educationPrepared: !currentVal);
         break;
       case 'careerObjectivePrepared':
         currentVal = _resumeChecklist.careerObjectivePrepared;
-        _resumeChecklist = _resumeChecklist.copyWith(careerObjectivePrepared: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(careerObjectivePrepared: !currentVal);
         break;
       case 'resumeReviewed':
         currentVal = _resumeChecklist.resumeReviewed;
-        _resumeChecklist = _resumeChecklist.copyWith(resumeReviewed: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(resumeReviewed: !currentVal);
         break;
       // LinkedIn Checklist Items
       case 'linkedInProfileCreated':
         currentVal = _resumeChecklist.linkedInProfileCreated;
-        _resumeChecklist = _resumeChecklist.copyWith(linkedInProfileCreated: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(linkedInProfileCreated: !currentVal);
         break;
       case 'linkedInPhotoAdded':
         currentVal = _resumeChecklist.linkedInPhotoAdded;
-        _resumeChecklist = _resumeChecklist.copyWith(linkedInPhotoAdded: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(linkedInPhotoAdded: !currentVal);
         break;
       case 'linkedInHeadlineAdded':
         currentVal = _resumeChecklist.linkedInHeadlineAdded;
-        _resumeChecklist = _resumeChecklist.copyWith(linkedInHeadlineAdded: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(linkedInHeadlineAdded: !currentVal);
         break;
       case 'linkedInAboutCompleted':
         currentVal = _resumeChecklist.linkedInAboutCompleted;
-        _resumeChecklist = _resumeChecklist.copyWith(linkedInAboutCompleted: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(linkedInAboutCompleted: !currentVal);
         break;
       case 'linkedInExperienceAdded':
         currentVal = _resumeChecklist.linkedInExperienceAdded;
-        _resumeChecklist = _resumeChecklist.copyWith(linkedInExperienceAdded: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(linkedInExperienceAdded: !currentVal);
         break;
       case 'linkedInUrlSaved':
         currentVal = _resumeChecklist.linkedInUrlSaved;
-        _resumeChecklist = _resumeChecklist.copyWith(linkedInUrlSaved: !currentVal);
+        _resumeChecklist =
+            _resumeChecklist.copyWith(linkedInUrlSaved: !currentVal);
         break;
     }
     notifyListeners();
@@ -634,7 +819,7 @@ class RoadmapProvider extends ChangeNotifier {
 
   List<CareerDimensionProgress> getCareerReadiness() {
     if (_profile == null) return [];
-    
+
     final dimensions = CareerDataMapper.getDimensionsForGoal(_profile!.goal);
     List<CareerDimensionProgress> progress = [];
 
@@ -644,7 +829,8 @@ class RoadmapProvider extends ChangeNotifier {
       for (final tid in topicIds) {
         completed += getProgressForTopic(tid).completedCount;
       }
-      progress.add(CareerDimensionProgress(dimensionName: dimName, completed: completed, total: total));
+      progress.add(CareerDimensionProgress(
+          dimensionName: dimName, completed: completed, total: total));
     });
 
     return progress;
@@ -674,7 +860,8 @@ class RoadmapProvider extends ChangeNotifier {
         if (!getProgressForTopic(tid).isFullyCompleted) {
           gaps.add(CareerGapModel(
             title: 'Foundation Incomplete',
-            description: 'Complete ${_formatTopicTitle(tid)} to build your foundation.',
+            description:
+                'Complete ${_formatTopicTitle(tid)} to build your foundation.',
             actionRoute: '/topic_detail',
             actionArguments: {'topicId': tid},
             actionLabel: 'LEARN',
@@ -687,7 +874,8 @@ class RoadmapProvider extends ChangeNotifier {
 
     // 2. Missing Project Evidence
     final projects = getProjectPortfolio();
-    final completedProjects = projects.where((p) => p.state == ProjectState.completed).toList();
+    final completedProjects =
+        projects.where((p) => p.state == ProjectState.completed).toList();
     if (completedProjects.isEmpty) {
       final firstNotStarted = projects.firstWhere(
         (p) => p.state == ProjectState.notStarted,

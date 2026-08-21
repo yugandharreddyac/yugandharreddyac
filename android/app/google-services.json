@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "559967220631",
-    "project_id": "my-unidocs-app",
-    "storage_bucket": "my-unidocs-app.firebasestorage.app"
+    "project_number": "88359315332",
+    "project_id": "unidocs-study-hub",
+    "storage_bucket": "unidocs-study-hub.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:559967220631:android:acd55572f9cc3a1d08cad2",
+        "mobilesdk_app_id": "1:88359315332:android:48f2e7a63ab76e123e9fd1",
         "android_client_info": {
           "package_name": "com.csse.studyhub.csse_study_hub"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC-IhXlcN-MZ8X0x6AA-bSa14tuGST-yHk"
+          "current_key": "AIzaSyD5l9oFMJgLId8Aet1vsq-fW07wcKlYwKc"
         }
       ],
       "services": {

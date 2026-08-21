@@ -27,17 +27,21 @@ void main() {
     ];
 
     test('Null profile returns notStarted', () {
-      final status = GuidanceEngine.determineStudentStatus(null, {}, dummyStages, const ResumeReadinessModel());
+      final status = GuidanceEngine.determineStudentStatus(
+          null, {}, dummyStages, const ResumeReadinessModel());
       expect(status, StudentStatus.notStarted);
     });
 
     test('Empty progress returns foundationBuilding or notStarted', () {
-      final status = GuidanceEngine.determineStudentStatus(profile, {}, dummyStages, const ResumeReadinessModel());
+      final status = GuidanceEngine.determineStudentStatus(
+          profile, {}, dummyStages, const ResumeReadinessModel());
       expect(status, StudentStatus.notStarted); // If 0% on foundation
     });
 
-    test('Roadmap health identifies blocking topic and correct current stage', () {
-      final health = GuidanceEngine.calculateRoadmapHealth(profile, {}, dummyStages);
+    test('Roadmap health identifies blocking topic and correct current stage',
+        () {
+      final health =
+          GuidanceEngine.calculateRoadmapHealth(profile, {}, dummyStages);
       expect(health.currentStageName, 'Foundation');
       expect(health.blockingTopicTitle, isNotNull);
       expect(health.stageHealths.isNotEmpty, true);
@@ -67,7 +71,7 @@ void main() {
       expect(action!.title, contains('Resume'));
       expect(action.reason, contains('recently learning'));
     });
-    
+
     test('Next best action falls back to next unstarted topic', () {
       final progressMap = <String, TopicProgressModel>{};
 

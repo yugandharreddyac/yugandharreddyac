@@ -30,7 +30,9 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
   void initState() {
     super.initState();
     _selectedLevel = widget.initialLevel ??
-        (widget.category.hasLevels ? widget.category.availableLevels!.first : null);
+        (widget.category.hasLevels
+            ? widget.category.availableLevels!.first
+            : null);
   }
 
   @override
@@ -39,8 +41,10 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
 
@@ -52,7 +56,8 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
       // If topic has direct subtopics with levels, include topic
       if (topic.level == _selectedLevel) return true;
       if (topic.hasSubtopics) {
-        return topic.subtopics.any((sub) => sub.level == _selectedLevel || sub.level == null);
+        return topic.subtopics
+            .any((sub) => sub.level == _selectedLevel || sub.level == null);
       }
       return true;
     }).toList();
@@ -97,7 +102,8 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
                   items: [
                     BreadcrumbItem(
                       label: 'Home',
-                      onTap: () => Navigator.popUntil(context, (route) => route.isFirst),
+                      onTap: () =>
+                          Navigator.popUntil(context, (route) => route.isFirst),
                     ),
                     BreadcrumbItem(
                       label: widget.hub.title,
@@ -132,7 +138,8 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
                           color: royalBlue.withAlpha(20),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Icon(widget.category.icon, color: royalBlue, size: 28),
+                        child: Icon(widget.category.icon,
+                            color: royalBlue, size: 28),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -217,7 +224,9 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
 
                 // Topics Section Title
                 Text(
-                  _selectedLevel != null ? '${_selectedLevel!.displayName} Topics' : 'Topics',
+                  _selectedLevel != null
+                      ? '${_selectedLevel!.displayName} Topics'
+                      : 'Topics',
                   style: GoogleFonts.inter(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -227,7 +236,8 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
                 const SizedBox(height: 12),
 
                 if (displayedTopics.isEmpty)
-                  _buildEmptyState(isDark, cardBg, borderColor, textPrimary, textSubtitle)
+                  _buildEmptyState(
+                      isDark, cardBg, borderColor, textPrimary, textSubtitle)
                 else
                   ListView.separated(
                     shrinkWrap: true,
@@ -245,7 +255,10 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
                         textSubtitle: textSubtitle,
                         royalBlue: royalBlue,
                         isDark: isDark,
-                      ).animate().fadeIn(delay: (index * 40).ms).slideX(begin: 0.03, end: 0);
+                      )
+                          .animate()
+                          .fadeIn(delay: (index * 40).ms)
+                          .slideX(begin: 0.03, end: 0);
                     },
                   ),
               ],
@@ -337,7 +350,7 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
                   if (topic.hasSubtopics) ...[
                     const SizedBox(height: 6),
                     Text(
-                      '${topic.subtopics.length} subtopics available',
+                      '${topic.subtopics.length} subtopic${topic.subtopics.length == 1 ? '' : 's'} available',
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -348,7 +361,8 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
+            const Icon(Icons.arrow_forward_ios_rounded,
+                size: 16, color: Colors.grey),
           ],
         ),
       ),
@@ -372,7 +386,8 @@ class _GenericCategoryScreenState extends State<GenericCategoryScreen> {
       ),
       child: Column(
         children: [
-          Icon(Icons.auto_stories_rounded, size: 48, color: textSubtitle.withAlpha(150)),
+          Icon(Icons.auto_stories_rounded,
+              size: 48, color: textSubtitle.withAlpha(150)),
           const SizedBox(height: 12),
           Text(
             'No topics found for this level',

@@ -59,7 +59,10 @@ class AiGenerationConfig {
       temperature: (map['temperature'] as num?)?.toDouble() ?? 0.7,
       maxTokens: (map['maxTokens'] as num?)?.toInt() ?? 2048,
       topP: (map['topP'] as num?)?.toDouble() ?? 0.95,
-      stopSequences: (map['stopSequences'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
+      stopSequences: (map['stopSequences'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
       responseFormat: map['responseFormat']?.toString() ?? 'text',
     );
   }
@@ -132,7 +135,8 @@ class AiRequest {
           : const AiContext(),
       capability: AiCapability.fromString(map['capability']?.toString()),
       generationConfig: map['generationConfig'] != null
-          ? AiGenerationConfig.fromMap(map['generationConfig'] as Map<String, dynamic>)
+          ? AiGenerationConfig.fromMap(
+              map['generationConfig'] as Map<String, dynamic>)
           : const AiGenerationConfig(),
       metadata: (map['metadata'] as Map<String, dynamic>?) ?? const {},
     );

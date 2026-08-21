@@ -67,7 +67,10 @@ enum DocumentProcessingStatus {
 
   bool get isTerminal => this == ready || this == failed || this == unsupported;
   bool get isInProgress =>
-      this == validating || this == extracting || this == chunking || this == indexing;
+      this == validating ||
+      this == extracting ||
+      this == chunking ||
+      this == indexing;
 }
 
 // ---------------------------------------------------------------------------
@@ -102,7 +105,8 @@ class DocumentMetadata {
 
   bool get isReady => processingStatus == DocumentProcessingStatus.ready;
   bool get isFailed => processingStatus == DocumentProcessingStatus.failed;
-  bool get isUnsupported => processingStatus == DocumentProcessingStatus.unsupported;
+  bool get isUnsupported =>
+      processingStatus == DocumentProcessingStatus.unsupported;
   bool get isInProgress => processingStatus.isInProgress;
 
   DocumentMetadata copyWith({
@@ -156,8 +160,8 @@ class DocumentMetadata {
       createdAt: map['createdAt'] != null
           ? DateTime.tryParse(map['createdAt'].toString()) ?? DateTime.now()
           : DateTime.now(),
-      processingStatus:
-          DocumentProcessingStatus.fromString(map['processingStatus']?.toString()),
+      processingStatus: DocumentProcessingStatus.fromString(
+          map['processingStatus']?.toString()),
       processingError: map['processingError']?.toString(),
     );
   }
@@ -402,8 +406,8 @@ class DocumentSearchResult {
 
   factory DocumentSearchResult.fromMap(Map<String, dynamic> map) {
     return DocumentSearchResult(
-      chunk: DocumentChunk.fromMap(
-          (map['chunk'] as Map<String, dynamic>?) ?? {}),
+      chunk:
+          DocumentChunk.fromMap((map['chunk'] as Map<String, dynamic>?) ?? {}),
       relevanceScore: (map['relevanceScore'] as num?)?.toDouble() ?? 0.0,
       matchedTerms: (map['matchedTerms'] as List<dynamic>?)
               ?.map((e) => e.toString())

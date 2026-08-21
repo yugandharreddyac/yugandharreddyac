@@ -30,10 +30,14 @@ enum SkillLevel {
 
 /// Learning style pedagogy preference
 enum LearningStyle {
-  theoryFirst('Theory First', 'Learn concept → understand depth → practice exercises → build projects'),
-  practiceFirst('Practice First', 'Quick concept → hands-on problems → code practice → mini projects'),
-  projectsFirst('Projects First', 'Concept overview → build practical project → explore internals as needed'),
-  balanced('Balanced', 'Structured theory → standard problem sets → project application → review');
+  theoryFirst('Theory First',
+      'Learn concept → understand depth → practice exercises → build projects'),
+  practiceFirst('Practice First',
+      'Quick concept → hands-on problems → code practice → mini projects'),
+  projectsFirst('Projects First',
+      'Concept overview → build practical project → explore internals as needed'),
+  balanced('Balanced',
+      'Structured theory → standard problem sets → project application → review');
 
   final String displayName;
   final String description;
@@ -166,27 +170,33 @@ class PersonalizedProfile {
       academicStage: academicStage ?? this.academicStage,
       goals: goals ?? List.from(this.goals),
       careerDirections: careerDirections ?? List.from(this.careerDirections),
-      primaryCareerDirection: primaryCareerDirection ?? this.primaryCareerDirection,
+      primaryCareerDirection:
+          primaryCareerDirection ?? this.primaryCareerDirection,
       interestAreas: interestAreas ?? List.from(this.interestAreas),
       overallSkillLevel: overallSkillLevel ?? this.overallSkillLevel,
       skillLevels: skillLevels ?? Map.from(this.skillLevels),
-      programmingLanguages: programmingLanguages ?? List.from(this.programmingLanguages),
+      programmingLanguages:
+          programmingLanguages ?? List.from(this.programmingLanguages),
       primaryLanguage: primaryLanguage ?? this.primaryLanguage,
       secondaryLanguage: secondaryLanguage ?? this.secondaryLanguage,
       projectExperience: projectExperience ?? this.projectExperience,
       internshipStatus: internshipStatus ?? this.internshipStatus,
       openSourceExperience: openSourceExperience ?? this.openSourceExperience,
       codingPracticeLevel: codingPracticeLevel ?? this.codingPracticeLevel,
-      targetOrganizationTypes: targetOrganizationTypes ?? List.from(this.targetOrganizationTypes),
+      targetOrganizationTypes:
+          targetOrganizationTypes ?? List.from(this.targetOrganizationTypes),
       targetCompany: targetCompany ?? this.targetCompany,
-      dailyLearningTimeMinutes: dailyLearningTimeMinutes ?? this.dailyLearningTimeMinutes,
+      dailyLearningTimeMinutes:
+          dailyLearningTimeMinutes ?? this.dailyLearningTimeMinutes,
       weeklyAvailability: weeklyAvailability ?? this.weeklyAvailability,
       targetTimeline: targetTimeline ?? this.targetTimeline,
       learningStyle: learningStyle ?? this.learningStyle,
       strengths: strengths ?? List.from(this.strengths),
       weaknesses: weaknesses ?? List.from(this.weaknesses),
-      placementPreparationAreas: placementPreparationAreas ?? List.from(this.placementPreparationAreas),
-      alreadyCompletedSkills: alreadyCompletedSkills ?? List.from(this.alreadyCompletedSkills),
+      placementPreparationAreas: placementPreparationAreas ??
+          List.from(this.placementPreparationAreas),
+      alreadyCompletedSkills:
+          alreadyCompletedSkills ?? List.from(this.alreadyCompletedSkills),
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       profileVersion: profileVersion ?? this.profileVersion,
@@ -245,21 +255,24 @@ class PersonalizedProfile {
       ),
       goals: List<String>.from(map['goals'] ?? []),
       careerDirections: List<String>.from(map['careerDirections'] ?? []),
-      primaryCareerDirection: map['primaryCareerDirection'] ?? 'Software Engineer',
+      primaryCareerDirection:
+          map['primaryCareerDirection'] ?? 'Software Engineer',
       interestAreas: List<String>.from(map['interestAreas'] ?? []),
       overallSkillLevel: SkillLevel.values.firstWhere(
         (e) => e.name == map['overallSkillLevel'],
         orElse: () => SkillLevel.beginner,
       ),
       skillLevels: skillLevelsMap,
-      programmingLanguages: List<String>.from(map['programmingLanguages'] ?? []),
+      programmingLanguages:
+          List<String>.from(map['programmingLanguages'] ?? []),
       primaryLanguage: map['primaryLanguage'] ?? 'Python',
       secondaryLanguage: map['secondaryLanguage'],
       projectExperience: map['projectExperience'] ?? 'No projects',
       internshipStatus: map['internshipStatus'] ?? 'No internship yet',
       openSourceExperience: map['openSourceExperience'] ?? 'Never contributed',
       codingPracticeLevel: map['codingPracticeLevel'] ?? 'Never practiced',
-      targetOrganizationTypes: List<String>.from(map['targetOrganizationTypes'] ?? []),
+      targetOrganizationTypes:
+          List<String>.from(map['targetOrganizationTypes'] ?? []),
       targetCompany: map['targetCompany'],
       dailyLearningTimeMinutes: map['dailyLearningTimeMinutes'] ?? 60,
       weeklyAvailability: map['weeklyAvailability'] ?? 'Weekdays + weekends',
@@ -270,8 +283,10 @@ class PersonalizedProfile {
       ),
       strengths: List<String>.from(map['strengths'] ?? []),
       weaknesses: List<String>.from(map['weaknesses'] ?? []),
-      placementPreparationAreas: List<String>.from(map['placementPreparationAreas'] ?? []),
-      alreadyCompletedSkills: List<String>.from(map['alreadyCompletedSkills'] ?? []),
+      placementPreparationAreas:
+          List<String>.from(map['placementPreparationAreas'] ?? []),
+      alreadyCompletedSkills:
+          List<String>.from(map['alreadyCompletedSkills'] ?? []),
       createdAt: DateTime.tryParse(map['createdAt'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(map['updatedAt'] ?? '') ?? DateTime.now(),
       profileVersion: map['profileVersion'] ?? 1,
@@ -299,7 +314,8 @@ class RoadmapItem {
   final String targetSkill;
   final List<String> relatedSkills;
   final String? resourceReference; // e.g. subjectId, topicId, hubId, quizId
-  final String? resourceType; // 'subject', 'textbook_topic', 'quiz', 'coding_hub', 'project', 'placement_hub'
+  final String?
+      resourceType; // 'subject', 'textbook_topic', 'quiz', 'coding_hub', 'project', 'placement_hub'
   final String? deepRoute; // Named route for 1-tap navigation
   final Map<String, dynamic>? routeArguments;
   final String? projectReference;
@@ -376,7 +392,8 @@ class RoadmapItem {
       resourceReference: resourceReference ?? this.resourceReference,
       resourceType: resourceType ?? this.resourceType,
       deepRoute: deepRoute ?? this.deepRoute,
-      routeArguments: routeArguments ?? (this.routeArguments != null ? Map.from(this.routeArguments!) : null),
+      routeArguments: routeArguments ??
+          (this.routeArguments != null ? Map.from(this.routeArguments!) : null),
       projectReference: projectReference ?? this.projectReference,
       quizReference: quizReference ?? this.quizReference,
       topicReference: topicReference ?? this.topicReference,
@@ -437,7 +454,9 @@ class RoadmapItem {
       resourceReference: map['resourceReference'],
       resourceType: map['resourceType'],
       deepRoute: map['deepRoute'],
-      routeArguments: map['routeArguments'] is Map ? Map<String, dynamic>.from(map['routeArguments']) : null,
+      routeArguments: map['routeArguments'] is Map
+          ? Map<String, dynamic>.from(map['routeArguments'])
+          : null,
       projectReference: map['projectReference'],
       quizReference: map['quizReference'],
       topicReference: map['topicReference'],
@@ -466,14 +485,18 @@ class RoadmapPhase {
 
   int get totalItemsCount => items.length;
   int get completedItemsCount => items.where((item) => item.isCompleted).length;
-  int get inProgressItemsCount => items.where((item) => item.isInProgress).length;
+  int get inProgressItemsCount =>
+      items.where((item) => item.isInProgress).length;
 
-  double get completionPercentage =>
-      totalItemsCount > 0 ? (completedItemsCount / totalItemsCount) * 100.0 : 0.0;
+  double get completionPercentage => totalItemsCount > 0
+      ? (completedItemsCount / totalItemsCount) * 100.0
+      : 0.0;
 
-  bool get isFullyCompleted => totalItemsCount > 0 && completedItemsCount == totalItemsCount;
+  bool get isFullyCompleted =>
+      totalItemsCount > 0 && completedItemsCount == totalItemsCount;
   bool get isInProgress => completedItemsCount > 0 && !isFullyCompleted;
-  bool get isNotStarted => completedItemsCount == 0 && inProgressItemsCount == 0;
+  bool get isNotStarted =>
+      completedItemsCount == 0 && inProgressItemsCount == 0;
 
   RoadmapPhase copyWith({
     String? id,
@@ -554,16 +577,26 @@ class PersonalizedRoadmap {
   int get totalItemsCount => allItems.length;
   int get completedItemsCount => allItems.where((i) => i.isCompleted).length;
 
-  double get overallProgress =>
-      totalItemsCount > 0 ? (completedItemsCount / totalItemsCount) * 100.0 : 0.0;
+  double get overallProgress => totalItemsCount > 0
+      ? (completedItemsCount / totalItemsCount) * 100.0
+      : 0.0;
 
   RoadmapPhase? get currentPhase => phases.firstWhere(
         (p) => !p.isFullyCompleted,
-        orElse: () => phases.isNotEmpty ? phases.last : const RoadmapPhase(id: '', title: '', description: '', sequence: 0, estimatedDuration: '', items: []),
+        orElse: () => phases.isNotEmpty
+            ? phases.last
+            : const RoadmapPhase(
+                id: '',
+                title: '',
+                description: '',
+                sequence: 0,
+                estimatedDuration: '',
+                items: []),
       );
 
-  int get currentPhaseIndex =>
-      phases.indexWhere((p) => !p.isFullyCompleted).clamp(0, phases.isEmpty ? 0 : phases.length - 1);
+  int get currentPhaseIndex => phases
+      .indexWhere((p) => !p.isFullyCompleted)
+      .clamp(0, phases.isEmpty ? 0 : phases.length - 1);
 
   RoadmapItem? get nextRecommendedItem {
     for (final phase in phases) {
@@ -650,8 +683,10 @@ class PersonalizedRoadmap {
       profileVersion: map['profileVersion'] ?? 1,
       generatorVersion: map['generatorVersion'] ?? '1.0.0',
       roadmapVersion: map['roadmapVersion'] ?? 1,
-      generatedAt: DateTime.tryParse(map['generatedAt'] ?? '') ?? DateTime.now(),
-      lastUpdatedAt: DateTime.tryParse(map['lastUpdatedAt'] ?? '') ?? DateTime.now(),
+      generatedAt:
+          DateTime.tryParse(map['generatedAt'] ?? '') ?? DateTime.now(),
+      lastUpdatedAt:
+          DateTime.tryParse(map['lastUpdatedAt'] ?? '') ?? DateTime.now(),
     );
   }
 

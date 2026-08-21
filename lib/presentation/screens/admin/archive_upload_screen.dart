@@ -49,9 +49,10 @@ class _ArchiveUploadScreenState extends State<ArchiveUploadScreen> {
     for (var year in studyProvider.years) {
       int countForYear = 0;
       final semesters = await repo.getSemesters(year.id);
-      
+
       for (var sem in semesters) {
-        final semResources = allResources.where((r) => r.semesterId == sem.id).toList();
+        final semResources =
+            allResources.where((r) => r.semesterId == sem.id).toList();
         _semesterResources[sem.id] = semResources;
         countForYear += semResources.length;
       }
@@ -81,14 +82,16 @@ class _ArchiveUploadScreenState extends State<ArchiveUploadScreen> {
     final studyProvider = context.watch<StudyProvider>();
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
 
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         title: Text(
           'Archive Upload Dashboard',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: textPrimary),
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, color: textPrimary),
         ),
         centerTitle: false,
         backgroundColor: Colors.transparent,
@@ -109,12 +112,14 @@ class _ArchiveUploadScreenState extends State<ArchiveUploadScreen> {
                       icon: const Icon(Icons.cloud_upload_rounded),
                       label: Text(
                         'Upload PDF to Archive.org',
-                        style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
                       ),
                     ),
                   ),
@@ -174,7 +179,8 @@ class _YearBoxState extends State<_YearBox> {
       setState(() {
         _semesters = sems;
         if (sems.isNotEmpty) {
-          _selectedSemesterId = sems.first.id; // default to first semester toggle
+          _selectedSemesterId =
+              sems.first.id; // default to first semester toggle
         }
         _isLoadingSems = false;
       });
@@ -186,7 +192,8 @@ class _YearBoxState extends State<_YearBox> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -196,7 +203,10 @@ class _YearBoxState extends State<_YearBox> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.primary.withAlpha(50), width: 1.5),
         boxShadow: [
-          BoxShadow(color: Colors.black.withAlpha(5), blurRadius: 8, offset: const Offset(0, 4)),
+          BoxShadow(
+              color: Colors.black.withAlpha(5),
+              blurRadius: 8,
+              offset: const Offset(0, 4)),
         ],
       ),
       child: Column(
@@ -208,17 +218,24 @@ class _YearBoxState extends State<_YearBox> {
             children: [
               Text(
                 widget.year.title,
-                style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
+                style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: textPrimary),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withAlpha(20),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   '${widget.totalFiles} Files Uploaded',
-                  style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+                  style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: AppColors.primary),
                 ),
               ),
             ],
@@ -253,15 +270,17 @@ class _YearBoxState extends State<_YearBox> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Files List for Selected Semester
             if (_selectedSemesterId != null) ...[
               Builder(builder: (ctx) {
-                final files = widget.semesterResources[_selectedSemesterId!] ?? [];
+                final files =
+                    widget.semesterResources[_selectedSemesterId!] ?? [];
                 if (files.isEmpty) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('No files uploaded yet for this semester.', style: TextStyle(color: Colors.grey.shade600)),
+                    child: Text('No files uploaded yet for this semester.',
+                        style: TextStyle(color: Colors.grey.shade600)),
                   );
                 }
                 return Container(
@@ -279,19 +298,32 @@ class _YearBoxState extends State<_YearBox> {
                     thickness: 6,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 8),
                       itemCount: files.length,
                       itemBuilder: (ctx, idx) {
                         final f = files[idx];
                         return ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                          leading: const Icon(Icons.picture_as_pdf_rounded, color: Colors.redAccent),
-                          title: Text(f.title, style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 14)),
-                          subtitle: Text(f.subjectName, style: const TextStyle(fontSize: 12)),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 8),
+                          leading: const Icon(Icons.picture_as_pdf_rounded,
+                              color: Colors.redAccent),
+                          title: Text(f.title,
+                              style: TextStyle(
+                                  color: textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14)),
+                          subtitle: Text(f.subjectName,
+                              style: const TextStyle(fontSize: 12)),
                           trailing: IconButton(
-                            icon: const Icon(Icons.remove_red_eye, color: AppColors.primary),
+                            icon: const Icon(Icons.remove_red_eye,
+                                color: AppColors.primary),
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => PdfViewerScreen(resource: f)));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          PdfViewerScreen(resource: f)));
                             },
                           ),
                         );
@@ -331,12 +363,14 @@ class _UploadModalState extends State<_UploadModal> {
   bool _isUploading = false;
 
   Future<void> _pickFile() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf'], withData: true);
+    final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['pdf'], withData: true);
     if (result != null && result.files.isNotEmpty) {
       setState(() {
         _selectedFile = result.files.first;
         if (_titleController.text.isEmpty) {
-          _titleController.text = _selectedFile!.name.replaceAll(RegExp(r'\.pdf$', caseSensitive: false), '');
+          _titleController.text = _selectedFile!.name
+              .replaceAll(RegExp(r'\.pdf$', caseSensitive: false), '');
         }
       });
     }
@@ -351,7 +385,8 @@ class _UploadModalState extends State<_UploadModal> {
       _availableSemesters = [];
       _availableSubjects = [];
     });
-    final sems = await context.read<StudyProvider>().repository.getSemesters(year.id);
+    final sems =
+        await context.read<StudyProvider>().repository.getSemesters(year.id);
     setState(() => _availableSemesters = sems);
   }
 
@@ -362,7 +397,8 @@ class _UploadModalState extends State<_UploadModal> {
       _selectedSubject = null;
       _availableSubjects = [];
     });
-    final subjs = await context.read<StudyProvider>().repository.getSubjects(semester.id);
+    final subjs =
+        await context.read<StudyProvider>().repository.getSubjects(semester.id);
     setState(() => _availableSubjects = subjs);
   }
 
@@ -372,22 +408,23 @@ class _UploadModalState extends State<_UploadModal> {
     setState(() => _isUploading = true);
     try {
       await context.read<StudyProvider>().repository.uploadAdminPdfResource(
-        year: _selectedYear!,
-        semester: _selectedSemester!,
-        subject: _selectedSubject!,
-        resourceType: _selectedResourceType,
-        title: _titleController.text.trim(),
-        description: '',
-        fileName: _selectedFile!.name,
-        pdfBytes: _selectedFile!.bytes!,
-        sectionType: 'Notes',
-        onProgress: (_) {},
-      );
+            year: _selectedYear!,
+            semester: _selectedSemester!,
+            subject: _selectedSubject!,
+            resourceType: _selectedResourceType,
+            title: _titleController.text.trim(),
+            description: '',
+            fileName: _selectedFile!.name,
+            pdfBytes: _selectedFile!.bytes!,
+            sectionType: 'Notes',
+            onProgress: (_) {},
+          );
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) {
         setState(() => _isUploading = false);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Upload failed: $e')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Upload failed: $e')));
       }
     }
   }
@@ -408,23 +445,34 @@ class _UploadModalState extends State<_UploadModal> {
                 DropdownButtonFormField<YearModel>(
                   value: _selectedYear,
                   decoration: const InputDecoration(labelText: 'Select Year'),
-                  items: studyProvider.years.map((y) => DropdownMenuItem(value: y, child: Text(y.title))).toList(),
+                  items: studyProvider.years
+                      .map((y) =>
+                          DropdownMenuItem(value: y, child: Text(y.title)))
+                      .toList(),
                   onChanged: _onYearChanged,
                   validator: (val) => val == null ? 'Required' : null,
                 ),
                 const SizedBox(height: 10),
                 DropdownButtonFormField<SemesterModel>(
                   value: _selectedSemester,
-                  decoration: const InputDecoration(labelText: 'Select Semester'),
-                  items: _availableSemesters.map((s) => DropdownMenuItem(value: s, child: Text(s.title))).toList(),
+                  decoration:
+                      const InputDecoration(labelText: 'Select Semester'),
+                  items: _availableSemesters
+                      .map((s) =>
+                          DropdownMenuItem(value: s, child: Text(s.title)))
+                      .toList(),
                   onChanged: _onSemesterChanged,
                   validator: (val) => val == null ? 'Required' : null,
                 ),
                 const SizedBox(height: 10),
                 DropdownButtonFormField<SubjectModel>(
                   value: _selectedSubject,
-                  decoration: const InputDecoration(labelText: 'Select Subject'),
-                  items: _availableSubjects.map((s) => DropdownMenuItem(value: s, child: Text(s.name))).toList(),
+                  decoration:
+                      const InputDecoration(labelText: 'Select Subject'),
+                  items: _availableSubjects
+                      .map((s) =>
+                          DropdownMenuItem(value: s, child: Text(s.name)))
+                      .toList(),
                   onChanged: (val) => setState(() => _selectedSubject = val),
                   validator: (val) => val == null ? 'Required' : null,
                 ),
@@ -432,20 +480,26 @@ class _UploadModalState extends State<_UploadModal> {
                 DropdownButtonFormField<String>(
                   value: _selectedResourceType,
                   decoration: const InputDecoration(labelText: 'Resource Type'),
-                  items: AppConstants.resourceTypes.map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
-                  onChanged: (val) => setState(() => _selectedResourceType = val!),
+                  items: AppConstants.resourceTypes
+                      .map((t) => DropdownMenuItem(value: t, child: Text(t)))
+                      .toList(),
+                  onChanged: (val) =>
+                      setState(() => _selectedResourceType = val!),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _titleController,
                   decoration: const InputDecoration(labelText: 'PDF Title'),
-                  validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                  validator: (val) =>
+                      val == null || val.isEmpty ? 'Required' : null,
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton.icon(
                   onPressed: _pickFile,
                   icon: const Icon(Icons.attach_file),
-                  label: Text(_selectedFile == null ? 'Choose PDF File' : _selectedFile!.name),
+                  label: Text(_selectedFile == null
+                      ? 'Choose PDF File'
+                      : _selectedFile!.name),
                 ),
               ],
             ),
@@ -453,10 +507,14 @@ class _UploadModalState extends State<_UploadModal> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel')),
         ElevatedButton(
           onPressed: _isUploading ? null : _upload,
-          child: _isUploading ? const CircularProgressIndicator() : const Text('Upload'),
+          child: _isUploading
+              ? const CircularProgressIndicator()
+              : const Text('Upload'),
         ),
       ],
     );

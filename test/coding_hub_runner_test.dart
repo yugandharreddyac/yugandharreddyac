@@ -20,11 +20,16 @@ void main() {
       expect(SupportedLanguage.java.displayName, contains('Java'));
 
       expect(SupportedLanguage.python.defaultTemplate.isNotEmpty, isTrue);
-      expect(SupportedLanguage.cpp.defaultTemplate.contains('int main'), isTrue);
-      expect(SupportedLanguage.java.defaultTemplate.contains('public static void main'), isTrue);
+      expect(
+          SupportedLanguage.cpp.defaultTemplate.contains('int main'), isTrue);
+      expect(
+          SupportedLanguage.java.defaultTemplate
+              .contains('public static void main'),
+          isTrue);
     });
 
-    test('Empty source code returns structured error result without throwing', () async {
+    test('Empty source code returns structured error result without throwing',
+        () async {
       final result = await service.executeCode(
         language: SupportedLanguage.python,
         code: '   ',
@@ -55,9 +60,11 @@ void main() {
       expect(result.stderr, contains('Main method not found'));
     });
 
-    test('Preset algorithm programs execute and produce stdout output', () async {
+    test('Preset algorithm programs execute and produce stdout output',
+        () async {
       // 1. Python Binary Search
-      final pyBinarySearch = CodeExecutionService.presets[SupportedLanguage.python]?['Binary Search'];
+      final pyBinarySearch = CodeExecutionService
+          .presets[SupportedLanguage.python]?['Binary Search'];
       expect(pyBinarySearch, isNotNull);
 
       final pyResult = await service.executeCode(
@@ -71,7 +78,8 @@ void main() {
       expect(pyResult.memoryUsageMb, greaterThan(0));
 
       // 2. C++ Reverse String
-      final cppReverse = CodeExecutionService.presets[SupportedLanguage.cpp]?['Reverse String & Palindrome'];
+      final cppReverse = CodeExecutionService.presets[SupportedLanguage.cpp]
+          ?['Reverse String & Palindrome'];
       expect(cppReverse, isNotNull);
 
       final cppResult = await service.executeCode(
@@ -83,7 +91,8 @@ void main() {
       expect(cppResult.stdout, contains('Is Palindrome: True'));
 
       // 3. Java Custom Stack
-      final javaStack = CodeExecutionService.presets[SupportedLanguage.java]?['Stack Implementation'];
+      final javaStack = CodeExecutionService.presets[SupportedLanguage.java]
+          ?['Stack Implementation'];
       expect(javaStack, isNotNull);
 
       final javaResult = await service.executeCode(
@@ -95,7 +104,8 @@ void main() {
       expect(javaResult.stdout, contains('Top element: 30'));
     });
 
-    test('Local snippet persistence saves, retrieves, and deletes correctly', () async {
+    test('Local snippet persistence saves, retrieves, and deletes correctly',
+        () async {
       final initialList = await service.getSavedSnippets();
       expect(initialList.isEmpty, isTrue);
 

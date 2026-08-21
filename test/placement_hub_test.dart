@@ -13,7 +13,8 @@ void main() {
 
   setUp(() {
     firebaseDataSource = FirebaseDataSource();
-    placementRepository = PlacementRepository(firebaseDataSource: firebaseDataSource);
+    placementRepository =
+        PlacementRepository(firebaseDataSource: firebaseDataSource);
     placementProvider = PlacementProvider(placementRepository);
   });
 
@@ -31,7 +32,9 @@ void main() {
 
       const cat = 'Aptitude';
       placementProvider.selectCategory(cat);
-      expect(placementProvider.filteredResources.every((r) => r.category == cat), isTrue);
+      expect(
+          placementProvider.filteredResources.every((r) => r.category == cat),
+          isTrue);
     });
 
     test('SearchIndexEngine indexes Placement Hub entities', () async {

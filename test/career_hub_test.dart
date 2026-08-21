@@ -13,9 +13,11 @@ void main() {
       final careerList = await repo.getCareerTechnologies();
 
       expect(careerList.isNotEmpty, true);
-      expect(careerList.any((c) => c.name.contains('Artificial Intelligence')), true);
+      expect(careerList.any((c) => c.name.contains('Artificial Intelligence')),
+          true);
 
-      final aiCareer = careerList.firstWhere((c) => c.name.contains('Artificial Intelligence'));
+      final aiCareer = careerList
+          .firstWhere((c) => c.name.contains('Artificial Intelligence'));
       expect(aiCareer.introduction.isNotEmpty, true);
       expect(aiCareer.whyLearn.isNotEmpty, true);
     });
@@ -28,7 +30,8 @@ void main() {
       expect(provider.technologies.isNotEmpty, true);
 
       final initialCount = provider.filteredTechnologies.length;
-      final category = provider.categories.firstWhere((cat) => cat != 'All', orElse: () => 'All');
+      final category = provider.categories
+          .firstWhere((cat) => cat != 'All', orElse: () => 'All');
 
       provider.selectCategory(category);
       if (category != 'All') {
@@ -49,7 +52,10 @@ void main() {
 
       final results = engine.search('Artificial Intelligence');
       expect(results.matchingItems.isNotEmpty, true);
-      expect(results.matchingItems.any((r) => r.title.contains('Artificial Intelligence')), true);
+      expect(
+          results.matchingItems
+              .any((r) => r.title.contains('Artificial Intelligence')),
+          true);
     });
   });
 }

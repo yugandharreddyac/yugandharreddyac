@@ -26,8 +26,10 @@ class DownloadProvider extends ChangeNotifier {
   DownloadViewState _state = DownloadViewState.idle;
   String? _errorMessage;
 
-  DownloadProvider(this.localStorage, {DownloadRepository? downloadRepository}) {
-    _downloadRepository = downloadRepository ?? DownloadRepository(localStorage: localStorage);
+  DownloadProvider(this.localStorage,
+      {DownloadRepository? downloadRepository}) {
+    _downloadRepository =
+        downloadRepository ?? DownloadRepository(localStorage: localStorage);
     Future.microtask(() => loadDownloadedResources());
   }
 
@@ -40,14 +42,19 @@ class DownloadProvider extends ChangeNotifier {
   bool get isSuccess => _state == DownloadViewState.success;
   bool get isError => _state == DownloadViewState.error;
   bool get isOffline => _state == DownloadViewState.offline;
-  bool get isEmpty => _state == DownloadViewState.empty || _downloadedResources.isEmpty;
-  bool get isDownloadingAny => _state == DownloadViewState.downloading || _activeTaskMap.isNotEmpty;
+  bool get isEmpty =>
+      _state == DownloadViewState.empty || _downloadedResources.isEmpty;
+  bool get isDownloadingAny =>
+      _state == DownloadViewState.downloading || _activeTaskMap.isNotEmpty;
   String? get errorMessage => _errorMessage;
 
   // Task Helpers
-  double getProgress(String resourceId) => _activeTaskMap[resourceId]?.progress ?? 0.0;
-  double getSpeed(String resourceId) => _activeTaskMap[resourceId]?.bytesPerSecond ?? 0.0;
-  Duration getEta(String resourceId) => _activeTaskMap[resourceId]?.estimatedRemaining ?? Duration.zero;
+  double getProgress(String resourceId) =>
+      _activeTaskMap[resourceId]?.progress ?? 0.0;
+  double getSpeed(String resourceId) =>
+      _activeTaskMap[resourceId]?.bytesPerSecond ?? 0.0;
+  Duration getEta(String resourceId) =>
+      _activeTaskMap[resourceId]?.estimatedRemaining ?? Duration.zero;
   bool isDownloaded(String resourceId) =>
       _downloadedResources.any((r) => r.id == resourceId);
   bool isDownloading(String resourceId) =>
@@ -65,12 +72,14 @@ class DownloadProvider extends ChangeNotifier {
         _setState(DownloadViewState.success);
       }
     } catch (e) {
-      _setState(DownloadViewState.error, error: 'Failed to load downloaded resources: $e');
+      _setState(DownloadViewState.error,
+          error: 'Failed to load downloaded resources: $e');
     }
   }
 
   bool isResourceDownloaded(String resourceId) {
-    return _downloadedResources.any((r) => r.id == resourceId && r.localFilePath != null);
+    return _downloadedResources
+        .any((r) => r.id == resourceId && r.localFilePath != null);
   }
 
   ResourceModel? getDownloadedResource(String resourceId) {
@@ -81,7 +90,8 @@ class DownloadProvider extends ChangeNotifier {
     }
   }
 
-  Future<String?> downloadPdf(ResourceModel resource, {Function(String)? onDownloadSuccess}) async {
+  Future<String?> downloadPdf(ResourceModel resource,
+      {Function(String)? onDownloadSuccess}) async {
     _setState(DownloadViewState.downloading);
 
     final path = await _downloadRepository.downloadPdf(
@@ -135,7 +145,8 @@ class DownloadProvider extends ChangeNotifier {
         _setState(DownloadViewState.success);
       }
     } catch (e) {
-      _setState(DownloadViewState.error, error: 'Failed to delete download: $e');
+      _setState(DownloadViewState.error,
+          error: 'Failed to delete download: $e');
     }
   }
 

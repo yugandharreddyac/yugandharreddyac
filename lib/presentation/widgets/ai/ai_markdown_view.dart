@@ -25,14 +25,18 @@ class AiMarkdownView extends StatelessWidget {
         GoogleFonts.inter(
           fontSize: 14.5,
           height: 1.55,
-          color: isDarkMode ? Colors.white.withOpacity(0.92) : const Color(0xFF1E293B),
+          color: isDarkMode
+              ? Colors.white.withOpacity(0.92)
+              : const Color(0xFF1E293B),
         );
 
     final blocks = _parseMarkdownBlocks(content);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: blocks.map((block) => _buildBlock(context, block, defaultText, isDarkMode)).toList(),
+      children: blocks
+          .map((block) => _buildBlock(context, block, defaultText, isDarkMode))
+          .toList(),
     );
   }
 
@@ -44,7 +48,8 @@ class AiMarkdownView extends StatelessWidget {
   ) {
     switch (block.type) {
       case _BlockType.code:
-        return _buildCodeBlock(context, block.content, block.language, isDarkMode);
+        return _buildCodeBlock(
+            context, block.content, block.language, isDarkMode);
 
       case _BlockType.h1:
         return Padding(
@@ -68,7 +73,9 @@ class AiMarkdownView extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontSize: 17,
               fontWeight: FontWeight.w700,
-              color: isDarkMode ? Colors.white.withOpacity(0.95) : const Color(0xFF1E293B),
+              color: isDarkMode
+                  ? Colors.white.withOpacity(0.95)
+                  : const Color(0xFF1E293B),
               height: 1.3,
             ),
           ),
@@ -82,7 +89,9 @@ class AiMarkdownView extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontSize: 15.5,
               fontWeight: FontWeight.w600,
-              color: isDarkMode ? Colors.white.withOpacity(0.9) : const Color(0xFF334155),
+              color: isDarkMode
+                  ? Colors.white.withOpacity(0.9)
+                  : const Color(0xFF334155),
               height: 1.3,
             ),
           ),
@@ -106,7 +115,8 @@ class AiMarkdownView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: _buildRichInlineText(block.content, baseTextStyle, isDarkMode),
+                child: _buildRichInlineText(
+                    block.content, baseTextStyle, isDarkMode),
               ),
             ],
           ),
@@ -130,7 +140,8 @@ class AiMarkdownView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: _buildRichInlineText(block.content, baseTextStyle, isDarkMode),
+                child: _buildRichInlineText(
+                    block.content, baseTextStyle, isDarkMode),
               ),
             ],
           ),
@@ -141,13 +152,15 @@ class AiMarkdownView extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 6),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: isDarkMode ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+            color:
+                isDarkMode ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
             borderRadius: BorderRadius.circular(8),
             border: const Border(
               left: BorderSide(color: AppColors.primary, width: 3.5),
             ),
           ),
-          child: _buildRichInlineText(block.content, baseTextStyle.copyWith(fontStyle: FontStyle.italic), isDarkMode),
+          child: _buildRichInlineText(block.content,
+              baseTextStyle.copyWith(fontStyle: FontStyle.italic), isDarkMode),
         );
 
       case _BlockType.table:
@@ -162,8 +175,11 @@ class AiMarkdownView extends StatelessWidget {
     }
   }
 
-  Widget _buildCodeBlock(BuildContext context, String code, String? language, bool isDarkMode) {
-    final langDisplay = (language != null && language.trim().isNotEmpty) ? language.trim().toUpperCase() : 'CODE';
+  Widget _buildCodeBlock(
+      BuildContext context, String code, String? language, bool isDarkMode) {
+    final langDisplay = (language != null && language.trim().isNotEmpty)
+        ? language.trim().toUpperCase()
+        : 'CODE';
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -247,10 +263,12 @@ class AiMarkdownView extends StatelessWidget {
                   },
                   borderRadius: BorderRadius.circular(6),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                     child: Row(
                       children: [
-                        const Icon(Icons.copy_rounded, size: 13, color: Color(0xFFBAC2DE)),
+                        const Icon(Icons.copy_rounded,
+                            size: 13, color: Color(0xFFBAC2DE)),
                         const SizedBox(width: 4),
                         Text(
                           'Copy',
@@ -285,7 +303,8 @@ class AiMarkdownView extends StatelessWidget {
     );
   }
 
-  Widget _buildTable(BuildContext context, List<List<String>> rows, bool isDarkMode) {
+  Widget _buildTable(
+      BuildContext context, List<List<String>> rows, bool isDarkMode) {
     if (rows.isEmpty) return const SizedBox.shrink();
 
     return Container(
@@ -314,7 +333,9 @@ class AiMarkdownView extends StatelessWidget {
             ),
             dataTextStyle: GoogleFonts.inter(
               fontSize: 13,
-              color: isDarkMode ? Colors.white.withOpacity(0.9) : const Color(0xFF334155),
+              color: isDarkMode
+                  ? Colors.white.withOpacity(0.9)
+                  : const Color(0xFF334155),
             ),
             columns: rows.first
                 .map((col) => DataColumn(label: Text(col.trim())))
@@ -330,14 +351,16 @@ class AiMarkdownView extends StatelessWidget {
     );
   }
 
-  Widget _buildRichInlineText(String text, TextStyle baseStyle, bool isDarkMode) {
+  Widget _buildRichInlineText(
+      String text, TextStyle baseStyle, bool isDarkMode) {
     final spans = _parseInlineSpans(text, baseStyle, isDarkMode);
     return SelectableText.rich(
       TextSpan(children: spans),
     );
   }
 
-  List<InlineSpan> _parseInlineSpans(String text, TextStyle baseStyle, bool isDarkMode) {
+  List<InlineSpan> _parseInlineSpans(
+      String text, TextStyle baseStyle, bool isDarkMode) {
     final spans = <InlineSpan>[];
     final inlineRegex = RegExp(r'(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)');
     int lastMatchEnd = 0;
@@ -368,17 +391,22 @@ class AiMarkdownView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
             margin: const EdgeInsets.symmetric(horizontal: 2),
             decoration: BoxDecoration(
-              color: isDarkMode ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+              color: isDarkMode
+                  ? const Color(0xFF1E293B)
+                  : const Color(0xFFF1F5F9),
               borderRadius: BorderRadius.circular(4),
               border: Border.all(
-                color: isDarkMode ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                color: isDarkMode
+                    ? const Color(0xFF334155)
+                    : const Color(0xFFE2E8F0),
                 width: 0.8,
               ),
             ),
             child: Text(
               matchedStr.substring(1, matchedStr.length - 1),
               style: GoogleFonts.firaCode(
-                fontSize: baseStyle.fontSize != null ? baseStyle.fontSize! * 0.9 : 13,
+                fontSize:
+                    baseStyle.fontSize != null ? baseStyle.fontSize! * 0.9 : 13,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,
               ),
@@ -471,13 +499,17 @@ class AiMarkdownView extends StatelessWidget {
 
       // Headers
       if (trimmed.startsWith('### ')) {
-        blocks.add(_MarkdownBlock(type: _BlockType.h3, content: trimmed.substring(4)));
+        blocks.add(
+            _MarkdownBlock(type: _BlockType.h3, content: trimmed.substring(4)));
       } else if (trimmed.startsWith('## ')) {
-        blocks.add(_MarkdownBlock(type: _BlockType.h2, content: trimmed.substring(3)));
+        blocks.add(
+            _MarkdownBlock(type: _BlockType.h2, content: trimmed.substring(3)));
       } else if (trimmed.startsWith('# ')) {
-        blocks.add(_MarkdownBlock(type: _BlockType.h1, content: trimmed.substring(2)));
+        blocks.add(
+            _MarkdownBlock(type: _BlockType.h1, content: trimmed.substring(2)));
       } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-        blocks.add(_MarkdownBlock(type: _BlockType.bullet, content: trimmed.substring(2)));
+        blocks.add(_MarkdownBlock(
+            type: _BlockType.bullet, content: trimmed.substring(2)));
       } else if (RegExp(r'^\d+\.\s').hasMatch(trimmed)) {
         final match = RegExp(r'^(\d+)\.\s(.*)$').firstMatch(trimmed);
         if (match != null) {
@@ -487,10 +519,12 @@ class AiMarkdownView extends StatelessWidget {
             number: int.tryParse(match.group(1) ?? '1'),
           ));
         } else {
-          blocks.add(_MarkdownBlock(type: _BlockType.paragraph, content: trimmed));
+          blocks.add(
+              _MarkdownBlock(type: _BlockType.paragraph, content: trimmed));
         }
       } else if (trimmed.startsWith('> ')) {
-        blocks.add(_MarkdownBlock(type: _BlockType.quote, content: trimmed.substring(2)));
+        blocks.add(_MarkdownBlock(
+            type: _BlockType.quote, content: trimmed.substring(2)));
       } else {
         blocks.add(_MarkdownBlock(type: _BlockType.paragraph, content: line));
       }

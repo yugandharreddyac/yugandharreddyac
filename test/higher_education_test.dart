@@ -13,13 +13,16 @@ void main() {
 
   setUp(() {
     firebaseDataSource = FirebaseDataSource();
-    higherEducationRepository = HigherEducationRepository(firebaseDataSource: firebaseDataSource);
-    higherEducationProvider = HigherEducationProvider(higherEducationRepository);
+    higherEducationRepository =
+        HigherEducationRepository(firebaseDataSource: firebaseDataSource);
+    higherEducationProvider =
+        HigherEducationProvider(higherEducationRepository);
   });
 
   group('Higher Education Hub Unit Tests', () {
     test('getHigherEducationResources returns GATE & GRE resources', () async {
-      final resources = await higherEducationRepository.getHigherEducationResources();
+      final resources =
+          await higherEducationRepository.getHigherEducationResources();
       expect(resources, isNotEmpty);
       expect(resources.any((r) => r.title.contains('GATE')), isTrue);
       expect(resources.any((r) => r.title.contains('GRE')), isTrue);
@@ -32,7 +35,8 @@ void main() {
 
     test('SearchIndexEngine indexes Higher Education entities', () async {
       final engine = SearchIndexEngine();
-      final resources = await higherEducationRepository.getHigherEducationResources();
+      final resources =
+          await higherEducationRepository.getHigherEducationResources();
 
       engine.buildIndex(
         [],
@@ -43,7 +47,8 @@ void main() {
       expect(engine.isIndexed, isTrue);
 
       final gateResult = engine.search('GATE');
-      expect(gateResult.matchingItems.any((i) => i.title.contains('GATE')), isTrue);
+      expect(gateResult.matchingItems.any((i) => i.title.contains('GATE')),
+          isTrue);
     });
   });
 }

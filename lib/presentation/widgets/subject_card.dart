@@ -50,8 +50,10 @@ class _SubjectCardState extends State<SubjectCard> {
     final accentColor = iconInfo.accentColor;
 
     final cardBgColor = isDark ? AppColors.surfaceDark : Colors.white;
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
 
     return RepaintBoundary(
@@ -61,7 +63,9 @@ class _SubjectCardState extends State<SubjectCard> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           curve: Curves.easeOutCubic,
-          transform: _isHovered ? (Matrix4.identity()..translate(0, -2)) : Matrix4.identity(),
+          transform: _isHovered
+              ? (Matrix4.identity()..translate(0, -2))
+              : Matrix4.identity(),
           decoration: BoxDecoration(
             color: cardBgColor,
             borderRadius: BorderRadius.circular(20),
@@ -83,8 +87,7 @@ class _SubjectCardState extends State<SubjectCard> {
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(20),
             child: InkWell(
-              onTap: widget.onTap ??
-                  () => _navigateToCategory(context, ''),
+              onTap: widget.onTap ?? () => _navigateToCategory(context, ''),
               borderRadius: BorderRadius.circular(20),
               splashColor: accentColor.withAlpha(20),
               highlightColor: accentColor.withAlpha(10),
@@ -144,7 +147,8 @@ class _SubjectCardState extends State<SubjectCard> {
                                   const SizedBox(width: 8),
                                   Text(
                                     '•',
-                                    style: TextStyle(fontSize: 12, color: textSecondary),
+                                    style: TextStyle(
+                                        fontSize: 12, color: textSecondary),
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
@@ -212,7 +216,8 @@ class _SubjectCardState extends State<SubjectCard> {
                       textPrimary: textPrimary,
                       textSecondary: textSecondary,
                       isLast: true,
-                      onTap: () => _navigateToCategory(context, 'Previous Question Papers'),
+                      onTap: () => _navigateToCategory(
+                          context, 'Previous Question Papers'),
                     ),
                   ],
                 ),

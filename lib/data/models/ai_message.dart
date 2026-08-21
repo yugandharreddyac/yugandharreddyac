@@ -103,12 +103,16 @@ class AiMessage {
           ? DateTime.tryParse(map['timestamp'].toString()) ?? DateTime.now()
           : DateTime.now(),
       attachments: (map['attachments'] as List<dynamic>?)
-              ?.map((a) => a is Map ? AiAttachment.fromMap(Map<String, dynamic>.from(a)) : null)
+              ?.map((a) => a is Map
+                  ? AiAttachment.fromMap(Map<String, dynamic>.from(a))
+                  : null)
               .whereType<AiAttachment>()
               .toList() ??
           const [],
       resourceReferences: (map['resourceReferences'] as List<dynamic>?)
-              ?.map((r) => r is Map ? AiResourceReference.fromMap(Map<String, dynamic>.from(r)) : null)
+              ?.map((r) => r is Map
+                  ? AiResourceReference.fromMap(Map<String, dynamic>.from(r))
+                  : null)
               .whereType<AiResourceReference>()
               .toList() ??
           const [],
@@ -117,7 +121,9 @@ class AiMessage {
               .toList() ??
           const [],
       isError: map['isError'] == true,
-      metadata: map['metadata'] is Map ? Map<String, dynamic>.from(map['metadata'] as Map) : const {},
+      metadata: map['metadata'] is Map
+          ? Map<String, dynamic>.from(map['metadata'] as Map)
+          : const {},
     );
   }
 

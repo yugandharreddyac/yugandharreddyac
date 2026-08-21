@@ -20,7 +20,8 @@ import 'package:csse_study_hub/presentation/screens/ai/unidocs_ai_screen.dart';
 // ---------------------------------------------------------------------------
 
 class _MockAiProvider implements AiProvider {
-  String responseText = 'Operating systems manage hardware and software resources.';
+  String responseText =
+      'Operating systems manage hardware and software resources.';
   List<AiResourceReference> refs = [];
   List<String> followUps = [];
   bool fail = false;
@@ -33,7 +34,8 @@ class _MockAiProvider implements AiProvider {
   String get displayName => 'Mock AI';
 
   @override
-  Set<AiCapability> get supportedCapabilities => {AiCapability.chat, AiCapability.explain};
+  Set<AiCapability> get supportedCapabilities =>
+      {AiCapability.chat, AiCapability.explain};
 
   @override
   Future<bool> checkHealth() async => true;
@@ -176,7 +178,8 @@ void main() {
         // After tap, welcome subtitle should be gone (message list replaces it)
         // The provider message may take time, so pump several frames
         for (int i = 0; i < 20; i++) {
-          if (find.text('How can I help you learn today?').evaluate().isEmpty) break;
+          if (find.text('How can I help you learn today?').evaluate().isEmpty)
+            break;
           await tester.pump(const Duration(milliseconds: 50));
         }
         expect(find.text('How can I help you learn today?'), findsNothing);
@@ -270,7 +273,10 @@ def binary_search(arr, target):
             role: AiMessageRole.assistant,
             content: 'Deadlock requires four conditions.',
             timestamp: DateTime.now(),
-            suggestedFollowUps: ['Explain deadlock conditions', 'Give code example'],
+            suggestedFollowUps: [
+              'Explain deadlock conditions',
+              'Give code example'
+            ],
           ),
         ]);
         await tester.pumpWidget(_buildApp());
@@ -314,7 +320,8 @@ def binary_search(arr, target):
         await tester.pumpAndSettle();
 
         // Section label
-        expect(find.text('Verified UniDocs Curriculum Resources'), findsOneWidget);
+        expect(
+            find.text('Verified UniDocs Curriculum Resources'), findsOneWidget);
         // Resource chip title
         expect(find.text('Deadlocks & Synchronization'), findsOneWidget);
       },
@@ -347,7 +354,8 @@ def binary_search(arr, target):
 
         if (_aiProvider.lastError != null) {
           // If we got the error, verify the banner
-          expect(find.textContaining('temporarily unavailable'), findsOneWidget);
+          expect(
+              find.textContaining('temporarily unavailable'), findsOneWidget);
           expect(find.text('Retry'), findsOneWidget);
         } else {
           // Fallback: verify provider error model directly (timing issue in test)
@@ -512,7 +520,8 @@ def binary_search(arr, target):
           timestamp: DateTime.now(),
           suggestedFollowUps: ['Follow up 1', 'Follow up 2'],
           resourceReferences: [
-            const AiResourceReference(id: 'r1', title: 'Topic A', hubName: 'Hub X'),
+            const AiResourceReference(
+                id: 'r1', title: 'Topic A', hubName: 'Hub X'),
           ],
         );
 

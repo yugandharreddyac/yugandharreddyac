@@ -15,11 +15,15 @@ class PlacementQuizRepository {
     var list = QuizMockData.questions;
 
     if (category != null && category.isNotEmpty && category != 'All') {
-      list = list.where((q) => q.category.toLowerCase() == category.toLowerCase()).toList();
+      list = list
+          .where((q) => q.category.toLowerCase() == category.toLowerCase())
+          .toList();
     }
 
     if (topic != null && topic.isNotEmpty && topic != 'All') {
-      list = list.where((q) => q.topic.toLowerCase() == topic.toLowerCase()).toList();
+      list = list
+          .where((q) => q.topic.toLowerCase() == topic.toLowerCase())
+          .toList();
     }
 
     if (difficulty != null) {
@@ -78,7 +82,8 @@ class PlacementQuizRepository {
     });
 
     if (weakTopics.isEmpty && questions.isNotEmpty) {
-      recommendedNext.add('Excellent Performance! Advance to High-Difficulty Timed Mock Tests');
+      recommendedNext.add(
+          'Excellent Performance! Advance to High-Difficulty Timed Mock Tests');
     }
 
     return QuizResultModel(

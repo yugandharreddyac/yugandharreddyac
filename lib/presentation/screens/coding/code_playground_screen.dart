@@ -86,7 +86,8 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
   }
 
   void _saveCurrentSnippet() async {
-    final titleController = TextEditingController(text: '${_selectedLanguage.displayName} Snippet');
+    final titleController =
+        TextEditingController(text: '${_selectedLanguage.displayName} Snippet');
 
     final save = await showDialog<bool>(
       context: context,
@@ -101,10 +102,14 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
           autofocus: true,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white),
             child: const Text('Save'),
           ),
         ],
@@ -114,7 +119,9 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
     if (save == true && mounted) {
       final snippet = CodeSnippetModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
-        title: titleController.text.trim().isNotEmpty ? titleController.text.trim() : 'Untitled Snippet',
+        title: titleController.text.trim().isNotEmpty
+            ? titleController.text.trim()
+            : 'Untitled Snippet',
         language: _selectedLanguage,
         code: _codeController.text,
         stdin: _stdinController.text,
@@ -152,7 +159,8 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                     children: [
                       Text(
                         'Saved Snippets (${_savedSnippets.length})',
-                        style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.inter(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close_rounded),
@@ -165,7 +173,8 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
                       child: Center(
-                        child: Text('No saved snippets yet. Tap Save Icon to bookmark code!'),
+                        child: Text(
+                            'No saved snippets yet. Tap Save Icon to bookmark code!'),
                       ),
                     )
                   else
@@ -182,15 +191,19 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                                 color: AppColors.primary.withAlpha(25),
                                 shape: BoxShape.circle,
                               ),
-                              child: const Icon(Icons.code_rounded, color: AppColors.primary, size: 20),
+                              child: const Icon(Icons.code_rounded,
+                                  color: AppColors.primary, size: 20),
                             ),
-                            title: Text(s.title, style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+                            title: Text(s.title,
+                                style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.bold)),
                             subtitle: Text(
                               '${s.language.displayName} • ${s.createdAt.day}/${s.createdAt.month}/${s.createdAt.year}',
                               style: GoogleFonts.inter(fontSize: 12),
                             ),
                             trailing: IconButton(
-                              icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent, size: 20),
+                              icon: const Icon(Icons.delete_outline_rounded,
+                                  color: Colors.redAccent, size: 20),
                               onPressed: () async {
                                 await _service.deleteSnippet(s.id);
                                 await _loadSavedSnippets();
@@ -235,21 +248,25 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const orangeAccent = AppColors.primary;
     const editorBg = Color(0xFF0F172A);
     const terminalBg = Color(0xFF020617);
 
-    final availablePresets = CodeExecutionService.presets[_selectedLanguage]?.keys.toList() ?? [];
+    final availablePresets =
+        CodeExecutionService.presets[_selectedLanguage]?.keys.toList() ?? [];
 
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         title: Text(
           'Coding Sandbox & Playground',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
         ),
         centerTitle: false,
         backgroundColor: cardColor,
@@ -302,7 +319,10 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                           value: lang,
                           child: Text(
                             lang.displayName,
-                            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary),
+                            style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: textPrimary),
                           ),
                         );
                       }).toList(),
@@ -319,23 +339,27 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                 if (availablePresets.isNotEmpty)
                   PopupMenuButton<String>(
                     tooltip: 'Load Algorithm Example',
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                     onSelected: _loadPreset,
                     itemBuilder: (ctx) => availablePresets.map((title) {
                       return PopupMenuItem(
                         value: title,
-                        child: Text(title, style: GoogleFonts.inter(fontSize: 13)),
+                        child:
+                            Text(title, style: GoogleFonts.inter(fontSize: 13)),
                       );
                     }).toList(),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
                         color: orangeAccent.withAlpha(isDark ? 35 : 20),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
                         children: [
-                          const Icon(Icons.auto_stories_rounded, size: 14, color: orangeAccent),
+                          const Icon(Icons.auto_stories_rounded,
+                              size: 14, color: orangeAccent),
                           const SizedBox(width: 6),
                           Text(
                             'Examples',
@@ -355,7 +379,9 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                 // Stdin Toggle Button
                 IconButton(
                   icon: Icon(
-                    _showStdin ? Icons.input_rounded : Icons.keyboard_alt_outlined,
+                    _showStdin
+                        ? Icons.input_rounded
+                        : Icons.keyboard_alt_outlined,
                     color: _showStdin ? orangeAccent : textSubtitle,
                     size: 20,
                   ),
@@ -383,13 +409,17 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                 children: [
                   Text(
                     'Standard Input (stdin):',
-                    style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: textSubtitle),
+                    style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: textSubtitle),
                   ),
                   const SizedBox(height: 6),
                   TextField(
                     controller: _stdinController,
                     maxLines: 2,
-                    style: GoogleFonts.jetBrainsMono(fontSize: 12, color: textPrimary),
+                    style: GoogleFonts.jetBrainsMono(
+                        fontSize: 12, color: textPrimary),
                     decoration: const InputDecoration(
                       hintText: 'Enter test inputs here (numbers, strings)...',
                       border: InputBorder.none,
@@ -413,10 +443,12 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
               children: [
                 // Editor Tab Bar
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: const BoxDecoration(
                     color: Color(0xFF1E293B),
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(17)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(17)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -426,36 +458,47 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                           Container(
                             width: 10,
                             height: 10,
-                            decoration: const BoxDecoration(color: Color(0xFFEF4444), shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                                color: Color(0xFFEF4444),
+                                shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 6),
                           Container(
                             width: 10,
                             height: 10,
-                            decoration: const BoxDecoration(color: Color(0xFFF59E0B), shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                                color: Color(0xFFF59E0B),
+                                shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 6),
                           Container(
                             width: 10,
                             height: 10,
-                            decoration: const BoxDecoration(color: Color(0xFF10B981), shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                                color: Color(0xFF10B981),
+                                shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 12),
                           Text(
                             'main.${_selectedLanguage.extension}',
-                            style: GoogleFonts.jetBrainsMono(fontSize: 12, color: Colors.grey.shade400),
+                            style: GoogleFonts.jetBrainsMono(
+                                fontSize: 12, color: Colors.grey.shade400),
                           ),
                         ],
                       ),
                       TextButton.icon(
                         onPressed: () {
                           setState(() {
-                            _codeController.text = _selectedLanguage.defaultTemplate;
+                            _codeController.text =
+                                _selectedLanguage.defaultTemplate;
                             _executionResult = null;
                           });
                         },
-                        icon: const Icon(Icons.restart_alt_rounded, size: 14, color: Colors.grey),
-                        label: Text('Reset', style: GoogleFonts.inter(fontSize: 11, color: Colors.grey)),
+                        icon: const Icon(Icons.restart_alt_rounded,
+                            size: 14, color: Colors.grey),
+                        label: Text('Reset',
+                            style: GoogleFonts.inter(
+                                fontSize: 11, color: Colors.grey)),
                       ),
                     ],
                   ),
@@ -498,17 +541,22 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                   ? const SizedBox(
                       width: 18,
                       height: 18,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                          color: Colors.white, strokeWidth: 2),
                     )
                   : const Icon(Icons.play_arrow_rounded, size: 22),
               label: Text(
-                _isExecuting ? 'Compiling & Executing...' : 'Execute & Run Code',
-                style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold),
+                _isExecuting
+                    ? 'Compiling & Executing...'
+                    : 'Execute & Run Code',
+                style: GoogleFonts.inter(
+                    fontSize: 15, fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF10B981),
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14)),
                 elevation: 0,
               ),
             ),
@@ -528,21 +576,27 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
               children: [
                 // Terminal Header
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: const BoxDecoration(
                     color: Color(0xFF0F172A),
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(17)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(17)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.terminal_rounded, size: 16, color: Color(0xFF10B981)),
+                          const Icon(Icons.terminal_rounded,
+                              size: 16, color: Color(0xFF10B981)),
                           const SizedBox(width: 8),
                           Text(
                             'Output Terminal (stdout)',
-                            style: GoogleFonts.jetBrainsMono(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey.shade300),
+                            style: GoogleFonts.jetBrainsMono(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade300),
                           ),
                         ],
                       ),
@@ -550,26 +604,30 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
                                 color: Colors.white10,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
                                 '${_executionResult!.executionTimeMs}ms',
-                                style: GoogleFonts.jetBrainsMono(fontSize: 10, color: Colors.greenAccent),
+                                style: GoogleFonts.jetBrainsMono(
+                                    fontSize: 10, color: Colors.greenAccent),
                               ),
                             ),
                             const SizedBox(width: 6),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
                                 color: Colors.white10,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
                                 '${_executionResult!.memoryUsageMb} MB',
-                                style: GoogleFonts.jetBrainsMono(fontSize: 10, color: Colors.blueAccent),
+                                style: GoogleFonts.jetBrainsMono(
+                                    fontSize: 10, color: Colors.blueAccent),
                               ),
                             ),
                           ],
@@ -584,7 +642,8 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                   child: _executionResult == null
                       ? Text(
                           'Ready. Click "Execute & Run Code" to compile and run output in sandbox.',
-                          style: GoogleFonts.jetBrainsMono(fontSize: 12, color: Colors.grey.shade600),
+                          style: GoogleFonts.jetBrainsMono(
+                              fontSize: 12, color: Colors.grey.shade600),
                         )
                       : SelectableText(
                           _executionResult!.isSuccess
@@ -593,7 +652,9 @@ class _CodePlaygroundScreenState extends State<CodePlaygroundScreen> {
                           style: GoogleFonts.jetBrainsMono(
                             fontSize: 13,
                             height: 1.45,
-                            color: _executionResult!.isSuccess ? const Color(0xFF38BDF8) : const Color(0xFFF87171),
+                            color: _executionResult!.isSuccess
+                                ? const Color(0xFF38BDF8)
+                                : const Color(0xFFF87171),
                           ),
                         ),
                 ),

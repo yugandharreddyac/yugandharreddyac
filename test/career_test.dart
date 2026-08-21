@@ -33,20 +33,25 @@ void main() {
       ),
     };
 
-    final pythonLevel = CareerDataMapper.calculateSkillLevel('Python', progressMap);
+    final pythonLevel =
+        CareerDataMapper.calculateSkillLevel('Python', progressMap);
     final javaLevel = CareerDataMapper.calculateSkillLevel('Java', progressMap);
     final cppLevel = CareerDataMapper.calculateSkillLevel('C++', progressMap);
 
-    expect(pythonLevel, SkillEvidenceLevel.demonstrated); // buildCompleted = true
-    expect(javaLevel, SkillEvidenceLevel.learning); // only learnCompleted = true
+    expect(
+        pythonLevel, SkillEvidenceLevel.demonstrated); // buildCompleted = true
+    expect(
+        javaLevel, SkillEvidenceLevel.learning); // only learnCompleted = true
     expect(cppLevel, SkillEvidenceLevel.notStarted);
   });
 
   test('CareerDataMapper identifies projects properly', () {
     // Get the actual first project topic from NonAcademicData
     final hub = NonAcademicData.getHubById('projects');
-    if (hub == null || hub.categories.isEmpty || hub.categories.first.topics.isEmpty) return;
-    
+    if (hub == null ||
+        hub.categories.isEmpty ||
+        hub.categories.first.topics.isEmpty) return;
+
     final topicId = hub.categories.first.topics.first.id;
 
     final Map<String, TopicProgressModel> progressMap = {
@@ -66,7 +71,9 @@ void main() {
     expect(project.state, ProjectState.completed);
   });
 
-  test('RoadmapProvider Resume Readiness toggling works and calculates percentages', () async {
+  test(
+      'RoadmapProvider Resume Readiness toggling works and calculates percentages',
+      () async {
     final provider = RoadmapProvider();
     // Wait for init
     await Future.delayed(const Duration(milliseconds: 100));
@@ -82,7 +89,8 @@ void main() {
     expect(provider.resumeChecklist.completedCount, 0);
   });
 
-  test('RoadmapProvider getCareerGaps prioritizes foundation over resume', () async {
+  test('RoadmapProvider getCareerGaps prioritizes foundation over resume',
+      () async {
     // We mock SharedPreferences so that RoadmapProvider loads an empty state.
     // If goal profile exists, it evaluates gaps.
     SharedPreferences.setMockInitialValues({

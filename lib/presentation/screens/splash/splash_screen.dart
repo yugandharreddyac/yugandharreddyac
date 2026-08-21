@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (mounted) {
       final user = FirebaseAuth.instance.currentUser;
-      
+
       if (user != null) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
@@ -107,7 +107,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.1,
               ),
-            ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideY(begin: 0.2, end: 0),
+            )
+                .animate()
+                .fadeIn(duration: 600.ms, delay: 200.ms)
+                .slideY(begin: 0.2, end: 0),
             const SizedBox(height: 8),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),

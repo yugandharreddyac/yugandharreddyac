@@ -80,7 +80,9 @@ class _YearCardState extends State<YearCard> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
-          transform: _isHovered ? (Matrix4.identity()..translate(0, -4)) : Matrix4.identity(),
+          transform: _isHovered
+              ? (Matrix4.identity()..translate(0, -4))
+              : Matrix4.identity(),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -96,7 +98,9 @@ class _YearCardState extends State<YearCard> {
                   border: Border.all(
                     color: _isHovered
                         ? accentColor
-                        : (isDark ? AppColors.borderDark : const Color(0xFFE4E4E7)),
+                        : (isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE4E4E7)),
                     width: _isHovered ? 1.8 : 1,
                   ),
                   boxShadow: [
@@ -144,12 +148,15 @@ class _YearCardState extends State<YearCard> {
                                 style: theme.textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B),
+                                  color: isDark
+                                      ? AppColors.textPrimaryDark
+                                      : const Color(0xFF09090B),
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 3),
                                 decoration: BoxDecoration(
                                   color: accentColor.withAlpha(20),
                                   borderRadius: BorderRadius.circular(8),
@@ -171,7 +178,9 @@ class _YearCardState extends State<YearCard> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A),
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : const Color(0xFF71717A),
                               fontSize: 13,
                             ),
                           ),
@@ -187,13 +196,19 @@ class _YearCardState extends State<YearCard> {
                       decoration: BoxDecoration(
                         color: _isHovered
                             ? accentColor
-                            : (isDark ? AppColors.borderDark.withAlpha(50) : Colors.grey.withAlpha(20)),
+                            : (isDark
+                                ? AppColors.borderDark.withAlpha(50)
+                                : Colors.grey.withAlpha(20)),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.arrow_forward_rounded,
                         size: 18,
-                        color: _isHovered ? Colors.white : (isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A)),
+                        color: _isHovered
+                            ? Colors.white
+                            : (isDark
+                                ? AppColors.textSecondaryDark
+                                : const Color(0xFF71717A)),
                       ),
                     ),
                   ],
@@ -201,7 +216,10 @@ class _YearCardState extends State<YearCard> {
               ),
             ),
           ),
-        ).animate().fadeIn(duration: 350.ms, delay: (widget.index * 60).ms).slideY(begin: 0.08, end: 0),
+        )
+            .animate()
+            .fadeIn(duration: 350.ms, delay: (widget.index * 60).ms)
+            .slideY(begin: 0.08, end: 0),
       ),
     );
   }

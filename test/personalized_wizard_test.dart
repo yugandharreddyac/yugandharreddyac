@@ -29,7 +29,9 @@ void main() {
   }
 
   group('PersonalizedWizardScreen Widget & Navigation Tests', () {
-    testWidgets('Wizard renders initial step with progress indicator and Next button', (tester) async {
+    testWidgets(
+        'Wizard renders initial step with progress indicator and Next button',
+        (tester) async {
       await tester.pumpWidget(createTestableWidget());
       await tester.pumpAndSettle();
 
@@ -41,7 +43,9 @@ void main() {
       expect(find.text('Next'), findsOneWidget);
     });
 
-    testWidgets('Step navigation advances forward and back while preserving state', (tester) async {
+    testWidgets(
+        'Step navigation advances forward and back while preserving state',
+        (tester) async {
       await tester.pumpWidget(createTestableWidget());
       await tester.pumpAndSettle();
 
@@ -65,7 +69,9 @@ void main() {
       expect(find.text('Current Academic Stage'), findsOneWidget);
     });
 
-    testWidgets('Review screen displays summary and edit action jumps back to target step', (tester) async {
+    testWidgets(
+        'Review screen displays summary and edit action jumps back to target step',
+        (tester) async {
       PersonalizedProfile? submittedProfile;
 
       await tester.pumpWidget(createTestableWidget(
@@ -93,7 +99,9 @@ void main() {
       expect(find.text('Current Academic Stage'), findsOneWidget);
     });
 
-    testWidgets('Submitting final review constructs and saves valid PersonalizedProfile', (tester) async {
+    testWidgets(
+        'Submitting final review constructs and saves valid PersonalizedProfile',
+        (tester) async {
       PersonalizedProfile? submittedProfile;
 
       await tester.pumpWidget(createTestableWidget(
@@ -117,7 +125,9 @@ void main() {
       expect(submittedProfile!.targetTimeline, isNotEmpty);
     });
 
-    testWidgets('Responsive Layout Test: Renders on narrow screen (320px) without overflow', (tester) async {
+    testWidgets(
+        'Responsive Layout Test: Renders on narrow screen (320px) without overflow',
+        (tester) async {
       tester.view.physicalSize = const Size(320, 640);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -129,7 +139,9 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('Responsive Layout Test: Renders on desktop width (1200px) with centered constraints', (tester) async {
+    testWidgets(
+        'Responsive Layout Test: Renders on desktop width (1200px) with centered constraints',
+        (tester) async {
       tester.view.physicalSize = const Size(1200, 800);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);

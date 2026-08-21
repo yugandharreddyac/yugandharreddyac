@@ -34,8 +34,10 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
 
     return DefaultTabController(
       length: 5,
@@ -95,7 +97,8 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
                         ),
                         const SizedBox(height: 4),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: Colors.white.withAlpha(40),
                             borderRadius: BorderRadius.circular(6),
@@ -132,8 +135,10 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
                 ),
                 labelColor: Colors.white,
                 unselectedLabelColor: textSecondary,
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                labelStyle:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
                 tabs: const [
                   Tab(text: '💡 Learn & Principles'),
                   Tab(text: '📝 Preparation Strategy'),
@@ -148,11 +153,16 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildOverviewTab(context, placement, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildRoadmapTab(context, placement, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildInterviewQaTab(context, placement, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildTipsTab(context, placement, cardBg, borderColor, textPrimary, textSecondary, isDark),
-                  _buildResourcesTab(context, placement, cardBg, borderColor, textPrimary, textSecondary, isDark),
+                  _buildOverviewTab(context, placement, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildRoadmapTab(context, placement, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildInterviewQaTab(context, placement, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildTipsTab(context, placement, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
+                  _buildResourcesTab(context, placement, cardBg, borderColor,
+                      textPrimary, textSecondary, isDark),
                 ],
               ),
             ),
@@ -162,29 +172,61 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
     );
   }
 
-  Widget _buildOverviewTab(BuildContext context, PlacementModel placement, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildOverviewTab(
+      BuildContext context,
+      PlacementModel placement,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Module Overview & Objectives', Icons.info_outline_rounded),
+        _buildSectionHeader(
+            'Module Overview & Objectives', Icons.info_outline_rounded),
         const SizedBox(height: 8),
-        _buildCard(cardBg, borderColor, child: Text(placement.description, style: TextStyle(color: textPrimary, fontSize: 13.5, height: 1.45))),
+        _buildCard(cardBg, borderColor,
+            child: Text(placement.description,
+                style: TextStyle(
+                    color: textPrimary, fontSize: 13.5, height: 1.45))),
       ],
     );
   }
 
-  Widget _buildRoadmapTab(BuildContext context, PlacementModel placement, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildRoadmapTab(
+      BuildContext context,
+      PlacementModel placement,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Preparation Roadmap & Timeline', Icons.map_rounded),
+        _buildSectionHeader(
+            'Preparation Roadmap & Timeline', Icons.map_rounded),
         const SizedBox(height: 8),
-        _buildCard(cardBg, borderColor, child: Text(placement.roadmap.isNotEmpty ? placement.roadmap : 'Follow structured practice daily for 4-6 weeks.', style: TextStyle(color: textPrimary, fontSize: 13, height: 1.45))),
+        _buildCard(cardBg, borderColor,
+            child: Text(
+                placement.roadmap.isNotEmpty
+                    ? placement.roadmap
+                    : 'Follow structured practice daily for 4-6 weeks.',
+                style:
+                    TextStyle(color: textPrimary, fontSize: 13, height: 1.45))),
       ],
     );
   }
 
-  Widget _buildInterviewQaTab(BuildContext context, PlacementModel placement, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildInterviewQaTab(
+      BuildContext context,
+      PlacementModel placement,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     if (placement.questionsAndAnswers.isEmpty) {
       return const Center(child: Text('No Q&A items available.'));
     }
@@ -215,10 +257,22 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
                 leading: CircleAvatar(
                   radius: 12,
                   backgroundColor: const Color(0xFF059669),
-                  child: Text('${index + 1}', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                  child: Text('${index + 1}',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold)),
                 ),
-                title: Text(qa.question, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5, color: textPrimary)),
-                trailing: Icon(isExpanded ? Icons.expand_less_rounded : Icons.expand_more_rounded, color: textSecondary),
+                title: Text(qa.question,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13.5,
+                        color: textPrimary)),
+                trailing: Icon(
+                    isExpanded
+                        ? Icons.expand_less_rounded
+                        : Icons.expand_more_rounded,
+                    color: textSecondary),
               ),
               if (isExpanded)
                 Padding(
@@ -228,14 +282,24 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
                     children: [
                       const Divider(height: 1),
                       const SizedBox(height: 10),
-                      Text(qa.answer, style: TextStyle(fontSize: 12.5, color: textSecondary, height: 1.4)),
+                      Text(qa.answer,
+                          style: TextStyle(
+                              fontSize: 12.5,
+                              color: textSecondary,
+                              height: 1.4)),
                       if (qa.keyPoints.isNotEmpty) ...[
                         const SizedBox(height: 8),
-                        const Text('Key Takeaways:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Color(0xFF059669))),
+                        const Text('Key Takeaways:',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: Color(0xFF059669))),
                         const SizedBox(height: 4),
                         ...qa.keyPoints.map((kp) => Padding(
                               padding: const EdgeInsets.only(bottom: 2),
-                              child: Text('• $kp', style: TextStyle(fontSize: 12, color: textPrimary)),
+                              child: Text('• $kp',
+                                  style: TextStyle(
+                                      fontSize: 12, color: textPrimary)),
                             )),
                       ],
                     ],
@@ -248,11 +312,19 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
     );
   }
 
-  Widget _buildTipsTab(BuildContext context, PlacementModel placement, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildTipsTab(
+      BuildContext context,
+      PlacementModel placement,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Pro Tips for Placement Success', Icons.lightbulb_rounded),
+        _buildSectionHeader(
+            'Pro Tips for Placement Success', Icons.lightbulb_rounded),
         const SizedBox(height: 8),
         ...placement.tips.map((tip) => Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -266,9 +338,15 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.star_rounded, color: Colors.amber, size: 18),
+                    const Icon(Icons.star_rounded,
+                        color: Colors.amber, size: 18),
                     const SizedBox(width: 10),
-                    Expanded(child: Text(tip, style: TextStyle(fontSize: 12.5, color: textPrimary, height: 1.35))),
+                    Expanded(
+                        child: Text(tip,
+                            style: TextStyle(
+                                fontSize: 12.5,
+                                color: textPrimary,
+                                height: 1.35))),
                   ],
                 ),
               ),
@@ -277,11 +355,19 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
     );
   }
 
-  Widget _buildResourcesTab(BuildContext context, PlacementModel placement, Color cardBg, Color borderColor, Color textPrimary, Color textSecondary, bool isDark) {
+  Widget _buildResourcesTab(
+      BuildContext context,
+      PlacementModel placement,
+      Color cardBg,
+      Color borderColor,
+      Color textPrimary,
+      Color textSecondary,
+      bool isDark) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Verified Practice Platforms & Links', Icons.verified_rounded),
+        _buildSectionHeader(
+            'Verified Practice Platforms & Links', Icons.verified_rounded),
         const SizedBox(height: 10),
         ...placement.resourceUrls.map((url) {
           return Container(
@@ -292,9 +378,18 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
               border: Border.all(color: borderColor),
             ),
             child: ListTile(
-              leading: const CircleAvatar(backgroundColor: Color(0xFF059669), radius: 14, child: Icon(Icons.open_in_new_rounded, size: 14, color: Colors.white)),
-              title: Text('Practice Platform Link', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: textPrimary)),
-              subtitle: Text(url, style: TextStyle(fontSize: 11, color: textSecondary)),
+              leading: const CircleAvatar(
+                  backgroundColor: Color(0xFF059669),
+                  radius: 14,
+                  child: Icon(Icons.open_in_new_rounded,
+                      size: 14, color: Colors.white)),
+              title: Text('Practice Platform Link',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: textPrimary)),
+              subtitle: Text(url,
+                  style: TextStyle(fontSize: 11, color: textSecondary)),
               onTap: () => _launchUrl(url),
             ),
           );
@@ -308,7 +403,8 @@ class _PlacementDetailScreenState extends State<PlacementDetailScreen> {
       children: [
         Icon(icon, color: const Color(0xFF059669), size: 18),
         const SizedBox(width: 8),
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        Text(title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
       ],
     );
   }

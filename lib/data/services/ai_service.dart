@@ -33,7 +33,8 @@ class AiService {
 
   String get activeProviderId => _provider.providerId;
   String get activeProviderName => _provider.displayName;
-  Set<AiCapability> get supportedCapabilities => _provider.supportedCapabilities;
+  Set<AiCapability> get supportedCapabilities =>
+      _provider.supportedCapabilities;
   AiContextComposer get contextComposer => _contextComposer;
 
   void setDocumentRepository(DocumentRepository documentRepository) {
@@ -41,7 +42,8 @@ class AiService {
       studentProvider: _contextComposer.studentProvider,
       roadmapProvider: _contextComposer.roadmapProvider,
       resourceProvider: _contextComposer.resourceProvider,
-      documentProvider: RagDocumentContextProvider(documentRepository: documentRepository),
+      documentProvider:
+          RagDocumentContextProvider(documentRepository: documentRepository),
     );
   }
 
@@ -122,7 +124,8 @@ class AiService {
 
     // 5. Execute with provider
     try {
-      final response = await _provider.generateResponse(request).timeout(timeout);
+      final response =
+          await _provider.generateResponse(request).timeout(timeout);
 
       if (response.isSuccessful && response.message != null) {
         // Save assistant response message
@@ -145,7 +148,8 @@ class AiService {
         id: 'resp_err_${DateTime.now().millisecondsSinceEpoch}',
         error: AiError(
           code: AiErrorCode.unknown,
-          message: 'An unexpected error occurred while communicating with the AI service.',
+          message:
+              'An unexpected error occurred while communicating with the AI service.',
           details: e.toString(),
           isRetryable: true,
         ),

@@ -19,7 +19,9 @@ class StorageHealthResult {
 class CloudStorageHealthChecker {
   final Dio _dio;
 
-  CloudStorageHealthChecker({Dio? dio}) : _dio = dio ?? Dio(BaseOptions(connectTimeout: const Duration(seconds: 5)));
+  CloudStorageHealthChecker({Dio? dio})
+      : _dio =
+            dio ?? Dio(BaseOptions(connectTimeout: const Duration(seconds: 5)));
 
   /// Perform diagnostic HEAD request to verify remote CDN HTTPS endpoint reachability
   Future<StorageHealthResult> checkEndpointHealth(String resourceUrl) async {
@@ -35,7 +37,9 @@ class CloudStorageHealthChecker {
       final response = await _dio.head(resourceUrl);
       final contentType = response.headers.value('content-type');
       final contentLengthHeader = response.headers.value('content-length');
-      final contentLength = contentLengthHeader != null ? int.tryParse(contentLengthHeader) ?? 0 : 0;
+      final contentLength = contentLengthHeader != null
+          ? int.tryParse(contentLengthHeader) ?? 0
+          : 0;
 
       return StorageHealthResult(
         isReachable: response.statusCode == 200,
@@ -59,7 +63,8 @@ class CloudStorageHealthChecker {
   }
 
   /// Run health diagnostic across all resources in base catalog
-  Future<Map<String, StorageHealthResult>> checkCatalogHealth(List<String> urls) async {
+  Future<Map<String, StorageHealthResult>> checkCatalogHealth(
+      List<String> urls) async {
     final results = <String, StorageHealthResult>{};
     for (final url in urls) {
       if (url.startsWith('https://')) {

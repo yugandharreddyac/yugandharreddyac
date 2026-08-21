@@ -54,7 +54,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     // For Web, downloadProvider.downloadPdf() instantly resolves the secure Firebase Storage URL and returns it.
 
     // Check if file is downloaded locally
-    final isDownloaded = downloadProvider.isResourceDownloaded(widget.resource.id);
+    final isDownloaded =
+        downloadProvider.isResourceDownloaded(widget.resource.id);
     if (isDownloaded) {
       final res = downloadProvider.getDownloadedResource(widget.resource.id);
       if (res?.localFilePath != null) {
@@ -72,7 +73,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
 
     // Stream/Download from Firebase Storage
     try {
-      final downloadedPath = await downloadProvider.downloadPdf(widget.resource);
+      final downloadedPath =
+          await downloadProvider.downloadPdf(widget.resource);
       if (mounted) {
         setState(() {
           _localFilePath = downloadedPath;
@@ -127,8 +129,9 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       pageNumber: _currentPage + 1,
     );
 
-    final readingProgress =
-        _totalPages > 0 ? ((_currentPage + 1) / _totalPages * 100).toStringAsFixed(0) : '0';
+    final readingProgress = _totalPages > 0
+        ? ((_currentPage + 1) / _totalPages * 100).toStringAsFixed(0)
+        : '0';
 
     const royalBlue = Color(0xFF2563EB);
 
@@ -153,7 +156,9 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                       'Page ${_currentPage + 1} of $_totalPages ($readingProgress%)',
                       style: GoogleFonts.inter(
                         fontSize: 12,
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
                       ),
                     ),
                 ],
@@ -161,7 +166,9 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
               actions: [
                 IconButton(
                   icon: Icon(
-                    isPageBookmarked ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
+                    isPageBookmarked
+                        ? Icons.bookmark_rounded
+                        : Icons.bookmark_border_rounded,
                     color: isPageBookmarked ? royalBlue : null,
                   ),
                   tooltip: 'Bookmark Page',
@@ -195,8 +202,12 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                     onPressed: () => _showJumpToPageDialog(),
                   ),
                 IconButton(
-                  icon: Icon(_isFullScreen ? Icons.fullscreen_exit_rounded : Icons.fullscreen_rounded),
-                  tooltip: _isFullScreen ? 'Exit Full Screen' : 'Full Screen Reading',
+                  icon: Icon(_isFullScreen
+                      ? Icons.fullscreen_exit_rounded
+                      : Icons.fullscreen_rounded),
+                  tooltip: _isFullScreen
+                      ? 'Exit Full Screen'
+                      : 'Full Screen Reading',
                   onPressed: _toggleFullScreen,
                 ),
               ],
@@ -212,20 +223,22 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                     const SizedBox(height: 16),
                     Text(
                       'Loading PDF Document...',
-                      style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.inter(
+                          fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       widget.resource.title,
                       style: GoogleFonts.inter(
                         fontSize: 13,
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
                       ),
                     ),
                   ],
                 ),
               )
-
             : _errorMessage != null
                 ? Center(
                     child: Padding(
@@ -233,18 +246,22 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.wifi_off_rounded, size: 64, color: Colors.orange),
+                          const Icon(Icons.wifi_off_rounded,
+                              size: 64, color: Colors.orange),
                           const SizedBox(height: 16),
                           Text(
                             'Offline Document Access',
-                            style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                            style: theme.textTheme.titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             _errorMessage!,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondaryLight,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -294,20 +311,24 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                               const SizedBox(height: 8),
 
                               // Show Archive.org processing notice for newly uploaded files
-                              if (_isArchiveOrgUrl(_localFilePath ?? widget.resource.storageUrl)) ...[
+                              if (_isArchiveOrgUrl(_localFilePath ??
+                                  widget.resource.storageUrl)) ...[
                                 Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 12),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                   padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(
                                     color: Colors.amber.withAlpha(25),
                                     borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(color: Colors.amber.withAlpha(80)),
+                                    border: Border.all(
+                                        color: Colors.amber.withAlpha(80)),
                                   ),
                                   child: Column(
                                     children: [
                                       const Row(
                                         children: [
-                                          Icon(Icons.schedule_rounded, color: Colors.amber, size: 22),
+                                          Icon(Icons.schedule_rounded,
+                                              color: Colors.amber, size: 22),
                                           SizedBox(width: 10),
                                           Expanded(
                                             child: Text(
@@ -328,7 +349,9 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                                         'Please try again shortly.',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                          color: isDark
+                                              ? AppColors.textSecondaryDark
+                                              : AppColors.textSecondaryLight,
                                         ),
                                       ),
                                     ],
@@ -339,7 +362,9 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                                   'Web PDF Stream Ready. Click below to view in browser tab.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                    color: isDark
+                                        ? AppColors.textSecondaryDark
+                                        : AppColors.textSecondaryLight,
                                   ),
                                 ),
                               ],
@@ -348,12 +373,16 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                               ElevatedButton.icon(
                                 onPressed: () async {
                                   try {
-                                    final urlStr = (_localFilePath ?? widget.resource.storageUrl).trim();
+                                    final urlStr = (_localFilePath ??
+                                            widget.resource.storageUrl)
+                                        .trim();
                                     if (urlStr.isEmpty) {
                                       if (context.mounted) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
                                           const SnackBar(
-                                            content: Text('No external document URL available for this resource.'),
+                                            content: Text(
+                                                'No external document URL available for this resource.'),
                                             backgroundColor: Colors.orange,
                                           ),
                                         );
@@ -361,29 +390,36 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                                       return;
                                     }
                                     final Uri uri = Uri.parse(urlStr);
-                                    final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                    final launched = await launchUrl(uri,
+                                        mode: LaunchMode.externalApplication);
                                     if (!launched && context.mounted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         SnackBar(
-                                          content: Text('Could not open document URL: $urlStr'),
+                                          content: Text(
+                                              'Could not open document URL: $urlStr'),
                                           backgroundColor: Colors.redAccent,
                                         ),
                                       );
                                     }
                                   } catch (e) {
                                     if (context.mounted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         SnackBar(
-                                          content: Text('Error opening document: $e'),
+                                          content: Text(
+                                              'Error opening document: $e'),
                                           backgroundColor: Colors.redAccent,
                                         ),
                                       );
                                     }
                                   }
                                 },
-                                icon: const Icon(Icons.open_in_new_rounded, size: 18),
+                                icon: const Icon(Icons.open_in_new_rounded,
+                                    size: 18),
                                 label: Text(
-                                  _isArchiveOrgUrl(_localFilePath ?? widget.resource.storageUrl)
+                                  _isArchiveOrgUrl(_localFilePath ??
+                                          widget.resource.storageUrl)
                                       ? 'Try Opening PDF'
                                       : 'Open PDF Document',
                                 ),
@@ -407,7 +443,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                                 _totalPages = pages ?? 0;
                                 _isReady = true;
                               });
-                              if (_currentPage > 0 && _pdfViewController != null) {
+                              if (_currentPage > 0 &&
+                                  _pdfViewController != null) {
                                 _pdfViewController?.setPage(_currentPage);
                               }
                             },
@@ -430,7 +467,8 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
                               child: FloatingActionButton.small(
                                 backgroundColor: AppColors.primary,
                                 onPressed: _toggleFullScreen,
-                                child: const Icon(Icons.fullscreen_exit_rounded, color: Colors.white),
+                                child: const Icon(Icons.fullscreen_exit_rounded,
+                                    color: Colors.white),
                               ),
                             ),
                         ],
@@ -517,11 +555,13 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     final res = widget.resource;
     final sizeKb = (res.fileSizeBytes / 1024).toStringAsFixed(1);
     final sizeMb = (res.fileSizeBytes / (1024 * 1024)).toStringAsFixed(2);
-    final sizeString = res.fileSizeBytes > 1024 * 1024 ? '$sizeMb MB' : '$sizeKb KB';
+    final sizeString =
+        res.fileSizeBytes > 1024 * 1024 ? '$sizeMb MB' : '$sizeKb KB';
 
     final lastUpdated = DateFormat.yMMMd().format(res.lastUpdated);
-    final readingProgress =
-        _totalPages > 0 ? ((_currentPage + 1) / _totalPages * 100).toStringAsFixed(0) : '0';
+    final readingProgress = _totalPages > 0
+        ? ((_currentPage + 1) / _totalPages * 100).toStringAsFixed(0)
+        : '0';
 
     showDialog(
       context: context,
@@ -545,8 +585,10 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
               _infoRow('File Size', sizeString),
               _infoRow('Last Updated', lastUpdated),
               _infoRow('Downloads', '${res.downloadCount}'),
-              _infoRow('Reading Progress', 'Page ${_currentPage + 1} of $_totalPages ($readingProgress%)'),
-              if (_localFilePath != null) _infoRow('Storage Path', _localFilePath!),
+              _infoRow('Reading Progress',
+                  'Page ${_currentPage + 1} of $_totalPages ($readingProgress%)'),
+              if (_localFilePath != null)
+                _infoRow('Storage Path', _localFilePath!),
             ],
           ),
         ),

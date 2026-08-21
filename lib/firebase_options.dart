@@ -47,29 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBIIIFgpy7T1q3LWez8E9H3EARqGkCNdxg',
-    appId: '1:559967220631:web:4bef765223aba5f808cad2',
-    messagingSenderId: '559967220631',
-    projectId: 'my-unidocs-app',
-    authDomain: 'my-unidocs-app.firebaseapp.com',
-    storageBucket: 'my-unidocs-app.firebasestorage.app',
-    measurementId: 'G-KWKC7822NN',
+    apiKey: 'AIzaSyBjxr0XIyJAMBDMDlk8kFnfzuW6QpGbkVU',
+    appId: '1:88359315332:web:e0a7f4dac670e0583e9fd1',
+    messagingSenderId: '88359315332',
+    projectId: 'unidocs-study-hub',
+    authDomain: 'unidocs-study-hub.firebaseapp.com',
+    storageBucket: 'unidocs-study-hub.firebasestorage.app',
+    measurementId: 'G-TTWXVGHNVM',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC-IhXlcN-MZ8X0x6AA-bSa14tuGST-yHk',
-    appId: '1:559967220631:android:acd55572f9cc3a1d08cad2',
-    messagingSenderId: '559967220631',
-    projectId: 'my-unidocs-app',
-    storageBucket: 'my-unidocs-app.firebasestorage.app',
+    apiKey: 'AIzaSyD5l9oFMJgLId8Aet1vsq-fW07wcKlYwKc',
+    appId: '1:88359315332:android:48f2e7a63ab76e123e9fd1',
+    messagingSenderId: '88359315332',
+    projectId: 'unidocs-study-hub',
+    storageBucket: 'unidocs-study-hub.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBdLh_5nGNSYL3cS9lo9TBUmXpUuK5Gmh4',
-    appId: '1:559967220631:ios:ade8a3cdacf0451008cad2',
-    messagingSenderId: '559967220631',
-    projectId: 'my-unidocs-app',
-    storageBucket: 'my-unidocs-app.firebasestorage.app',
+    apiKey: 'AIzaSyBjxr0XIyJAMBDMDlk8kFnfzuW6QpGbkVU',
+    appId: '1:88359315332:ios:48f2e7a63ab76e123e9fd1',
+    messagingSenderId: '88359315332',
+    projectId: 'unidocs-study-hub',
+    storageBucket: 'unidocs-study-hub.firebasestorage.app',
     iosBundleId: 'com.csse.studyhub.csseStudyHub',
   );
 }

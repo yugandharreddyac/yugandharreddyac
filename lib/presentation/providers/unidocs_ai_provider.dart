@@ -38,7 +38,8 @@ class UniDocsAiProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   AiError? get lastError => _lastError;
   AiCapability get selectedCapability => _selectedCapability;
-  List<AiAttachment> get pendingAttachments => List.unmodifiable(_pendingAttachments);
+  List<AiAttachment> get pendingAttachments =>
+      List.unmodifiable(_pendingAttachments);
   String get activeProviderName => _aiService.activeProviderName;
   AiProvider get activeProvider => _aiService.provider;
 
@@ -91,7 +92,8 @@ class UniDocsAiProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final newConv = await _repository.createConversation(initialTitle: initialTitle);
+      final newConv =
+          await _repository.createConversation(initialTitle: initialTitle);
       _currentConversation = newConv;
       await loadConversations();
     } catch (_) {
@@ -152,7 +154,8 @@ class UniDocsAiProvider extends ChangeNotifier {
 
     if (_currentConversation == null) {
       final newConv = await _repository.createConversation(
-        initialTitle: prompt.length > 25 ? '${prompt.substring(0, 25)}...' : prompt,
+        initialTitle:
+            prompt.length > 25 ? '${prompt.substring(0, 25)}...' : prompt,
       );
       _currentConversation = newConv;
     }

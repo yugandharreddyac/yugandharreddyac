@@ -32,7 +32,9 @@ void main() {
 
       final index = DocumentIndex(
         metadata: meta,
-        pages: const [DocumentPage(pageNumber: 1, extractedText: 'Divide and conquer')],
+        pages: const [
+          DocumentPage(pageNumber: 1, extractedText: 'Divide and conquer')
+        ],
         chunks: const [chunk],
       );
 
@@ -71,10 +73,12 @@ void main() {
 
     test('Delete and clear operations isolate documents', () async {
       final doc1 = DocumentIndex(
-        metadata: DocumentMetadata(documentId: 'd1', fileName: 'f1.pdf', createdAt: DateTime.now()),
+        metadata: DocumentMetadata(
+            documentId: 'd1', fileName: 'f1.pdf', createdAt: DateTime.now()),
       );
       final doc2 = DocumentIndex(
-        metadata: DocumentMetadata(documentId: 'd2', fileName: 'f2.pdf', createdAt: DateTime.now()),
+        metadata: DocumentMetadata(
+            documentId: 'd2', fileName: 'f2.pdf', createdAt: DateTime.now()),
       );
 
       await repo.saveDocument(doc1);
@@ -103,7 +107,8 @@ void main() {
             chunkId: 'c1',
             documentId: 'doc_search',
             pageNumber: 10,
-            text: 'Mutual exclusion is one of the four necessary deadlock conditions.',
+            text:
+                'Mutual exclusion is one of the four necessary deadlock conditions.',
           ),
           DocumentChunk(
             chunkId: 'c2',
@@ -116,7 +121,8 @@ void main() {
 
       await repo.saveDocument(doc);
 
-      final results = await repo.searchChunks('doc_search', 'mutual exclusion deadlock');
+      final results =
+          await repo.searchChunks('doc_search', 'mutual exclusion deadlock');
       expect(results, isNotEmpty);
       expect(results.first.chunk.chunkId, equals('c1'));
       expect(results.first.pageNumber, equals(10));

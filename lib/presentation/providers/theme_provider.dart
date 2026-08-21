@@ -14,7 +14,8 @@ class ThemeProvider extends ChangeNotifier {
   bool get isDarkMode {
     if (_themeMode == ThemeMode.dark) return true;
     if (_themeMode == ThemeMode.light) return false;
-    return WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+    return WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark;
   }
 
   void _loadThemeFromPrefs() {
@@ -45,4 +46,3 @@ class ThemeProvider extends ChangeNotifier {
     await setThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
   }
 }
-

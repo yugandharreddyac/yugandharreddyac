@@ -24,7 +24,10 @@ class AdminRepository {
         'totalUsers': metrics['totalUsers'] ?? 450,
         'adminCount': adminCount > 0 ? adminCount : 1,
         'studentCount': studentCount > 0 ? studentCount : 449,
-        'storageBytesUsed': (metrics['totalResources'] ?? 8) * 4.2 * 1024 * 1024, // Estimate ~4.2MB per PDF
+        'storageBytesUsed': (metrics['totalResources'] ?? 8) *
+            4.2 *
+            1024 *
+            1024, // Estimate ~4.2MB per PDF
       };
     } catch (e) {
       debugPrint('AdminRepository metrics error: $e');

@@ -34,7 +34,8 @@ class ProfileProvider extends ChangeNotifier {
         _setState(ProfileViewState.success);
       }
     } catch (e) {
-      _setState(ProfileViewState.error, error: 'Failed to fetch user profile: $e');
+      _setState(ProfileViewState.error,
+          error: 'Failed to fetch user profile: $e');
     }
   }
 

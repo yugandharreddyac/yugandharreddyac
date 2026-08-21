@@ -46,14 +46,16 @@ class TestMockAiProvider implements AiProvider {
       content: 'Echo response for: $prompt',
       timestamp: DateTime.now(),
       resourceReferences: const [
-        AiResourceReference(id: 'python', title: 'Python Core', hubName: 'Coding Hub'),
+        AiResourceReference(
+            id: 'python', title: 'Python Core', hubName: 'Coding Hub'),
       ],
     );
 
     return AiResponse(
       id: 'resp_success',
       message: responseMsg,
-      usage: const AiUsageMetadata(promptTokens: 20, completionTokens: 10, totalTokens: 30),
+      usage: const AiUsageMetadata(
+          promptTokens: 20, completionTokens: 10, totalTokens: 30),
       resourceReferences: responseMsg.resourceReferences,
     );
   }
@@ -78,7 +80,8 @@ void main() {
   });
 
   group('AiService & Provider Abstraction Tests', () {
-    test('Default AiService uses NoOpAiProvider gracefully without throwing', () async {
+    test('Default AiService uses NoOpAiProvider gracefully without throwing',
+        () async {
       final service = AiService(repository: repo);
       expect(service.activeProviderId, equals('noop_provider'));
 
@@ -96,7 +99,9 @@ void main() {
       expect(resp.error?.message, contains('not configured'));
     });
 
-    test('AiService with Mock Provider receives context and persists conversation', () async {
+    test(
+        'AiService with Mock Provider receives context and persists conversation',
+        () async {
       final mockProvider = TestMockAiProvider();
       final service = AiService(provider: mockProvider, repository: repo);
 
@@ -108,15 +113,20 @@ void main() {
       );
 
       expect(resp.isSuccessful, isTrue);
-      expect(resp.message?.content, equals('Echo response for: What is Polymorphism?'));
+      expect(resp.message?.content,
+          equals('Echo response for: What is Polymorphism?'));
       expect(mockProvider.lastReceivedRequest, isNotNull);
-      expect(mockProvider.lastReceivedRequest?.capability, equals(AiCapability.explain));
-      expect(mockProvider.lastReceivedRequest?.context.unidocsResources.first.id, equals('python'));
+      expect(mockProvider.lastReceivedRequest?.capability,
+          equals(AiCapability.explain));
+      expect(
+          mockProvider.lastReceivedRequest?.context.unidocsResources.first.id,
+          equals('python'));
 
       // Verify conversation persistence
       final savedConv = await repo.loadConversation('conv_echo');
       expect(savedConv, isNotNull);
-      expect(savedConv!.messages.length, equals(2)); // User message + Assistant message
+      expect(savedConv!.messages.length,
+          equals(2)); // User message + Assistant message
       expect(savedConv.messages[0].isUser, isTrue);
       expect(savedConv.messages[1].isAssistant, isTrue);
     });
@@ -153,11 +163,14 @@ void main() {
     test('UniDocsAiProvider state management lifecycle', () async {
       final mockProvider = TestMockAiProvider();
       final service = AiService(provider: mockProvider, repository: repo);
-      final stateProvider = UniDocsAiProvider(aiService: service, repository: repo);
+      final stateProvider =
+          UniDocsAiProvider(aiService: service, repository: repo);
 
-      await stateProvider.createNewConversation(initialTitle: 'Practice Session');
+      await stateProvider.createNewConversation(
+          initialTitle: 'Practice Session');
       expect(stateProvider.currentConversation, isNotNull);
-      expect(stateProvider.currentConversation?.title, equals('Practice Session'));
+      expect(
+          stateProvider.currentConversation?.title, equals('Practice Session'));
 
       final resp = await stateProvider.sendMessage('Explain Quick Sort');
       expect(resp.isSuccessful, isTrue);

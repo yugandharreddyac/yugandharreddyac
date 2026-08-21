@@ -12,7 +12,9 @@ void main() {
   });
 
   group('CSSED Phase 3 Acceptance & Personal Student Intelligence Tests', () {
-    test('1. Topic opening history deduplicates, persists, and caps at 10 items', () async {
+    test(
+        '1. Topic opening history deduplicates, persists, and caps at 10 items',
+        () async {
       final provider = RoadmapProvider();
       await Future.delayed(const Duration(milliseconds: 50));
       expect(provider.recentTopicIds.isEmpty, isTrue);
@@ -35,7 +37,8 @@ void main() {
       expect(provider.recentTopicIds.length, equals(2));
     });
 
-    test('2. Topic bookmarking toggles, checks status, and persists state', () async {
+    test('2. Topic bookmarking toggles, checks status, and persists state',
+        () async {
       final provider = RoadmapProvider();
       await Future.delayed(const Duration(milliseconds: 50));
       expect(provider.isTopicBookmarked('basics_intro'), isFalse);
@@ -48,7 +51,8 @@ void main() {
       expect(provider.isTopicBookmarked('basics_intro'), isFalse);
     });
 
-    test('3. Empirical Student Insights calculation returns accurate stats', () async {
+    test('3. Empirical Student Insights calculation returns accurate stats',
+        () async {
       final provider = RoadmapProvider();
       await Future.delayed(const Duration(milliseconds: 50));
       await provider.setGoalProfile(const UserGoalProfile(
@@ -62,15 +66,19 @@ void main() {
       expect(insights.inProgressTopicsCount, equals(0));
 
       // Complete 1 activity (In Progress)
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.learn);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.learn);
       insights = provider.getStudentInsights();
       expect(insights.inProgressTopicsCount, equals(1));
       expect(insights.foundationPercentage, greaterThan(0.0));
 
       // Complete all 4 activities (Completed)
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.practice);
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.build);
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.review);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.practice);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.build);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.review);
 
       insights = provider.getStudentInsights();
       expect(insights.completedTopicsCount, equals(1));
@@ -91,8 +99,10 @@ void main() {
       expect(provider.lastOpenedTopicId, equals('basics_intro'));
 
       // Step C: Mark LEARN and PRACTICE
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.learn);
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.practice);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.learn);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.practice);
 
       var progress = provider.getProgressForTopic('basics_intro');
       expect(progress.percentage, equals(50.0));
@@ -103,8 +113,10 @@ void main() {
       expect(provider.isTopicBookmarked('basics_intro'), isTrue);
 
       // Step E: Complete BUILD and REVIEW
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.build);
-      await provider.toggleActivity(topicId: 'basics_intro', type: ActivityType.review);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.build);
+      await provider.toggleActivity(
+          topicId: 'basics_intro', type: ActivityType.review);
 
       progress = provider.getProgressForTopic('basics_intro');
       expect(progress.isFullyCompleted, isTrue);
@@ -118,9 +130,12 @@ void main() {
       final reloadedProvider = RoadmapProvider();
       await Future.delayed(const Duration(milliseconds: 50));
       expect(reloadedProvider.isTopicBookmarked('basics_intro'), isTrue);
-      expect(reloadedProvider.getProgressForTopic('basics_intro').isFullyCompleted, isTrue);
+      expect(
+          reloadedProvider.getProgressForTopic('basics_intro').isFullyCompleted,
+          isTrue);
     });
-    test('Phase 4: Active Learning Next-Action Engine & Career Milestones', () async {
+    test('Phase 4: Active Learning Next-Action Engine & Career Milestones',
+        () async {
       final provider = RoadmapProvider();
       await Future.delayed(const Duration(milliseconds: 50));
       await provider.setGoalProfile(
@@ -137,14 +152,16 @@ void main() {
       // Start learning (In-progress)
       final topicId = initialTasks.first.topicId;
       await provider.toggleActivity(topicId: topicId, type: ActivityType.learn);
-      await provider.toggleActivity(topicId: topicId, type: ActivityType.practice);
+      await provider.toggleActivity(
+          topicId: topicId, type: ActivityType.practice);
 
       // Verify Active Learning prioritization (Continue session)
       final activeTasks = provider.getTodaysPlan();
       expect(activeTasks.first.topicId, equals(topicId));
       expect(activeTasks.first.reason, contains('Continue'));
       expect(activeTasks.first.progressText, equals('2 / 4'));
-      expect(activeTasks.first.actionTitle, equals('Build mini-project / code exercise'));
+      expect(activeTasks.first.actionTitle,
+          equals('Build mini-project / code exercise'));
 
       // Verify Career Milestone Progress math
       final initialMilestones = provider.getCareerMilestones();
@@ -153,7 +170,8 @@ void main() {
 
       // Complete topic fully
       await provider.toggleActivity(topicId: topicId, type: ActivityType.build);
-      await provider.toggleActivity(topicId: topicId, type: ActivityType.review);
+      await provider.toggleActivity(
+          topicId: topicId, type: ActivityType.review);
 
       // Verify Completed topic is filtered from active tasks
       final postTasks = provider.getTodaysPlan();

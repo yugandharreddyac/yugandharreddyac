@@ -13,7 +13,8 @@ void main() {
 
   setUp(() {
     firebaseDataSource = FirebaseDataSource();
-    emergingTechRepository = EmergingTechRepository(firebaseDataSource: firebaseDataSource);
+    emergingTechRepository =
+        EmergingTechRepository(firebaseDataSource: firebaseDataSource);
     emergingTechProvider = EmergingTechProvider(emergingTechRepository);
   });
 
@@ -25,16 +26,24 @@ void main() {
       expect(techs.any((t) => t.title.contains('Cloud')), isTrue);
     });
 
-    test('EmergingTechProvider filters technologies by category and search query', () async {
+    test(
+        'EmergingTechProvider filters technologies by category and search query',
+        () async {
       await emergingTechProvider.fetchEmergingTechs();
       expect(emergingTechProvider.items, isNotEmpty);
 
       emergingTechProvider.setSearchQuery('Generative');
-      expect(emergingTechProvider.filteredItems.any((t) => t.title.contains('Generative AI')), isTrue);
+      expect(
+          emergingTechProvider.filteredItems
+              .any((t) => t.title.contains('Generative AI')),
+          isTrue);
 
       emergingTechProvider.setSearchQuery('');
       emergingTechProvider.selectCategory('Artificial Intelligence');
-      expect(emergingTechProvider.filteredItems.every((t) => t.category == 'Artificial Intelligence'), isTrue);
+      expect(
+          emergingTechProvider.filteredItems
+              .every((t) => t.category == 'Artificial Intelligence'),
+          isTrue);
     });
 
     test('SearchIndexEngine indexes Emerging Tech entities', () async {
@@ -50,10 +59,13 @@ void main() {
       expect(engine.isIndexed, isTrue);
 
       final genAiRes = engine.search('Generative');
-      expect(genAiRes.matchingItems.any((i) => i.title.contains('Generative AI')), isTrue);
+      expect(
+          genAiRes.matchingItems.any((i) => i.title.contains('Generative AI')),
+          isTrue);
 
       final cloudRes = engine.search('Cloud');
-      expect(cloudRes.matchingItems.any((i) => i.title.contains('Cloud')), isTrue);
+      expect(
+          cloudRes.matchingItems.any((i) => i.title.contains('Cloud')), isTrue);
     });
   });
 }

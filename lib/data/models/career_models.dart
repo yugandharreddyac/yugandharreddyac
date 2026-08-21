@@ -116,26 +116,36 @@ class ResumeReadinessModel {
     bool? networkingBasicsCompleted,
   }) {
     return ResumeReadinessModel(
-      technicalSkillsIdentified: technicalSkillsIdentified ?? this.technicalSkillsIdentified,
+      technicalSkillsIdentified:
+          technicalSkillsIdentified ?? this.technicalSkillsIdentified,
       oneCompletedProject: oneCompletedProject ?? this.oneCompletedProject,
-      projectDescriptionsPrepared: projectDescriptionsPrepared ?? this.projectDescriptionsPrepared,
+      projectDescriptionsPrepared:
+          projectDescriptionsPrepared ?? this.projectDescriptionsPrepared,
       evidenceAvailable: evidenceAvailable ?? this.evidenceAvailable,
       educationPrepared: educationPrepared ?? this.educationPrepared,
-      careerObjectivePrepared: careerObjectivePrepared ?? this.careerObjectivePrepared,
+      careerObjectivePrepared:
+          careerObjectivePrepared ?? this.careerObjectivePrepared,
       resumeReviewed: resumeReviewed ?? this.resumeReviewed,
       certificationsAdded: certificationsAdded ?? this.certificationsAdded,
       achievementsAdded: achievementsAdded ?? this.achievementsAdded,
-      linkedInProfileCreated: linkedInProfileCreated ?? this.linkedInProfileCreated,
+      linkedInProfileCreated:
+          linkedInProfileCreated ?? this.linkedInProfileCreated,
       linkedInPhotoAdded: linkedInPhotoAdded ?? this.linkedInPhotoAdded,
-      linkedInHeadlineAdded: linkedInHeadlineAdded ?? this.linkedInHeadlineAdded,
-      linkedInAboutCompleted: linkedInAboutCompleted ?? this.linkedInAboutCompleted,
-      linkedInExperienceAdded: linkedInExperienceAdded ?? this.linkedInExperienceAdded,
+      linkedInHeadlineAdded:
+          linkedInHeadlineAdded ?? this.linkedInHeadlineAdded,
+      linkedInAboutCompleted:
+          linkedInAboutCompleted ?? this.linkedInAboutCompleted,
+      linkedInExperienceAdded:
+          linkedInExperienceAdded ?? this.linkedInExperienceAdded,
       linkedInSkillsAdded: linkedInSkillsAdded ?? this.linkedInSkillsAdded,
-      linkedInProjectsAdded: linkedInProjectsAdded ?? this.linkedInProjectsAdded,
-      linkedInCertificationsAdded: linkedInCertificationsAdded ?? this.linkedInCertificationsAdded,
+      linkedInProjectsAdded:
+          linkedInProjectsAdded ?? this.linkedInProjectsAdded,
+      linkedInCertificationsAdded:
+          linkedInCertificationsAdded ?? this.linkedInCertificationsAdded,
       linkedInUrlSaved: linkedInUrlSaved ?? this.linkedInUrlSaved,
       customUrlSaved: customUrlSaved ?? this.customUrlSaved,
-      networkingBasicsCompleted: networkingBasicsCompleted ?? this.networkingBasicsCompleted,
+      networkingBasicsCompleted:
+          networkingBasicsCompleted ?? this.networkingBasicsCompleted,
     );
   }
 
@@ -231,7 +241,8 @@ class ResumeReadinessModel {
   bool get isReady => resumeReviewed && linkedInUrlSaved;
   int get completedCount => resumeCompletedCount + linkedInCompletedCount;
   int get totalItems => resumeTotalItems + linkedInTotalItems;
-  double get percentage => totalItems == 0 ? 0.0 : (completedCount / totalItems) * 100.0;
+  double get percentage =>
+      totalItems == 0 ? 0.0 : (completedCount / totalItems) * 100.0;
 }
 
 class CareerDimensionProgress {

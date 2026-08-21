@@ -23,7 +23,8 @@ class DocumentProcessingProvider extends ChangeNotifier {
         _repository = repository ?? InMemoryDocumentRepository();
 
   DocumentRepository get repository => _repository;
-  Map<String, DocumentMetadata> get activeDocuments => Map.unmodifiable(_activeDocuments);
+  Map<String, DocumentMetadata> get activeDocuments =>
+      Map.unmodifiable(_activeDocuments);
   bool get hasActiveDocuments => _activeDocuments.isNotEmpty;
   bool isProcessing(String id) => _processingIds.contains(id);
 
@@ -35,7 +36,8 @@ class DocumentProcessingProvider extends ChangeNotifier {
     String fileName, {
     DocumentSourceType sourceType = DocumentSourceType.localUserFile,
   }) async {
-    final tempId = 'doc_${DateTime.now().millisecondsSinceEpoch}_${fileName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}';
+    final tempId =
+        'doc_${DateTime.now().millisecondsSinceEpoch}_${fileName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}';
     _processingIds.add(tempId);
 
     // Step 1: Validating
@@ -51,7 +53,8 @@ class DocumentProcessingProvider extends ChangeNotifier {
 
     try {
       // Step 2: Metadata & Signature validation
-      meta = await _extractor.extractMetadata(filePath, fileName, sourceType: sourceType);
+      meta = await _extractor.extractMetadata(filePath, fileName,
+          sourceType: sourceType);
       _activeDocuments.remove(tempId);
       final docId = meta.documentId;
       _processingIds.remove(tempId);
@@ -71,7 +74,9 @@ class DocumentProcessingProvider extends ChangeNotifier {
               ? AiAttachmentSourceType.unidocsResource
               : AiAttachmentSourceType.localFile,
           localIdentifier: filePath,
-          status: meta.isUnsupported ? AiAttachmentStatus.unsupported : AiAttachmentStatus.failed,
+          status: meta.isUnsupported
+              ? AiAttachmentStatus.unsupported
+              : AiAttachmentStatus.failed,
           metadata: {
             'error': meta.processingError,
           },
@@ -79,14 +84,17 @@ class DocumentProcessingProvider extends ChangeNotifier {
       }
 
       // Step 3: Text Extraction
-      _activeDocuments[docId] = meta.copyWith(processingStatus: DocumentProcessingStatus.extracting);
+      _activeDocuments[docId] =
+          meta.copyWith(processingStatus: DocumentProcessingStatus.extracting);
       notifyListeners();
 
       final pages = await _extractor.extractPages(filePath, meta);
-      final totalExtractedChars = pages.fold<int>(0, (sum, p) => sum + p.characterCount);
+      final totalExtractedChars =
+          pages.fold<int>(0, (sum, p) => sum + p.characterCount);
 
       if (pages.isEmpty || totalExtractedChars < 10) {
-        const errorMsg = 'No readable digital text could be extracted. The PDF may be scanned or image-only.';
+        const errorMsg =
+            'No readable digital text could be extracted. The PDF may be scanned or image-only.';
         _activeDocuments[docId] = meta.copyWith(
           processingStatus: DocumentProcessingStatus.unsupported,
           processingError: errorMsg,
@@ -118,7 +126,8 @@ class DocumentProcessingProvider extends ChangeNotifier {
       final chunks = _chunker.chunkDocument(documentId: docId, pages: pages);
 
       // Step 5: Indexing in Repository
-      _activeDocuments[docId] = meta.copyWith(processingStatus: DocumentProcessingStatus.indexing);
+      _activeDocuments[docId] =
+          meta.copyWith(processingStatus: DocumentProcessingStatus.indexing);
       notifyListeners();
 
       final docIndex = DocumentIndex(
@@ -137,7 +146,10 @@ class DocumentProcessingProvider extends ChangeNotifier {
       notifyListeners();
 
       // Step 6: Return Ready AiAttachment
-      final snippet = chunks.isNotEmpty ? chunks.first.text.substring(0, chunks.first.text.length.clamp(0, 150)) : '';
+      final snippet = chunks.isNotEmpty
+          ? chunks.first.text
+              .substring(0, chunks.first.text.length.clamp(0, 150))
+          : '';
 
       return AiAttachment(
         id: docId,

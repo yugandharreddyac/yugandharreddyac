@@ -80,13 +80,16 @@ void main() {
     mockAdapter = MockDioAdapter();
     testDio = Dio()..httpClientAdapter = mockAdapter;
     provider = GeminiProvider(
-      backendUrl: 'https://us-central1-csse-study-hub-prod.cloudfunctions.net/aiGenerate',
+      backendUrl:
+          'https://us-central1-csse-study-hub-prod.cloudfunctions.net/aiGenerate',
       dio: testDio,
     );
   });
 
   group('GeminiProvider Backend Communication Tests', () {
-    test('Unconfigured backendUrl returns noProviderConfigured error gracefully', () async {
+    test(
+        'Unconfigured backendUrl returns noProviderConfigured error gracefully',
+        () async {
       final unconfiguredProvider = GeminiProvider(backendUrl: '');
       final req = AiRequest(
         conversationId: 'conv_1',
@@ -106,7 +109,9 @@ void main() {
       expect(resp.error?.code, equals(AiErrorCode.noProviderConfigured));
     });
 
-    test('generateResponse sends valid AiRequest payload and parses 200 OK response', () async {
+    test(
+        'generateResponse sends valid AiRequest payload and parses 200 OK response',
+        () async {
       mockAdapter.statusCode = 200;
       mockAdapter.responseBody = {
         'id': 'resp_123',
@@ -114,10 +119,15 @@ void main() {
           'id': 'msg_123',
           'conversationId': 'conv_1',
           'role': 'assistant',
-          'content': 'Dijkstra algorithm finds the shortest path in a weighted graph.',
+          'content':
+              'Dijkstra algorithm finds the shortest path in a weighted graph.',
           'timestamp': DateTime.now().toIso8601String(),
           'resourceReferences': [
-            {'id': 'dsa_graphs', 'title': 'Graph Algorithms', 'hubName': 'Coding Hub'}
+            {
+              'id': 'dsa_graphs',
+              'title': 'Graph Algorithms',
+              'hubName': 'Coding Hub'
+            }
           ],
           'suggestedFollowUps': ['What is the time complexity?'],
           'isError': false,
@@ -129,7 +139,11 @@ void main() {
           'latencyMs': 420,
         },
         'resourceReferences': [
-          {'id': 'dsa_graphs', 'title': 'Graph Algorithms', 'hubName': 'Coding Hub'}
+          {
+            'id': 'dsa_graphs',
+            'title': 'Graph Algorithms',
+            'hubName': 'Coding Hub'
+          }
         ],
       };
 
@@ -146,7 +160,10 @@ void main() {
         ],
         context: const AiContext(
           unidocsResources: [
-            AiResourceReference(id: 'dsa_graphs', title: 'Graph Algorithms', hubName: 'Coding Hub'),
+            AiResourceReference(
+                id: 'dsa_graphs',
+                title: 'Graph Algorithms',
+                hubName: 'Coding Hub'),
           ],
         ),
       );
@@ -161,19 +178,28 @@ void main() {
       // Verify request sent to backend
       expect(mockAdapter.lastRequestOptions?.path, contains('aiGenerate'));
       expect(mockAdapter.lastRequestOptions?.data, isA<Map<String, dynamic>>());
-      final sentData = mockAdapter.lastRequestOptions?.data as Map<String, dynamic>;
+      final sentData =
+          mockAdapter.lastRequestOptions?.data as Map<String, dynamic>;
       expect(sentData['conversationId'], equals('conv_1'));
       expect(sentData['messages'], isNotEmpty);
     });
 
-    test('Error Normalization: 401 Unauthorized maps to authenticationFailed', () async {
+    test('Error Normalization: 401 Unauthorized maps to authenticationFailed',
+        () async {
       mockAdapter.statusCode = 401;
-      mockAdapter.responseBody = {'error': {'code': 'authentication_failed', 'message': 'Unauthorized'}};
+      mockAdapter.responseBody = {
+        'error': {'code': 'authentication_failed', 'message': 'Unauthorized'}
+      };
 
       final req = AiRequest(
         conversationId: 'conv_1',
         messages: [
-          AiMessage(id: 'm1', conversationId: 'conv_1', role: AiMessageRole.user, content: 'Hi', timestamp: DateTime.now()),
+          AiMessage(
+              id: 'm1',
+              conversationId: 'conv_1',
+              role: AiMessageRole.user,
+              content: 'Hi',
+              timestamp: DateTime.now()),
         ],
       );
 
@@ -182,14 +208,25 @@ void main() {
       expect(resp.error?.code, equals(AiErrorCode.authenticationFailed));
     });
 
-    test('Error Normalization: 429 Too Many Requests maps to rateLimitExceeded', () async {
+    test('Error Normalization: 429 Too Many Requests maps to rateLimitExceeded',
+        () async {
       mockAdapter.statusCode = 429;
-      mockAdapter.responseBody = {'error': {'code': 'rate_limit_exceeded', 'message': 'Rate limit exceeded'}};
+      mockAdapter.responseBody = {
+        'error': {
+          'code': 'rate_limit_exceeded',
+          'message': 'Rate limit exceeded'
+        }
+      };
 
       final req = AiRequest(
         conversationId: 'conv_1',
         messages: [
-          AiMessage(id: 'm1', conversationId: 'conv_1', role: AiMessageRole.user, content: 'Spam test', timestamp: DateTime.now()),
+          AiMessage(
+              id: 'm1',
+              conversationId: 'conv_1',
+              role: AiMessageRole.user,
+              content: 'Spam test',
+              timestamp: DateTime.now()),
         ],
       );
 
@@ -199,14 +236,22 @@ void main() {
       expect(resp.error?.isRetryable, isTrue);
     });
 
-    test('Error Normalization: 413 Payload Too Large maps to invalidResponse', () async {
+    test('Error Normalization: 413 Payload Too Large maps to invalidResponse',
+        () async {
       mockAdapter.statusCode = 413;
-      mockAdapter.responseBody = {'error': {'code': 'invalid_response', 'message': 'Payload too large'}};
+      mockAdapter.responseBody = {
+        'error': {'code': 'invalid_response', 'message': 'Payload too large'}
+      };
 
       final req = AiRequest(
         conversationId: 'conv_1',
         messages: [
-          AiMessage(id: 'm1', conversationId: 'conv_1', role: AiMessageRole.user, content: 'Giant prompt', timestamp: DateTime.now()),
+          AiMessage(
+              id: 'm1',
+              conversationId: 'conv_1',
+              role: AiMessageRole.user,
+              content: 'Giant prompt',
+              timestamp: DateTime.now()),
         ],
       );
 
@@ -221,7 +266,12 @@ void main() {
       final req = AiRequest(
         conversationId: 'conv_1',
         messages: [
-          AiMessage(id: 'm1', conversationId: 'conv_1', role: AiMessageRole.user, content: 'Slow question', timestamp: DateTime.now()),
+          AiMessage(
+              id: 'm1',
+              conversationId: 'conv_1',
+              role: AiMessageRole.user,
+              content: 'Slow question',
+              timestamp: DateTime.now()),
         ],
       );
 
@@ -231,13 +281,20 @@ void main() {
       expect(resp.error?.isRetryable, isTrue);
     });
 
-    test('Error Normalization: Network connection failure maps to networkUnavailable', () async {
+    test(
+        'Error Normalization: Network connection failure maps to networkUnavailable',
+        () async {
       mockAdapter.throwType = DioExceptionType.connectionError;
 
       final req = AiRequest(
         conversationId: 'conv_1',
         messages: [
-          AiMessage(id: 'm1', conversationId: 'conv_1', role: AiMessageRole.user, content: 'Offline test', timestamp: DateTime.now()),
+          AiMessage(
+              id: 'm1',
+              conversationId: 'conv_1',
+              role: AiMessageRole.user,
+              content: 'Offline test',
+              timestamp: DateTime.now()),
         ],
       );
 
@@ -258,7 +315,8 @@ void main() {
   });
 
   group('Security & Architectural Isolation Tests', () {
-    test('Client requests contain ZERO Gemini API keys in headers or body', () async {
+    test('Client requests contain ZERO Gemini API keys in headers or body',
+        () async {
       mockAdapter.statusCode = 200;
       mockAdapter.responseBody = {
         'id': 'resp_sec',
@@ -274,7 +332,12 @@ void main() {
       final req = AiRequest(
         conversationId: 'conv_sec',
         messages: [
-          AiMessage(id: 'm1', conversationId: 'conv_sec', role: AiMessageRole.user, content: 'Security audit query', timestamp: DateTime.now()),
+          AiMessage(
+              id: 'm1',
+              conversationId: 'conv_sec',
+              role: AiMessageRole.user,
+              content: 'Security audit query',
+              timestamp: DateTime.now()),
         ],
       );
 
@@ -297,7 +360,8 @@ void main() {
           'id': 'msg_svc',
           'conversationId': 'conv_svc',
           'role': 'assistant',
-          'content': 'Operating Systems handle process scheduling and memory management.',
+          'content':
+              'Operating Systems handle process scheduling and memory management.',
           'timestamp': DateTime.now().toIso8601String(),
         },
       };

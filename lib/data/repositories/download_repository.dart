@@ -55,7 +55,8 @@ class DownloadRepository {
     final resourceId = resource.id;
 
     if (kIsWeb) {
-      onSuccess(resource.copyWith(localFilePath: resource.storageUrl), resource.storageUrl);
+      onSuccess(resource.copyWith(localFilePath: resource.storageUrl),
+          resource.storageUrl);
       return resource.storageUrl;
     }
 

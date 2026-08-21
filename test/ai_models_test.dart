@@ -11,7 +11,8 @@ void main() {
   group('AiMessage Model Tests', () {
     test('AiMessage role parsing and helper getters', () {
       expect(AiMessageRole.fromString('user'), equals(AiMessageRole.user));
-      expect(AiMessageRole.fromString('assistant'), equals(AiMessageRole.assistant));
+      expect(AiMessageRole.fromString('assistant'),
+          equals(AiMessageRole.assistant));
       expect(AiMessageRole.fromString('system'), equals(AiMessageRole.system));
       expect(AiMessageRole.fromString('tool'), equals(AiMessageRole.tool));
       expect(AiMessageRole.fromString('unknown'), equals(AiMessageRole.user));
@@ -36,7 +37,10 @@ void main() {
         role: AiMessageRole.user,
         content: 'Explain Dijkstra algorithm',
         timestamp: DateTime(2026, 8, 15, 10, 0),
-        suggestedFollowUps: const ['Show Python code', 'What is the time complexity?'],
+        suggestedFollowUps: const [
+          'Show Python code',
+          'What is the time complexity?'
+        ],
         metadata: const {'source': 'quick_search'},
       );
 
@@ -58,9 +62,12 @@ void main() {
 
   group('AiAttachment Model Tests', () {
     test('AiAttachment parsing and serialization', () {
-      expect(AiAttachmentSourceType.fromString('local_file'), equals(AiAttachmentSourceType.localFile));
-      expect(AiAttachmentSourceType.fromString('unidocs_resource'), equals(AiAttachmentSourceType.unidocsResource));
-      expect(AiAttachmentStatus.fromString('processed'), equals(AiAttachmentStatus.processed));
+      expect(AiAttachmentSourceType.fromString('local_file'),
+          equals(AiAttachmentSourceType.localFile));
+      expect(AiAttachmentSourceType.fromString('unidocs_resource'),
+          equals(AiAttachmentSourceType.unidocsResource));
+      expect(AiAttachmentStatus.fromString('processed'),
+          equals(AiAttachmentStatus.processed));
 
       final attachment = AiAttachment(
         id: 'att_1',
@@ -79,7 +86,8 @@ void main() {
       final reconstructed = AiAttachment.fromMap(map);
       expect(reconstructed.id, equals('att_1'));
       expect(reconstructed.filename, equals('syllabus_dbms.pdf'));
-      expect(reconstructed.extractedTextSnippet, equals('Unit 1: Relational Model'));
+      expect(reconstructed.extractedTextSnippet,
+          equals('Unit 1: Relational Model'));
     });
   });
 
@@ -105,9 +113,13 @@ void main() {
           content: 'Here is the explanation',
           timestamp: DateTime.now(),
         ),
-        usage: const AiUsageMetadata(promptTokens: 100, completionTokens: 50, totalTokens: 150),
+        usage: const AiUsageMetadata(
+            promptTokens: 100, completionTokens: 50, totalTokens: 150),
         resourceReferences: const [
-          AiResourceReference(id: 'dsa_arrays', title: 'Arrays & Strings', hubName: 'Coding Hub'),
+          AiResourceReference(
+              id: 'dsa_arrays',
+              title: 'Arrays & Strings',
+              hubName: 'Coding Hub'),
         ],
       );
 
@@ -132,8 +144,18 @@ void main() {
         createdAt: now,
         updatedAt: now,
         messages: [
-          AiMessage(id: '1', conversationId: 'conv_main', role: AiMessageRole.user, content: 'Hi', timestamp: now),
-          AiMessage(id: '2', conversationId: 'conv_main', role: AiMessageRole.assistant, content: 'Hello', timestamp: now),
+          AiMessage(
+              id: '1',
+              conversationId: 'conv_main',
+              role: AiMessageRole.user,
+              content: 'Hi',
+              timestamp: now),
+          AiMessage(
+              id: '2',
+              conversationId: 'conv_main',
+              role: AiMessageRole.assistant,
+              content: 'Hello',
+              timestamp: now),
         ],
       );
 
@@ -153,9 +175,24 @@ void main() {
       final req = AiRequest(
         conversationId: 'conv_req',
         messages: [
-          AiMessage(id: '1', conversationId: 'conv_req', role: AiMessageRole.user, content: 'First question', timestamp: DateTime.now()),
-          AiMessage(id: '2', conversationId: 'conv_req', role: AiMessageRole.assistant, content: 'Answer', timestamp: DateTime.now()),
-          AiMessage(id: '3', conversationId: 'conv_req', role: AiMessageRole.user, content: 'Second question', timestamp: DateTime.now()),
+          AiMessage(
+              id: '1',
+              conversationId: 'conv_req',
+              role: AiMessageRole.user,
+              content: 'First question',
+              timestamp: DateTime.now()),
+          AiMessage(
+              id: '2',
+              conversationId: 'conv_req',
+              role: AiMessageRole.assistant,
+              content: 'Answer',
+              timestamp: DateTime.now()),
+          AiMessage(
+              id: '3',
+              conversationId: 'conv_req',
+              role: AiMessageRole.user,
+              content: 'Second question',
+              timestamp: DateTime.now()),
         ],
         capability: AiCapability.explain,
       );
@@ -191,7 +228,8 @@ void main() {
       final aiContext = AiContext(
         student: studentCtx,
         unidocsResources: const [
-          AiResourceReference(id: 'python', title: 'Python Core', hubName: 'Coding Hub'),
+          AiResourceReference(
+              id: 'python', title: 'Python Core', hubName: 'Coding Hub'),
         ],
       );
 

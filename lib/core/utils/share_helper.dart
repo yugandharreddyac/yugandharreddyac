@@ -5,7 +5,8 @@ import '../../data/models/subject_model.dart';
 
 class ShareHelper {
   /// Native sharing trigger for a Resource
-  static Future<void> shareResource(BuildContext context, ResourceModel resource) async {
+  static Future<void> shareResource(
+      BuildContext context, ResourceModel resource) async {
     final String text =
         '📘 *${resource.title}*\n\nSubject: ${resource.subjectName}\nCategory: ${resource.resourceType}\n\nAccess this study material on CSSE Study Hub!';
 
@@ -13,7 +14,8 @@ class ShareHelper {
   }
 
   /// Native sharing trigger for a Subject
-  static Future<void> shareSubject(BuildContext context, SubjectModel subject) async {
+  static Future<void> shareSubject(
+      BuildContext context, SubjectModel subject) async {
     final String text =
         '📚 *${subject.name} (${subject.code})*\n\nCredits: ${subject.creditHours}\n${subject.description}\n\nExplore study notes, question papers & books on CSSE Study Hub!';
 
@@ -34,7 +36,8 @@ class ShareHelper {
     required String title,
   }) async {
     final String encodedText = Uri.encodeComponent(content);
-    final Uri uri = Uri.parse('mailto:?subject=${Uri.encodeComponent(title)}&body=$encodedText');
+    final Uri uri = Uri.parse(
+        'mailto:?subject=${Uri.encodeComponent(title)}&body=$encodedText');
 
     try {
       if (await canLaunchUrl(uri)) {
@@ -51,7 +54,8 @@ class ShareHelper {
     }
   }
 
-  static void _showShareFallbackModal(BuildContext context, String content, String title) {
+  static void _showShareFallbackModal(
+      BuildContext context, String content, String title) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(

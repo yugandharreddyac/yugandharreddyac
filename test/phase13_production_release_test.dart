@@ -15,14 +15,23 @@ void main() {
   group('Phase 13 — Production Release & UI/UX Audit Tests', () {
     final catalog = AcademicResourceCatalog.allAcademicResources;
 
-    test('1. Security Scan: Zero Hardcoded Secrets or Credentials in Source Files', () {
+    test(
+        '1. Security Scan: Zero Hardcoded Secrets or Credentials in Source Files',
+        () {
       final libDir = Directory('lib');
-      final files = libDir.listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'));
-      final secretPattern = RegExp(r'(r2_access_key|r2_secret_key|aws_secret_access_key|private_key|api_secret)\s*=\s*["\x27][^"\x27]+["\x27]', caseSensitive: false);
+      final files = libDir
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'));
+      final secretPattern = RegExp(
+          r'(r2_access_key|r2_secret_key|aws_secret_access_key|private_key|api_secret)\s*=\s*["\x27][^"\x27]+["\x27]',
+          caseSensitive: false);
 
       for (final file in files) {
         final content = file.readAsStringSync();
-        expect(secretPattern.hasMatch(content), isFalse, reason: 'File ${file.path} contains forbidden hardcoded secret credentials!');
+        expect(secretPattern.hasMatch(content), isFalse,
+            reason:
+                'File ${file.path} contains forbidden hardcoded secret credentials!');
       }
     });
 
@@ -30,14 +39,23 @@ void main() {
       for (final res in catalog) {
         if (res.storageUrl.isNotEmpty) {
           expect(res.storageUrl.startsWith('https://'), isTrue,
-              reason: 'Resource ${res.id} must strictly enforce https:// scheme');
+              reason:
+                  'Resource ${res.id} must strictly enforce https:// scheme');
         }
       }
     });
 
     test('3. Copyright Safety Tier Rules (external_copyrighted vs hosted)', () {
       for (final res in catalog) {
-        expect(res.copyrightTier, isIn(['created_by_cssed', 'open_licensed', 'public_domain', 'officially_provided', 'external_copyrighted']));
+        expect(
+            res.copyrightTier,
+            isIn([
+              'created_by_cssed',
+              'open_licensed',
+              'public_domain',
+              'officially_provided',
+              'external_copyrighted'
+            ]));
         if (res.isExternalCopyrighted) {
           expect(res.isDownloadable, isFalse);
         }
@@ -46,7 +64,8 @@ void main() {
 
     test('4. Availability Status Integrity & Beginner Explanations', () {
       for (final res in catalog) {
-        expect(res.availabilityStatus, isIn(['available', 'coming_soon', 'external', 'unavailable']));
+        expect(res.availabilityStatus,
+            isIn(['available', 'coming_soon', 'external', 'unavailable']));
         expect(res.whatIsThis, isNotNull);
         expect(res.whyUseIt, isNotNull);
       }
@@ -55,10 +74,12 @@ void main() {
     test('5. PdfRepository Duplicate Resource ID & Scheme Validation', () {
       final pdfRepo = PdfRepository();
       final errors = pdfRepo.validateDocumentUrls(catalog);
-      expect(errors, isEmpty, reason: 'Catalog must have 0 scheme errors and 0 duplicate IDs');
+      expect(errors, isEmpty,
+          reason: 'Catalog must have 0 scheme errors and 0 duplicate IDs');
     });
 
-    test('6. Global Search Index Engine High Query Stress & Boundary Tests', () {
+    test('6. Global Search Index Engine High Query Stress & Boundary Tests',
+        () {
       final searchEngine = SearchIndexEngine();
       searchEngine.buildIndex(MockData.subjects, catalog);
 
@@ -79,7 +100,8 @@ void main() {
 
     test('7. AppConfig & R2StorageHelper Production Environment Settings', () {
       AppConfig.environment = AppEnvironment.prod;
-      expect(AppConfig.cdnBaseUrl, equals('https://cdn.csse-study-hub.org/academic'));
+      expect(AppConfig.cdnBaseUrl,
+          equals('https://cdn.csse-study-hub.org/academic'));
 
       final path = R2StorageHelper.buildR2StoragePath(
         yearId: 'year_1',
@@ -89,23 +111,30 @@ void main() {
         documentType: 'notes',
         fileName: 'c_syntax.pdf',
       );
-      expect(path, equals('academic/year_1/sem_1_1/cs1104/unit_1/notes/c_syntax.pdf'));
+      expect(path,
+          equals('academic/year_1/sem_1_1/cs1104/unit_1/notes/c_syntax.pdf'));
     });
 
-    test('8. CloudStorageHealthChecker Handles Invalid URLs Gracefully', () async {
+    test('8. CloudStorageHealthChecker Handles Invalid URLs Gracefully',
+        () async {
       final checker = CloudStorageHealthChecker();
-      final result = await checker.checkEndpointHealth('http://insecure-domain.com/file.pdf');
+      final result = await checker
+          .checkEndpointHealth('http://insecure-domain.com/file.pdf');
       expect(result.isReachable, isFalse);
       expect(result.statusCode, equals(400));
     });
 
-    test('9. Academic Hierarchy Integrity Verification (4 Years, 8 Semesters, 30 Subjects)', () {
+    test(
+        '9. Academic Hierarchy Integrity Verification (4 Years, 8 Semesters, 30 Subjects)',
+        () {
       expect(MockData.years.length, equals(4));
       expect(MockData.semesters.length, equals(8));
       expect(MockData.subjects.length, greaterThanOrEqualTo(30));
     });
 
-    test('10. Non-Academic Educational Hubs Structural Integrity Verification (72 Topics)', () {
+    test(
+        '10. Non-Academic Educational Hubs Structural Integrity Verification (72 Topics)',
+        () {
       final allHubs = NonAcademicData.allHubs;
       expect(allHubs.length, equals(6));
 

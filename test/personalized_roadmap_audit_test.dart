@@ -19,7 +19,9 @@ void main() {
   const generator = RuleBasedRoadmapGenerator();
 
   group('Personalized Roadmap Deep Audit — Representative Real Profiles', () {
-    test('Audit Profile A: 3rd Year AI/ML, Python intermediate, Math weak, 2h/day, 6m', () async {
+    test(
+        'Audit Profile A: 3rd Year AI/ML, Python intermediate, Math weak, 2h/day, 6m',
+        () async {
       final profileA = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement', 'Skill Upgrade'],
@@ -53,7 +55,8 @@ void main() {
       final mathItem = roadmap.findItemById('ai_p1_math');
       expect(mathItem, isNotNull);
       expect(mathItem!.priority, equals(RoadmapItemPriority.critical));
-      expect(mathItem.recommendationReason, contains('Mathematics was selected as a focus improvement area'));
+      expect(mathItem.recommendationReason,
+          contains('Mathematics was selected as a focus improvement area'));
 
       // 4. Check ML Core prerequisites (requires NumPy & Math)
       final mlItem = roadmap.findItemById('ai_p2_ml');
@@ -69,14 +72,18 @@ void main() {
       // 6. Check UniDocs resource resolution
       expect(pythonItem.resourceReference, equals('python'));
       expect(pythonItem.resourceType, equals('hub_topic'));
-      expect(NonAcademicData.findTopicById(pythonItem.resourceReference!), isNotNull);
+      expect(NonAcademicData.findTopicById(pythonItem.resourceReference!),
+          isNotNull);
 
       final dsaItem = roadmap.findItemById('ai_p1_dsa');
       expect(dsaItem!.resourceReference, equals('dsa_arrays'));
-      expect(NonAcademicData.findTopicById(dsaItem.resourceReference!), isNotNull);
+      expect(
+          NonAcademicData.findTopicById(dsaItem.resourceReference!), isNotNull);
     });
 
-    test('Audit Profile B: 2nd Year Web Dev, JS beginner, HTML/CSS basic, 1h/day, 1y', () async {
+    test(
+        'Audit Profile B: 2nd Year Web Dev, JS beginner, HTML/CSS basic, 1h/day, 1y',
+        () async {
       final profileB = PersonalizedProfile(
         academicStage: AcademicStage.secondYear,
         goals: const ['Internship'],
@@ -119,7 +126,9 @@ void main() {
       expect(NonAcademicData.findTopicById('web_react'), isNotNull);
     });
 
-    test('Audit Profile C: 3rd Year Cybersecurity, Linux beginner, Networking beginner, 2h/day', () async {
+    test(
+        'Audit Profile C: 3rd Year Cybersecurity, Linux beginner, Networking beginner, 2h/day',
+        () async {
       final profileC = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: const ['Placement'],
@@ -150,7 +159,9 @@ void main() {
       expect(NonAcademicData.findTopicById('cyber_intro'), isNotNull);
     });
 
-    test('Audit Profile D: Final Year Placement, DSA beginner, Aptitude weak, 3h/day, 3m', () async {
+    test(
+        'Audit Profile D: Final Year Placement, DSA beginner, Aptitude weak, 3h/day, 3m',
+        () async {
       final profileD = PersonalizedProfile(
         academicStage: AcademicStage.fourthYear,
         goals: const ['Placement'],
@@ -226,12 +237,14 @@ void main() {
             return false;
           }
 
-          expect(hasCycle(item.id), isFalse, reason: 'Cycle detected in $track at item ${item.id}');
+          expect(hasCycle(item.id), isFalse,
+              reason: 'Cycle detected in $track at item ${item.id}');
         }
       }
     });
 
-    test('All prerequisites precede dependent items in topological sequence', () async {
+    test('All prerequisites precede dependent items in topological sequence',
+        () async {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.secondYear,
         goals: const ['Placement'],
@@ -262,7 +275,9 @@ void main() {
   });
 
   group('Personalized Roadmap Provider & UI Responsiveness Audit', () {
-    testWidgets('MyRoadmapScreen renders responsive layout on 320px, 360px, 412px and desktop', (tester) async {
+    testWidgets(
+        'MyRoadmapScreen renders responsive layout on 320px, 360px, 412px and desktop',
+        (tester) async {
       SharedPreferences.setMockInitialValues({});
       final provider = RoadmapProvider();
       await Future.delayed(const Duration(milliseconds: 50));

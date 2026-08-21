@@ -22,8 +22,10 @@ class ProfileScreen extends StatelessWidget {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const orangeAccent = AppColors.primary;
     const royalBlue = Color(0xFF2563EB);
@@ -43,12 +45,16 @@ class ProfileScreen extends StatelessWidget {
         centerTitle: false,
         backgroundColor: cardColor,
         elevation: 0,
-        leading: Navigator.canPop(context) 
-            ? IconButton(
-                icon: Icon(Icons.arrow_back_rounded, color: textPrimary),
-                onPressed: () => Navigator.pop(context),
-              )
-            : null,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_rounded, color: textPrimary),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacementNamed(context, AppRoutes.home);
+            }
+          },
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(24),
@@ -74,16 +80,15 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [orangeAccent, emeraldGreen],
-                    ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withAlpha(isDark ? 30 : 20),
                     shape: BoxShape.circle,
                   ),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     radius: 32,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person_rounded, size: 36, color: orangeAccent),
+                    backgroundColor: cardColor,
+                    child: const Icon(Icons.person_outline_rounded,
+                        size: 36, color: AppColors.primary),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -109,7 +114,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
                           color: orangeAccent.withAlpha(20),
                           borderRadius: BorderRadius.circular(8),
@@ -205,13 +211,23 @@ class ProfileScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      themeProvider.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                      color: themeProvider.isDarkMode ? Colors.amberAccent : royalBlue,
+                      themeProvider.isDarkMode
+                          ? Icons.light_mode_rounded
+                          : Icons.dark_mode_rounded,
+                      color: themeProvider.isDarkMode
+                          ? Colors.amberAccent
+                          : royalBlue,
                       size: 20,
                     ),
                   ),
-                  title: Text('Dark Mode Theme', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 15, color: textPrimary)),
-                  subtitle: Text('Switch theme preferences', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+                  title: Text('Dark Mode Theme',
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: textPrimary)),
+                  subtitle: Text('Switch theme preferences',
+                      style:
+                          GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
                   trailing: Switch(
                     value: themeProvider.isDarkMode,
                     activeColor: royalBlue,
@@ -226,12 +242,21 @@ class ProfileScreen extends StatelessWidget {
                       color: emeraldGreen.withAlpha(15),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.bookmark_rounded, color: emeraldGreen, size: 20),
+                    child: const Icon(Icons.bookmark_rounded,
+                        color: emeraldGreen, size: 20),
                   ),
-                  title: Text('Saved Bookmarks', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 15, color: textPrimary)),
-                  subtitle: Text('View bookmarked resources', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.bookmarks),
+                  title: Text('Saved Bookmarks',
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: textPrimary)),
+                  subtitle: Text('View bookmarked resources',
+                      style:
+                          GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+                  trailing: const Icon(Icons.arrow_forward_ios_rounded,
+                      size: 14, color: Colors.grey),
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.bookmarks),
                 ),
                 Divider(height: 1, color: borderColor),
                 ListTile(
@@ -241,12 +266,21 @@ class ProfileScreen extends StatelessWidget {
                       color: royalBlue.withAlpha(15),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.admin_panel_settings_rounded, color: royalBlue, size: 20),
+                    child: const Icon(Icons.admin_panel_settings_rounded,
+                        color: royalBlue, size: 20),
                   ),
-                  title: Text('Admin Control Panel', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 15, color: textPrimary)),
-                  subtitle: Text('Manage resources, uploads & analytics', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.adminDashboard),
+                  title: Text('Admin Control Panel',
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: textPrimary)),
+                  subtitle: Text('Manage resources, uploads & analytics',
+                      style:
+                          GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+                  trailing: const Icon(Icons.arrow_forward_ios_rounded,
+                      size: 14, color: Colors.grey),
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.adminDashboard),
                 ),
                 Divider(height: 1, color: borderColor),
                 ListTile(
@@ -256,11 +290,19 @@ class ProfileScreen extends StatelessWidget {
                       color: emeraldGreen.withAlpha(15),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.info_outline_rounded, color: emeraldGreen, size: 20),
+                    child: const Icon(Icons.info_outline_rounded,
+                        color: emeraldGreen, size: 20),
                   ),
-                  title: Text('About CSSE Study Hub', style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 15, color: textPrimary)),
-                  subtitle: Text('Version ${AppConstants.appVersion}', style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+                  title: Text('About CSSE Study Hub',
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: textPrimary)),
+                  subtitle: Text('Version ${AppConstants.appVersion}',
+                      style:
+                          GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+                  trailing: const Icon(Icons.arrow_forward_ios_rounded,
+                      size: 14, color: Colors.grey),
                   onTap: () => Navigator.pushNamed(context, AppRoutes.about),
                 ),
               ],

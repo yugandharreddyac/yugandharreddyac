@@ -64,7 +64,8 @@ class AiError {
 
     return AiError(
       code: code,
-      message: map['message']?.toString() ?? 'An error occurred during AI processing.',
+      message: map['message']?.toString() ??
+          'An error occurred during AI processing.',
       details: map['details']?.toString(),
       isRetryable: retryable,
     );

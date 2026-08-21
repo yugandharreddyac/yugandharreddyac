@@ -21,7 +21,8 @@ class AuthenticationRepository {
     return await firebaseDataSource.signInWithEmail(email, password);
   }
 
-  Future<UserCredential?> registerWithEmail(String email, String password) async {
+  Future<UserCredential?> registerWithEmail(
+      String email, String password) async {
     return await firebaseDataSource.registerWithEmail(email, password);
   }
 

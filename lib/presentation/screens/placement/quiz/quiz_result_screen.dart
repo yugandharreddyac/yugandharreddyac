@@ -17,8 +17,10 @@ class QuizResultScreen extends StatelessWidget {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
@@ -34,7 +36,8 @@ class QuizResultScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Assessment Scorecard',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, fontSize: 18, color: textPrimary),
         ),
         centerTitle: false,
         backgroundColor: cardColor,
@@ -59,8 +62,12 @@ class QuizResultScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: isPassed
-                    ? (isDark ? [const Color(0xFF064E3B), const Color(0xFF022C22)] : [emeraldGreen, const Color(0xFF047857)])
-                    : (isDark ? [const Color(0xFF7F1D1D), const Color(0xFF450A0A)] : [const Color(0xFFEF4444), const Color(0xFFB91C1C)]),
+                    ? (isDark
+                        ? [const Color(0xFF064E3B), const Color(0xFF022C22)]
+                        : [emeraldGreen, const Color(0xFF047857)])
+                    : (isDark
+                        ? [const Color(0xFF7F1D1D), const Color(0xFF450A0A)]
+                        : [const Color(0xFFEF4444), const Color(0xFFB91C1C)]),
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -75,7 +82,9 @@ class QuizResultScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    isPassed ? Icons.emoji_events_rounded : Icons.trending_up_rounded,
+                    isPassed
+                        ? Icons.emoji_events_rounded
+                        : Icons.trending_up_rounded,
                     color: Colors.white,
                     size: 38,
                   ),
@@ -83,7 +92,10 @@ class QuizResultScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   isPassed ? 'Performance Qualified' : 'Needs Reinforcement',
-                  style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -93,11 +105,17 @@ class QuizResultScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   '${result.score} / ${result.totalQuestions}',
-                  style: GoogleFonts.inter(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: GoogleFonts.inter(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 Text(
                   'Overall Accuracy: $accuracyStr%',
-                  style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white70),
+                  style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white70),
                 ),
               ],
             ),
@@ -167,7 +185,8 @@ class QuizResultScreen extends StatelessWidget {
           // 3. Topic-wise Breakdown
           Text(
             'Topic-wise Mastery Breakdown',
-            style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
           ),
           const SizedBox(height: 12),
           ...result.topicTotalCount.entries.map((entry) {
@@ -193,7 +212,10 @@ class QuizResultScreen extends StatelessWidget {
                     children: [
                       Text(
                         topic,
-                        style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: textPrimary),
                       ),
                       Text(
                         '$correct / $total (${(percentage * 100).toStringAsFixed(0)}%)',
@@ -226,7 +248,10 @@ class QuizResultScreen extends StatelessWidget {
           if (result.weakTopics.isNotEmpty) ...[
             Text(
               'Identified Weak Focus Areas',
-              style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+              style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary),
             ),
             const SizedBox(height: 10),
             Container(
@@ -234,7 +259,8 @@ class QuizResultScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFF59E0B).withAlpha(isDark ? 25 : 15),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFF59E0B).withAlpha(60)),
+                border:
+                    Border.all(color: const Color(0xFFF59E0B).withAlpha(60)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,12 +270,16 @@ class QuizResultScreen extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.arrow_right_rounded, color: Color(0xFFF59E0B), size: 20),
+                        const Icon(Icons.arrow_right_rounded,
+                            color: Color(0xFFF59E0B), size: 20),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             rec,
-                            style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textPrimary),
                           ),
                         ),
                       ],
@@ -278,7 +308,8 @@ class QuizResultScreen extends StatelessWidget {
                   label: const Text('Try Another Test'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
               ),
@@ -294,7 +325,8 @@ class QuizResultScreen extends StatelessWidget {
                     backgroundColor: orangeAccent,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
               ),
@@ -328,7 +360,8 @@ class QuizResultScreen extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             value,
-            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
           ),
           const SizedBox(height: 2),
           Text(

@@ -27,19 +27,22 @@ void main() {
             chunkId: 'c1',
             documentId: 'doc_rag_1',
             pageNumber: 15,
-            text: 'First Normal Form (1NF) requires all attribute values to be atomic.',
+            text:
+                'First Normal Form (1NF) requires all attribute values to be atomic.',
           ),
           DocumentChunk(
             chunkId: 'c2',
             documentId: 'doc_rag_1',
             pageNumber: 18,
-            text: 'Third Normal Form (3NF) eliminates transitive dependencies for non-prime attributes.',
+            text:
+                'Third Normal Form (3NF) eliminates transitive dependencies for non-prime attributes.',
           ),
           DocumentChunk(
             chunkId: 'c3',
             documentId: 'doc_rag_1',
             pageNumber: 20,
-            text: 'BCNF is a stricter version of 3NF where for every dependency X -> Y, X must be a super key.',
+            text:
+                'BCNF is a stricter version of 3NF where for every dependency X -> Y, X must be a super key.',
           ),
         ],
       );
@@ -62,7 +65,9 @@ void main() {
       expect(result.first.filename, equals('dbms_unit3.pdf'));
     });
 
-    test('buildGroundedContext returns formatted excerpt with page numbers and anti-hallucination rules', () async {
+    test(
+        'buildGroundedContext returns formatted excerpt with page numbers and anti-hallucination rules',
+        () async {
       final attachments = [
         const AiAttachment(
           id: 'doc_rag_1',
@@ -78,14 +83,18 @@ void main() {
       );
 
       expect(contextText, isNotNull);
-      expect(contextText, contains('DOCUMENT CONTEXT: "Database Normalization"'));
+      expect(
+          contextText, contains('DOCUMENT CONTEXT: "Database Normalization"'));
       expect(contextText, contains('[Page 18]'));
       expect(contextText, contains('transitive dependencies'));
-      expect(contextText, contains('INSTRUCTIONS FOR DOCUMENT-GROUNDED ANSWERS'));
-      expect(contextText, contains('Do not fabricate missing document content'));
+      expect(
+          contextText, contains('INSTRUCTIONS FOR DOCUMENT-GROUNDED ANSWERS'));
+      expect(
+          contextText, contains('Do not fabricate missing document content'));
     });
 
-    test('buildGroundedContext returns null when no matching documents exist', () async {
+    test('buildGroundedContext returns null when no matching documents exist',
+        () async {
       final attachments = [
         const AiAttachment(
           id: 'non_existent_doc',
@@ -102,12 +111,14 @@ void main() {
       expect(contextText, isNull);
     });
 
-    test('AiContextComposer incorporates RAG context into system instructions', () {
+    test('AiContextComposer incorporates RAG context into system instructions',
+        () {
       final composer = AiContextComposer(
         documentProvider: ragProvider,
       );
 
-      const customRagPrompt = '\n--- DOCUMENT CONTEXT: "Test" ---\n[Page 5] Test chunk\n';
+      const customRagPrompt =
+          '\n--- DOCUMENT CONTEXT: "Test" ---\n[Page 5] Test chunk\n';
 
       final context = composer.compose(
         userQuery: 'Explain test',

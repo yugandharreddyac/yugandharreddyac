@@ -27,8 +27,10 @@ class ProjectProvider extends ChangeNotifier {
 
   List<ProjectModel> get filteredProjects {
     return _projects.where((p) {
-      final matchesCategory = _selectedCategory == 'All' || p.category == _selectedCategory;
-      final matchesDifficulty = _selectedDifficulty == 'All' || p.difficulty == _selectedDifficulty;
+      final matchesCategory =
+          _selectedCategory == 'All' || p.category == _selectedCategory;
+      final matchesDifficulty =
+          _selectedDifficulty == 'All' || p.difficulty == _selectedDifficulty;
       return matchesCategory && matchesDifficulty;
     }).toList();
   }

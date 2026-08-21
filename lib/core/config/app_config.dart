@@ -4,13 +4,16 @@ class AppConfig {
   static AppEnvironment environment = AppEnvironment.prod;
 
   /// Default production CDN base URL for Cloudflare R2 / CDN object delivery
-  static const String defaultCdnBaseUrl = 'https://cdn.csse-study-hub.org/academic';
+  static const String defaultCdnBaseUrl =
+      'https://cdn.csse-study-hub.org/academic';
 
   /// Staging CDN base URL
-  static const String stagingCdnBaseUrl = 'https://staging-cdn.csse-study-hub.org/academic';
+  static const String stagingCdnBaseUrl =
+      'https://staging-cdn.csse-study-hub.org/academic';
 
   /// Development CDN base URL
-  static const String devCdnBaseUrl = 'https://dev-cdn.csse-study-hub.org/academic';
+  static const String devCdnBaseUrl =
+      'https://dev-cdn.csse-study-hub.org/academic';
 
   /// Get active base CDN storage URL based on environment setting
   static String get cdnBaseUrl {
@@ -26,16 +29,20 @@ class AppConfig {
   }
 
   /// Production Render AI backend proxy endpoint URL
-  static const String renderAiBackendUrl = 'https://unidocs-ai-backend.onrender.com';
+  static const String renderAiBackendUrl =
+      'https://unidocs-ai-backend.onrender.com';
 
   /// Default production AI proxy endpoint URL (Firebase Cloud Function)
-  static const String defaultAiBackendUrl = 'https://us-central1-csse-study-hub-prod.cloudfunctions.net/aiGenerate';
+  static const String defaultAiBackendUrl =
+      'https://us-central1-csse-study-hub-prod.cloudfunctions.net/aiGenerate';
 
   /// Staging AI proxy endpoint URL
-  static const String stagingAiBackendUrl = 'https://us-central1-csse-study-hub-staging.cloudfunctions.net/aiGenerate';
+  static const String stagingAiBackendUrl =
+      'https://us-central1-csse-study-hub-staging.cloudfunctions.net/aiGenerate';
 
   /// Development / Local emulator AI proxy endpoint URL
-  static const String devAiBackendUrl = 'http://10.0.2.2:5001/csse-study-hub-prod/us-central1/aiGenerate';
+  static const String devAiBackendUrl =
+      'http://10.0.2.2:5001/csse-study-hub-prod/us-central1/aiGenerate';
 
   static String? _customAiBackendUrl;
 

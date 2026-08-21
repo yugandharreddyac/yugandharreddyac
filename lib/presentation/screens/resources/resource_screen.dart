@@ -35,9 +35,24 @@ class _ResourceScreenState extends State<ResourceScreen> {
   String _selectedYearFilter = 'All';
 
   final List<Map<String, dynamic>> _subjectSections = const [
-    {'index': 0, 'title': 'Syllabus', 'icon': Icons.assignment_outlined, 'badge': 'Curriculum'},
-    {'index': 1, 'title': 'Notes', 'icon': Icons.menu_book_rounded, 'badge': 'Core'},
-    {'index': 2, 'title': 'Previous Papers', 'icon': Icons.description_rounded, 'badge': 'PYQs'},
+    {
+      'index': 0,
+      'title': 'Syllabus',
+      'icon': Icons.assignment_outlined,
+      'badge': 'Curriculum'
+    },
+    {
+      'index': 1,
+      'title': 'Notes',
+      'icon': Icons.menu_book_rounded,
+      'badge': 'Core'
+    },
+    {
+      'index': 2,
+      'title': 'Previous Papers',
+      'icon': Icons.description_rounded,
+      'badge': 'PYQs'
+    },
   ];
 
   @override
@@ -68,7 +83,8 @@ class _ResourceScreenState extends State<ResourceScreen> {
 
     SubjectModel? currentSubject;
     try {
-      currentSubject = studyProvider.subjects.firstWhere((s) => s.id == widget.subjectId);
+      currentSubject =
+          studyProvider.subjects.firstWhere((s) => s.id == widget.subjectId);
     } catch (_) {}
 
     final overview = studyProvider.courseOverview;
@@ -78,8 +94,10 @@ class _ResourceScreenState extends State<ResourceScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
     const orangeAccent = AppColors.primary;
 
     return Scaffold(
@@ -107,7 +125,8 @@ class _ResourceScreenState extends State<ResourceScreen> {
                     color: orangeAccent.withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.school_rounded, color: orangeAccent, size: 28),
+                  child: const Icon(Icons.school_rounded,
+                      color: orangeAccent, size: 28),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -127,7 +146,10 @@ class _ResourceScreenState extends State<ResourceScreen> {
                       const SizedBox(height: 4),
                       Text(
                         'Code: ${currentSubject?.code ?? widget.subjectId} • ${currentSubject?.credits ?? 4} Credits',
-                        style: TextStyle(color: textSecondary, fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            color: textSecondary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -159,7 +181,8 @@ class _ResourceScreenState extends State<ResourceScreen> {
                       sec['title'] as String,
                       style: TextStyle(
                         color: isSelected ? Colors.white : textPrimary,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.w500,
                         fontSize: 13,
                       ),
                     ),
@@ -219,13 +242,17 @@ class _ResourceScreenState extends State<ResourceScreen> {
   ) {
     switch (sectionIndex) {
       case 0:
-        return _buildSyllabusTab(provider, overview, cardBg, borderColor, textPrimary, textSecondary, isDark);
+        return _buildSyllabusTab(provider, overview, cardBg, borderColor,
+            textPrimary, textSecondary, isDark);
       case 1:
-        return _buildNotesTab(provider, chapters, cardBg, borderColor, textPrimary, textSecondary, isDark);
+        return _buildNotesTab(provider, chapters, cardBg, borderColor,
+            textPrimary, textSecondary, isDark);
       case 2:
-        return _buildPreviousPapersTab(provider, allResources, cardBg, borderColor, textPrimary, textSecondary, isDark);
+        return _buildPreviousPapersTab(provider, allResources, cardBg,
+            borderColor, textPrimary, textSecondary, isDark);
       default:
-        return _buildSyllabusTab(provider, overview, cardBg, borderColor, textPrimary, textSecondary, isDark);
+        return _buildSyllabusTab(provider, overview, cardBg, borderColor,
+            textPrimary, textSecondary, isDark);
     }
   }
 
@@ -244,15 +271,17 @@ class _ResourceScreenState extends State<ResourceScreen> {
     }
 
     final syllabusPdfs = provider.resources.where((r) {
-      final t = (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
+      final t =
+          (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
       return t.contains('syllabus') || t.contains('curriculum');
     }).toList();
 
-    if ((overview == null || overview.description.isEmpty) && syllabusPdfs.isEmpty) {
-
+    if ((overview == null || overview.description.isEmpty) &&
+        syllabusPdfs.isEmpty) {
       return const EmptyStateWidget(
         title: 'No syllabus available yet.',
-        message: 'Syllabus details and official curriculum documents for this subject will appear here.',
+        message:
+            'Syllabus details and official curriculum documents for this subject will appear here.',
         icon: Icons.assignment_outlined,
       );
     }
@@ -273,66 +302,105 @@ class _ResourceScreenState extends State<ResourceScreen> {
               children: [
                 Text(
                   'Syllabus & Course Curriculum',
-                  style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary),
+                  style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: textPrimary),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   overview.description,
-                  style: TextStyle(color: textSecondary, fontSize: 14, height: 1.5),
+                  style: TextStyle(
+                      color: textSecondary, fontSize: 14, height: 1.5),
                 ),
                 if (overview.prerequisites.isNotEmpty) ...[
                   const SizedBox(height: 14),
-                  Text('Prerequisites', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary)),
+                  Text('Prerequisites',
+                      style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary)),
                   const SizedBox(height: 6),
                   Wrap(
                     spacing: 6,
                     runSpacing: 6,
-                    children: overview.prerequisites.map((p) => Chip(
-                      label: Text(p, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500)),
-                      backgroundColor: AppColors.primary.withOpacity(0.12),
-                      side: const BorderSide(color: AppColors.primary),
-                    )).toList(),
+                    children: overview.prerequisites
+                        .map((p) => Chip(
+                              label: Text(p,
+                                  style: const TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500)),
+                              backgroundColor:
+                                  AppColors.primary.withOpacity(0.12),
+                              side: const BorderSide(color: AppColors.primary),
+                            ))
+                        .toList(),
                   ),
                 ],
                 if (overview.learningObjectives.isNotEmpty) ...[
                   const SizedBox(height: 14),
-                  Text('Learning Objectives', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary)),
+                  Text('Learning Objectives',
+                      style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary)),
                   const SizedBox(height: 6),
                   ...overview.learningObjectives.map((obj) => Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('• ', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
-                        Expanded(child: Text(obj, style: TextStyle(color: textSecondary, fontSize: 13, height: 1.4))),
-                      ],
-                    ),
-                  )),
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('• ',
+                                style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.bold)),
+                            Expanded(
+                                child: Text(obj,
+                                    style: TextStyle(
+                                        color: textSecondary,
+                                        fontSize: 13,
+                                        height: 1.4))),
+                          ],
+                        ),
+                      )),
                 ],
                 if (overview.learningOutcomes.isNotEmpty) ...[
                   const SizedBox(height: 14),
-                  Text('Course Outcomes', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary)),
+                  Text('Course Outcomes',
+                      style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary)),
                   const SizedBox(height: 6),
                   ...overview.learningOutcomes.map((out) => Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.check_circle_outline, size: 16, color: Colors.green),
-                        const SizedBox(width: 6),
-                        Expanded(child: Text(out, style: TextStyle(color: textSecondary, fontSize: 13, height: 1.4))),
-                      ],
-                    ),
-                  )),
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(Icons.check_circle_outline,
+                                size: 16, color: Colors.green),
+                            const SizedBox(width: 6),
+                            Expanded(
+                                child: Text(out,
+                                    style: TextStyle(
+                                        color: textSecondary,
+                                        fontSize: 13,
+                                        height: 1.4))),
+                          ],
+                        ),
+                      )),
                 ],
               ],
             ),
           ),
           const SizedBox(height: 16),
         ],
-
         if (syllabusPdfs.isNotEmpty) ...[
-          Text('Official Syllabus Documents & PDFs', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold, color: textPrimary)),
+          Text('Official Syllabus Documents & PDFs',
+              style: GoogleFonts.inter(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary)),
           const SizedBox(height: 10),
           ...syllabusPdfs.map((res) => ResourceCard(
                 resource: res,
@@ -344,7 +412,6 @@ class _ResourceScreenState extends State<ResourceScreen> {
                   );
                 },
               )),
-
         ],
       ],
     );
@@ -365,14 +432,18 @@ class _ResourceScreenState extends State<ResourceScreen> {
     }
 
     final notesPdfs = provider.resources.where((r) {
-      final t = (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
-      return t.contains('note') || t.contains('material') || t.contains('lecture');
+      final t =
+          (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
+      return t.contains('note') ||
+          t.contains('material') ||
+          t.contains('lecture');
     }).toList();
 
     if (chapters.isEmpty && notesPdfs.isEmpty) {
       return const EmptyStateWidget(
         title: 'No notes available yet.',
-        message: 'Chapter notes, section explanations, and lecture study material for this subject will appear here.',
+        message:
+            'Chapter notes, section explanations, and lecture study material for this subject will appear here.',
         icon: Icons.menu_book_rounded,
       );
     }
@@ -381,78 +452,103 @@ class _ResourceScreenState extends State<ResourceScreen> {
       padding: const EdgeInsets.all(16),
       children: [
         if (chapters.isNotEmpty) ...[
-          Text('Interactive Course Modules', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold, color: textPrimary)),
+          Text('Interactive Course Modules',
+              style: GoogleFonts.inter(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary)),
           const SizedBox(height: 10),
           ...chapters.map((ch) => Card(
-            color: cardBg,
-            margin: const EdgeInsets.only(bottom: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-              side: BorderSide(color: borderColor),
-            ),
-            child: ExpansionTile(
-              leading: CircleAvatar(
-                backgroundColor: AppColors.primary.withOpacity(0.2),
-                child: Text(
-                  '${ch.chapterNumber}',
-                  style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                color: cardBg,
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  side: BorderSide(color: borderColor),
                 ),
-              ),
-              title: Text(
-                'Chapter ${ch.chapterNumber}: ${ch.title}',
-                style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 15, color: textPrimary),
-              ),
-              subtitle: Text(
-                '${ch.sections.length} Sections • ${ch.description}',
-                style: TextStyle(color: textSecondary, fontSize: 12),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              children: ch.sections.map((sec) {
-                return Container(
-                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-                  decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ExpansionTile(
-                    title: Text(
-                      '${sec.sectionNumber} ${sec.title}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+                child: ExpansionTile(
+                  leading: CircleAvatar(
+                    backgroundColor: AppColors.primary.withOpacity(0.2),
+                    child: Text(
+                      '${ch.chapterNumber}',
+                      style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold),
                     ),
-                    children: sec.topics.map((top) {
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-                        leading: const Icon(Icons.topic_outlined, size: 18, color: AppColors.primary),
+                  ),
+                  title: Text(
+                    'Chapter ${ch.chapterNumber}: ${ch.title}',
+                    style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: textPrimary),
+                  ),
+                  subtitle: Text(
+                    '${ch.sections.length} Sections • ${ch.description}',
+                    style: TextStyle(color: textSecondary, fontSize: 12),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  children: ch.sections.map((sec) {
+                    return Container(
+                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? const Color(0xFF1E293B)
+                            : const Color(0xFFF1F5F9),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ExpansionTile(
                         title: Text(
-                          '${top.topicNumber} ${top.title}',
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textPrimary),
+                          '${sec.sectionNumber} ${sec.title}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: textPrimary),
                         ),
-                        trailing: const Icon(Icons.chevron_right, size: 18, color: AppColors.primary),
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.topicDetail,
-                            arguments: {
-                              'topic': top,
-                              'subjectName': widget.subjectName,
-                              'chapterTitle': 'Chapter ${ch.chapterNumber}: ${ch.title}',
-                              'sectionTitle': '${sec.sectionNumber} ${sec.title}',
+                        children: sec.topics.map((top) {
+                          return ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 2),
+                            leading: const Icon(Icons.topic_outlined,
+                                size: 18, color: AppColors.primary),
+                            title: Text(
+                              '${top.topicNumber} ${top.title}',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: textPrimary),
+                            ),
+                            trailing: const Icon(Icons.chevron_right,
+                                size: 18, color: AppColors.primary),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.topicDetail,
+                                arguments: {
+                                  'topic': top,
+                                  'subjectName': widget.subjectName,
+                                  'chapterTitle':
+                                      'Chapter ${ch.chapterNumber}: ${ch.title}',
+                                  'sectionTitle':
+                                      '${sec.sectionNumber} ${sec.title}',
+                                },
+                              );
                             },
                           );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                );
-              }).toList(),
-            ),
-          )),
+                        }).toList(),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              )),
         ],
-
         if (notesPdfs.isNotEmpty) ...[
           if (chapters.isNotEmpty) const SizedBox(height: 16),
-          Text('PDF Notes & Materials', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold, color: textPrimary)),
+          Text('PDF Notes & Materials',
+              style: GoogleFonts.inter(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary)),
           const SizedBox(height: 10),
           ...notesPdfs.map((res) => ResourceCard(
                 resource: res,
@@ -484,19 +580,25 @@ class _ResourceScreenState extends State<ResourceScreen> {
     }
 
     final paperResources = allResources.where((r) {
-      final t = (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
-      return t.contains('previous') || t.contains('pyq') || t.contains('paper') || t.contains('exam');
+      final t =
+          (r.resourceType + (r.sectionType ?? '') + r.title).toLowerCase();
+      return t.contains('previous') ||
+          t.contains('pyq') ||
+          t.contains('paper') ||
+          t.contains('exam');
     }).toList();
 
     final filteredPapers = paperResources.where((r) {
       if (_selectedYearFilter == 'All') return true;
-      return r.yearId.contains(_selectedYearFilter) || r.title.contains(_selectedYearFilter);
+      return r.yearId.contains(_selectedYearFilter) ||
+          r.title.contains(_selectedYearFilter);
     }).toList();
 
     if (paperResources.isEmpty) {
       return const EmptyStateWidget(
         title: 'No previous papers available yet.',
-        message: 'Mid-term, end-term, and university question papers for this subject will appear here.',
+        message:
+            'Mid-term, end-term, and university question papers for this subject will appear here.',
         icon: Icons.description_rounded,
       );
     }
@@ -509,7 +611,11 @@ class _ResourceScreenState extends State<ResourceScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Text('Filter Year: ', style: TextStyle(color: textSecondary, fontWeight: FontWeight.bold, fontSize: 13)),
+              Text('Filter Year: ',
+                  style: TextStyle(
+                      color: textSecondary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13)),
               const SizedBox(width: 8),
               Expanded(
                 child: ListView(
@@ -519,11 +625,18 @@ class _ResourceScreenState extends State<ResourceScreen> {
                     return Padding(
                       padding: const EdgeInsets.only(right: 6),
                       child: ChoiceChip(
-                        label: Text(yr, style: TextStyle(color: isSel ? Colors.black : textPrimary, fontSize: 12, fontWeight: isSel ? FontWeight.bold : FontWeight.normal)),
+                        label: Text(yr,
+                            style: TextStyle(
+                                color: isSel ? Colors.black : textPrimary,
+                                fontSize: 12,
+                                fontWeight: isSel
+                                    ? FontWeight.bold
+                                    : FontWeight.normal)),
                         selected: isSel,
                         selectedColor: AppColors.primary,
                         backgroundColor: cardBg,
-                        onSelected: (_) => setState(() => _selectedYearFilter = yr),
+                        onSelected: (_) =>
+                            setState(() => _selectedYearFilter = yr),
                       ),
                     );
                   }).toList(),
@@ -537,7 +650,8 @@ class _ResourceScreenState extends State<ResourceScreen> {
           child: filteredPapers.isEmpty
               ? EmptyStateWidget(
                   title: 'No $_selectedYearFilter question papers found.',
-                  message: 'Try switching the year filter to view available examination papers.',
+                  message:
+                      'Try switching the year filter to view available examination papers.',
                   icon: Icons.filter_alt_off_rounded,
                 )
               : ListView.builder(
@@ -556,7 +670,6 @@ class _ResourceScreenState extends State<ResourceScreen> {
                       },
                     );
                   },
-
                 ),
         ),
       ],

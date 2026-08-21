@@ -9,7 +9,8 @@ class RoadmapOnboardingScreen extends StatefulWidget {
   const RoadmapOnboardingScreen({super.key});
 
   @override
-  State<RoadmapOnboardingScreen> createState() => _RoadmapOnboardingScreenState();
+  State<RoadmapOnboardingScreen> createState() =>
+      _RoadmapOnboardingScreenState();
 }
 
 class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
@@ -24,7 +25,8 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
     const royalBlue = Color(0xFF2563EB);
     final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final textSubtitle =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +59,8 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.explore_rounded, color: Colors.white, size: 28),
+                      const Icon(Icons.explore_rounded,
+                          color: Colors.white, size: 28),
                       const SizedBox(width: 12),
                       Text(
                         'CSSED Navigator',
@@ -89,10 +92,13 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1E1B4B) : const Color(0xFFEFF6FF),
+                color:
+                    isDark ? const Color(0xFF1E1B4B) : const Color(0xFFEFF6FF),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+                  color: isDark
+                      ? const Color(0xFF4338CA)
+                      : const Color(0xFFBFDBFE),
                 ),
               ),
               child: Column(
@@ -100,12 +106,16 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.auto_awesome_rounded, color: Color(0xFF2563EB), size: 22),
+                      const Icon(Icons.auto_awesome_rounded,
+                          color: Color(0xFF2563EB), size: 22),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           'Comprehensive 14-Step Personalization',
-                          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary),
+                          style: GoogleFonts.inter(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: textPrimary),
                         ),
                       ),
                     ],
@@ -120,14 +130,18 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.personalizedWizard);
+                        Navigator.pushNamed(
+                            context, AppRoutes.personalizedWizard);
                       },
                       icon: const Icon(Icons.psychology_rounded, size: 18),
-                      label: Text('Launch 14-Step Wizard', style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 13)),
+                      label: Text('Launch 14-Step Wizard',
+                          style: GoogleFonts.inter(
+                              fontWeight: FontWeight.bold, fontSize: 13)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: royalBlue,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                     ),
@@ -220,11 +234,17 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? (isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF))
+                            ? (isDark
+                                ? const Color(0xFF1E3A8A)
+                                : const Color(0xFFEFF6FF))
                             : cardBg,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: isSelected ? royalBlue : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+                          color: isSelected
+                              ? royalBlue
+                              : (isDark
+                                  ? const Color(0xFF334155)
+                                  : const Color(0xFFE2E8F0)),
                           width: isSelected ? 2 : 1,
                         ),
                       ),
@@ -233,7 +253,9 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: isSelected ? royalBlue : royalBlue.withAlpha(20),
+                              color: isSelected
+                                  ? royalBlue
+                                  : royalBlue.withAlpha(20),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -259,7 +281,8 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                             ),
                           ),
                           if (isSelected)
-                            const Icon(Icons.check_circle_rounded, color: royalBlue, size: 22),
+                            const Icon(Icons.check_circle_rounded,
+                                color: royalBlue, size: 22),
                         ],
                       ),
                     ),
@@ -308,7 +331,8 @@ class _RoadmapOnboardingScreenState extends State<RoadmapOnboardingScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 20),
+                    const Icon(Icons.arrow_forward_rounded,
+                        color: Colors.white, size: 20),
                   ],
                 ),
               ),

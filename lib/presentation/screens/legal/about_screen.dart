@@ -46,7 +46,9 @@ class AboutScreen extends StatelessWidget {
                 Text(
                   'Version 1.0.0 (Build +1)',
                   style: TextStyle(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -54,7 +56,6 @@ class AboutScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-
           _buildCard(
             theme,
             isDark,
@@ -63,7 +64,6 @@ class AboutScreen extends StatelessWidget {
                 'CSSE Study Hub is designed to help Computer Science & Software Engineering students access high-quality syllabus guides, lecture notes, and previous question papers in seconds.',
           ),
           const SizedBox(height: 14),
-
           _buildCard(
             theme,
             isDark,
@@ -72,7 +72,6 @@ class AboutScreen extends StatelessWidget {
                 '• Framework: Flutter (Dart ^3.5.0)\n• Architecture: Clean Layered Architecture\n• State Management: Provider Pattern\n• Backend: Firebase Firestore, Firebase Storage & Auth\n• Local Storage & Offline Engine: SharedPreferences & Path Provider',
           ),
           const SizedBox(height: 14),
-
           _buildCard(
             theme,
             isDark,
@@ -85,7 +84,8 @@ class AboutScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(ThemeData theme, bool isDark, {required String title, required String body}) {
+  Widget _buildCard(ThemeData theme, bool isDark,
+      {required String title, required String body}) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -110,7 +110,9 @@ class AboutScreen extends StatelessWidget {
             body,
             style: theme.textTheme.bodyMedium?.copyWith(
               height: 1.5,
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
             ),
           ),
         ],

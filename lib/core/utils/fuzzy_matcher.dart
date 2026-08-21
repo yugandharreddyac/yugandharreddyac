@@ -12,7 +12,12 @@ class FuzzyMatcher {
     'js': ['javascript', 'web development'],
     'ts': ['typescript'],
     'os': ['operating system', 'operating systems'],
-    'dbms': ['database management system', 'database management systems', 'database', 'sql'],
+    'dbms': [
+      'database management system',
+      'database management systems',
+      'database',
+      'sql'
+    ],
     'dld': ['digital logic design', 'digital logic', 'boolean algebra'],
     'cn': ['computer networks', 'networking', 'tcp/ip'],
     'se': ['software engineering', 'agile'],
@@ -84,7 +89,8 @@ class FuzzyMatcher {
   }
 
   /// Tests if [query] is a fuzzy match for [target]
-  static bool isFuzzyMatch(String query, String target, {double threshold = 0.70}) {
+  static bool isFuzzyMatch(String query, String target,
+      {double threshold = 0.70}) {
     final q = query.trim().toLowerCase();
     final t = target.trim().toLowerCase();
 

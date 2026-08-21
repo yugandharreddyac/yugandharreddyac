@@ -9,10 +9,12 @@ abstract class DocumentExtractor {
   static const int maxPages = 300;
 
   /// Inspects and extracts metadata for the specified document
-  Future<DocumentMetadata> extractMetadata(String filePath, String fileName, {DocumentSourceType sourceType = DocumentSourceType.localUserFile});
+  Future<DocumentMetadata> extractMetadata(String filePath, String fileName,
+      {DocumentSourceType sourceType = DocumentSourceType.localUserFile});
 
   /// Extracts readable pages with text content from the document
-  Future<List<DocumentPage>> extractPages(String filePath, DocumentMetadata metadata);
+  Future<List<DocumentPage>> extractPages(
+      String filePath, DocumentMetadata metadata);
 }
 
 /// Concrete PDF document extractor with byte-level text recovery and security validations
@@ -26,7 +28,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
     DocumentSourceType sourceType = DocumentSourceType.localUserFile,
   }) async {
     final now = DateTime.now();
-    final docId = 'doc_${now.millisecondsSinceEpoch}_${fileName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}';
+    final docId =
+        'doc_${now.millisecondsSinceEpoch}_${fileName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}';
 
     try {
       final file = File(filePath);
@@ -37,7 +40,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
           sourceType: sourceType,
           createdAt: now,
           processingStatus: DocumentProcessingStatus.failed,
-          processingError: 'The selected file could not be found at path: $filePath',
+          processingError:
+              'The selected file could not be found at path: $filePath',
         );
       }
 
@@ -63,7 +67,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
           sourceType: sourceType,
           createdAt: now,
           processingStatus: DocumentProcessingStatus.failed,
-          processingError: 'File size ($sizeMb MB) exceeds the 20 MB maximum limit for document analysis.',
+          processingError:
+              'File size ($sizeMb MB) exceeds the 20 MB maximum limit for document analysis.',
         );
       }
 
@@ -81,12 +86,14 @@ class PdfDocumentExtractor implements DocumentExtractor {
             sourceType: sourceType,
             createdAt: now,
             processingStatus: DocumentProcessingStatus.unsupported,
-            processingError: 'The file does not appear to be a valid PDF document (missing PDF signature).',
+            processingError:
+                'The file does not appear to be a valid PDF document (missing PDF signature).',
           );
         }
 
         // Check if encrypted
-        if (headerStr.contains('/Encrypt') || headerStr.contains('/Encrypt 0 R')) {
+        if (headerStr.contains('/Encrypt') ||
+            headerStr.contains('/Encrypt 0 R')) {
           return DocumentMetadata(
             documentId: docId,
             fileName: fileName,
@@ -94,7 +101,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
             sourceType: sourceType,
             createdAt: now,
             processingStatus: DocumentProcessingStatus.unsupported,
-            processingError: 'Password-protected or encrypted PDFs are not supported.',
+            processingError:
+                'Password-protected or encrypted PDFs are not supported.',
           );
         }
       } finally {
@@ -128,7 +136,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
   }
 
   @override
-  Future<List<DocumentPage>> extractPages(String filePath, DocumentMetadata metadata) async {
+  Future<List<DocumentPage>> extractPages(
+      String filePath, DocumentMetadata metadata) async {
     try {
       final file = File(filePath);
       if (!await file.exists()) return [];
@@ -154,12 +163,15 @@ class PdfDocumentExtractor implements DocumentExtractor {
   int _estimatePageCount(Uint8List bytes) {
     try {
       final raw = latin1.decode(bytes, allowInvalid: true);
-      
+
       // Look for /Count in /Pages dictionary
-      final countMatch = RegExp(r'/Type\s*/Pages.*?/Count\s+(\d+)', dotAll: true).firstMatch(raw);
+      final countMatch =
+          RegExp(r'/Type\s*/Pages.*?/Count\s+(\d+)', dotAll: true)
+              .firstMatch(raw);
       if (countMatch != null) {
         final count = int.tryParse(countMatch.group(1) ?? '1');
-        if (count != null && count > 0) return count.clamp(1, DocumentExtractor.maxPages);
+        if (count != null && count > 0)
+          return count.clamp(1, DocumentExtractor.maxPages);
       }
 
       // Fallback: count /Type /Page occurrences (avoiding /Pages)
@@ -171,7 +183,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
     return 1;
   }
 
-  List<DocumentPage> _extractTextPagesFromBytes(Uint8List bytes, int expectedPages) {
+  List<DocumentPage> _extractTextPagesFromBytes(
+      Uint8List bytes, int expectedPages) {
     final raw = latin1.decode(bytes, allowInvalid: true);
 
     // Split text by page delimiters if possible
@@ -212,7 +225,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
     final buffer = StringBuffer();
 
     // 1. Match BT (Begin Text) ... ET (End Text) blocks
-    final btMatches = RegExp(r'BT\s*(.*?)\s*ET', dotAll: true).allMatches(segment);
+    final btMatches =
+        RegExp(r'BT\s*(.*?)\s*ET', dotAll: true).allMatches(segment);
     for (final bt in btMatches) {
       final block = bt.group(1) ?? '';
       _extractTextFromOperators(block, buffer);
@@ -244,7 +258,8 @@ class PdfDocumentExtractor implements DocumentExtractor {
     }
 
     // Look for array TJ operators: [(Part1) 120 (Part2)] TJ
-    final arrayTjMatches = RegExp(r'\[(.*?)\]\s*TJ', dotAll: true).allMatches(block);
+    final arrayTjMatches =
+        RegExp(r'\[(.*?)\]\s*TJ', dotAll: true).allMatches(block);
     for (final m in arrayTjMatches) {
       final arrayContent = m.group(1) ?? '';
       final innerStrings = RegExp(r'\((.*?)\)').allMatches(arrayContent);
@@ -274,7 +289,10 @@ class PdfDocumentExtractor implements DocumentExtractor {
     int readable = 0;
     for (int i = 0; i < s.length; i++) {
       final code = s.codeUnitAt(i);
-      if ((code >= 32 && code <= 126) || code == 10 || code == 13 || code == 9) {
+      if ((code >= 32 && code <= 126) ||
+          code == 10 ||
+          code == 13 ||
+          code == 9) {
         readable++;
       }
     }

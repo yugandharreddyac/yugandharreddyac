@@ -25,7 +25,8 @@ class CourseOverviewModel {
     this.syllabusMapping = const {},
   });
 
-  factory CourseOverviewModel.fromJson(Map<String, dynamic> json, String subjectId) {
+  factory CourseOverviewModel.fromJson(
+      Map<String, dynamic> json, String subjectId) {
     return CourseOverviewModel(
       subjectId: subjectId,
       subjectName: json['subjectName'] ?? '',
@@ -87,7 +88,8 @@ class TextbookChapterModel {
       description: json['description'] ?? '',
       order: json['order'] as int? ?? 1,
       sections: (json['sections'] as List<dynamic>?)
-              ?.map((e) => TextbookSectionModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  TextbookSectionModel.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
     );
@@ -154,7 +156,8 @@ class TextbookSectionModel {
       description: json['description'] ?? '',
       order: json['order'] as int? ?? 1,
       topics: (json['topics'] as List<dynamic>?)
-              ?.map((e) => TextbookTopicModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  TextbookTopicModel.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
     );
@@ -261,7 +264,9 @@ class TextbookTopicModel {
       practiceQuestions: List<String>.from(json['practiceQuestions'] ?? []),
       examQuestions: List<String>.from(json['examQuestions'] ?? []),
       attachedResource: json['attachedResource'] != null
-          ? ResourceModel.fromFirestore(Map<String, dynamic>.from(json['attachedResource']), json['attachedResource']['id'] ?? '')
+          ? ResourceModel.fromFirestore(
+              Map<String, dynamic>.from(json['attachedResource']),
+              json['attachedResource']['id'] ?? '')
           : null,
       order: json['order'] as int? ?? 1,
       isCompleted: json['isCompleted'] ?? false,
@@ -313,7 +318,8 @@ class ExternalResourceModel {
   final String title;
   final String url;
   final ContentSource sourceType;
-  final String resourceType; // e.g., 'OfficialDoc', 'Tutorial', 'YouTubeVideo', 'Playlist', 'OnlineCourse', 'Book', 'GitHubRepo'
+  final String
+      resourceType; // e.g., 'OfficialDoc', 'Tutorial', 'YouTubeVideo', 'Playlist', 'OnlineCourse', 'Book', 'GitHubRepo'
   final String description;
   final bool isVerified;
 
@@ -361,7 +367,8 @@ class AcademicQuestionModel {
   final int chapterNumber;
   final String question;
   final String answer;
-  final String category; // 'Very Short', 'Short', 'Long', 'Conceptual', 'Programming', 'High Priority'
+  final String
+      category; // 'Very Short', 'Short', 'Long', 'Conceptual', 'Programming', 'High Priority'
   final int order;
 
   const AcademicQuestionModel({

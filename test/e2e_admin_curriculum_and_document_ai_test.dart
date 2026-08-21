@@ -60,7 +60,8 @@ class _GroundedCapturingProvider implements AiProvider {
   String get displayName => 'Grounded Capturing Mock';
 
   @override
-  Set<AiCapability> get supportedCapabilities => {AiCapability.chat, AiCapability.documentQA};
+  Set<AiCapability> get supportedCapabilities =>
+      {AiCapability.chat, AiCapability.documentQA};
 
   @override
   Future<bool> checkHealth() async => true;
@@ -74,7 +75,8 @@ class _GroundedCapturingProvider implements AiProvider {
         id: 'msg_assistant_1',
         conversationId: request.conversationId,
         role: AiMessageRole.assistant,
-        content: 'Cayley-Hamilton theorem states that every square matrix satisfies its own characteristic equation.',
+        content:
+            'Cayley-Hamilton theorem states that every square matrix satisfies its own characteristic equation.',
         timestamp: DateTime.now(),
       ),
       citations: [
@@ -82,7 +84,8 @@ class _GroundedCapturingProvider implements AiProvider {
           documentTitle: 'Engineering Mathematics-I Unit 1',
           documentId: 'doc_maths_unit1',
           pageNumber: 5,
-          snippet: 'Cayley-Hamilton Theorem: A square matrix satisfies its characteristic polynomial.',
+          snippet:
+              'Cayley-Hamilton Theorem: A square matrix satisfies its characteristic polynomial.',
         ),
       ],
     );
@@ -118,17 +121,32 @@ Widget _createTestApp({
       ChangeNotifierProvider(create: (_) => AuthProvider(firebase)),
       ChangeNotifierProvider(create: (_) => ProfileProvider(firebase)),
       ChangeNotifierProvider(create: (_) => RecentProvider(localStorage)),
-      ChangeNotifierProvider(create: (_) => CareerProvider(CareerRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => CodingProvider(CodingRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => PlacementProvider(PlacementRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => ProjectProvider(ProjectRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => HigherEducationProvider(HigherEducationRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              CareerProvider(CareerRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              CodingProvider(CodingRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => PlacementProvider(
+              PlacementRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              ProjectProvider(ProjectRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => HigherEducationProvider(
+              HigherEducationRepository(firebaseDataSource: firebase))),
       ChangeNotifierProvider(create: (_) => UniByteProvider()),
-      ChangeNotifierProvider(create: (_) => AdminProvider(repository: AdminRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => HierarchyProvider(NonAcademicRepository())),
+      ChangeNotifierProvider(
+          create: (_) => AdminProvider(
+              repository: AdminRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => HierarchyProvider(NonAcademicRepository())),
       ChangeNotifierProvider(create: (_) => RoadmapProvider()),
       ChangeNotifierProvider(create: (_) => QuizProvider()),
-      ChangeNotifierProvider(create: (_) => DocumentProcessingProvider(repository: documentRepository)),
+      ChangeNotifierProvider(
+          create: (_) =>
+              DocumentProcessingProvider(repository: documentRepository)),
       ChangeNotifierProvider(
         create: (_) {
           final aiProv = UniDocsAiProvider(
@@ -151,7 +169,9 @@ Widget _createTestApp({
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('E2E Production Workflow: Admin Upload -> Storage -> Firestore -> Student Curriculum -> AI', () {
+  group(
+      'E2E Production Workflow: Admin Upload -> Storage -> Firestore -> Student Curriculum -> AI',
+      () {
     late LocalStorageDataSource localStorage;
     late FirebaseDataSource firebase;
     late StudyRepository studyRepository;
@@ -169,7 +189,9 @@ void main() {
       documentRepository = InMemoryDocumentRepository();
     });
 
-    testWidgets('1. Admin uploads real PDF metadata, Student sees resource & opens PDF Viewer', (tester) async {
+    testWidgets(
+        '1. Admin uploads real PDF metadata, Student sees resource & opens PDF Viewer',
+        (tester) async {
       // Step A: Simulate Admin uploading a verified syllabus PDF to Storage & Firestore
       final testResource = ResourceModel(
         id: 'res_maths_unit1_prod',
@@ -178,11 +200,14 @@ void main() {
         yearId: 'year_1',
         semesterId: 'sem_1',
         title: 'Unit 1 Matrices and Eigenvalues Production Notes',
-        description: 'Verified official course lecture notes with complete derivations.',
+        description:
+            'Verified official course lecture notes with complete derivations.',
         resourceType: 'notes',
         sectionType: 'Notes',
-        storagePath: 'StudyHub/year_1/sem_1/Engineering Mathematics-I/notes/unit1_matrices.pdf',
-        storageUrl: 'https://cdn.csse-study-hub.org/academic/year_1/sem_1/unit1_matrices.pdf',
+        storagePath:
+            'StudyHub/year_1/sem_1/Engineering Mathematics-I/notes/unit1_matrices.pdf',
+        storageUrl:
+            'https://cdn.csse-study-hub.org/academic/year_1/sem_1/unit1_matrices.pdf',
         fileSizeBytes: 1428500,
         downloadCount: 0,
         lastUpdated: DateTime.now(),
@@ -224,15 +249,19 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.byType(PdfViewerScreen), findsOneWidget);
-      expect(find.text('Unit 1 Matrices and Eigenvalues Production Notes'), findsWidgets);
+      expect(find.text('Unit 1 Matrices and Eigenvalues Production Notes'),
+          findsWidgets);
     });
 
-    test('2. UniDocs AI indexes uploaded PDF document and answers grounded questions', () async {
+    test(
+        '2. UniDocs AI indexes uploaded PDF document and answers grounded questions',
+        () async {
       final mockProvider = _GroundedCapturingProvider();
       final prefs = await SharedPreferences.getInstance();
       final convRepo = LocalAiConversationRepository(prefs);
 
-      final ragProvider = RagDocumentContextProvider(documentRepository: documentRepository);
+      final ragProvider =
+          RagDocumentContextProvider(documentRepository: documentRepository);
       final composer = AiContextComposer(documentProvider: ragProvider);
 
       final aiService = AiService(
@@ -256,7 +285,8 @@ void main() {
             chunkId: 'chunk_maths_1',
             documentId: 'doc_maths_unit1',
             pageNumber: 5,
-            text: 'Cayley-Hamilton Theorem: Every square matrix satisfies its own characteristic equation det(A - lambda * I) = 0.',
+            text:
+                'Cayley-Hamilton Theorem: Every square matrix satisfies its own characteristic equation det(A - lambda * I) = 0.',
           ),
         ],
       );
@@ -282,7 +312,8 @@ void main() {
       expect(response.citations, isNotEmpty);
       expect(response.citations.first.documentId, equals('doc_maths_unit1'));
       expect(mockProvider.capturedRequest, isNotNull);
-      expect(mockProvider.capturedRequest!.context?.attachedDocuments, isNotEmpty);
+      expect(
+          mockProvider.capturedRequest!.context?.attachedDocuments, isNotEmpty);
     });
   });
 }

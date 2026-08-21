@@ -18,7 +18,8 @@ void main() {
   });
 
   group('Coding Hub Unit Tests', () {
-    test('getCodingLanguages returns structured programming languages', () async {
+    test('getCodingLanguages returns structured programming languages',
+        () async {
       final langs = await codingRepository.getCodingLanguages();
       expect(langs, isNotEmpty);
       expect(langs.any((l) => l.name.contains('Python')), isTrue);
@@ -29,7 +30,8 @@ void main() {
       final topics = await codingRepository.getDsaTopics();
       expect(topics, isNotEmpty);
       expect(topics.any((t) => t.topicName.contains('Array')), isTrue);
-      expect(topics.any((t) => t.topicName.contains('Dynamic Programming')), isTrue);
+      expect(topics.any((t) => t.topicName.contains('Dynamic Programming')),
+          isTrue);
     });
 
     test('getCodingProjects returns industry project blueprints', () async {
@@ -62,7 +64,8 @@ void main() {
 
       expect(engine.isIndexed, isTrue);
       final pyResult = engine.search('Python');
-      expect(pyResult.matchingItems.any((i) => i.title.contains('Python')), isTrue);
+      expect(pyResult.matchingItems.any((i) => i.title.contains('Python')),
+          isTrue);
     });
   });
 }

@@ -21,7 +21,8 @@ class UrlLauncherUtil {
         await _launchUri(context, formattedUri);
         return;
       }
-      _showErrorSnackBar(context, 'Unable to open this resource. Please try again.');
+      _showErrorSnackBar(
+          context, 'Unable to open this resource. Please try again.');
       return;
     }
 
@@ -36,12 +37,14 @@ class UrlLauncherUtil {
       );
 
       if (!launched && context.mounted) {
-        _showErrorSnackBar(context, 'Unable to open this resource. Please try again.');
+        _showErrorSnackBar(
+            context, 'Unable to open this resource. Please try again.');
       }
     } catch (e) {
       debugPrint('[UrlLauncherUtil] Error launching URL $uri: $e');
       if (context.mounted) {
-        _showErrorSnackBar(context, 'Unable to open this resource. Please try again.');
+        _showErrorSnackBar(
+            context, 'Unable to open this resource. Please try again.');
       }
     }
   }
@@ -51,12 +54,14 @@ class UrlLauncherUtil {
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.error_outline_rounded, color: Colors.white, size: 20),
+            const Icon(Icons.error_outline_rounded,
+                color: Colors.white, size: 20),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
                 message,
-                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
               ),
             ),
           ],

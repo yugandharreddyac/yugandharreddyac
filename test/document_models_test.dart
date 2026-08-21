@@ -52,7 +52,8 @@ void main() {
     test('DocumentPage serialization and word metrics', () {
       const page = DocumentPage(
         pageNumber: 3,
-        extractedText: 'A deadlock is a situation where a set of processes are blocked.',
+        extractedText:
+            'A deadlock is a situation where a set of processes are blocked.',
       );
 
       expect(page.pageNumber, equals(3));
@@ -70,7 +71,8 @@ void main() {
         chunkId: 'doc_1_p2_c0',
         documentId: 'doc_1',
         pageNumber: 2,
-        text: 'Semaphores are integer variables used for process synchronization.',
+        text:
+            'Semaphores are integer variables used for process synchronization.',
         startOffset: 0,
         endOffset: 66,
         tokenEstimate: 12,
@@ -96,7 +98,8 @@ void main() {
         processingStatus: DocumentProcessingStatus.ready,
       );
 
-      const page = DocumentPage(pageNumber: 1, extractedText: 'Relational model');
+      const page =
+          DocumentPage(pageNumber: 1, extractedText: 'Relational model');
       const chunk = DocumentChunk(
         chunkId: 'c1',
         documentId: 'doc_idx_1',
@@ -126,7 +129,8 @@ void main() {
         documentTitle: 'Operating Systems Notes',
         documentId: 'doc_os_1',
         pageNumber: 42,
-        snippet: 'Deadlock prevention requires invalidating one of the 4 conditions.',
+        snippet:
+            'Deadlock prevention requires invalidating one of the 4 conditions.',
       );
 
       expect(docCitation.isDocumentCitation, isTrue);

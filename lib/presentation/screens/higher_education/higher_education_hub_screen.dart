@@ -30,94 +30,108 @@ class HigherEducationHubScreen extends StatefulWidget {
   const HigherEducationHubScreen({super.key});
 
   @override
-  State<HigherEducationHubScreen> createState() => _HigherEducationHubScreenState();
+  State<HigherEducationHubScreen> createState() =>
+      _HigherEducationHubScreenState();
 }
 
-class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> with SingleTickerProviderStateMixin {
+class _HigherEducationHubScreenState extends State<HigherEducationHubScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
 
   static const List<OfficialPortalItem> _officialPortals = [
     OfficialPortalItem(
-      title: 'GATE CSE 2027 Official Portal',
-      description: 'Official GATE 2027 website (IIT Kanpur) for GOAPS registration, syllabus & admit card download.',
-      category: 'GATE 2027',
-      url: 'https://gate2027.iitk.ac.in',
+      title: 'GATE 2025 (IIT Roorkee)',
+      description:
+          'Official GATE 2025 website (IIT Roorkee) for GOAPS registration, syllabus & admit card download.',
+      category: 'GATE 2025',
+      url: 'https://gate2025.iitr.ac.in',
       icon: Icons.school_rounded,
     ),
     OfficialPortalItem(
       title: 'COAP Portal (IIT M.Tech Admission)',
-      description: 'Common Offer Acceptance Portal for checking & accepting M.Tech admission offers in all IITs.',
+      description:
+          'Common Offer Acceptance Portal for checking & accepting M.Tech admission offers in all IITs.',
       category: 'Counselling',
       url: 'https://coap.iitk.ac.in',
       icon: Icons.domain_rounded,
     ),
     OfficialPortalItem(
       title: 'CCMT Counselling (NIT / IIIT M.Tech)',
-      description: 'Centralized Counselling for M.Tech/M.Arch/M.Plan admissions in NITs, IIITs & CFTIs.',
+      description:
+          'Centralized Counselling for M.Tech/M.Arch/M.Plan admissions in NITs, IIITs & CFTIs.',
       category: 'Counselling',
       url: 'https://ccmt.admissions.nic.in',
       icon: Icons.account_balance_rounded,
     ),
     OfficialPortalItem(
       title: 'NPTEL Official IIT Online Courses',
-      description: 'Free online video lectures & courseware by 7 IITs & IISc for GATE CSSE preparation.',
+      description:
+          'Free online video lectures & courseware by 7 IITs & IISc for GATE CSSE preparation.',
       category: 'Learning Portal',
       url: 'https://nptel.ac.in',
       icon: Icons.play_circle_fill_rounded,
     ),
     OfficialPortalItem(
       title: 'SWAYAM Govt Learning Portal',
-      description: 'Ministry of Education portal offering free online courses for engineering students.',
+      description:
+          'Ministry of Education portal offering free online courses for engineering students.',
       category: 'Learning Portal',
       url: 'https://swayam.gov.in',
       icon: Icons.auto_stories_rounded,
     ),
     OfficialPortalItem(
       title: 'AICTE Official Portal',
-      description: 'All India Council for Technical Education portal for engineering scholarships & approvals.',
+      description:
+          'All India Council for Technical Education portal for engineering scholarships & approvals.',
       category: 'Governing Body',
       url: 'https://www.aicte-india.org',
       icon: Icons.verified_rounded,
     ),
     OfficialPortalItem(
       title: 'UGC Official Portal',
-      description: 'University Grants Commission portal for higher education grants & fellowships.',
+      description:
+          'University Grants Commission portal for higher education grants & fellowships.',
       category: 'Governing Body',
       url: 'https://www.ugc.gov.in',
       icon: Icons.account_balance_outlined,
     ),
     OfficialPortalItem(
       title: 'Official GRE (ETS Portal)',
-      description: 'Educational Testing Service portal for scheduling GRE exam dates & sending scores.',
+      description:
+          'Educational Testing Service portal for scheduling GRE exam dates & sending scores.',
       category: 'Global Exam',
       url: 'https://www.ets.org/gre',
       icon: Icons.language_rounded,
     ),
     OfficialPortalItem(
       title: 'Official TOEFL (ETS Portal)',
-      description: 'Official ETS portal for TOEFL iBT English proficiency test registration & score reports.',
+      description:
+          'Official ETS portal for TOEFL iBT English proficiency test registration & score reports.',
       category: 'Global Exam',
       url: 'https://www.ets.org/toefl',
       icon: Icons.translate_rounded,
     ),
     OfficialPortalItem(
       title: 'Official IELTS Portal',
-      description: 'Official IELTS test booking, score checking & preparation materials for foreign study.',
+      description:
+          'Official IELTS test booking, score checking & preparation materials for foreign study.',
       category: 'Global Exam',
       url: 'https://www.ielts.org',
       icon: Icons.public_rounded,
     ),
     OfficialPortalItem(
       title: 'Official GMAT Focus Edition (mba.com)',
-      description: 'Official GMAC portal for booking GMAT Focus Edition exam dates & business school applications.',
+      description:
+          'Official GMAC portal for booking GMAT Focus Edition exam dates & business school applications.',
       category: 'Global Exam',
       url: 'https://www.mba.com',
       icon: Icons.business_center_rounded,
     ),
     OfficialPortalItem(
       title: 'Official CAT (IIM Portal)',
-      description: 'Common Admission Test official portal for IIM MBA registration & scorecard download.',
+      description:
+          'Common Admission Test official portal for IIM MBA registration & scorecard download.',
       category: 'Management',
       url: 'https://iimcat.ac.in',
       icon: Icons.workspace_premium_rounded,
@@ -161,8 +175,10 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const primaryBlue = AppColors.primary;
     const navyBlue = AppColors.primaryDark;
@@ -206,7 +222,6 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                 children: [
                   // HERO BANNER (GATE CSE 2027 FOCUS)
                   Container(
-                    padding: const EdgeInsets.all(22),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: isDark
@@ -224,35 +239,53 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                         ),
                       ],
                     ),
-                    child: Row(
+                    clipBehavior: Clip.hardEdge,
+                    child: Stack(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha(35),
-                            shape: BoxShape.circle,
+                        Positioned(
+                          right: -20,
+                          bottom: -20,
+                          child: Icon(
+                            Icons.school_rounded,
+                            size: 140,
+                            color: Colors.white.withAlpha(isDark ? 15 : 20),
                           ),
-                          child: const Icon(Icons.school_rounded, color: Colors.white, size: 32),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Padding(
+                          padding: const EdgeInsets.all(22),
+                          child: Row(
                             children: [
-                              Text(
-                                '🎓 Higher Education & Competitive Exams',
-                                style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold,
+                              Container(
+                                padding: const EdgeInsets.all(14),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha(35),
+                                  shape: BoxShape.circle,
                                 ),
+                                child: const Icon(Icons.school_rounded,
+                                    color: Colors.white, size: 32),
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad & Research Opportunities',
-                                style: GoogleFonts.inter(
-                                  color: Colors.white.withAlpha(220),
-                                  fontSize: 13,
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '🎓 Higher Education & Competitive Exams',
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white,
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad & Research Opportunities',
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white.withAlpha(220),
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -282,10 +315,13 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                       controller: _searchController,
                       onChanged: (_) => setState(() {}),
                       decoration: const InputDecoration(
-                        hintText: 'Search GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad...',
-                        prefixIcon: Icon(Icons.search_rounded, color: primaryBlue),
+                        hintText:
+                            'Search GATE, GRE, TOEFL, IELTS, CAT, GMAT, MS Abroad...',
+                        prefixIcon:
+                            Icon(Icons.search_rounded, color: primaryBlue),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       ),
                     ),
                   ),
@@ -309,7 +345,8 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                       ),
                       labelColor: Colors.white,
                       unselectedLabelColor: textSubtitle,
-                      labelStyle: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 12),
+                      labelStyle: GoogleFonts.inter(
+                          fontWeight: FontWeight.bold, fontSize: 12),
                       tabs: const [
                         Tab(text: '🎓 Higher Studies & Exams'),
                         Tab(text: '🏛️ Govt & PSUs'),
@@ -326,9 +363,33 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        _buildExamList(context, higherStudiesExams, primaryBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
-                        _buildExamList(context, governmentExams, navyBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
-                        _buildPortalsList(context, filteredPortals, primaryBlue, cardColor, borderColor, textPrimary, textSubtitle, isDark),
+                        _buildExamList(
+                            context,
+                            higherStudiesExams,
+                            primaryBlue,
+                            cardColor,
+                            borderColor,
+                            textPrimary,
+                            textSubtitle,
+                            isDark),
+                        _buildExamList(
+                            context,
+                            governmentExams,
+                            navyBlue,
+                            cardColor,
+                            borderColor,
+                            textPrimary,
+                            textSubtitle,
+                            isDark),
+                        _buildPortalsList(
+                            context,
+                            filteredPortals,
+                            primaryBlue,
+                            cardColor,
+                            borderColor,
+                            textPrimary,
+                            textSubtitle,
+                            isDark),
                       ],
                     ),
                   ),
@@ -402,7 +463,8 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                           color: themeColor.withAlpha(20),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.workspace_premium_rounded, color: themeColor, size: 24),
+                        child: Icon(Icons.workspace_premium_rounded,
+                            color: themeColor, size: 24),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -431,7 +493,9 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                       ),
                       IconButton(
                         icon: Icon(
-                          isSaved ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
+                          isSaved
+                              ? Icons.bookmark_rounded
+                              : Icons.bookmark_border_rounded,
                           color: isSaved ? themeColor : Colors.grey,
                         ),
                         onPressed: () => provider.toggleSave(exam.id),
@@ -454,7 +518,9 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                     children: [
                       _buildBadge('Syllabus & Pattern', themeColor),
                       _buildBadge('Books & Resources', const Color(0xFF8B5CF6)),
-                      _buildBadge('Salary: ${exam.salaryRange.split('|').first.trim()}', const Color(0xFF10B981)),
+                      _buildBadge(
+                          'Salary: ${exam.salaryRange.split('|').first.trim()}',
+                          const Color(0xFF10B981)),
                     ],
                   ),
 
@@ -473,7 +539,8 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                           fontSize: 13,
                         ),
                       ),
-                      const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+                      const Icon(Icons.arrow_forward_ios_rounded,
+                          size: 14, color: Colors.grey),
                     ],
                   ),
                 ],
@@ -553,7 +620,8 @@ class _HigherEducationHubScreenState extends State<HigherEducationHubScreen> wit
                           ),
                           const SizedBox(height: 2),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
                               color: royalBlue.withAlpha(15),
                               borderRadius: BorderRadius.circular(6),

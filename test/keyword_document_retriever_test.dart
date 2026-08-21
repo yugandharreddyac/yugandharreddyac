@@ -11,25 +11,29 @@ void main() {
         chunkId: 'chunk_1',
         documentId: 'doc_os',
         pageNumber: 1,
-        text: 'Operating Systems Overview: Processes, Threads, CPU Scheduling, and Memory Management.',
+        text:
+            'Operating Systems Overview: Processes, Threads, CPU Scheduling, and Memory Management.',
       ),
       DocumentChunk(
         chunkId: 'chunk_2',
         documentId: 'doc_os',
         pageNumber: 12,
-        text: 'Deadlock prevention methods include eliminating mutual exclusion, hold and wait, no preemption, and circular wait.',
+        text:
+            'Deadlock prevention methods include eliminating mutual exclusion, hold and wait, no preemption, and circular wait.',
       ),
       DocumentChunk(
         chunkId: 'chunk_3',
         documentId: 'doc_os',
         pageNumber: 14,
-        text: 'Bankers algorithm is a deadlock avoidance algorithm that tests for safety before resource allocation.',
+        text:
+            'Bankers algorithm is a deadlock avoidance algorithm that tests for safety before resource allocation.',
       ),
       DocumentChunk(
         chunkId: 'chunk_4',
         documentId: 'doc_os',
         pageNumber: 25,
-        text: 'Virtual memory management uses page tables, translation lookaside buffers (TLB), and demand paging.',
+        text:
+            'Virtual memory management uses page tables, translation lookaside buffers (TLB), and demand paging.',
       ),
     ];
 
@@ -43,7 +47,8 @@ void main() {
       expect(results, isEmpty);
     });
 
-    test('Single keyword returns matching chunks ranked by term match', () async {
+    test('Single keyword returns matching chunks ranked by term match',
+        () async {
       final results = await retriever.search('deadlock', chunks);
 
       expect(results, isNotEmpty);
@@ -52,7 +57,8 @@ void main() {
       expect(chunkIds, containsAll(['chunk_2', 'chunk_3']));
     });
 
-    test('Exact multi-word phrase receives bonus boost and ranks highest', () async {
+    test('Exact multi-word phrase receives bonus boost and ranks highest',
+        () async {
       final results = await retriever.search(
         'deadlock prevention methods',
         chunks,
@@ -62,7 +68,8 @@ void main() {
       expect(results, isNotEmpty);
       expect(results.first.chunk.chunkId, equals('chunk_2'));
       expect(results.first.pageNumber, equals(12));
-      expect(results.first.relevanceScore, greaterThan(5.0)); // Exact phrase bonus
+      expect(
+          results.first.relevanceScore, greaterThan(5.0)); // Exact phrase bonus
     });
 
     test('Result limit is strictly respected', () async {

@@ -19,7 +19,9 @@ class RecentRepository {
     int lastReadPage = 1,
     int totalPages = 1,
   }) async {
-    final double progress = totalPages > 0 ? (lastReadPage / totalPages * 100).clamp(0.0, 100.0) : 0.0;
+    final double progress = totalPages > 0
+        ? (lastReadPage / totalPages * 100).clamp(0.0, 100.0)
+        : 0.0;
 
     final recent = RecentResourceModel(
       resourceId: resourceId,

@@ -32,12 +32,19 @@ class _ResourceCardState extends State<ResourceCard> {
     final lower = resourceType.toLowerCase();
     if (lower.contains('syllabus')) return '📑 Official Syllabus';
     if (lower.contains('note')) return '📄 Study Notes';
-    if (lower.contains('pyq') || lower.contains('paper') || lower.contains('previous')) return '🎯 Previous Year Questions';
-    if (lower.contains('textbook') || lower.contains('book') || lower.contains('reference')) return '📘 Reference Book';
-    if (lower.contains('lab') || lower.contains('manual')) return '💻 Lab Manual';
+    if (lower.contains('pyq') ||
+        lower.contains('paper') ||
+        lower.contains('previous')) return '🎯 Previous Year Questions';
+    if (lower.contains('textbook') ||
+        lower.contains('book') ||
+        lower.contains('reference')) return '📘 Reference Book';
+    if (lower.contains('lab') || lower.contains('manual'))
+      return '💻 Lab Manual';
     if (lower.contains('video')) return '🎥 Video Tutorial';
-    if (lower.contains('doc') || lower.contains('official')) return '🌐 Official Docs';
-    if (lower.contains('practice') || lower.contains('quiz')) return '💻 Practice Questions';
+    if (lower.contains('doc') || lower.contains('official'))
+      return '🌐 Official Docs';
+    if (lower.contains('practice') || lower.contains('quiz'))
+      return '💻 Practice Questions';
     return '📁 Academic Resource';
   }
 
@@ -58,7 +65,8 @@ class _ResourceCardState extends State<ResourceCard> {
     final isDownloading = downloadProvider.isDownloading(widget.resource.id);
     final downloadProgress = downloadProvider.getProgress(widget.resource.id);
 
-    final typeColor = Formatters.getResourceTypeColor(widget.resource.resourceType);
+    final typeColor =
+        Formatters.getResourceTypeColor(widget.resource.resourceType);
     final categoryBadge = _getCategoryBadge(widget.resource.resourceType);
     final isNewItem = _isNew(widget.resource.lastUpdated);
 
@@ -68,7 +76,9 @@ class _ResourceCardState extends State<ResourceCard> {
         onExit: (_) => setState(() => _isHovered = false),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
-          transform: _isHovered ? (Matrix4.identity()..translate(0, -3)) : Matrix4.identity(),
+          transform: _isHovered
+              ? (Matrix4.identity()..translate(0, -3))
+              : Matrix4.identity(),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -83,7 +93,9 @@ class _ResourceCardState extends State<ResourceCard> {
                   border: Border.all(
                     color: _isHovered
                         ? typeColor
-                        : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                        : (isDark
+                            ? AppColors.borderDark
+                            : AppColors.borderLight),
                     width: _isHovered ? 1.6 : 1,
                   ),
                   boxShadow: [
@@ -104,7 +116,8 @@ class _ResourceCardState extends State<ResourceCard> {
                       children: [
                         // Category Badge
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             color: typeColor.withAlpha(25),
                             borderRadius: BorderRadius.circular(8),
@@ -124,7 +137,8 @@ class _ResourceCardState extends State<ResourceCard> {
                         // New Badge
                         if (isNewItem) ...[
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 7, vertical: 3),
                             decoration: BoxDecoration(
                               color: Colors.redAccent.withAlpha(20),
                               borderRadius: BorderRadius.circular(6),
@@ -144,14 +158,16 @@ class _ResourceCardState extends State<ResourceCard> {
                         // Featured Badge
                         if (widget.resource.isFeatured) ...[
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 7, vertical: 3),
                             decoration: BoxDecoration(
                               color: Colors.amber.withAlpha(25),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: const Row(
                               children: [
-                                Icon(Icons.star_rounded, size: 12, color: Colors.amber),
+                                Icon(Icons.star_rounded,
+                                    size: 12, color: Colors.amber),
                                 SizedBox(width: 2),
                                 Text(
                                   'Featured',
@@ -171,7 +187,8 @@ class _ResourceCardState extends State<ResourceCard> {
 
                         // Native Share Trigger
                         IconButton(
-                          icon: const Icon(Icons.share_outlined, size: 18, color: Colors.grey),
+                          icon: const Icon(Icons.share_outlined,
+                              size: 18, color: Colors.grey),
                           onPressed: () {
                             ShareHelper.shareResource(context, widget.resource);
                           },
@@ -180,8 +197,11 @@ class _ResourceCardState extends State<ResourceCard> {
                         // Bookmark Toggle
                         IconButton(
                           icon: Icon(
-                            isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-                            color: isBookmarked ? AppColors.primary : Colors.grey,
+                            isBookmarked
+                                ? Icons.bookmark_rounded
+                                : Icons.bookmark_border_rounded,
+                            color:
+                                isBookmarked ? AppColors.primary : Colors.grey,
                             size: 20,
                           ),
                           onPressed: () {
@@ -201,7 +221,9 @@ class _ResourceCardState extends State<ResourceCard> {
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         height: 1.3,
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -212,7 +234,9 @@ class _ResourceCardState extends State<ResourceCard> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
                         fontSize: 13,
                         height: 1.4,
                       ),
@@ -220,9 +244,11 @@ class _ResourceCardState extends State<ResourceCard> {
                     const SizedBox(height: 8),
 
                     // Beginner-first "What is this?" & "Why use it?" section
-                    if (widget.resource.whatIsThis != null || widget.resource.whyUseIt != null) ...[
+                    if (widget.resource.whatIsThis != null ||
+                        widget.resource.whyUseIt != null) ...[
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 8),
                         decoration: BoxDecoration(
                           color: isDark
                               ? AppColors.primary.withAlpha(20)
@@ -238,7 +264,8 @@ class _ResourceCardState extends State<ResourceCard> {
                             if (widget.resource.whatIsThis != null)
                               Row(
                                 children: [
-                                  const Icon(Icons.help_outline_rounded, size: 12, color: AppColors.primary),
+                                  const Icon(Icons.help_outline_rounded,
+                                      size: 12, color: AppColors.primary),
                                   const SizedBox(width: 4),
                                   Expanded(
                                     child: Text(
@@ -248,7 +275,9 @@ class _ResourceCardState extends State<ResourceCard> {
                                       style: GoogleFonts.inter(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w600,
-                                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                        color: isDark
+                                            ? AppColors.textPrimaryDark
+                                            : AppColors.textPrimaryLight,
                                       ),
                                     ),
                                   ),
@@ -258,7 +287,8 @@ class _ResourceCardState extends State<ResourceCard> {
                               const SizedBox(height: 3),
                               Row(
                                 children: [
-                                  const Icon(Icons.star_outline_rounded, size: 12, color: Colors.orange),
+                                  const Icon(Icons.star_outline_rounded,
+                                      size: 12, color: Colors.orange),
                                   const SizedBox(width: 4),
                                   Expanded(
                                     child: Text(
@@ -267,7 +297,9 @@ class _ResourceCardState extends State<ResourceCard> {
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.inter(
                                         fontSize: 11,
-                                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                        color: isDark
+                                            ? AppColors.textSecondaryDark
+                                            : AppColors.textSecondaryLight,
                                       ),
                                     ),
                                   ),
@@ -283,18 +315,22 @@ class _ResourceCardState extends State<ResourceCard> {
                     // Bottom Metadata & Action Bar
                     Row(
                       children: [
-                        const Icon(Icons.picture_as_pdf_rounded, size: 16, color: AppColors.primary),
+                        const Icon(Icons.picture_as_pdf_rounded,
+                            size: 16, color: AppColors.primary),
                         const SizedBox(width: 4),
                         Text(
                           Formatters.formatBytes(widget.resource.fileSizeBytes),
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                            color: isDark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondaryLight,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Icon(Icons.download_rounded, size: 14, color: AppColors.primary),
+                        const Icon(Icons.download_rounded,
+                            size: 14, color: AppColors.primary),
                         const SizedBox(width: 2),
                         Text(
                           '${widget.resource.downloadCount}',
@@ -305,7 +341,11 @@ class _ResourceCardState extends State<ResourceCard> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Icon(Icons.calendar_today_rounded, size: 12, color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        Icon(Icons.calendar_today_rounded,
+                            size: 12,
+                            color: isDark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondaryLight),
                         const SizedBox(width: 3),
                         Expanded(
                           child: Text(
@@ -314,7 +354,9 @@ class _ResourceCardState extends State<ResourceCard> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 11,
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondaryLight,
                             ),
                           ),
                         ),
@@ -323,7 +365,8 @@ class _ResourceCardState extends State<ResourceCard> {
                         // Action Buttons: Open & Download
                         if (widget.resource.isComingSoon) ...[
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
                             decoration: BoxDecoration(
                               color: Colors.amber.withAlpha(30),
                               borderRadius: BorderRadius.circular(8),
@@ -332,7 +375,8 @@ class _ResourceCardState extends State<ResourceCard> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(Icons.schedule_rounded, size: 14, color: Colors.amber),
+                                const Icon(Icons.schedule_rounded,
+                                    size: 14, color: Colors.amber),
                                 const SizedBox(width: 4),
                                 Text(
                                   'Coming Soon',
@@ -350,25 +394,35 @@ class _ResourceCardState extends State<ResourceCard> {
                             width: 24,
                             height: 24,
                             child: CircularProgressIndicator(
-                              value: downloadProgress > 0 ? downloadProgress : null,
+                              value: downloadProgress > 0
+                                  ? downloadProgress
+                                  : null,
                               strokeWidth: 2.5,
                               color: AppColors.primary,
                             ),
                           ),
                         ] else ...[
-                          if (widget.resource.isDownloadable && !widget.resource.isExternalCopyrighted)
+                          if (widget.resource.isDownloadable &&
+                              !widget.resource.isExternalCopyrighted)
                             IconButton(
                               constraints: const BoxConstraints(),
                               padding: const EdgeInsets.all(6),
-                              tooltip: isDownloaded ? 'Downloaded Offline' : 'Download PDF',
+                              tooltip: isDownloaded
+                                  ? 'Downloaded Offline'
+                                  : 'Download PDF',
                               icon: Icon(
-                                isDownloaded ? Icons.check_circle_rounded : Icons.file_download_outlined,
-                                color: isDownloaded ? AppColors.primary : AppColors.primary,
+                                isDownloaded
+                                    ? Icons.check_circle_rounded
+                                    : Icons.file_download_outlined,
+                                color: isDownloaded
+                                    ? AppColors.primary
+                                    : AppColors.primary,
                                 size: 22,
                               ),
                               onPressed: () async {
                                 if (!isDownloaded) {
-                                  await downloadProvider.downloadPdf(widget.resource);
+                                  await downloadProvider
+                                      .downloadPdf(widget.resource);
                                 }
                               },
                             ),
@@ -377,8 +431,10 @@ class _ResourceCardState extends State<ResourceCard> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
@@ -390,8 +446,11 @@ class _ResourceCardState extends State<ResourceCard> {
                               size: 14,
                             ),
                             label: Text(
-                              widget.resource.isExternalCopyrighted ? 'Open Website' : 'Open PDF',
-                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                              widget.resource.isExternalCopyrighted
+                                  ? 'Open Website'
+                                  : 'Open PDF',
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],

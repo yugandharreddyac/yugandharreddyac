@@ -48,8 +48,10 @@ class NoOpAiProvider implements AiProvider {
       id: 'resp_${DateTime.now().millisecondsSinceEpoch}',
       error: const AiError(
         code: AiErrorCode.noProviderConfigured,
-        message: 'UniDocs AI provider is not configured. Please connect an AI service backend.',
-        details: 'Phase 1 Core Architecture baseline: No external AI backend configured.',
+        message:
+            'UniDocs AI provider is not configured. Please connect an AI service backend.',
+        details:
+            'Phase 1 Core Architecture baseline: No external AI backend configured.',
         isRetryable: false,
       ),
     );

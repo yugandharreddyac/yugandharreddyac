@@ -4,14 +4,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum SupportedLanguage {
   python('Python 3.10', 'py', 'print("Hello from UniDocs!")'),
-  cpp('C++ (GCC 11.2)', 'cpp', '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello from UniDocs!" << endl;\n    return 0;\n}'),
-  java('Java (OpenJDK 17)', 'java', 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from UniDocs!");\n    }\n}');
+  cpp('C++ (GCC 11.2)', 'cpp',
+      '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello from UniDocs!" << endl;\n    return 0;\n}'),
+  java('Java (OpenJDK 17)', 'java',
+      'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from UniDocs!");\n    }\n}');
 
   final String displayName;
   final String extension;
   final String defaultTemplate;
 
-  const SupportedLanguage(this.displayName, this.extension, this.defaultTemplate);
+  const SupportedLanguage(
+      this.displayName, this.extension, this.defaultTemplate);
 }
 
 class CodeSnippetModel {
@@ -245,7 +248,8 @@ public class Main {
       return const ExecutionResult(
         isSuccess: false,
         stdout: '',
-        stderr: 'Error: Source code buffer is empty. Please write or load code to execute.',
+        stderr:
+            'Error: Source code buffer is empty. Please write or load code to execute.',
         executionTimeMs: 0,
         memoryUsageMb: 0.0,
         exitCode: 1,
@@ -268,7 +272,8 @@ public class Main {
       return const ExecutionResult(
         isSuccess: false,
         stdout: '',
-        stderr: 'Error: Main method not found in class. Please define public static void main(String[] args).',
+        stderr:
+            'Error: Main method not found in class. Please define public static void main(String[] args).',
         executionTimeMs: 18,
         memoryUsageMb: 14.5,
         exitCode: 1,
@@ -287,7 +292,8 @@ public class Main {
       stdoutBuffer.writeln('Array: [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]');
       stdoutBuffer.writeln('Target 23 found at index: 5');
     } else if (code.contains('generate_fibonacci')) {
-      stdoutBuffer.writeln('First 10 Fibonacci numbers: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]');
+      stdoutBuffer.writeln(
+          'First 10 Fibonacci numbers: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]');
     } else if (code.contains('bubble_sort')) {
       stdoutBuffer.writeln('Original: [64, 34, 25, 12, 22, 11, 90]');
       stdoutBuffer.writeln('Sorted:   [11, 12, 22, 25, 34, 64, 90]');
@@ -301,7 +307,9 @@ public class Main {
     } else if (code.contains('sieve') || code.contains('prime')) {
       stdoutBuffer.writeln('Primes up to 30: 2 3 5 7 11 13 17 19 23 29');
       // Dynamic pattern extraction for custom print/cout statements
-      final printMatches = RegExp(r'(?:print|cout\s*<<|System\.out\.println)\s*\(?[\s"]*(.+?)[\s"]*\)?(?:<<|;|\n|\))').allMatches(code);
+      final printMatches = RegExp(
+              r'(?:print|cout\s*<<|System\.out\.println)\s*\(?[\s"]*(.+?)[\s"]*\)?(?:<<|;|\n|\))')
+          .allMatches(code);
 
       if (printMatches.isNotEmpty) {
         for (final m in printMatches) {
@@ -326,7 +334,9 @@ public class Main {
       stdout: stdoutBuffer.toString().trim(),
       stderr: '',
       executionTimeMs: elapsedMs > 0 ? elapsedMs : 24,
-      memoryUsageMb: language == SupportedLanguage.java ? 16.4 : (language == SupportedLanguage.cpp ? 4.8 : 8.6),
+      memoryUsageMb: language == SupportedLanguage.java
+          ? 16.4
+          : (language == SupportedLanguage.cpp ? 4.8 : 8.6),
       exitCode: 0,
     );
   }
@@ -350,7 +360,9 @@ public class Main {
 
     try {
       final decoded = jsonDecode(raw) as List;
-      return decoded.map((item) => CodeSnippetModel.fromMap(item as Map<String, dynamic>)).toList();
+      return decoded
+          .map((item) => CodeSnippetModel.fromMap(item as Map<String, dynamic>))
+          .toList();
     } catch (_) {
       return [];
     }

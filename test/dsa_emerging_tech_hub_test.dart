@@ -22,7 +22,9 @@ void main() {
       expect(topicIds, contains('dsa_dp'));
     });
 
-    test('All DSA topics have comprehensive descriptions (>150 chars) and resources', () {
+    test(
+        'All DSA topics have comprehensive descriptions (>150 chars) and resources',
+        () {
       for (final topic in dsaCategory.topics) {
         expect(topic.description.length, greaterThanOrEqualTo(150),
             reason: 'Topic ${topic.id} description must be comprehensive');
@@ -42,7 +44,8 @@ void main() {
   group('Phase 7G - Emerging Technologies Hub Tests', () {
     const emergingTechHub = NonAcademicData.emergingTechHub;
 
-    test('Emerging Tech Hub has required categories & preserved stable IDs', () {
+    test('Emerging Tech Hub has required categories & preserved stable IDs',
+        () {
       expect(emergingTechHub.id, equals('emerging_tech'));
       expect(emergingTechHub.categories.length, greaterThanOrEqualTo(6));
 
@@ -55,29 +58,39 @@ void main() {
         'cyber_intro',
       ];
 
-      final allTopics = emergingTechHub.categories.expand((c) => c.topics).toList();
+      final allTopics =
+          emergingTechHub.categories.expand((c) => c.topics).toList();
       final allTopicIds = allTopics.map((t) => t.id).toList();
 
       for (final id in stableIds) {
-        expect(allTopicIds, contains(id), reason: 'Stable ID $id must be preserved in Emerging Tech');
+        expect(allTopicIds, contains(id),
+            reason: 'Stable ID $id must be preserved in Emerging Tech');
       }
     });
 
-    test('All Emerging Tech topics have resources, valid HTTPS links & practice/projects', () {
-      final allTopics = emergingTechHub.categories.expand((c) => c.topics).toList();
+    test(
+        'All Emerging Tech topics have resources, valid HTTPS links & practice/projects',
+        () {
+      final allTopics =
+          emergingTechHub.categories.expand((c) => c.topics).toList();
 
       for (final topic in allTopics) {
         expect(topic.description.length, greaterThan(150),
-            reason: 'Topic ${topic.id} description must be beginner-first & comprehensive');
+            reason:
+                'Topic ${topic.id} description must be beginner-first & comprehensive');
 
         expect(topic.resources.length, greaterThanOrEqualTo(4),
             reason: 'Topic ${topic.id} must have at least 4 resources');
 
-        final hasPractice = topic.resources.any((r) => r.type == HierarchyResourceType.practice);
-        final hasProject = topic.resources.any((r) => r.type == HierarchyResourceType.project);
+        final hasPractice = topic.resources
+            .any((r) => r.type == HierarchyResourceType.practice);
+        final hasProject =
+            topic.resources.any((r) => r.type == HierarchyResourceType.project);
 
-        expect(hasPractice, isTrue, reason: 'Topic ${topic.id} must have practice resources');
-        expect(hasProject, isTrue, reason: 'Topic ${topic.id} must have project resources');
+        expect(hasPractice, isTrue,
+            reason: 'Topic ${topic.id} must have practice resources');
+        expect(hasProject, isTrue,
+            reason: 'Topic ${topic.id} must have project resources');
 
         for (final res in topic.resources) {
           expect(res.url.startsWith('https://'), isTrue,
@@ -95,10 +108,12 @@ void main() {
       expect(searchEngine.isIndexed, isTrue);
 
       final searchResults = searchEngine.search('Dynamic Programming');
-      expect(searchResults, isNotEmpty, reason: 'Search should find Dynamic Programming');
+      expect(searchResults, isNotEmpty,
+          reason: 'Search should find Dynamic Programming');
 
       final aiResults = searchEngine.search('Machine Learning');
-      expect(aiResults, isNotEmpty, reason: 'Search should find Machine Learning');
+      expect(aiResults, isNotEmpty,
+          reason: 'Search should find Machine Learning');
 
       final dockerResults = searchEngine.search('Docker');
       expect(dockerResults, isNotEmpty, reason: 'Search should find Docker');

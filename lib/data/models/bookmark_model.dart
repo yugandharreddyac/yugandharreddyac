@@ -59,10 +59,10 @@ class BookmarkModel {
       subjectName: subjectName,
       yearId: 'year_1',
       semesterId: 'sem_1',
-      storageUrl: 'https://raw.githubusercontent.com/flutter/pdf_viewer/main/test.pdf',
+      storageUrl:
+          'https://raw.githubusercontent.com/flutter/pdf_viewer/main/test.pdf',
       fileSizeBytes: 2048576,
       lastUpdated: createdAt,
     );
   }
 }
-

@@ -117,7 +117,8 @@ class MockData {
       name: 'Engineering Mathematics-I',
       yearId: 'year_1',
       semesterId: 'sem_1_1',
-      description: 'Partial differentiation, multiple integrals, Beta/Gamma functions & Fourier series',
+      description:
+          'Partial differentiation, multiple integrals, Beta/Gamma functions & Fourier series',
       credits: 3,
       subjectCode: 'CS1101',
       createdAt: _now,
@@ -129,7 +130,8 @@ class MockData {
       name: 'Green Chemistry',
       yearId: 'year_1',
       semesterId: 'sem_1_1',
-      description: '12 principles of green synthesis, renewable resources, water chemistry & nanomaterials',
+      description:
+          '12 principles of green synthesis, renewable resources, water chemistry & nanomaterials',
       credits: 3,
       subjectCode: 'CS1102',
       createdAt: _now,
@@ -141,7 +143,8 @@ class MockData {
       name: 'English',
       yearId: 'year_1',
       semesterId: 'sem_1_1',
-      description: 'Literary texts, life skills, communication, grammar, vocabulary & essay writing',
+      description:
+          'Literary texts, life skills, communication, grammar, vocabulary & essay writing',
       credits: 3,
       subjectCode: 'CS1103',
       createdAt: _now,
@@ -153,7 +156,8 @@ class MockData {
       name: 'Computer Programming Using C',
       yearId: 'year_1',
       semesterId: 'sem_1_1',
-      description: 'C programming syntax, control statements, arrays, functions, pointers, structs & files',
+      description:
+          'C programming syntax, control statements, arrays, functions, pointers, structs & files',
       credits: 3,
       subjectCode: 'CS1104',
       createdAt: _now,
@@ -165,7 +169,8 @@ class MockData {
       name: 'IT Essentials',
       yearId: 'year_1',
       semesterId: 'sem_1_1',
-      description: 'Computer hardware, RAM/ROM memory hierarchy, networks, cybersecurity & AI/IoT trends',
+      description:
+          'Computer hardware, RAM/ROM memory hierarchy, networks, cybersecurity & AI/IoT trends',
       credits: 3,
       subjectCode: 'CS1105',
       createdAt: _now,
@@ -179,7 +184,8 @@ class MockData {
       name: 'Engineering Mathematics – II',
       yearId: 'year_1',
       semesterId: 'sem_1_2',
-      description: 'Linear algebra, eigenvalues, 1st & higher order ODEs, circuits & Laplace transforms',
+      description:
+          'Linear algebra, eigenvalues, 1st & higher order ODEs, circuits & Laplace transforms',
       credits: 3,
       subjectCode: 'CS1201',
       createdAt: _now,
@@ -191,7 +197,8 @@ class MockData {
       name: 'Engineering Physics',
       yearId: 'year_1',
       semesterId: 'sem_1_2',
-      description: 'Waves & oscillations, optics, lasers, quantum mechanics, semiconductors & nanotechnology',
+      description:
+          'Waves & oscillations, optics, lasers, quantum mechanics, semiconductors & nanotechnology',
       credits: 3,
       subjectCode: 'CS1202',
       createdAt: _now,
@@ -203,7 +210,8 @@ class MockData {
       name: 'Data Structures',
       yearId: 'year_1',
       semesterId: 'sem_1_2',
-      description: 'Algorithm complexity, stacks, queues, linked lists, BST/AVL trees, heaps & graph algorithms',
+      description:
+          'Algorithm complexity, stacks, queues, linked lists, BST/AVL trees, heaps & graph algorithms',
       credits: 4,
       subjectCode: 'CS1203',
       createdAt: _now,
@@ -215,7 +223,8 @@ class MockData {
       name: 'Digital Logic Design',
       yearId: 'year_1',
       semesterId: 'sem_1_2',
-      description: 'Number codes, K-Maps, adders, MUX/DEMUX, flip-flops, counters, RAM/ROM & FPGA/HDL',
+      description:
+          'Number codes, K-Maps, adders, MUX/DEMUX, flip-flops, counters, RAM/ROM & FPGA/HDL',
       credits: 3,
       subjectCode: 'CS1204',
       createdAt: _now,
@@ -227,7 +236,8 @@ class MockData {
       name: 'Elements of Electronic Engineering',
       yearId: 'year_1',
       semesterId: 'sem_1_2',
-      description: 'Diode circuits, transistors, operational amplifiers & electronic devices',
+      description:
+          'Diode circuits, transistors, operational amplifiers & electronic devices',
       credits: 3,
       subjectCode: 'CSSE1205',
       createdAt: _now,
@@ -241,7 +251,8 @@ class MockData {
       name: 'Java',
       yearId: 'year_2',
       semesterId: 'sem_2_1',
-      description: 'Object-oriented paradigm, inheritance, exception handling, multithreading & collections',
+      description:
+          'Object-oriented paradigm, inheritance, exception handling, multithreading & collections',
       credits: 4,
       subjectCode: 'CSSE2101',
       createdAt: _now,
@@ -253,7 +264,8 @@ class MockData {
       name: 'Discrete Mathematical Structures',
       yearId: 'year_2',
       semesterId: 'sem_2_1',
-      description: 'Set theory, mathematical logic, recurrence relations, graph theory & combinatorics',
+      description:
+          'Set theory, mathematical logic, recurrence relations, graph theory & combinatorics',
       credits: 3,
       subjectCode: 'CSSE2102',
       createdAt: _now,
@@ -265,7 +277,8 @@ class MockData {
       name: 'Probability, Statistics & Queueing Theory',
       yearId: 'year_2',
       semesterId: 'sem_2_1',
-      description: 'Probability distributions, sampling, hypothesis testing & Markov chains',
+      description:
+          'Probability distributions, sampling, hypothesis testing & Markov chains',
       credits: 3,
       subjectCode: 'CSSE2103',
       createdAt: _now,
@@ -277,7 +290,8 @@ class MockData {
       name: 'Computer Organization & Architecture',
       yearId: 'year_2',
       semesterId: 'sem_2_1',
-      description: 'CPU architecture, instruction sets, memory organization & I/O interfacing',
+      description:
+          'CPU architecture, instruction sets, memory organization & I/O interfacing',
       credits: 3,
       subjectCode: 'CSSE2104',
       createdAt: _now,
@@ -289,7 +303,8 @@ class MockData {
       name: 'Operating Systems',
       yearId: 'year_2',
       semesterId: 'sem_2_1',
-      description: 'Process management, CPU scheduling, memory management, file systems & deadlocks',
+      description:
+          'Process management, CPU scheduling, memory management, file systems & deadlocks',
       credits: 3,
       subjectCode: 'CSSE2105',
       createdAt: _now,
@@ -303,7 +318,8 @@ class MockData {
       name: 'Microprocessors & Microcontrollers',
       yearId: 'year_2',
       semesterId: 'sem_2_2',
-      description: '8086 assembly language, microcontrollers, interrupts & hardware interfacing',
+      description:
+          '8086 assembly language, microcontrollers, interrupts & hardware interfacing',
       credits: 3,
       subjectCode: 'CSSE2201',
       createdAt: _now,
@@ -315,7 +331,8 @@ class MockData {
       name: 'Formal Languages & Automata Theory',
       yearId: 'year_2',
       semesterId: 'sem_2_2',
-      description: 'Finite automata, regular expressions, context-free grammars & Turing machines',
+      description:
+          'Finite automata, regular expressions, context-free grammars & Turing machines',
       credits: 3,
       subjectCode: 'CSSE2202',
       createdAt: _now,
@@ -327,7 +344,8 @@ class MockData {
       name: 'Design and Analysis of Algorithms',
       yearId: 'year_2',
       semesterId: 'sem_2_2',
-      description: 'Asymptotic complexity, divide & conquer, greedy, dynamic programming & NP-completeness',
+      description:
+          'Asymptotic complexity, divide & conquer, greedy, dynamic programming & NP-completeness',
       credits: 4,
       subjectCode: 'CSSE2203',
       createdAt: _now,
@@ -339,7 +357,8 @@ class MockData {
       name: 'Database Management Systems',
       yearId: 'year_2',
       semesterId: 'sem_2_2',
-      description: 'Relational algebra, SQL queries, ER modeling, normalization, transactions & indexing',
+      description:
+          'Relational algebra, SQL queries, ER modeling, normalization, transactions & indexing',
       credits: 3,
       subjectCode: 'CSSE2204',
       createdAt: _now,
@@ -351,7 +370,8 @@ class MockData {
       name: 'Managerial Economics',
       yearId: 'year_2',
       semesterId: 'sem_2_2',
-      description: 'Demand forecasting, production analysis, cost structures & financial accounting',
+      description:
+          'Demand forecasting, production analysis, cost structures & financial accounting',
       credits: 3,
       subjectCode: 'CSSE2205',
       createdAt: _now,
@@ -365,7 +385,8 @@ class MockData {
       name: 'Data Communication & Computer Networks',
       yearId: 'year_3',
       semesterId: 'sem_3_1',
-      description: 'OSI & TCP/IP reference models, routing algorithms, socket programming & wireless networks',
+      description:
+          'OSI & TCP/IP reference models, routing algorithms, socket programming & wireless networks',
       credits: 3,
       subjectCode: 'CSSE3101',
       createdAt: _now,
@@ -377,7 +398,8 @@ class MockData {
       name: 'Compiler Design',
       yearId: 'year_3',
       semesterId: 'sem_3_1',
-      description: 'Lexical analysis, parsing techniques, syntax-directed translation & code generation',
+      description:
+          'Lexical analysis, parsing techniques, syntax-directed translation & code generation',
       credits: 3,
       subjectCode: 'CSSE3102',
       createdAt: _now,
@@ -389,7 +411,8 @@ class MockData {
       name: 'Python Programming',
       yearId: 'year_3',
       semesterId: 'sem_3_1',
-      description: 'Scripting syntax, data science libraries, object-oriented concepts & web APIs',
+      description:
+          'Scripting syntax, data science libraries, object-oriented concepts & web APIs',
       credits: 3,
       subjectCode: 'CSSE3103',
       createdAt: _now,
@@ -401,7 +424,8 @@ class MockData {
       name: 'Artificial Intelligence',
       yearId: 'year_3',
       semesterId: 'sem_3_1',
-      description: 'Problem-solving search strategies, knowledge representation, logic & expert systems',
+      description:
+          'Problem-solving search strategies, knowledge representation, logic & expert systems',
       credits: 3,
       subjectCode: 'CSSE3104',
       createdAt: _now,
@@ -413,7 +437,8 @@ class MockData {
       name: 'Data Warehousing & Data Mining',
       yearId: 'year_3',
       semesterId: 'sem_3_1',
-      description: 'ETL pipelines, OLAP cubes, association rule mining, classification & clustering',
+      description:
+          'ETL pipelines, OLAP cubes, association rule mining, classification & clustering',
       credits: 3,
       subjectCode: 'CSSE3105',
       createdAt: _now,
@@ -427,7 +452,8 @@ class MockData {
       name: 'Object Oriented Software Engineering',
       yearId: 'year_3',
       semesterId: 'sem_3_2',
-      description: 'Agile methodologies, UML modeling, software design patterns & testing frameworks',
+      description:
+          'Agile methodologies, UML modeling, software design patterns & testing frameworks',
       credits: 3,
       subjectCode: 'CSSE3201',
       createdAt: _now,
@@ -439,7 +465,8 @@ class MockData {
       name: 'Machine Learning',
       yearId: 'year_3',
       semesterId: 'sem_3_2',
-      description: 'Supervised & unsupervised learning, regression, neural networks & model evaluation',
+      description:
+          'Supervised & unsupervised learning, regression, neural networks & model evaluation',
       credits: 3,
       subjectCode: 'CSSE3202',
       createdAt: _now,
@@ -451,7 +478,8 @@ class MockData {
       name: 'Cryptography & Network Security',
       yearId: 'year_3',
       semesterId: 'sem_3_2',
-      description: 'Symmetric/asymmetric encryption, RSA, digital signatures & firewalls',
+      description:
+          'Symmetric/asymmetric encryption, RSA, digital signatures & firewalls',
       credits: 3,
       subjectCode: 'CSSE3203',
       createdAt: _now,
@@ -463,7 +491,8 @@ class MockData {
       name: 'Embedded Systems',
       yearId: 'year_3',
       semesterId: 'sem_3_2',
-      description: 'Real-time operating systems (RTOS), ARM architecture & IoT hardware development',
+      description:
+          'Real-time operating systems (RTOS), ARM architecture & IoT hardware development',
       credits: 2,
       subjectCode: 'CSSE3204',
       createdAt: _now,
@@ -475,7 +504,8 @@ class MockData {
       name: 'Cloud Computing',
       yearId: 'year_3',
       semesterId: 'sem_3_2',
-      description: 'Virtualization, IaaS/PaaS/SaaS models, serverless architecture & cloud security',
+      description:
+          'Virtualization, IaaS/PaaS/SaaS models, serverless architecture & cloud security',
       credits: 3,
       subjectCode: 'CSSE3205',
       createdAt: _now,

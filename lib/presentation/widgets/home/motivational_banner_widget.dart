@@ -15,7 +15,8 @@ class MotivationalBannerWidget extends StatefulWidget {
   }
 
   @override
-  State<MotivationalBannerWidget> createState() => _MotivationalBannerWidgetState();
+  State<MotivationalBannerWidget> createState() =>
+      _MotivationalBannerWidgetState();
 }
 
 class _MotivationalBannerWidgetState extends State<MotivationalBannerWidget> {
@@ -36,20 +37,22 @@ class _MotivationalBannerWidgetState extends State<MotivationalBannerWidget> {
                   Colors.white.withAlpha(15),
                 ]
               : [
-                  Colors.white.withAlpha(45),
-                  Colors.white.withAlpha(20),
+                  Theme.of(context).primaryColor.withAlpha(25),
+                  Theme.of(context).primaryColor.withAlpha(10),
                 ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withAlpha(60),
+          color: isDark
+              ? Colors.white.withAlpha(60)
+              : Theme.of(context).primaryColor.withAlpha(60),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(isDark ? 20 : 10),
+            color: Colors.black.withAlpha(isDark ? 20 : 5),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -58,9 +61,9 @@ class _MotivationalBannerWidgetState extends State<MotivationalBannerWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.auto_awesome_rounded,
-            color: Colors.amberAccent,
+            color: isDark ? Colors.amberAccent : Theme.of(context).primaryColor,
             size: 17,
           ),
           const SizedBox(width: 10),
@@ -73,7 +76,7 @@ class _MotivationalBannerWidgetState extends State<MotivationalBannerWidget> {
               style: GoogleFonts.inter(
                 fontSize: 13.5,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 letterSpacing: 0.2,
               ),
             ),

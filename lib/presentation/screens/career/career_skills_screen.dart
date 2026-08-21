@@ -10,15 +10,19 @@ class CareerSkillsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
+    final backgroundColor =
+        isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final textSubtitle =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
     final whiteCardColor = isDark ? const Color(0xFF1E293B) : Colors.white;
 
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Skill Matrix', style: GoogleFonts.outfit(fontWeight: FontWeight.w600, color: textPrimary)),
+        title: Text('Skill Matrix',
+            style: GoogleFonts.outfit(
+                fontWeight: FontWeight.w600, color: textPrimary)),
         backgroundColor: backgroundColor,
         elevation: 0,
         iconTheme: IconThemeData(color: textPrimary),
@@ -26,9 +30,11 @@ class CareerSkillsScreen extends StatelessWidget {
       body: Consumer<RoadmapProvider>(
         builder: (context, provider, child) {
           final skills = provider.getSkillMatrix();
-          
+
           if (skills.isEmpty) {
-             return Center(child: Text('No skills defined.', style: GoogleFonts.inter(color: textSubtitle)));
+            return Center(
+                child: Text('No skills defined.',
+                    style: GoogleFonts.inter(color: textSubtitle)));
           }
 
           // Group by category
@@ -56,7 +62,8 @@ class CareerSkillsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...categorySkills.map((skill) => _buildSkillTile(skill, isDark, textPrimary, textSubtitle, whiteCardColor)),
+                  ...categorySkills.map((skill) => _buildSkillTile(skill,
+                      isDark, textPrimary, textSubtitle, whiteCardColor)),
                   const SizedBox(height: 24),
                 ],
               );
@@ -67,7 +74,8 @@ class CareerSkillsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillTile(SkillEvidenceModel skill, bool isDark, Color textPrimary, Color textSubtitle, Color whiteCardColor) {
+  Widget _buildSkillTile(SkillEvidenceModel skill, bool isDark,
+      Color textPrimary, Color textSubtitle, Color whiteCardColor) {
     Color badgeColor;
     String badgeText;
     IconData badgeIcon;

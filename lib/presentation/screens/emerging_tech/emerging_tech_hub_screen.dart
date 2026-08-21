@@ -42,8 +42,10 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const royalBlue = Color(0xFF2563EB);
 
@@ -67,7 +69,6 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
           // Header Card
           Container(
             margin: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [Color(0xFF0F172A), Color(0xFF1E293B)],
@@ -84,29 +85,51 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                 ),
               ],
             ),
-            child: Row(
+            clipBehavior: Clip.hardEdge,
+            child: Stack(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withOpacity(0.2),
-                    shape: BoxShape.circle,
+                Positioned(
+                  right: -20,
+                  bottom: -20,
+                  child: Icon(
+                    Icons.hub_rounded,
+                    size: 140,
+                    color: Colors.white.withAlpha(15),
                   ),
-                  child: const Icon(Icons.hub_rounded, color: Color(0xFF60A5FA), size: 30),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
                     children: [
-                      const Text(
-                        'Future-Ready Technology Discovery',
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3B82F6).withOpacity(0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.hub_rounded,
+                            color: Color(0xFF60A5FA), size: 30),
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'Generative AI, Cloud & DevOps, Cybersecurity, Data Engineering, & Agentic Systems.',
-                        style: TextStyle(color: Colors.grey.shade400, fontSize: 11.5),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Future-Ready Technology Discovery',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              'Generative AI, Cloud & DevOps, Cybersecurity, Data Engineering, & Agentic Systems.',
+                              style: TextStyle(
+                                  color: Colors.grey.shade400, fontSize: 11.5),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -122,13 +145,19 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
               controller: _searchController,
               onChanged: (val) => provider.setSearchQuery(val),
               decoration: InputDecoration(
-                hintText: 'Search technologies, tools (LangChain, Docker, PyTorch)...',
-                prefixIcon: const Icon(Icons.search_rounded, color: AppColors.primary),
+                hintText:
+                    'Search technologies, tools (LangChain, Docker, PyTorch)...',
+                prefixIcon:
+                    const Icon(Icons.search_rounded, color: AppColors.primary),
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 filled: true,
                 fillColor: cardColor,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: borderColor)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: borderColor)),
               ),
             ),
           ),
@@ -148,7 +177,8 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                         cat,
                         style: GoogleFonts.inter(
                           color: isSelected ? Colors.white : textPrimary,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
                           fontSize: 12,
                         ),
                       ),
@@ -157,7 +187,8 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? royalBlue : borderColor),
+                        side: BorderSide(
+                            color: isSelected ? royalBlue : borderColor),
                       ),
                       onSelected: (_) => provider.selectCategory(cat),
                     ),
@@ -203,7 +234,8 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => EmergingTechDetailScreen(technology: tech),
+                                    builder: (_) => EmergingTechDetailScreen(
+                                        technology: tech),
                                   ),
                                 );
                               },
@@ -215,10 +247,13 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                                     Row(
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 3),
                                           decoration: BoxDecoration(
-                                            color: AppColors.primary.withAlpha(20),
-                                            borderRadius: BorderRadius.circular(6),
+                                            color:
+                                                AppColors.primary.withAlpha(20),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
                                           child: Text(
                                             tech.category,
@@ -230,7 +265,10 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                                           ),
                                         ),
                                         const Spacer(),
-                                        const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.primary),
+                                        const Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            size: 14,
+                                            color: AppColors.primary),
                                       ],
                                     ),
                                     const SizedBox(height: 10),
@@ -247,7 +285,10 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                                       tech.overview,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(fontSize: 12.5, color: textSubtitle, height: 1.35),
+                                      style: TextStyle(
+                                          fontSize: 12.5,
+                                          color: textSubtitle,
+                                          height: 1.35),
                                     ),
                                     const SizedBox(height: 12),
                                     Wrap(
@@ -255,14 +296,20 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                                       runSpacing: 4,
                                       children: tech.tools.take(4).map((tool) {
                                         return Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 2),
                                           decoration: BoxDecoration(
-                                            color: isDark ? AppColors.surfaceDark : const Color(0xFFF1F5F9),
-                                            borderRadius: BorderRadius.circular(6),
+                                            color: isDark
+                                                ? AppColors.surfaceDark
+                                                : const Color(0xFFF1F5F9),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
                                           child: Text(
                                             tool,
-                                            style: TextStyle(fontSize: 10.5, color: textPrimary),
+                                            style: TextStyle(
+                                                fontSize: 10.5,
+                                                color: textPrimary),
                                           ),
                                         );
                                       }).toList(),
@@ -271,7 +318,10 @@ class _EmergingTechHubScreenState extends State<EmergingTechHubScreen> {
                                 ),
                               ),
                             ),
-                          ).animate().fadeIn(delay: (index * 40).ms).slideY(begin: 0.05, end: 0);
+                          )
+                              .animate()
+                              .fadeIn(delay: (index * 40).ms)
+                              .slideY(begin: 0.05, end: 0);
                         },
                       ),
           ),

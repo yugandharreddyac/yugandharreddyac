@@ -40,7 +40,8 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
       list = list.where((bm) => bm.pageNumber != null).toList();
     } else if (_selectedFilter != 'All') {
       list = list
-          .where((bm) => bm.resourceType.toLowerCase() == _selectedFilter.toLowerCase())
+          .where((bm) =>
+              bm.resourceType.toLowerCase() == _selectedFilter.toLowerCase())
           .toList();
     }
 
@@ -59,13 +60,21 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
 
     const orangeAccent = AppColors.primary;
     const emeraldGreen = Color(0xFF10B981);
 
-    final filters = ['All', 'Pages Only', 'Syllabus', 'Notes', 'Previous Question Papers'];
+    final filters = [
+      'All',
+      'Pages Only',
+      'Syllabus',
+      'Notes',
+      'Previous Question Papers'
+    ];
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -126,7 +135,8 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                         f,
                         style: GoogleFonts.inter(
                           color: isSelected ? Colors.white : textPrimary,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
                           fontSize: 13,
                         ),
                       ),
@@ -135,7 +145,8 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                       backgroundColor: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: isSelected ? orangeAccent : borderColor),
+                        side: BorderSide(
+                            color: isSelected ? orangeAccent : borderColor),
                       ),
                       onSelected: (selected) {
                         if (selected) {
@@ -152,12 +163,14 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           ],
           Expanded(
             child: rawBookmarks.isEmpty
-                ? _buildEmptyState(context, textPrimary, textSubtitle, orangeAccent, isDark, cardColor, borderColor)
+                ? _buildEmptyState(context, textPrimary, textSubtitle,
+                    orangeAccent, isDark, cardColor, borderColor)
                 : processedBookmarks.isEmpty
                     ? Center(
                         child: Text(
                           'No bookmarks match your search.',
-                          style: GoogleFonts.inter(color: textSubtitle, fontSize: 14),
+                          style: GoogleFonts.inter(
+                              color: textSubtitle, fontSize: 14),
                         ),
                       )
                     : ListView.builder(
@@ -173,7 +186,8 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                               border: Border.all(color: borderColor),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withAlpha(isDark ? 30 : 6),
+                                  color:
+                                      Colors.black.withAlpha(isDark ? 30 : 6),
                                   blurRadius: 10,
                                   offset: const Offset(0, 3),
                                 ),
@@ -184,12 +198,19 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                               leading: Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: (bookmark.pageNumber != null ? emeraldGreen : orangeAccent).withAlpha(20),
+                                  color: (bookmark.pageNumber != null
+                                          ? emeraldGreen
+                                          : orangeAccent)
+                                      .withAlpha(20),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
-                                  bookmark.pageNumber != null ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-                                  color: bookmark.pageNumber != null ? emeraldGreen : orangeAccent,
+                                  bookmark.pageNumber != null
+                                      ? Icons.bookmark_rounded
+                                      : Icons.bookmark_border_rounded,
+                                  color: bookmark.pageNumber != null
+                                      ? emeraldGreen
+                                      : orangeAccent,
                                   size: 22,
                                 ),
                               ),
@@ -207,11 +228,13 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                                   children: [
                                     if (bookmark.pageNumber != null)
                                       Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 2),
                                         margin: const EdgeInsets.only(right: 8),
                                         decoration: BoxDecoration(
                                           color: emeraldGreen.withAlpha(15),
-                                          borderRadius: BorderRadius.circular(6),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
                                         ),
                                         child: Text(
                                           'Page ${bookmark.pageNumber}',
@@ -224,13 +247,15 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                                       ),
                                     Text(
                                       Formatters.formatDate(bookmark.createdAt),
-                                      style: GoogleFonts.inter(fontSize: 13, color: textSubtitle),
+                                      style: GoogleFonts.inter(
+                                          fontSize: 13, color: textSubtitle),
                                     ),
                                   ],
                                 ),
                               ),
                               trailing: IconButton(
-                                icon: const Icon(Icons.bookmark_remove_rounded, color: Colors.redAccent, size: 20),
+                                icon: const Icon(Icons.bookmark_remove_rounded,
+                                    color: Colors.redAccent, size: 20),
                                 tooltip: 'Remove Bookmark',
                                 onPressed: () {
                                   bookmarkProvider.removeBookmark(bookmark.id);
@@ -240,7 +265,8 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => PdfViewerScreen(resource: bookmark.toResourceModel()),
+                                    builder: (_) => PdfViewerScreen(
+                                        resource: bookmark.toResourceModel()),
                                   ),
                                 );
                               },
@@ -289,7 +315,8 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                   color: orangeAccent.withAlpha(15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.bookmark_border_rounded, color: orangeAccent, size: 48),
+                child: Icon(Icons.bookmark_border_rounded,
+                    color: orangeAccent, size: 48),
               ),
               const SizedBox(height: 16),
               Text(
@@ -320,8 +347,10 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: orangeAccent,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                 ),
               ),
             ],

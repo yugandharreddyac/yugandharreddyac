@@ -10,7 +10,8 @@ class StorageRepository {
   /// Uses in-memory cache to prevent duplicate network calls.
   Future<String> resolveDownloadUrl(String storagePath) async {
     if (storagePath.isEmpty) return '';
-    if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) {
+    if (storagePath.startsWith('http://') ||
+        storagePath.startsWith('https://')) {
       return storagePath;
     }
 
@@ -32,8 +33,20 @@ class StorageRepository {
     required String resourceType,
     required String fileName,
   }) {
-    final cleanFileName = fileName.endsWith('.pdf') ? fileName : '$fileName.pdf';
-    return 'StudyHub/$year/$semester/$subject/$resourceType/$cleanFileName';
+    final safeSubject = subject
+        .replaceAll(RegExp(r'[^a-zA-Z0-9_\-]'), '_')
+        .replaceAll(RegExp(r'_+'), '_');
+    final safeResourceType = resourceType
+        .replaceAll(RegExp(r'[^a-zA-Z0-9_\-]'), '_')
+        .replaceAll(RegExp(r'_+'), '_');
+    var cleanFileName =
+        fileName.replaceAll(RegExp(r'\.pdf$', caseSensitive: false), '');
+    cleanFileName = cleanFileName
+        .replaceAll(RegExp(r'[^a-zA-Z0-9_\-]'), '_')
+        .replaceAll(RegExp(r'_+'), '_');
+    cleanFileName = '$cleanFileName.pdf';
+
+    return 'StudyHub/$year/$semester/$safeSubject/$safeResourceType/$cleanFileName';
   }
 
   /// Upload PDF bytes to Firebase Storage

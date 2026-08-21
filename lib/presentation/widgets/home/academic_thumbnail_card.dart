@@ -41,7 +41,8 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
 
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
 
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
@@ -74,7 +75,9 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
               color: cardColor,
               borderRadius: BorderRadius.circular(22),
               border: Border.all(
-                color: _isHovered ? widget.primaryAccent.withAlpha(180) : borderColor,
+                color: _isHovered
+                    ? widget.primaryAccent.withAlpha(180)
+                    : borderColor,
                 width: _isHovered ? 1.5 : 1.0,
               ),
               boxShadow: [
@@ -133,17 +136,20 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
                           // Vector Graphic Theme Icons Centerpiece
                           Positioned.fill(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: widget.themeIcons.map((ic) {
                                         return Container(
-                                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 4),
                                           padding: const EdgeInsets.all(7),
                                           decoration: BoxDecoration(
                                             color: Colors.white.withAlpha(45),
@@ -154,13 +160,15 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
                                             ),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withAlpha(20),
+                                                color:
+                                                    Colors.black.withAlpha(20),
                                                 blurRadius: 6,
                                                 offset: const Offset(0, 2),
                                               ),
                                             ],
                                           ),
-                                          child: Icon(ic, color: Colors.white, size: 18),
+                                          child: Icon(ic,
+                                              color: Colors.white, size: 18),
                                         );
                                       }).toList(),
                                     ),
@@ -173,11 +181,15 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
                                       runSpacing: 4,
                                       children: widget.themeBadges.map((badge) {
                                         return Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 6, vertical: 2),
                                           decoration: BoxDecoration(
                                             color: Colors.black.withAlpha(40),
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(color: Colors.white.withAlpha(50)),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            border: Border.all(
+                                                color:
+                                                    Colors.white.withAlpha(50)),
                                           ),
                                           child: Text(
                                             badge,
@@ -201,7 +213,8 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
                             top: 8,
                             left: 8,
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 3),
                               decoration: BoxDecoration(
                                 color: Colors.white.withAlpha(220),
                                 borderRadius: BorderRadius.circular(10),
@@ -242,10 +255,12 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
                               alignment: Alignment.centerLeft,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         widget.yearTitle,
@@ -275,7 +290,8 @@ class _AcademicThumbnailCardState extends State<AcademicThumbnailCard> {
                                       const SizedBox(width: 4),
                                       _buildChip('PYQs', emeraldGreen),
                                       const SizedBox(width: 4),
-                                      _buildChip('Syllabus', const Color(0xFF8B5CF6)),
+                                      _buildChip(
+                                          'Syllabus', const Color(0xFF8B5CF6)),
                                     ],
                                   ),
                                 ],

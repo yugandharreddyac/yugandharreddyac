@@ -11,35 +11,50 @@ void main() {
     test('Levenshtein distance calculation is accurate', () {
       expect(FuzzyMatcher.levenshteinDistance('kitten', 'sitting'), equals(3));
       expect(FuzzyMatcher.levenshteinDistance('python', 'pythn'), equals(1));
-      expect(FuzzyMatcher.levenshteinDistance('dijkstra', 'diijkstra'), equals(1));
-      expect(FuzzyMatcher.levenshteinDistance('database', 'databse'), equals(1));
+      expect(
+          FuzzyMatcher.levenshteinDistance('dijkstra', 'diijkstra'), equals(1));
+      expect(
+          FuzzyMatcher.levenshteinDistance('database', 'databse'), equals(1));
       expect(FuzzyMatcher.levenshteinDistance('same', 'same'), equals(0));
       expect(FuzzyMatcher.levenshteinDistance('', 'test'), equals(4));
     });
 
-    test('Similarity calculation produces normalized score between 0.0 and 1.0', () {
+    test('Similarity calculation produces normalized score between 0.0 and 1.0',
+        () {
       expect(FuzzyMatcher.similarity('python', 'python'), equals(1.0));
       expect(FuzzyMatcher.similarity('python', 'pythn'), greaterThan(0.80));
-      expect(FuzzyMatcher.similarity('dijkstra', 'diijkstra'), greaterThan(0.85));
+      expect(
+          FuzzyMatcher.similarity('dijkstra', 'diijkstra'), greaterThan(0.85));
       expect(FuzzyMatcher.similarity('abc', 'xyz'), equals(0.0));
     });
 
     test('isFuzzyMatch identifies typos within threshold', () {
       expect(FuzzyMatcher.isFuzzyMatch('pythn', 'Python Programming'), isTrue);
-      expect(FuzzyMatcher.isFuzzyMatch('diijkstra', 'Dijkstra Algorithm'), isTrue);
-      expect(FuzzyMatcher.isFuzzyMatch('databse', 'Database Management'), isTrue);
-      expect(FuzzyMatcher.isFuzzyMatch('operatng', 'Operating Systems'), isTrue);
+      expect(
+          FuzzyMatcher.isFuzzyMatch('diijkstra', 'Dijkstra Algorithm'), isTrue);
+      expect(
+          FuzzyMatcher.isFuzzyMatch('databse', 'Database Management'), isTrue);
+      expect(
+          FuzzyMatcher.isFuzzyMatch('operatng', 'Operating Systems'), isTrue);
       expect(FuzzyMatcher.isFuzzyMatch('xyzqwe', 'Database Systems'), isFalse);
     });
 
-    test('expandAbbreviations returns candidate expansions for known CS terms', () {
-      expect(FuzzyMatcher.expandAbbreviations('os'), contains('operating system'));
-      expect(FuzzyMatcher.expandAbbreviations('dbms'), contains('database management system'));
-      expect(FuzzyMatcher.expandAbbreviations('dld'), contains('digital logic design'));
-      expect(FuzzyMatcher.expandAbbreviations('cn'), contains('computer networks'));
-      expect(FuzzyMatcher.expandAbbreviations('ai'), contains('artificial intelligence'));
-      expect(FuzzyMatcher.expandAbbreviations('ml'), contains('machine learning'));
-      expect(FuzzyMatcher.expandAbbreviations('pyq'), contains('previous question papers'));
+    test('expandAbbreviations returns candidate expansions for known CS terms',
+        () {
+      expect(
+          FuzzyMatcher.expandAbbreviations('os'), contains('operating system'));
+      expect(FuzzyMatcher.expandAbbreviations('dbms'),
+          contains('database management system'));
+      expect(FuzzyMatcher.expandAbbreviations('dld'),
+          contains('digital logic design'));
+      expect(FuzzyMatcher.expandAbbreviations('cn'),
+          contains('computer networks'));
+      expect(FuzzyMatcher.expandAbbreviations('ai'),
+          contains('artificial intelligence'));
+      expect(
+          FuzzyMatcher.expandAbbreviations('ml'), contains('machine learning'));
+      expect(FuzzyMatcher.expandAbbreviations('pyq'),
+          contains('previous question papers'));
     });
   });
 
@@ -54,13 +69,19 @@ void main() {
     test('Exact search returns high-confidence results', () {
       final result = engine.search('Python');
       expect(result.isNotEmpty, isTrue);
-      expect(result.matchingItems.any((item) => item.title.toLowerCase().contains('python')), isTrue);
+      expect(
+          result.matchingItems
+              .any((item) => item.title.toLowerCase().contains('python')),
+          isTrue);
     });
 
     test('Prefix search returns matches correctly', () {
       final result = engine.search('Pyth');
       expect(result.isNotEmpty, isTrue);
-      expect(result.matchingItems.any((item) => item.title.toLowerCase().contains('python')), isTrue);
+      expect(
+          result.matchingItems
+              .any((item) => item.title.toLowerCase().contains('python')),
+          isTrue);
     });
 
     test('Partial/Substring search matches key concepts', () {
@@ -73,31 +94,55 @@ void main() {
       // 1. Pythn -> Python
       final pythnResult = engine.search('Pythn');
       expect(pythnResult.isNotEmpty, isTrue);
-      expect(pythnResult.matchingItems.any((i) => i.title.toLowerCase().contains('python') || i.keywords.any((k) => k.toLowerCase().contains('python'))), isTrue);
+      expect(
+          pythnResult.matchingItems.any((i) =>
+              i.title.toLowerCase().contains('python') ||
+              i.keywords.any((k) => k.toLowerCase().contains('python'))),
+          isTrue);
 
       // 2. Diijkstra -> Dijkstra
       final dijkstraResult = engine.search('Diijkstra');
       expect(dijkstraResult.isNotEmpty, isTrue);
-      expect(dijkstraResult.matchingItems.any((i) => i.title.toLowerCase().contains('dijkstra') || i.keywords.any((k) => k.toLowerCase().contains('dijkstra'))), isTrue);
+      expect(
+          dijkstraResult.matchingItems.any((i) =>
+              i.title.toLowerCase().contains('dijkstra') ||
+              i.keywords.any((k) => k.toLowerCase().contains('dijkstra'))),
+          isTrue);
 
       // 3. Databse -> Database
       final dbResult = engine.search('Databse');
       expect(dbResult.isNotEmpty, isTrue);
-      expect(dbResult.matchingItems.any((i) => i.title.toLowerCase().contains('database') || i.keywords.any((k) => k.toLowerCase().contains('database'))), isTrue);
+      expect(
+          dbResult.matchingItems.any((i) =>
+              i.title.toLowerCase().contains('database') ||
+              i.keywords.any((k) => k.toLowerCase().contains('database'))),
+          isTrue);
     });
 
     test('Abbreviation search expands and matches CS acronyms', () {
       final osResult = engine.search('OS');
       expect(osResult.isNotEmpty, isTrue);
-      expect(osResult.matchingItems.any((i) => i.subjectName.toLowerCase().contains('operating system') || i.title.toLowerCase().contains('operating system')), isTrue);
+      expect(
+          osResult.matchingItems.any((i) =>
+              i.subjectName.toLowerCase().contains('operating system') ||
+              i.title.toLowerCase().contains('operating system')),
+          isTrue);
 
       final dbmsResult = engine.search('DBMS');
       expect(dbmsResult.isNotEmpty, isTrue);
-      expect(dbmsResult.matchingItems.any((i) => i.subjectName.toLowerCase().contains('database') || i.title.toLowerCase().contains('database')), isTrue);
+      expect(
+          dbmsResult.matchingItems.any((i) =>
+              i.subjectName.toLowerCase().contains('database') ||
+              i.title.toLowerCase().contains('database')),
+          isTrue);
 
       final dldResult = engine.search('DLD');
       expect(dldResult.isNotEmpty, isTrue);
-      expect(dldResult.matchingItems.any((i) => i.subjectName.toLowerCase().contains('digital logic') || i.title.toLowerCase().contains('digital logic')), isTrue);
+      expect(
+          dldResult.matchingItems.any((i) =>
+              i.subjectName.toLowerCase().contains('digital logic') ||
+              i.title.toLowerCase().contains('digital logic')),
+          isTrue);
     });
 
     test('Empty query returns empty result without throwing', () {
@@ -145,7 +190,8 @@ void main() {
         year: '1',
       );
 
-      expect(item1.matchScore('Python'), greaterThan(item2.matchScore('Python')));
+      expect(
+          item1.matchScore('Python'), greaterThan(item2.matchScore('Python')));
     });
   });
 }

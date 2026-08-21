@@ -24,7 +24,8 @@ void main() {
   });
 
   group('Admin Textbook Manager Unit Tests', () {
-    test('saveCourseOverview and fetchCourseOverview update overview data', () async {
+    test('saveCourseOverview and fetchCourseOverview update overview data',
+        () async {
       const subjectId = 'sub_ai';
       const overview = CourseOverviewModel(
         subjectId: subjectId,
@@ -81,7 +82,8 @@ void main() {
       await repository.saveTextbookChapter(subjectId, chapter);
       final chapters = await repository.getTextbookChapters(subjectId);
 
-      expect(chapters.any((c) => c.title.contains('Adversarial Search')), isTrue);
+      expect(
+          chapters.any((c) => c.title.contains('Adversarial Search')), isTrue);
     });
 
     test('reorderTextbookChapters updates chapter order ranks', () async {

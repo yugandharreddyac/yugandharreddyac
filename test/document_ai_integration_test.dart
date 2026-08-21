@@ -21,7 +21,8 @@ class _CapturingAiProvider implements AiProvider {
   String get displayName => 'Capturing Mock';
 
   @override
-  Set<AiCapability> get supportedCapabilities => {AiCapability.chat, AiCapability.documentQA};
+  Set<AiCapability> get supportedCapabilities =>
+      {AiCapability.chat, AiCapability.documentQA};
 
   @override
   Future<bool> checkHealth() async => true;
@@ -35,7 +36,8 @@ class _CapturingAiProvider implements AiProvider {
         id: 'msg_assistant_1',
         conversationId: request.conversationId,
         role: AiMessageRole.assistant,
-        content: 'According to the provided document, deadlock prevention invalidates circular wait.',
+        content:
+            'According to the provided document, deadlock prevention invalidates circular wait.',
         timestamp: DateTime.now(),
         metadata: {
           'citations': [
@@ -78,7 +80,8 @@ void main() {
       docRepo = InMemoryDocumentRepository();
       mockProvider = _CapturingAiProvider();
 
-      final ragProvider = RagDocumentContextProvider(documentRepository: docRepo);
+      final ragProvider =
+          RagDocumentContextProvider(documentRepository: docRepo);
       final composer = AiContextComposer(documentProvider: ragProvider);
 
       aiService = AiService(
@@ -102,13 +105,15 @@ void main() {
             chunkId: 'c_os_1',
             documentId: 'doc_os_unit3',
             pageNumber: 10,
-            text: 'Semaphores and mutex locks are fundamental synchronization primitives.',
+            text:
+                'Semaphores and mutex locks are fundamental synchronization primitives.',
           ),
           DocumentChunk(
             chunkId: 'c_os_2',
             documentId: 'doc_os_unit3',
             pageNumber: 22,
-            text: 'Deadlock prevention invalidates one of the four Coffman conditions, such as circular wait.',
+            text:
+                'Deadlock prevention invalidates one of the four Coffman conditions, such as circular wait.',
           ),
         ],
       );
@@ -116,7 +121,9 @@ void main() {
       await docRepo.saveDocument(index);
     });
 
-    test('AiService queries RAG context and passes page-grounded instructions to AI Provider', () async {
+    test(
+        'AiService queries RAG context and passes page-grounded instructions to AI Provider',
+        () async {
       final attachment = const AiAttachment(
         id: 'doc_os_unit3',
         filename: 'os_unit_3_concurrency.pdf',
@@ -135,11 +142,17 @@ void main() {
       expect(mockProvider.lastRequest, isNotNull);
 
       // Verify system instructions contain the retrieved chunk and page reference
-      final instructions = mockProvider.lastRequest!.context.systemInstructions ?? '';
-      expect(instructions, contains('DOCUMENT CONTEXT: "OS Unit 3 Concurrency & Deadlocks"'));
+      final instructions =
+          mockProvider.lastRequest!.context.systemInstructions ?? '';
+      expect(instructions,
+          contains('DOCUMENT CONTEXT: "OS Unit 3 Concurrency & Deadlocks"'));
       expect(instructions, contains('[Page 22]'));
-      expect(instructions, contains('Deadlock prevention invalidates one of the four Coffman conditions'));
-      expect(instructions, contains('Do not fabricate missing document content'));
+      expect(
+          instructions,
+          contains(
+              'Deadlock prevention invalidates one of the four Coffman conditions'));
+      expect(
+          instructions, contains('Do not fabricate missing document content'));
 
       // Verify response citations
       expect(response.citations.isNotEmpty, isTrue);
@@ -147,7 +160,8 @@ void main() {
       expect(response.citations.first.pageNumber, equals(22));
     });
 
-    test('Multiple documents in attachments are searched and combined cleanly', () async {
+    test('Multiple documents in attachments are searched and combined cleanly',
+        () async {
       final doc2 = DocumentIndex(
         metadata: DocumentMetadata(
           documentId: 'doc_algo_1',
@@ -161,7 +175,8 @@ void main() {
             chunkId: 'c_algo_1',
             documentId: 'doc_algo_1',
             pageNumber: 5,
-            text: 'Dijkstra algorithm computes the shortest path in weighted graphs.',
+            text:
+                'Dijkstra algorithm computes the shortest path in weighted graphs.',
           ),
         ],
       );
@@ -186,10 +201,12 @@ void main() {
         attachments: attachments,
       );
 
-      final instructions = mockProvider.lastRequest!.context.systemInstructions ?? '';
+      final instructions =
+          mockProvider.lastRequest!.context.systemInstructions ?? '';
       expect(instructions, contains('DOCUMENT CONTEXT: "DSA Quick Guide"'));
       expect(instructions, contains('[Page 5]'));
-      expect(instructions, contains('Dijkstra algorithm computes the shortest path'));
+      expect(instructions,
+          contains('Dijkstra algorithm computes the shortest path'));
     });
   });
 }

@@ -10,7 +10,8 @@ class DocumentChunker {
     this.targetChunkWords = 200,
     this.overlapWords = 30,
     this.minChunkWords = 15,
-  }) : assert(overlapWords < targetChunkWords, 'Overlap must be strictly smaller than target chunk size');
+  }) : assert(overlapWords < targetChunkWords,
+            'Overlap must be strictly smaller than target chunk size');
 
   /// Splits document pages into bounded, page-aware chunks
   List<DocumentChunk> chunkDocument({
@@ -49,7 +50,8 @@ class DocumentChunker {
     final words = <String>[];
 
     for (final p in paragraphs) {
-      final pWords = p.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+      final pWords =
+          p.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
       if (pWords.isNotEmpty) {
         words.addAll(pWords);
         // Add paragraph break token if needed, or simply let word sequence flow
@@ -93,7 +95,8 @@ class DocumentChunker {
         // Append remaining words to the previous chunk if too short
         final last = pageChunks.removeLast();
         final combinedText = '${last.text} ${chunkWords.join(' ')}';
-        final combinedTokens = (last.tokenEstimate + chunkWords.length * 1.33).round();
+        final combinedTokens =
+            (last.tokenEstimate + chunkWords.length * 1.33).round();
         pageChunks.add(
           last.copyWith(
             text: combinedText,

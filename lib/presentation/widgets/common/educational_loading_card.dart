@@ -50,7 +50,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
     _rotationTimer = Timer.periodic(const Duration(seconds: 4), (_) {
       if (mounted) {
         setState(() {
-          _currentIndex = (_currentIndex + 1) % EducationalContentProvider.allItems.length;
+          _currentIndex =
+              (_currentIndex + 1) % EducationalContentProvider.allItems.length;
         });
       }
     });
@@ -69,8 +70,10 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
 
     final cardBg = isDark ? AppColors.surfaceDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
     const orangeAccent = AppColors.primary;
 
     // ==========================================
@@ -88,7 +91,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline_rounded, color: AppColors.error, size: 36),
+            const Icon(Icons.error_outline_rounded,
+                color: AppColors.error, size: 36),
             const SizedBox(height: 10),
             Text(
               'Something went wrong',
@@ -100,7 +104,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
             ),
             const SizedBox(height: 4),
             Text(
-              widget.errorMessage ?? 'Please check your connection and try again.',
+              widget.errorMessage ??
+                  'Please check your connection and try again.',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: 13,
@@ -112,12 +117,15 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
               ElevatedButton.icon(
                 onPressed: widget.onRetry,
                 icon: const Icon(Icons.refresh_rounded, size: 16),
-                label: Text('Retry', style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+                label: Text('Retry',
+                    style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: orangeAccent,
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
               ),
             ],
@@ -147,7 +155,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
                 color: orangeAccent.withAlpha(20),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.inbox_rounded, color: orangeAccent, size: 32),
+              child: const Icon(Icons.inbox_rounded,
+                  color: orangeAccent, size: 32),
             ),
             const SizedBox(height: 12),
             Text(
@@ -160,24 +169,29 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
             ),
             const SizedBox(height: 4),
             Text(
-              widget.emptyMessage ?? 'Content will appear here as soon as available.',
+              widget.emptyMessage ??
+                  'Content will appear here as soon as available.',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: 13,
                 color: textSubtitle,
               ),
             ),
-            if (widget.onEmptyAction != null && widget.emptyActionText != null) ...[
+            if (widget.onEmptyAction != null &&
+                widget.emptyActionText != null) ...[
               const SizedBox(height: 14),
               OutlinedButton(
                 onPressed: widget.onEmptyAction,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: orangeAccent,
                   side: const BorderSide(color: orangeAccent),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 ),
-                child: Text(widget.emptyActionText!, style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+                child: Text(widget.emptyActionText!,
+                    style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
               ),
             ],
           ],
@@ -220,7 +234,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
                       color: currentItem.accentColor.withAlpha(25),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Icon(currentItem.icon, color: currentItem.accentColor, size: 18),
+                    child: Icon(currentItem.icon,
+                        color: currentItem.accentColor, size: 18),
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -250,7 +265,8 @@ class _EducationalLoadingCardState extends State<EducationalLoadingCard> {
                     height: 14,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(currentItem.accentColor),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          currentItem.accentColor),
                     ),
                   ),
                 ],

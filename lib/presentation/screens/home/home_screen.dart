@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
       currentRoute: AppRoutes.home,
       child: Scaffold(
         drawer: const AppNavigationDrawer(),
-        backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
+        backgroundColor:
+            isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
         body: IndexedStack(
           index: _currentIndex,
           children: pages,
@@ -70,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     selectedIndex: _currentIndex,
                     elevation: 0,
                     height: 65,
-                    backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
+                    backgroundColor:
+                        isDark ? AppColors.surfaceDark : Colors.white,
                     indicatorColor: AppColors.primary.withAlpha(35),
                     onDestinationSelected: (index) {
                       setState(() {
@@ -80,17 +82,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     destinations: const [
                       NavigationDestination(
                         icon: Icon(Icons.home_outlined),
-                        selectedIcon: Icon(Icons.home_rounded, color: AppColors.primary),
+                        selectedIcon:
+                            Icon(Icons.home_rounded, color: AppColors.primary),
                         label: 'Home',
                       ),
                       NavigationDestination(
                         icon: Icon(Icons.download_outlined),
-                        selectedIcon: Icon(Icons.download_rounded, color: AppColors.primary),
+                        selectedIcon: Icon(Icons.download_rounded,
+                            color: AppColors.primary),
                         label: 'Downloads',
                       ),
                       NavigationDestination(
                         icon: Icon(Icons.person_outline_rounded),
-                        selectedIcon: Icon(Icons.person_rounded, color: AppColors.primary),
+                        selectedIcon: Icon(Icons.person_rounded,
+                            color: AppColors.primary),
                         label: 'Profile',
                       ),
                     ],
@@ -139,8 +144,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5);
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE4E4E7);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF09090B);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF71717A);
     const orangeAccent = AppColors.primary;
     final cardColor = isDark ? AppColors.surfaceDark : Colors.white;
     final isDesktop = MediaQuery.of(context).size.width >= 850;
@@ -198,7 +205,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       const SizedBox(height: 16),
                       // Desktop Search Bar
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.search),
                         child: AbsorbPointer(
                           child: Container(
                             height: 46,
@@ -206,10 +214,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             decoration: BoxDecoration(
                               color: cardColor,
                               borderRadius: BorderRadius.circular(23),
-                              border: Border.all(color: orangeAccent, width: 1.5),
+                              border:
+                                  Border.all(color: orangeAccent, width: 1.5),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withAlpha(isDark ? 40 : 10),
+                                  color:
+                                      Colors.black.withAlpha(isDark ? 40 : 10),
                                   blurRadius: 10,
                                   offset: const Offset(0, 3),
                                 ),
@@ -217,7 +227,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.search_rounded, color: orangeAccent, size: 20),
+                                const Icon(Icons.search_rounded,
+                                    color: orangeAccent, size: 20),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Text(
@@ -232,7 +243,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                Icon(Icons.tune_rounded, color: textSubtitle, size: 18),
+                                Icon(Icons.tune_rounded,
+                                    color: textSubtitle, size: 18),
                               ],
                             ),
                           ),
@@ -250,7 +262,9 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       width: double.infinity,
                       padding: const EdgeInsets.fromLTRB(20, 16, 20, 42),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF18181B) : const Color(0xFF09090B),
+                        color: isDark
+                            ? const Color(0xFF18181B)
+                            : const Color(0xFF09090B),
                         borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(24),
                         ),
@@ -269,9 +283,11 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             children: [
                               Builder(
                                 builder: (scaffoldCtx) => IconButton(
-                                  icon: const Icon(Icons.menu_rounded, color: Colors.white, size: 24),
+                                  icon: const Icon(Icons.menu_rounded,
+                                      color: Colors.white, size: 24),
                                   tooltip: 'Navigation Menu',
-                                  onPressed: () => Scaffold.of(scaffoldCtx).openDrawer(),
+                                  onPressed: () =>
+                                      Scaffold.of(scaffoldCtx).openDrawer(),
                                 ),
                               ),
                               Container(
@@ -280,7 +296,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                   color: orangeAccent,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: const Icon(Icons.terminal_rounded, color: Colors.white, size: 18),
+                                child: const Icon(Icons.terminal_rounded,
+                                    color: Colors.white, size: 18),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
@@ -299,30 +316,41 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                   padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
-                                      colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                                      colors: [
+                                        Color(0xFF6366F1),
+                                        Color(0xFF8B5CF6)
+                                      ],
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: const Icon(Icons.auto_awesome_rounded, size: 14, color: Colors.white),
+                                  child: const Icon(Icons.auto_awesome_rounded,
+                                      size: 14, color: Colors.white),
                                 ),
                                 tooltip: 'UniDocs AI',
-                                onPressed: () => Navigator.pushNamed(context, AppRoutes.ai),
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, AppRoutes.ai),
                               ),
                               IconButton(
                                 icon: Icon(
-                                  themeProvider.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                                  color: themeProvider.isDarkMode ? Colors.amberAccent : Colors.white70,
+                                  themeProvider.isDarkMode
+                                      ? Icons.light_mode_rounded
+                                      : Icons.dark_mode_rounded,
+                                  color: themeProvider.isDarkMode
+                                      ? Colors.amberAccent
+                                      : Colors.white70,
                                 ),
                                 tooltip: 'Toggle Theme',
                                 onPressed: () => themeProvider.toggleTheme(),
                               ),
                               const SizedBox(width: 4),
                               GestureDetector(
-                                onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
+                                onTap: () => Navigator.pushNamed(
+                                    context, AppRoutes.profile),
                                 child: const CircleAvatar(
                                   radius: 16,
                                   backgroundColor: orangeAccent,
-                                  child: Icon(Icons.person_rounded, size: 18, color: Colors.white),
+                                  child: Icon(Icons.person_rounded,
+                                      size: 18, color: Colors.white),
                                 ),
                               ),
                             ],
@@ -358,7 +386,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       left: 20,
                       right: 20,
                       child: GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.search),
                         child: AbsorbPointer(
                           child: Container(
                             height: 48,
@@ -366,10 +395,12 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             decoration: BoxDecoration(
                               color: cardColor,
                               borderRadius: BorderRadius.circular(24),
-                              border: Border.all(color: orangeAccent, width: 1.5),
+                              border:
+                                  Border.all(color: orangeAccent, width: 1.5),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withAlpha(isDark ? 40 : 10),
+                                  color:
+                                      Colors.black.withAlpha(isDark ? 40 : 10),
                                   blurRadius: 12,
                                   offset: const Offset(0, 4),
                                 ),
@@ -377,7 +408,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.search_rounded, color: orangeAccent, size: 20),
+                                const Icon(Icons.search_rounded,
+                                    color: orangeAccent, size: 20),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Text(
@@ -392,7 +424,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                Icon(Icons.tune_rounded, color: textSubtitle, size: 18),
+                                Icon(Icons.tune_rounded,
+                                    color: textSubtitle, size: 18),
                               ],
                             ),
                           ),
@@ -405,7 +438,10 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               SizedBox(height: isDesktop ? 16 : 32),
 
               // --- CS QUICK BYTE ---
-              const UniByteCard().animate().fadeIn(delay: 80.ms).slideY(begin: 0.05, end: 0),
+              const UniByteCard()
+                  .animate()
+                  .fadeIn(delay: 80.ms)
+                  .slideY(begin: 0.05, end: 0),
 
               const SizedBox(height: 12),
 
@@ -413,7 +449,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     color: cardColor,
                     borderRadius: BorderRadius.circular(16),
@@ -427,7 +464,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           color: orangeAccent.withAlpha(20),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(Icons.map_rounded, color: orangeAccent, size: 20),
+                        child: const Icon(Icons.map_rounded,
+                            color: orangeAccent, size: 20),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -460,16 +498,19 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       ),
                       const SizedBox(width: 10),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, AppRoutes.roadmap),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AppRoutes.roadmap),
                         style: TextButton.styleFrom(
                           foregroundColor: orangeAccent,
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
                         ),
                         child: Row(
                           children: [
                             Text(
                               'Open Path',
-                              style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold),
+                              style: GoogleFonts.inter(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(width: 2),
                             const Icon(Icons.arrow_forward_rounded, size: 14),
@@ -486,7 +527,14 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
               // --- COMPACT QUICK ACCESS GRID ---
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: _buildCompactQuickAccessGrid(context, isDark, textPrimary, textSubtitle, cardColor, borderColor, orangeAccent),
+                child: _buildCompactQuickAccessGrid(
+                    context,
+                    isDark,
+                    textPrimary,
+                    textSubtitle,
+                    cardColor,
+                    borderColor,
+                    orangeAccent),
               ),
               const SizedBox(height: 20),
 
@@ -505,18 +553,26 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                             children: [
                               Text(
                                 'Academic Curriculum',
-                                style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.3),
+                                style: GoogleFonts.outfit(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: textPrimary,
+                                    letterSpacing: -0.3),
                               ),
                               const SizedBox(height: 2),
                               Text(
                                 'Explore core computer science courses organized by academic year',
-                                style: GoogleFonts.inter(fontSize: 12, color: textSubtitle, fontWeight: FontWeight.w500),
+                                style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    color: textSubtitle,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ],
                           ),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(context, AppRoutes.years),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, AppRoutes.years),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -529,7 +585,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
+                              const Icon(Icons.arrow_forward_rounded,
+                                  size: 14, color: orangeAccent),
                             ],
                           ),
                         ),
@@ -541,7 +598,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                         final isWide = constraints.maxWidth > 700;
                         final isMedium = constraints.maxWidth > 480;
                         final crossAxisCount = isWide ? 4 : (isMedium ? 2 : 1);
-                        final childAspectRatio = isWide ? 2.5 : (isMedium ? 2.6 : 3.8);
+                        final childAspectRatio =
+                            isWide ? 2.5 : (isMedium ? 2.6 : 3.8);
 
                         return GridView.count(
                           crossAxisCount: crossAxisCount,
@@ -551,14 +609,29 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           mainAxisSpacing: 12,
                           childAspectRatio: childAspectRatio,
                           children: const [
-                            AcademicYearCard(yearTitle: '1st Year', subtitle: 'Foundation & Basic Concepts', yearId: 'year_1'),
-                            AcademicYearCard(yearTitle: '2nd Year', subtitle: 'Core CS & Data Structures', yearId: 'year_2'),
-                            AcademicYearCard(yearTitle: '3rd Year', subtitle: 'Advanced Tech & Systems', yearId: 'year_3'),
-                            AcademicYearCard(yearTitle: '4th Year', subtitle: 'Placements & Capstone', yearId: 'year_4'),
+                            AcademicYearCard(
+                                yearTitle: '1st Year',
+                                subtitle: 'Foundation & Basic Concepts',
+                                yearId: 'year_1'),
+                            AcademicYearCard(
+                                yearTitle: '2nd Year',
+                                subtitle: 'Core CS & Data Structures',
+                                yearId: 'year_2'),
+                            AcademicYearCard(
+                                yearTitle: '3rd Year',
+                                subtitle: 'Advanced Tech & Systems',
+                                yearId: 'year_3'),
+                            AcademicYearCard(
+                                yearTitle: '4th Year',
+                                subtitle: 'Placements & Capstone',
+                                yearId: 'year_4'),
                           ],
                         );
                       },
-                    ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.05, end: 0),
+                    )
+                        .animate()
+                        .fadeIn(delay: 100.ms)
+                        .slideY(begin: 0.05, end: 0),
                     const SizedBox(height: 24),
 
                     // --- CAREER & PRACTICAL HUBS ---
@@ -581,7 +654,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    _buildHubsGrid(context, isDark, textPrimary, textSubtitle, cardColor, borderColor, orangeAccent),
+                    _buildHubsGrid(context, isDark, textPrimary, textSubtitle,
+                        cardColor, borderColor, orangeAccent),
                     const SizedBox(height: 24),
 
                     // --- RECENTLY ADDED RESOURCES ---
@@ -601,7 +675,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(context, AppRoutes.search),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, AppRoutes.search),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -614,7 +689,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              const Icon(Icons.arrow_forward_rounded, size: 14, color: orangeAccent),
+                              const Icon(Icons.arrow_forward_rounded,
+                                  size: 14, color: orangeAccent),
                             ],
                           ),
                         ),
@@ -623,7 +699,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     const SizedBox(height: 10),
 
                     recents.isEmpty
-                        ? _buildRecentFallbackList(context, orangeAccent, cardColor, borderColor, textPrimary, textSubtitle)
+                        ? _buildRecentFallbackList(context, orangeAccent,
+                            cardColor, borderColor, textPrimary, textSubtitle)
                         : Column(
                             children: recents.take(4).map((recent) {
                               final resource = recent.toResourceModel();
@@ -635,35 +712,43 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                   border: Border.all(color: borderColor),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withAlpha(isDark ? 30 : 5),
+                                      color: Colors.black
+                                          .withAlpha(isDark ? 30 : 5),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
                                   ],
                                 ),
                                 child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 14, vertical: 4),
                                   leading: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: orangeAccent.withAlpha(20),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(Icons.description_rounded, color: orangeAccent, size: 18),
+                                    child: const Icon(Icons.description_rounded,
+                                        color: orangeAccent, size: 18),
                                   ),
                                   title: Text(
                                     recent.resourceTitle,
-                                    style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 14, color: textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: textPrimary),
                                   ),
                                   subtitle: Padding(
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Row(
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 6, vertical: 2),
                                           decoration: BoxDecoration(
                                             color: orangeAccent.withAlpha(15),
-                                            borderRadius: BorderRadius.circular(4),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
                                           ),
                                           child: Text(
                                             recent.resourceType,
@@ -676,18 +761,25 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                                         ),
                                         const SizedBox(width: 8),
                                         Text(
-                                          Formatters.formatDate(recent.openedAt),
-                                          style: GoogleFonts.inter(fontSize: 12, color: textSubtitle),
+                                          Formatters.formatDate(
+                                              recent.openedAt),
+                                          style: GoogleFonts.inter(
+                                              fontSize: 12,
+                                              color: textSubtitle),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.grey),
+                                  trailing: const Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 12,
+                                      color: Colors.grey),
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => PdfViewerScreen(resource: resource),
+                                        builder: (_) =>
+                                            PdfViewerScreen(resource: resource),
                                       ),
                                     );
                                   },
@@ -765,7 +857,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
           builder: (context, constraints) {
             final isWide = constraints.maxWidth > 700;
             final crossAxisCount = isWide ? 4 : 2;
-            final childAspectRatio = isWide ? 3.4 : (constraints.maxWidth < 360 ? 2.3 : 2.8);
+            final childAspectRatio =
+                isWide ? 3.4 : (constraints.maxWidth < 360 ? 2.3 : 2.8);
 
             return GridView.count(
               crossAxisCount: crossAxisCount,
@@ -782,7 +875,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                     onTap: item.onTap,
                     borderRadius: BorderRadius.circular(14),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(color: borderColor),
@@ -900,7 +994,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
       builder: (context, constraints) {
         final isWide = constraints.maxWidth > 700;
         final crossAxisCount = isWide ? 3 : 2;
-        final childAspectRatio = isWide ? 1.45 : (constraints.maxWidth < 360 ? 1.02 : 1.10);
+        final childAspectRatio =
+            isWide ? 1.45 : (constraints.maxWidth < 360 ? 1.02 : 1.10);
 
         return GridView.count(
           crossAxisCount: crossAxisCount,
@@ -1005,7 +1100,11 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
     final sampleItems = [
       {'title': 'Operating Systems Notes', 'cat': 'Notes', 'time': 'Today'},
       {'title': 'DBMS PYQ', 'cat': 'Question Paper', 'time': 'Yesterday'},
-      {'title': 'Artificial Intelligence Roadmap', 'cat': 'Career Hub', 'time': 'Today'},
+      {
+        'title': 'Artificial Intelligence Roadmap',
+        'cat': 'Career Hub',
+        'time': 'Today'
+      },
     ];
 
     return Column(
@@ -1018,16 +1117,22 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
             border: Border.all(color: borderColor),
           ),
           child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
             leading: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: orangeAccent.withAlpha(20),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.description_rounded, color: orangeAccent, size: 18),
+              child: Icon(Icons.description_rounded,
+                  color: orangeAccent, size: 18),
             ),
-            title: Text(item['title'] as String, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
+            title: Text(item['title'] as String,
+                style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: textPrimary)),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Wrap(
@@ -1036,7 +1141,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                 runSpacing: 2,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: orangeAccent.withAlpha(15),
                       borderRadius: BorderRadius.circular(4),
@@ -1058,7 +1164,8 @@ class _HomeDashboardViewState extends State<_HomeDashboardView> {
                 ],
               ),
             ),
-            trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.grey),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded,
+                size: 12, color: Colors.grey),
           ),
         );
       }).toList(),

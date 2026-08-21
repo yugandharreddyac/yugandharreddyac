@@ -13,8 +13,10 @@ class CareerAdminPage extends StatelessWidget {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const emeraldGreen = Color(0xFF10B981);
 
@@ -23,7 +25,8 @@ class CareerAdminPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           '🚀 Career Hub Management',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 20, color: textPrimary),
+          style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold, fontSize: 20, color: textPrimary),
         ),
         backgroundColor: cardColor,
         elevation: 0,
@@ -43,7 +46,10 @@ class CareerAdminPage extends StatelessWidget {
               children: [
                 Text(
                   'Technology Roadmaps Control',
-                  style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary),
+                  style: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -109,15 +115,22 @@ class CareerAdminPage extends StatelessWidget {
       child: ListTile(
         leading: Container(
           padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(color: color.withAlpha(20), shape: BoxShape.circle),
+          decoration:
+              BoxDecoration(color: color.withAlpha(20), shape: BoxShape.circle),
           child: Icon(icon, color: color, size: 20),
         ),
-        title: Text(title, style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16, color: textPrimary)),
-        subtitle: Text(subtitle, style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
-        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+        title: Text(title,
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.bold, fontSize: 16, color: textPrimary)),
+        subtitle: Text(subtitle,
+            style: GoogleFonts.inter(fontSize: 12, color: textSubtitle)),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded,
+            size: 14, color: Colors.grey),
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('$title functionality ready for Firestore sync.')),
+            SnackBar(
+                content:
+                    Text('$title functionality ready for Firestore sync.')),
           );
         },
       ),

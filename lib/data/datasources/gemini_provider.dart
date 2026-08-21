@@ -53,7 +53,9 @@ class GeminiProvider implements AiProvider {
   Future<bool> checkHealth() async {
     if (backendUrl.trim().isEmpty) return false;
     try {
-      final healthUrl = backendUrl.endsWith('/') ? '${backendUrl}health' : '$backendUrl/health';
+      final healthUrl = backendUrl.endsWith('/')
+          ? '${backendUrl}health'
+          : '$backendUrl/health';
       final res = await _dio.get(
         healthUrl,
         options: Options(
@@ -75,7 +77,8 @@ class GeminiProvider implements AiProvider {
         error: const AiError(
           code: AiErrorCode.noProviderConfigured,
           message: 'UniDocs AI backend endpoint is not configured.',
-          details: 'Set a valid backend proxy URL to enable Gemini communication.',
+          details:
+              'Set a valid backend proxy URL to enable Gemini communication.',
           isRetryable: false,
         ),
       );
@@ -84,7 +87,8 @@ class GeminiProvider implements AiProvider {
     // 1. Fetch Firebase Auth ID Token if available
     String? idToken;
     try {
-      final currentUser = _auth?.currentUser ?? FirebaseAuth.instance.currentUser;
+      final currentUser =
+          _auth?.currentUser ?? FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
         idToken = await currentUser.getIdToken();
       }
@@ -102,7 +106,8 @@ class GeminiProvider implements AiProvider {
 
     // 2. Invoke Secure Backend Endpoint
     try {
-      final endpointUrl = backendUrl.endsWith('/') ? '${backendUrl}generate' : backendUrl;
+      final endpointUrl =
+          backendUrl.endsWith('/') ? '${backendUrl}generate' : backendUrl;
       final response = await _dio.post(
         endpointUrl,
         data: request.toMap(),
@@ -142,7 +147,8 @@ class GeminiProvider implements AiProvider {
     final responseData = dioErr.response?.data;
 
     // Check if backend returned structured error JSON
-    if (responseData is Map<String, dynamic> && responseData.containsKey('error')) {
+    if (responseData is Map<String, dynamic> &&
+        responseData.containsKey('error')) {
       final errMap = responseData['error'];
       if (errMap is Map<String, dynamic>) {
         return AiResponse.failure(
@@ -158,7 +164,8 @@ class GeminiProvider implements AiProvider {
         id: 'resp_auth_$timestamp',
         error: const AiError(
           code: AiErrorCode.authenticationFailed,
-          message: 'Authentication failed. Please sign in to access UniDocs AI.',
+          message:
+              'Authentication failed. Please sign in to access UniDocs AI.',
           isRetryable: false,
         ),
       );
@@ -169,7 +176,8 @@ class GeminiProvider implements AiProvider {
         id: 'resp_rate_$timestamp',
         error: const AiError(
           code: AiErrorCode.rateLimitExceeded,
-          message: 'You have sent too many requests. Please wait a moment before trying again.',
+          message:
+              'You have sent too many requests. Please wait a moment before trying again.',
           isRetryable: true,
         ),
       );
@@ -180,7 +188,8 @@ class GeminiProvider implements AiProvider {
         id: 'resp_payload_$timestamp',
         error: const AiError(
           code: AiErrorCode.invalidResponse,
-          message: 'Your prompt or document context is too large. Please shorten your message.',
+          message:
+              'Your prompt or document context is too large. Please shorten your message.',
           isRetryable: false,
         ),
       );
@@ -193,7 +202,8 @@ class GeminiProvider implements AiProvider {
         id: 'resp_timeout_$timestamp',
         error: const AiError(
           code: AiErrorCode.timeout,
-          message: 'The request timed out while communicating with the AI service.',
+          message:
+              'The request timed out while communicating with the AI service.',
           isRetryable: true,
         ),
       );
@@ -204,7 +214,8 @@ class GeminiProvider implements AiProvider {
         id: 'resp_net_$timestamp',
         error: const AiError(
           code: AiErrorCode.networkUnavailable,
-          message: 'Network connection failed. Please check your internet connection.',
+          message:
+              'Network connection failed. Please check your internet connection.',
           isRetryable: true,
         ),
       );

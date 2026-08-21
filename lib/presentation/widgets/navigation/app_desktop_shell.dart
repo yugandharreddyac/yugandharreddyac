@@ -37,14 +37,15 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
     final isDark = theme.brightness == Brightness.dark;
     final themeProvider = context.watch<ThemeProvider>();
 
-    final sidebarBg = isDark ? const Color(0xFF09090B) : const Color(0xFF18181B);
-    final sidebarBorder = isDark ? const Color(0xFF27272A) : const Color(0xFF3F3F46);
-    final sidebarWidth = _isSidebarHidden
-        ? 0.0
-        : (_isCollapsed ? 72.0 : 250.0);
+    final sidebarBg =
+        isDark ? const Color(0xFF09090B) : const Color(0xFF18181B);
+    final sidebarBorder =
+        isDark ? const Color(0xFF27272A) : const Color(0xFF3F3F46);
+    final sidebarWidth = _isSidebarHidden ? 0.0 : (_isCollapsed ? 72.0 : 250.0);
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
+      backgroundColor:
+          isDark ? AppColors.backgroundDark : const Color(0xFFF4F4F5),
       body: Row(
         children: [
           // Sidebar Container (Optional & Toggleable)
@@ -65,7 +66,8 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                         // Sidebar Header
                         Container(
                           height: 64,
-                          padding: EdgeInsets.symmetric(horizontal: _isCollapsed ? 12 : 18),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _isCollapsed ? 12 : 18),
                           child: Row(
                             children: [
                               Container(
@@ -74,14 +76,16 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                                   color: AppColors.primary,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: const Icon(Icons.terminal_rounded, color: Colors.white, size: 20),
+                                child: const Icon(Icons.terminal_rounded,
+                                    color: Colors.white, size: 20),
                               ),
                               if (!_isCollapsed) ...[
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         AppConstants.appName,
@@ -114,7 +118,8 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                         // Navigation Items
                         Expanded(
                           child: ListView(
-                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 8),
                             children: [
                               _buildSidebarItem(
                                 icon: Icons.grid_view_rounded,
@@ -188,10 +193,14 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             alignment: Alignment.center,
                             child: Row(
-                              mainAxisAlignment: _isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
+                              mainAxisAlignment: _isCollapsed
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.start,
                               children: [
                                 Icon(
-                                  _isCollapsed ? Icons.chevron_right_rounded : Icons.chevron_left_rounded,
+                                  _isCollapsed
+                                      ? Icons.chevron_right_rounded
+                                      : Icons.chevron_left_rounded,
                                   color: Colors.white70,
                                   size: 20,
                                 ),
@@ -230,7 +239,9 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                     color: isDark ? AppColors.surfaceDark : Colors.white,
                     border: Border(
                       bottom: BorderSide(
-                        color: isDark ? AppColors.borderDark : const Color(0xFFE4E4E7),
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE4E4E7),
                       ),
                     ),
                   ),
@@ -239,11 +250,16 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                       // Sidebar Optional Toggle Button
                       IconButton(
                         icon: Icon(
-                          _isSidebarHidden ? Icons.menu_rounded : Icons.menu_open_rounded,
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          _isSidebarHidden
+                              ? Icons.menu_rounded
+                              : Icons.menu_open_rounded,
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
                           size: 22,
                         ),
-                        tooltip: _isSidebarHidden ? 'Show Sidebar' : 'Hide Sidebar',
+                        tooltip:
+                            _isSidebarHidden ? 'Show Sidebar' : 'Hide Sidebar',
                         onPressed: () {
                           setState(() {
                             _isSidebarHidden = !_isSidebarHidden;
@@ -257,7 +273,9 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                           style: GoogleFonts.inter(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -265,41 +283,55 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                       const SizedBox(width: 12),
                       // Search Trigger
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.search),
                         child: Container(
                           width: 280,
                           height: 38,
                           padding: const EdgeInsets.symmetric(horizontal: 14),
                           decoration: BoxDecoration(
-                            color: isDark ? const Color(0xFF09090B) : const Color(0xFFF4F4F5),
+                            color: isDark
+                                ? const Color(0xFF09090B)
+                                : const Color(0xFFF4F4F5),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: isDark ? AppColors.borderDark : const Color(0xFFE4E4E7),
+                              color: isDark
+                                  ? AppColors.borderDark
+                                  : const Color(0xFFE4E4E7),
                             ),
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.search_rounded, color: AppColors.primary, size: 18),
+                              const Icon(Icons.search_rounded,
+                                  color: AppColors.primary, size: 18),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: Text(
                                   'Search subjects, notes, PYQs...',
                                   style: GoogleFonts.inter(
                                     fontSize: 13,
-                                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                    color: isDark
+                                        ? AppColors.textSecondaryDark
+                                        : AppColors.textSecondaryLight,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
                                 decoration: BoxDecoration(
-                                  color: isDark ? const Color(0xFF27272A) : const Color(0xFFE4E4E7),
+                                  color: isDark
+                                      ? const Color(0xFF27272A)
+                                      : const Color(0xFFE4E4E7),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(
                                   'Ctrl+K',
-                                  style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.primary),
+                                  style: GoogleFonts.inter(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary),
                                 ),
                               ),
                             ],
@@ -309,8 +341,12 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                       const SizedBox(width: 16),
                       IconButton(
                         icon: Icon(
-                          themeProvider.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                          color: themeProvider.isDarkMode ? Colors.amberAccent : AppColors.textPrimaryLight,
+                          themeProvider.isDarkMode
+                              ? Icons.light_mode_rounded
+                              : Icons.dark_mode_rounded,
+                          color: themeProvider.isDarkMode
+                              ? Colors.amberAccent
+                              : AppColors.textPrimaryLight,
                           size: 20,
                         ),
                         tooltip: 'Toggle Theme',
@@ -318,11 +354,13 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                       ),
                       const SizedBox(width: 8),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.profile),
                         child: const CircleAvatar(
                           radius: 16,
                           backgroundColor: AppColors.primary,
-                          child: Icon(Icons.person_rounded, size: 18, color: Colors.white),
+                          child: Icon(Icons.person_rounded,
+                              size: 18, color: Colors.white),
                         ),
                       ),
                     ],
@@ -390,7 +428,8 @@ class _AppDesktopShellState extends State<AppDesktopShell> {
                       label,
                       style: GoogleFonts.inter(
                         fontSize: 13,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.w500,
                         color: isSelected ? Colors.white : Colors.white70,
                       ),
                       maxLines: 1,

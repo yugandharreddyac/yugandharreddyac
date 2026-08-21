@@ -16,8 +16,10 @@ class SavedTopicsScreen extends StatelessWidget {
     const emeraldGreen = Color(0xFF059669);
     final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+    final textSubtitle =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final borderColor =
+        isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
 
     final bookmarkedIds = roadmapProvider.bookmarkedTopicIds;
 
@@ -37,7 +39,8 @@ class SavedTopicsScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.bookmark_outline_rounded, size: 64, color: textSubtitle.withAlpha(120)),
+                    Icon(Icons.bookmark_outline_rounded,
+                        size: 64, color: textSubtitle.withAlpha(120)),
                     const SizedBox(height: 16),
                     Text(
                       'No Saved Topics Yet',
@@ -87,8 +90,12 @@ class SavedTopicsScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          progress.isFullyCompleted ? Icons.check_circle_rounded : Icons.bookmark_rounded,
-                          color: progress.isFullyCompleted ? emeraldGreen : royalBlue,
+                          progress.isFullyCompleted
+                              ? Icons.check_circle_rounded
+                              : Icons.bookmark_rounded,
+                          color: progress.isFullyCompleted
+                              ? emeraldGreen
+                              : royalBlue,
                           size: 22,
                         ),
                       ),
@@ -117,14 +124,16 @@ class SavedTopicsScreen extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.bookmark_remove_rounded, color: Colors.grey),
+                        icon: const Icon(Icons.bookmark_remove_rounded,
+                            color: Colors.grey),
                         tooltip: 'Remove Bookmark',
                         onPressed: () {
                           roadmapProvider.toggleTopicBookmark(topicId);
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: royalBlue),
+                        icon: const Icon(Icons.arrow_forward_ios_rounded,
+                            size: 16, color: royalBlue),
                         onPressed: () {
                           if (match != null) {
                             Navigator.push(
@@ -134,7 +143,11 @@ class SavedTopicsScreen extends StatelessWidget {
                                   hub: match.hub,
                                   category: match.category,
                                   topic: match.topic,
-                                  breadcrumbTrail: [match.hub.title, match.category.title, match.topic.title],
+                                  breadcrumbTrail: [
+                                    match.hub.title,
+                                    match.category.title,
+                                    match.topic.title
+                                  ],
                                 ),
                               ),
                             );

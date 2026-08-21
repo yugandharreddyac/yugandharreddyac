@@ -14,16 +14,97 @@ abstract class DocumentRetriever {
 /// Deterministic keyword and phrase-matching document retrieval engine
 class KeywordDocumentRetriever implements DocumentRetriever {
   static const Set<String> _stopWords = {
-    'a', 'an', 'the', 'and', 'or', 'but', 'is', 'are', 'was', 'were',
-    'in', 'on', 'at', 'by', 'for', 'with', 'about', 'against', 'between',
-    'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to',
-    'from', 'up', 'down', 'of', 'off', 'over', 'under', 'again', 'further',
-    'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all',
-    'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such',
-    'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very',
-    'can', 'will', 'just', 'should', 'now', 'what', 'which', 'who', 'whom',
-    'this', 'that', 'these', 'those', 'am', 'been', 'being', 'have', 'has',
-    'had', 'do', 'does', 'did', 'explain', 'give', 'tell', 'me', 'please',
+    'a',
+    'an',
+    'the',
+    'and',
+    'or',
+    'but',
+    'is',
+    'are',
+    'was',
+    'were',
+    'in',
+    'on',
+    'at',
+    'by',
+    'for',
+    'with',
+    'about',
+    'against',
+    'between',
+    'into',
+    'through',
+    'during',
+    'before',
+    'after',
+    'above',
+    'below',
+    'to',
+    'from',
+    'up',
+    'down',
+    'of',
+    'off',
+    'over',
+    'under',
+    'again',
+    'further',
+    'then',
+    'once',
+    'here',
+    'there',
+    'when',
+    'where',
+    'why',
+    'how',
+    'all',
+    'any',
+    'both',
+    'each',
+    'few',
+    'more',
+    'most',
+    'other',
+    'some',
+    'such',
+    'no',
+    'nor',
+    'not',
+    'only',
+    'own',
+    'same',
+    'so',
+    'than',
+    'too',
+    'very',
+    'can',
+    'will',
+    'just',
+    'should',
+    'now',
+    'what',
+    'which',
+    'who',
+    'whom',
+    'this',
+    'that',
+    'these',
+    'those',
+    'am',
+    'been',
+    'being',
+    'have',
+    'has',
+    'had',
+    'do',
+    'does',
+    'did',
+    'explain',
+    'give',
+    'tell',
+    'me',
+    'please',
   };
 
   const KeywordDocumentRetriever();
@@ -70,7 +151,8 @@ class KeywordDocumentRetriever implements DocumentRetriever {
       if (matchedTerms.isEmpty) continue;
 
       // 2. Exact phrase boost
-      if (normalizedQuery.length > 5 && chunkTextLower.contains(normalizedQuery)) {
+      if (normalizedQuery.length > 5 &&
+          chunkTextLower.contains(normalizedQuery)) {
         score += 5.0; // Significant bonus for full question/phrase presence
       } else {
         // Multi-term bigram boost
@@ -89,7 +171,8 @@ class KeywordDocumentRetriever implements DocumentRetriever {
 
       if (documentTitle != null && documentTitle.isNotEmpty) {
         final titleTokens = _tokenizeAndFilter(documentTitle.toLowerCase());
-        final titleMatches = titleTokens.where((t) => queryTokens.contains(t)).length;
+        final titleMatches =
+            titleTokens.where((t) => queryTokens.contains(t)).length;
         if (titleMatches > 0) {
           score += (titleMatches * 0.3);
         }
@@ -117,7 +200,8 @@ class KeywordDocumentRetriever implements DocumentRetriever {
     final seenChunkTexts = <String>{};
 
     for (final r in results) {
-      final condensed = r.chunk.text.substring(0, r.chunk.text.length.clamp(0, 80));
+      final condensed =
+          r.chunk.text.substring(0, r.chunk.text.length.clamp(0, 80));
       if (!seenChunkTexts.contains(condensed)) {
         seenChunkTexts.add(condensed);
         deduped.add(r);
@@ -129,7 +213,9 @@ class KeywordDocumentRetriever implements DocumentRetriever {
   }
 
   List<String> _tokenizeAndFilter(String text) {
-    return _tokenize(text).where((t) => !_stopWords.contains(t) && t.length > 1).toList();
+    return _tokenize(text)
+        .where((t) => !_stopWords.contains(t) && t.length > 1)
+        .toList();
   }
 
   List<String> _tokenize(String text) {

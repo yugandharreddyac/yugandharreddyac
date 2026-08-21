@@ -7,7 +7,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Master Content & Hierarchy Audit Tests', () {
-    test('Verify all 6 hubs + Entrepreneurship Hub exist in NonAcademicData', () {
+    test('Verify all 6 hubs + Entrepreneurship Hub exist in NonAcademicData',
+        () {
       final hubs = NonAcademicData.allHubs;
       expect(hubs.length, greaterThanOrEqualTo(6));
 
@@ -20,7 +21,9 @@ void main() {
       expect(hubIds, contains('entrepreneurship'));
     });
 
-    test('Verify all external resource URLs across all hubs use valid HTTPS schemes', () {
+    test(
+        'Verify all external resource URLs across all hubs use valid HTTPS schemes',
+        () {
       int totalResources = 0;
       int validHttpsUrls = 0;
       int invalidUrls = 0;
@@ -31,7 +34,8 @@ void main() {
             // Direct resources
             for (final res in topic.resources) {
               totalResources++;
-              if (res.url.startsWith('https://') || res.url.startsWith('http://')) {
+              if (res.url.startsWith('https://') ||
+                  res.url.startsWith('http://')) {
                 validHttpsUrls++;
               } else {
                 invalidUrls++;
@@ -41,7 +45,8 @@ void main() {
             for (final subtopic in topic.subtopics) {
               for (final res in subtopic.resources) {
                 totalResources++;
-                if (res.url.startsWith('https://') || res.url.startsWith('http://')) {
+                if (res.url.startsWith('https://') ||
+                    res.url.startsWith('http://')) {
                   validHttpsUrls++;
                 } else {
                   invalidUrls++;
@@ -57,7 +62,9 @@ void main() {
       expect(totalResources, greaterThanOrEqualTo(80));
     });
 
-    test('Verify SearchIndexEngine indexes Entrepreneurship and all non-academic hubs', () {
+    test(
+        'Verify SearchIndexEngine indexes Entrepreneurship and all non-academic hubs',
+        () {
       final searchEngine = SearchIndexEngine();
       searchEngine.buildIndex([], []);
 
@@ -73,7 +80,9 @@ void main() {
       expect(pythonResults.isNotEmpty, isTrue);
     });
 
-    test('Verify ResumeReadinessModel contains full Resume and LinkedIn checklist items', () {
+    test(
+        'Verify ResumeReadinessModel contains full Resume and LinkedIn checklist items',
+        () {
       const model = ResumeReadinessModel();
       expect(model.resumeTotalItems, equals(9));
       expect(model.linkedInTotalItems, equals(11));

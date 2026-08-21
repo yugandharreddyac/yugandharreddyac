@@ -47,9 +47,12 @@ class SearchIndexEngine {
 
     // 1. Index Subjects & their Course Overviews + Textbook Hierarchy
     for (final subj in subjects) {
-      final syllabusMetadata = _getSyllabusMetadata(subj.subjectCode ?? subj.code, subj.name);
-      final overview = courseOverviewsMap?[subj.id] ?? TextbookMockData.getCourseOverview(subj.id);
-      final chapters = textbookChaptersMap?[subj.id] ?? TextbookMockData.getTextbookChapters(subj.id);
+      final syllabusMetadata =
+          _getSyllabusMetadata(subj.subjectCode ?? subj.code, subj.name);
+      final overview = courseOverviewsMap?[subj.id] ??
+          TextbookMockData.getCourseOverview(subj.id);
+      final chapters = textbookChaptersMap?[subj.id] ??
+          TextbookMockData.getTextbookChapters(subj.id);
 
       // Index Subject Level
       items.add(
@@ -100,11 +103,22 @@ class SearchIndexEngine {
 
       // Index 3 Standardized Subject Section Types
       final sectionTypes = [
-        {'title': 'Syllabus', 'index': 0, 'kw': ['syllabus', 'curriculum', 'overview']},
-        {'title': 'Notes & Lecture Material', 'index': 1, 'kw': ['notes', 'textbook', 'lecture notes', 'summary']},
-        {'title': 'Previous Question Papers', 'index': 2, 'kw': ['previous papers', 'past papers', 'pyqs', 'exam papers']},
+        {
+          'title': 'Syllabus',
+          'index': 0,
+          'kw': ['syllabus', 'curriculum', 'overview']
+        },
+        {
+          'title': 'Notes & Lecture Material',
+          'index': 1,
+          'kw': ['notes', 'textbook', 'lecture notes', 'summary']
+        },
+        {
+          'title': 'Previous Question Papers',
+          'index': 2,
+          'kw': ['previous papers', 'past papers', 'pyqs', 'exam papers']
+        },
       ];
-
 
       for (final sec in sectionTypes) {
         final secTitle = sec['title'] as String;
@@ -137,7 +151,8 @@ class SearchIndexEngine {
             id: 'idx_q_${subj.id}_${q.id}',
             category: 'Important Question',
             title: q.question,
-            subtitle: '${subj.name} → Chapter ${q.chapterNumber} • ${q.category}',
+            subtitle:
+                '${subj.name} → Chapter ${q.chapterNumber} • ${q.category}',
             subjectName: subj.name,
             subjectCode: subj.code,
             semester: subj.semesterId,
@@ -163,10 +178,16 @@ class SearchIndexEngine {
             subjectCode: subj.code,
             semester: subj.semesterId,
             year: subj.yearId,
-            keywords: [lab.title, lab.objective, lab.theory, lab.code, ...lab.vivaQuestions, subj.name],
+            keywords: [
+              lab.title,
+              lab.objective,
+              lab.theory,
+              lab.code,
+              ...lab.vivaQuestions,
+              subj.name
+            ],
             subject: subj,
             sectionIndex: 1,
-
             sectionType: 'Practical / Laboratory',
           ),
         );
@@ -185,7 +206,12 @@ class SearchIndexEngine {
             subjectCode: subj.code,
             semester: subj.semesterId,
             year: subj.yearId,
-            keywords: [ch.title, ch.description, 'chapter ${ch.chapterNumber}', subj.name],
+            keywords: [
+              ch.title,
+              ch.description,
+              'chapter ${ch.chapterNumber}',
+              subj.name
+            ],
             subject: subj,
             chapterId: ch.id,
             chapterNumber: ch.chapterNumber,
@@ -206,7 +232,12 @@ class SearchIndexEngine {
               subjectCode: subj.code,
               semester: subj.semesterId,
               year: subj.yearId,
-              keywords: [sec.title, sec.description, sec.sectionNumber, subj.name],
+              keywords: [
+                sec.title,
+                sec.description,
+                sec.sectionNumber,
+                subj.name
+              ],
               subject: subj,
               chapterId: ch.id,
               chapterNumber: ch.chapterNumber,
@@ -225,7 +256,8 @@ class SearchIndexEngine {
                 id: 'idx_top_${subj.id}_${top.id}',
                 category: 'Textbook Topic',
                 title: '${top.topicNumber} ${top.title}',
-                subtitle: '${subj.name} → Chapter ${ch.chapterNumber} → ${sec.sectionNumber}',
+                subtitle:
+                    '${subj.name} → Chapter ${ch.chapterNumber} → ${sec.sectionNumber}',
                 subjectName: subj.name,
                 subjectCode: subj.code,
                 semester: subj.semesterId,
@@ -280,7 +312,10 @@ class SearchIndexEngine {
           year: res.yearId,
           keywords: [res.title, res.description, ...res.tags],
           noteTitles: res.resourceType == 'Notes' ? [res.title] : [],
-          previousPaperTitles: res.resourceType.contains('Paper') || res.resourceType.contains('PYQ') ? [res.title] : [],
+          previousPaperTitles: res.resourceType.contains('Paper') ||
+                  res.resourceType.contains('PYQ')
+              ? [res.title]
+              : [],
           storageUrl: res.storageUrl,
           resource: res,
           sectionType: res.sectionType ?? res.resourceType,
@@ -289,7 +324,8 @@ class SearchIndexEngine {
     }
 
     // 3. Index Career Roles & Technologies
-    final careerList = careerTechs ?? CareerRepository.fallbackCareerTechnologies;
+    final careerList =
+        careerTechs ?? CareerRepository.fallbackCareerTechnologies;
     for (final car in careerList) {
       items.add(
         SearchableItem(
@@ -317,7 +353,8 @@ class SearchIndexEngine {
     }
 
     // 4. Index Coding Languages, DSA Topics & Projects
-    final codingLangsList = codingLangs ?? CodingRepository.fallbackCodingLanguages;
+    final codingLangsList =
+        codingLangs ?? CodingRepository.fallbackCodingLanguages;
     for (final lang in codingLangsList) {
       items.add(
         SearchableItem(
@@ -329,7 +366,13 @@ class SearchIndexEngine {
           subjectCode: lang.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [lang.name, lang.introduction, lang.syntaxFundamentals, ...lang.practiceProblems, ...lang.interviewQuestions],
+          keywords: [
+            lang.name,
+            lang.introduction,
+            lang.syntaxFundamentals,
+            ...lang.practiceProblems,
+            ...lang.interviewQuestions
+          ],
         ),
       );
     }
@@ -346,12 +389,21 @@ class SearchIndexEngine {
           subjectCode: dsa.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [dsa.topicName, dsa.category, dsa.definition, dsa.intuition, dsa.algorithm, ...dsa.practiceProblems, ...dsa.interviewQuestions],
+          keywords: [
+            dsa.topicName,
+            dsa.category,
+            dsa.definition,
+            dsa.intuition,
+            dsa.algorithm,
+            ...dsa.practiceProblems,
+            ...dsa.interviewQuestions
+          ],
         ),
       );
     }
 
-    final codingProjectsList = codingProjects ?? CodingRepository.fallbackCodingProjects;
+    final codingProjectsList =
+        codingProjects ?? CodingRepository.fallbackCodingProjects;
     for (final proj in codingProjectsList) {
       items.add(
         SearchableItem(
@@ -363,7 +415,13 @@ class SearchIndexEngine {
           subjectCode: proj.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [proj.title, proj.problemStatement, proj.architecture, ...proj.techStack, ...proj.requiredSkills],
+          keywords: [
+            proj.title,
+            proj.problemStatement,
+            proj.architecture,
+            ...proj.techStack,
+            ...proj.requiredSkills
+          ],
         ),
       );
     }
@@ -380,14 +438,27 @@ class SearchIndexEngine {
           subjectCode: p.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [p.title, p.category, p.difficulty, p.description, p.problemStatement, p.systemArchitecture, p.resumeDescription, ...p.technologies, ...p.requiredSkills],
+          keywords: [
+            p.title,
+            p.category,
+            p.difficulty,
+            p.description,
+            p.problemStatement,
+            p.systemArchitecture,
+            p.resumeDescription,
+            ...p.technologies,
+            ...p.requiredSkills
+          ],
         ),
       );
     }
 
-    final placementsList = placements ?? PlacementRepository.fallbackPlacementResources;
+    final placementsList =
+        placements ?? PlacementRepository.fallbackPlacementResources;
     for (final plc in placementsList) {
-      final qKeywords = plc.questionsAndAnswers.map((qa) => '${qa.question} ${qa.answer}').toList();
+      final qKeywords = plc.questionsAndAnswers
+          .map((qa) => '${qa.question} ${qa.answer}')
+          .toList();
       items.add(
         SearchableItem(
           id: 'idx_plc_${plc.id}',
@@ -398,14 +469,23 @@ class SearchIndexEngine {
           subjectCode: plc.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [plc.title, plc.category, plc.description, plc.roadmap, ...plc.tips, ...qKeywords],
+          keywords: [
+            plc.title,
+            plc.category,
+            plc.description,
+            plc.roadmap,
+            ...plc.tips,
+            ...qKeywords
+          ],
         ),
       );
     }
 
-    final higherEdList = higherEdItems ?? HigherEducationRepository.fallbackHigherEducationResources;
+    final higherEdList = higherEdItems ??
+        HigherEducationRepository.fallbackHigherEducationResources;
     for (final ed in higherEdList) {
-      final faqKeywords = ed.faqs.map((f) => '${f.question} ${f.answer}').toList();
+      final faqKeywords =
+          ed.faqs.map((f) => '${f.question} ${f.answer}').toList();
       items.add(
         SearchableItem(
           id: 'idx_hed_${ed.id}',
@@ -416,12 +496,23 @@ class SearchIndexEngine {
           subjectCode: ed.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [ed.title, ed.category, ed.subtitle, ed.overview, ed.eligibilityCriteria, ed.careerOpportunities, ...ed.syllabusTopics, ...ed.scholarships, ...faqKeywords],
+          keywords: [
+            ed.title,
+            ed.category,
+            ed.subtitle,
+            ed.overview,
+            ed.eligibilityCriteria,
+            ed.careerOpportunities,
+            ...ed.syllabusTopics,
+            ...ed.scholarships,
+            ...faqKeywords
+          ],
         ),
       );
     }
 
-    final emergingTechList = emergingTechs ?? EmergingTechRepository.fallbackEmergingTechs;
+    final emergingTechList =
+        emergingTechs ?? EmergingTechRepository.fallbackEmergingTechs;
     for (final em in emergingTechList) {
       items.add(
         SearchableItem(
@@ -433,7 +524,19 @@ class SearchIndexEngine {
           subjectCode: em.id,
           semester: 'N/A',
           year: 'N/A',
-          keywords: [em.title, em.category, em.overview, em.whyItMatters, em.futureDirection, ...em.coreConcepts, ...em.tools, ...em.frameworks, ...em.prerequisites, ...em.careerRoles, ...em.projects],
+          keywords: [
+            em.title,
+            em.category,
+            em.overview,
+            em.whyItMatters,
+            em.futureDirection,
+            ...em.coreConcepts,
+            ...em.tools,
+            ...em.frameworks,
+            ...em.prerequisites,
+            ...em.careerRoles,
+            ...em.projects
+          ],
         ),
       );
     }
@@ -476,8 +579,10 @@ class SearchIndexEngine {
     _index = items;
     _isIndexed = true;
 
-    debugPrint('[GlobalSearchEngine] Documents loaded: ${subjects.length} subjects, ${resources.length} resources');
-    debugPrint('[GlobalSearchEngine] Total Searchable items indexed: ${_index.length}');
+    debugPrint(
+        '[GlobalSearchEngine] Documents loaded: ${subjects.length} subjects, ${resources.length} resources');
+    debugPrint(
+        '[GlobalSearchEngine] Total Searchable items indexed: ${_index.length}');
   }
 
   /// Searches the pre-built index locally in O(N) time with 0 network calls
@@ -506,12 +611,14 @@ class SearchIndexEngine {
           maxScore = score;
         }
 
-        if (item.subject != null && !seenSubjectIds.contains(item.subject!.id)) {
+        if (item.subject != null &&
+            !seenSubjectIds.contains(item.subject!.id)) {
           seenSubjectIds.add(item.subject!.id);
           matchingSubjects.add(item.subject!);
         }
 
-        if (item.resource != null && !seenResourceIds.contains(item.resource!.id)) {
+        if (item.resource != null &&
+            !seenResourceIds.contains(item.resource!.id)) {
           seenResourceIds.add(item.resource!.id);
           matchingResources.add(item.resource!);
         }
@@ -529,10 +636,12 @@ class SearchIndexEngine {
     if (isFuzzy && matchingItems.isNotEmpty) {
       // Find the cleanest candidate title/subject to suggest
       final topItem = matchingItems.first;
-      didYouMean = topItem.subjectName.isNotEmpty ? topItem.subjectName : topItem.title;
+      didYouMean =
+          topItem.subjectName.isNotEmpty ? topItem.subjectName : topItem.title;
     }
 
-    debugPrint('[GlobalSearchEngine] User search query: "$query" -> Found ${matchingItems.length} matching items (${matchingSubjects.length} subjects, ${matchingResources.length} resources) [maxScore=$maxScore]');
+    debugPrint(
+        '[GlobalSearchEngine] User search query: "$query" -> Found ${matchingItems.length} matching items (${matchingSubjects.length} subjects, ${matchingResources.length} resources) [maxScore=$maxScore]');
 
     return GlobalSearchResult(
       matchingSubjects: matchingSubjects,
@@ -548,7 +657,9 @@ class SearchIndexEngine {
     final c = code.toUpperCase();
     final n = name.toLowerCase();
 
-    if (c == 'CS1101' || n.contains('mathematics-i') || n.contains('mathematics i')) {
+    if (c == 'CS1101' ||
+        n.contains('mathematics-i') ||
+        n.contains('mathematics i')) {
       return {
         'units': [
           'Unit 1: Partial Differentiation',
@@ -580,9 +691,24 @@ class SearchIndexEngine {
           'Parseval formula',
           'Harmonic analysis'
         ],
-        'keywords': ['maths 1', 'CS1101', 'jacobians', 'euler theorem', 'lagrange multipliers', 'leibnitz rule', 'beta function', 'gamma function', 'fourier series', 'parseval formula', 'double integrals', 'triple integrals']
+        'keywords': [
+          'maths 1',
+          'CS1101',
+          'jacobians',
+          'euler theorem',
+          'lagrange multipliers',
+          'leibnitz rule',
+          'beta function',
+          'gamma function',
+          'fourier series',
+          'parseval formula',
+          'double integrals',
+          'triple integrals'
+        ]
       };
-    } else if (c == 'CS1102' || n.contains('green chemistry') || n.contains('chemistry')) {
+    } else if (c == 'CS1102' ||
+        n.contains('green chemistry') ||
+        n.contains('chemistry')) {
       return {
         'units': [
           'Unit 1: Introduction to Green Chemistry',
@@ -611,7 +737,19 @@ class SearchIndexEngine {
           'Carbon Nanotubes',
           'Green Nanotechnology'
         ],
-        'keywords': ['chemistry', 'CS1102', 'green chemistry', 'twelve principles', 'green solvents', 'microwave synthesis', 'biodiesel', 'fuel cells', 'hardness of water', 'EDTA', 'carbon nanotubes']
+        'keywords': [
+          'chemistry',
+          'CS1102',
+          'green chemistry',
+          'twelve principles',
+          'green solvents',
+          'microwave synthesis',
+          'biodiesel',
+          'fuel cells',
+          'hardness of water',
+          'EDTA',
+          'carbon nanotubes'
+        ]
       };
     } else if (c == 'CS1103' || n.contains('english')) {
       return {
@@ -637,9 +775,24 @@ class SearchIndexEngine {
           'Synonyms and Antonyms',
           'Essay Writing and Summarizing'
         ],
-        'keywords': ['english', 'CS1103', 'grammar', 'vocabulary', 'essay writing', 'subject verb agreement', 'prepositions', 'articles', 'william hazlitt', 'rudyard kipling', 'george orwell']
+        'keywords': [
+          'english',
+          'CS1103',
+          'grammar',
+          'vocabulary',
+          'essay writing',
+          'subject verb agreement',
+          'prepositions',
+          'articles',
+          'william hazlitt',
+          'rudyard kipling',
+          'george orwell'
+        ]
       };
-    } else if (c == 'CS1104' || n.contains('c programming') || n.contains('programming using c') || n.contains('programming in c')) {
+    } else if (c == 'CS1104' ||
+        n.contains('c programming') ||
+        n.contains('programming using c') ||
+        n.contains('programming in c')) {
       return {
         'units': [
           'Chapter 1: Introduction to C',
@@ -666,9 +819,28 @@ class SearchIndexEngine {
           'File Handling (fopen, fclose, fread, fwrite, fseek, ftell)',
           'Command Line Arguments (argc, argv)'
         ],
-        'keywords': ['c', 'programming', 'CS1104', 'pointers', 'arrays', 'functions', 'recursion', 'strings', 'structs', 'unions', 'files', 'printf', 'scanf', 'fopen', 'argc', 'argv']
+        'keywords': [
+          'c',
+          'programming',
+          'CS1104',
+          'pointers',
+          'arrays',
+          'functions',
+          'recursion',
+          'strings',
+          'structs',
+          'unions',
+          'files',
+          'printf',
+          'scanf',
+          'fopen',
+          'argc',
+          'argv'
+        ]
       };
-    } else if (c == 'CS1105' || n.contains('it essentials') || n.contains('essentials')) {
+    } else if (c == 'CS1105' ||
+        n.contains('it essentials') ||
+        n.contains('essentials')) {
       return {
         'units': [
           'Chapter 1: Introduction to Computer',
@@ -688,9 +860,26 @@ class SearchIndexEngine {
           'Cybersecurity, Malware, Phishing, Firewalls and Encryption',
           'Emerging Technologies (AI, Machine Learning, IoT, Big Data, Blockchain, AR/VR)'
         ],
-        'keywords': ['it', 'essentials', 'CS1105', 'hardware', 'RAM', 'ROM', 'cache', 'networks', 'operating systems', 'cybersecurity', 'firewalls', 'AI', 'IoT', 'blockchain']
+        'keywords': [
+          'it',
+          'essentials',
+          'CS1105',
+          'hardware',
+          'RAM',
+          'ROM',
+          'cache',
+          'networks',
+          'operating systems',
+          'cybersecurity',
+          'firewalls',
+          'AI',
+          'IoT',
+          'blockchain'
+        ]
       };
-    } else if (c == 'CS1201' || n.contains('mathematics – ii') || n.contains('mathematics ii')) {
+    } else if (c == 'CS1201' ||
+        n.contains('mathematics – ii') ||
+        n.contains('mathematics ii')) {
       return {
         'units': [
           'Chapter 1: Linear Algebra',
@@ -712,7 +901,18 @@ class SearchIndexEngine {
           'Laplace Transforms, Inverse Laplace and Convolution Theorem',
           'Unit Step Function, Dirac Delta Impulse and Periodic Functions'
         ],
-        'keywords': ['maths 2', 'CS1201', 'linear algebra', 'eigenvalues', 'eigenvectors', 'Cayley Hamilton', 'Laplace transforms', 'differential equations', 'Gauss elimination', 'circuits']
+        'keywords': [
+          'maths 2',
+          'CS1201',
+          'linear algebra',
+          'eigenvalues',
+          'eigenvectors',
+          'Cayley Hamilton',
+          'Laplace transforms',
+          'differential equations',
+          'Gauss elimination',
+          'circuits'
+        ]
       };
     } else if (c == 'CS1202' || n.contains('physics')) {
       return {
@@ -733,7 +933,19 @@ class SearchIndexEngine {
           'Rectifiers, Transistors, LED and Solar Cells',
           'Sol-Gel Synthesis and Carbon Nanotubes (CNT)'
         ],
-        'keywords': ['physics', 'CS1202', 'waves', 'optics', 'lasers', 'quantum mechanics', 'Schrodinger equation', 'semiconductors', 'PN junction', 'Zener diode', 'nanotechnology']
+        'keywords': [
+          'physics',
+          'CS1202',
+          'waves',
+          'optics',
+          'lasers',
+          'quantum mechanics',
+          'Schrodinger equation',
+          'semiconductors',
+          'PN junction',
+          'Zener diode',
+          'nanotechnology'
+        ]
       };
     } else if (c == 'CS1203' || n.contains('data structures')) {
       return {
@@ -756,7 +968,23 @@ class SearchIndexEngine {
           'Minimum Spanning Trees (Prim\'s, Kruskal\'s)',
           'Dijkstra\'s Shortest Path Algorithm'
         ],
-        'keywords': ['ds', 'data structures', 'CS1203', 'stacks', 'queues', 'linked lists', 'trees', 'BST', 'AVL', 'heap sort', 'graphs', 'BFS', 'DFS', 'Dijkstra', 'algorithms']
+        'keywords': [
+          'ds',
+          'data structures',
+          'CS1203',
+          'stacks',
+          'queues',
+          'linked lists',
+          'trees',
+          'BST',
+          'AVL',
+          'heap sort',
+          'graphs',
+          'BFS',
+          'DFS',
+          'Dijkstra',
+          'algorithms'
+        ]
       };
     } else if (c == 'CS1204' || n.contains('digital logic')) {
       return {
@@ -776,12 +1004,30 @@ class SearchIndexEngine {
           'Flip-Flops (SR, JK, D, T, Master-Slave), Shift Registers and Counters',
           'RAM, ROM, PLA, PAL, FPGA and Introduction to Verilog/VHDL'
         ],
-        'keywords': ['dld', 'digital logic', 'CS1204', 'K maps', 'boolean algebra', 'adders', 'MUX', 'flip flops', 'counters', 'RAM', 'ROM', 'FPGA', 'Verilog']
+        'keywords': [
+          'dld',
+          'digital logic',
+          'CS1204',
+          'K maps',
+          'boolean algebra',
+          'adders',
+          'MUX',
+          'flip flops',
+          'counters',
+          'RAM',
+          'ROM',
+          'FPGA',
+          'Verilog'
+        ]
       };
     }
 
     return {
-      'units': ['Unit 1: Overview', 'Unit 2: Core Concepts', 'Unit 3: Advanced Topics'],
+      'units': [
+        'Unit 1: Overview',
+        'Unit 2: Core Concepts',
+        'Unit 3: Advanced Topics'
+      ],
       'topics': [name, '$code Basics', 'Core Algorithms', 'Applications'],
       'keywords': [name.toLowerCase(), code.toLowerCase()]
     };
@@ -794,7 +1040,8 @@ class SearchIndexEngine {
     List<HierarchicalTopicModel> topics,
   ) {
     for (final topic in topics) {
-      final levelLabel = topic.level != null ? ' (${topic.level!.displayName})' : '';
+      final levelLabel =
+          topic.level != null ? ' (${topic.level!.displayName})' : '';
 
       items.add(
         SearchableItem(
@@ -822,12 +1069,20 @@ class SearchIndexEngine {
             id: 'idx_res_${topic.id}_${res.id}',
             category: res.type.displayName,
             title: res.title,
-            subtitle: '${hub.title} → ${cat.title} → ${topic.title} • ${res.description}',
+            subtitle:
+                '${hub.title} → ${cat.title} → ${topic.title} • ${res.description}',
             subjectName: res.title,
             subjectCode: res.id,
             semester: 'N/A',
             year: 'N/A',
-            keywords: [res.title, res.description, topic.title, cat.title, hub.title, res.type.displayName],
+            keywords: [
+              res.title,
+              res.description,
+              topic.title,
+              cat.title,
+              hub.title,
+              res.type.displayName
+            ],
           ),
         );
       }

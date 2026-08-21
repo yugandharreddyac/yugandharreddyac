@@ -14,7 +14,6 @@ class DsaTopicDetailScreen extends StatefulWidget {
 }
 
 class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -24,8 +23,10 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSecondary = isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSecondary =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF475569);
 
     return DefaultTabController(
       length: 5,
@@ -87,13 +88,21 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
                         Row(
                           children: [
                             Chip(
-                              label: Text(topic.timeComplexity, style: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+                              label: Text(topic.timeComplexity,
+                                  style: const TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
                               backgroundColor: Colors.white.withAlpha(40),
                               visualDensity: VisualDensity.compact,
                             ),
                             const SizedBox(width: 6),
                             Chip(
-                              label: Text(topic.spaceComplexity, style: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+                              label: Text(topic.spaceComplexity,
+                                  style: const TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
                               backgroundColor: Colors.white.withAlpha(40),
                               visualDensity: VisualDensity.compact,
                             ),
@@ -122,8 +131,10 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
                 ),
                 labelColor: Colors.white,
                 unselectedLabelColor: textSecondary,
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                labelStyle:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
                 tabs: const [
                   Tab(text: '💡 Concept & Intuition'),
                   Tab(text: '📝 Algorithm & Pseudocode'),
@@ -138,11 +149,16 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildConceptTab(context, topic, isDark, textPrimary, textSecondary),
-                  _buildAlgorithmTab(context, topic, isDark, textPrimary, textSecondary),
-                  _buildCodeTab(context, topic, isDark, textPrimary, textSecondary),
-                  _buildComplexityTab(context, topic, isDark, textPrimary, textSecondary),
-                  _buildPracticeTab(context, topic, isDark, textPrimary, textSecondary),
+                  _buildConceptTab(
+                      context, topic, isDark, textPrimary, textSecondary),
+                  _buildAlgorithmTab(
+                      context, topic, isDark, textPrimary, textSecondary),
+                  _buildCodeTab(
+                      context, topic, isDark, textPrimary, textSecondary),
+                  _buildComplexityTab(
+                      context, topic, isDark, textPrimary, textSecondary),
+                  _buildPracticeTab(
+                      context, topic, isDark, textPrimary, textSecondary),
                 ],
               ),
             ),
@@ -152,36 +168,42 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
     );
   }
 
-  Widget _buildConceptTab(BuildContext context, DsaTopicModel topic, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildConceptTab(BuildContext context, DsaTopicModel topic,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _buildSectionHeader('Definition', Icons.description_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: topic.definition, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: topic.definition, isDark: isDark, textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Real-World Intuition', Icons.lightbulb_outline_rounded),
+        _buildSectionHeader(
+            'Real-World Intuition', Icons.lightbulb_outline_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: topic.intuition, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: topic.intuition, isDark: isDark, textPrimary: textPrimary),
         const SizedBox(height: 16),
-
-        _buildSectionHeader('Problem Solving Approach', Icons.alt_route_rounded),
+        _buildSectionHeader(
+            'Problem Solving Approach', Icons.alt_route_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: topic.approach, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: topic.approach, isDark: isDark, textPrimary: textPrimary),
       ],
     );
   }
 
-  Widget _buildAlgorithmTab(BuildContext context, DsaTopicModel topic, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildAlgorithmTab(BuildContext context, DsaTopicModel topic,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Step-by-Step Algorithm Logic', Icons.format_list_numbered_rounded),
+        _buildSectionHeader(
+            'Step-by-Step Algorithm Logic', Icons.format_list_numbered_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: topic.algorithm, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: topic.algorithm, isDark: isDark, textPrimary: textPrimary),
         const SizedBox(height: 16),
-
         _buildSectionHeader('Standard Pseudocode', Icons.code_rounded),
         const SizedBox(height: 8),
         Container(
@@ -193,18 +215,24 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
           ),
           child: SelectableText(
             topic.pseudocode,
-            style: const TextStyle(fontFamily: 'monospace', fontSize: 12.5, color: Colors.cyanAccent, height: 1.4),
+            style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 12.5,
+                color: Colors.cyanAccent,
+                height: 1.4),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildCodeTab(BuildContext context, DsaTopicModel topic, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildCodeTab(BuildContext context, DsaTopicModel topic, bool isDark,
+      Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _buildSectionHeader('Executable Code Implementation', Icons.terminal_rounded),
+        _buildSectionHeader(
+            'Executable Code Implementation', Icons.terminal_rounded),
         const SizedBox(height: 8),
         Container(
           width: double.infinity,
@@ -215,35 +243,47 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
           ),
           child: SelectableText(
             topic.codeImplementation,
-            style: const TextStyle(fontFamily: 'monospace', fontSize: 12.5, color: Color(0xFF38BDF8), height: 1.45),
+            style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 12.5,
+                color: Color(0xFF38BDF8),
+                height: 1.45),
           ),
         ),
         if (topic.example.isNotEmpty) ...[
           const SizedBox(height: 16),
-          _buildSectionHeader('Worked Out Example Walkthrough', Icons.smart_toy_rounded),
+          _buildSectionHeader(
+              'Worked Out Example Walkthrough', Icons.smart_toy_rounded),
           const SizedBox(height: 8),
-          _buildCard(context, text: topic.example, isDark: isDark, textPrimary: textPrimary),
+          _buildCard(context,
+              text: topic.example, isDark: isDark, textPrimary: textPrimary),
         ],
       ],
     );
   }
 
-  Widget _buildComplexityTab(BuildContext context, DsaTopicModel topic, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildComplexityTab(BuildContext context, DsaTopicModel topic,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _buildSectionHeader('Time Complexity Analysis', Icons.timer_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: topic.timeComplexity, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: topic.timeComplexity,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
         _buildSectionHeader('Space Complexity Analysis', Icons.memory_rounded),
         const SizedBox(height: 8),
-        _buildCard(context, text: topic.spaceComplexity, isDark: isDark, textPrimary: textPrimary),
+        _buildCard(context,
+            text: topic.spaceComplexity,
+            isDark: isDark,
+            textPrimary: textPrimary),
         const SizedBox(height: 16),
-
         if (topic.commonMistakes.isNotEmpty) ...[
-          _buildSectionHeader('Common Pitfalls & Off-by-One Traps', Icons.warning_amber_rounded),
+          _buildSectionHeader('Common Pitfalls & Off-by-One Traps',
+              Icons.warning_amber_rounded),
           const SizedBox(height: 8),
           ...topic.commonMistakes.map((mistake) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -256,9 +296,15 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.error_outline_rounded, color: Colors.amber, size: 18),
+                      const Icon(Icons.error_outline_rounded,
+                          color: Colors.amber, size: 18),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(mistake, style: TextStyle(fontSize: 12.5, color: textPrimary, height: 1.35))),
+                      Expanded(
+                          child: Text(mistake,
+                              style: TextStyle(
+                                  fontSize: 12.5,
+                                  color: textPrimary,
+                                  height: 1.35))),
                     ],
                   ),
                 ),
@@ -268,12 +314,14 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
     );
   }
 
-  Widget _buildPracticeTab(BuildContext context, DsaTopicModel topic, bool isDark, Color textPrimary, Color textSecondary) {
+  Widget _buildPracticeTab(BuildContext context, DsaTopicModel topic,
+      bool isDark, Color textPrimary, Color textSecondary) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         if (topic.practiceProblems.isNotEmpty) ...[
-          _buildSectionHeader('Curated LeetCode / Striver Practice Problems', Icons.task_alt_rounded),
+          _buildSectionHeader('Curated LeetCode / Striver Practice Problems',
+              Icons.task_alt_rounded),
           const SizedBox(height: 8),
           ...topic.practiceProblems.map((prob) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -282,22 +330,31 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                    border: Border.all(
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE2E8F0)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.fitness_center_rounded, color: Color(0xFF4F46E5), size: 18),
+                      const Icon(Icons.fitness_center_rounded,
+                          color: Color(0xFF4F46E5), size: 18),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(prob, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: textPrimary))),
+                      Expanded(
+                          child: Text(prob,
+                              style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary))),
                     ],
                   ),
                 ),
               )),
           const SizedBox(height: 16),
         ],
-
         if (topic.interviewQuestions.isNotEmpty) ...[
-          _buildSectionHeader('Top Tech Interview Questions', Icons.psychology_rounded),
+          _buildSectionHeader(
+              'Top Tech Interview Questions', Icons.psychology_rounded),
           const SizedBox(height: 8),
           ...topic.interviewQuestions.map((q) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -306,13 +363,22 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+                    border: Border.all(
+                        color: isDark
+                            ? AppColors.borderDark
+                            : const Color(0xFFE2E8F0)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.help_outline_rounded, color: AppColors.primary, size: 18),
+                      const Icon(Icons.help_outline_rounded,
+                          color: AppColors.primary, size: 18),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(q, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: textPrimary))),
+                      Expanded(
+                          child: Text(q,
+                              style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary))),
                     ],
                   ),
                 ),
@@ -327,19 +393,25 @@ class _DsaTopicDetailScreenState extends State<DsaTopicDetailScreen> {
       children: [
         Icon(icon, color: const Color(0xFF4F46E5), size: 20),
         const SizedBox(width: 8),
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5)),
+        Text(title,
+            style:
+                const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5)),
       ],
     );
   }
 
-  Widget _buildCard(BuildContext context, {required String text, required bool isDark, required Color textPrimary}) {
+  Widget _buildCard(BuildContext context,
+      {required String text,
+      required bool isDark,
+      required Color textPrimary}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
+        border: Border.all(
+            color: isDark ? AppColors.borderDark : const Color(0xFFE2E8F0)),
       ),
       child: Text(
         text.isEmpty ? 'Exhaustive textbook content provided in full.' : text,

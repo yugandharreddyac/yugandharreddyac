@@ -15,7 +15,8 @@ class RecentProvider extends ChangeNotifier {
   String? _errorMessage;
 
   RecentProvider(this.localStorage, {RecentRepository? recentRepository}) {
-    _recentRepository = recentRepository ?? RecentRepository(localStorage: localStorage);
+    _recentRepository =
+        recentRepository ?? RecentRepository(localStorage: localStorage);
     Future.microtask(() => loadRecentResources());
   }
 
@@ -26,7 +27,8 @@ class RecentProvider extends ChangeNotifier {
   bool get isSuccess => _state == RecentViewState.success;
   bool get isError => _state == RecentViewState.error;
   bool get isOffline => _state == RecentViewState.offline;
-  bool get isEmpty => _state == RecentViewState.empty || _recentResources.isEmpty;
+  bool get isEmpty =>
+      _state == RecentViewState.empty || _recentResources.isEmpty;
   String? get errorMessage => _errorMessage;
 
   void loadRecentResources() {
@@ -39,7 +41,8 @@ class RecentProvider extends ChangeNotifier {
         _setState(RecentViewState.success);
       }
     } catch (e) {
-      _setState(RecentViewState.error, error: 'Failed to load recent history: $e');
+      _setState(RecentViewState.error,
+          error: 'Failed to load recent history: $e');
     }
   }
 
@@ -60,7 +63,8 @@ class RecentProvider extends ChangeNotifier {
       );
       loadRecentResources();
     } catch (e) {
-      _setState(RecentViewState.error, error: 'Failed to record recent view: $e');
+      _setState(RecentViewState.error,
+          error: 'Failed to record recent view: $e');
     }
   }
 

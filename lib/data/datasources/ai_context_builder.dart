@@ -151,10 +151,15 @@ class RagDocumentContextProvider implements DocumentContextProvider {
 
       final chunksToUse = searchResults.isNotEmpty
           ? searchResults
-          : doc.chunks.take(3).map((c) => DocumentSearchResult(chunk: c, relevanceScore: 0.1, pageNumber: c.pageNumber)).toList();
+          : doc.chunks
+              .take(3)
+              .map((c) => DocumentSearchResult(
+                  chunk: c, relevanceScore: 0.1, pageNumber: c.pageNumber))
+              .toList();
 
       if (chunksToUse.isNotEmpty) {
-        buffer.writeln('\n--- DOCUMENT CONTEXT: "${doc.metadata.title}" (File: ${doc.metadata.fileName}) ---');
+        buffer.writeln(
+            '\n--- DOCUMENT CONTEXT: "${doc.metadata.title}" (File: ${doc.metadata.fileName}) ---');
         for (final res in chunksToUse) {
           buffer.writeln('[Page ${res.pageNumber}] ${res.chunk.text}');
           totalChunksFound++;
@@ -165,9 +170,12 @@ class RagDocumentContextProvider implements DocumentContextProvider {
     if (totalChunksFound == 0) return null;
 
     buffer.writeln('\n--- INSTRUCTIONS FOR DOCUMENT-GROUNDED ANSWERS ---');
-    buffer.writeln('1. Answer using the provided document excerpts above whenever the student asks about the attached document.');
-    buffer.writeln('2. Explicitly cite the document title and page number (e.g. "[Page X]") for factual claims.');
-    buffer.writeln('3. If the provided document does not contain enough information to answer the question reliably, explicitly state: "I couldn\'t find enough information in the selected document to answer that reliably." Do not fabricate missing document content.');
+    buffer.writeln(
+        '1. Answer using the provided document excerpts above whenever the student asks about the attached document.');
+    buffer.writeln(
+        '2. Explicitly cite the document title and page number (e.g. "[Page X]") for factual claims.');
+    buffer.writeln(
+        '3. If the provided document does not contain enough information to answer the question reliably, explicitly state: "I couldn\'t find enough information in the selected document to answer that reliably." Do not fabricate missing document content.');
 
     return buffer.toString();
   }
@@ -218,10 +226,10 @@ class AiContextComposer {
     // 4. Default anti-hallucination guardrail instructions
     var instructions = customSystemInstructions ??
         'You are UniDocs AI, a supportive Computer Science Engineering learning companion. '
-        'Provide accurate, pedagogical, and concise explanations. '
-        'Always prioritize verified UniDocs curriculum resources when available. '
-        'Never fabricate nonexistent resource IDs, chapter names, or routes. '
-        'Tailor advice to the student\'s academic stage, identified weaknesses, and career track.';
+            'Provide accurate, pedagogical, and concise explanations. '
+            'Always prioritize verified UniDocs curriculum resources when available. '
+            'Never fabricate nonexistent resource IDs, chapter names, or routes. '
+            'Tailor advice to the student\'s academic stage, identified weaknesses, and career track.';
 
     // Inject document RAG context if available
     if (documentContextText != null && documentContextText.trim().isNotEmpty) {

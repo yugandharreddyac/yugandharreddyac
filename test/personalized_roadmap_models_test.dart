@@ -8,7 +8,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('PersonalizedProfile Model Tests', () {
-    test('PersonalizedProfile serializes and deserializes to JSON seamlessly', () {
+    test('PersonalizedProfile serializes and deserializes to JSON seamlessly',
+        () {
       final profile = PersonalizedProfile(
         academicStage: AcademicStage.thirdYear,
         goals: ['Placement', 'Software Development'],
@@ -50,7 +51,8 @@ void main() {
       expect(decoded.primaryLanguage, equals('Python'));
       expect(decoded.secondaryLanguage, equals('C++'));
       expect(decoded.dailyLearningTimeMinutes, equals(120));
-      expect(decoded.skillLevels['programming'], equals(SkillLevel.intermediate));
+      expect(
+          decoded.skillLevels['programming'], equals(SkillLevel.intermediate));
       expect(decoded.skillLevels['dsa'], equals(SkillLevel.basic));
       expect(decoded.strengths, contains('Programming'));
       expect(decoded.weaknesses, contains('DSA'));
@@ -58,7 +60,9 @@ void main() {
       expect(decoded.alreadyCompletedSkills, contains('Python Basics'));
     });
 
-    test('PersonalizedProfile handles missing optional fields gracefully with defaults', () {
+    test(
+        'PersonalizedProfile handles missing optional fields gracefully with defaults',
+        () {
       const minimalMap = {
         'academicStage': 'secondYear',
         'goals': ['Placement'],
@@ -128,7 +132,8 @@ void main() {
       expect(fromMap.difficulty, equals(RoadmapDifficulty.beginner));
     });
 
-    test('RoadmapPhase computes progress and completion metrics dynamically', () {
+    test('RoadmapPhase computes progress and completion metrics dynamically',
+        () {
       const item1 = RoadmapItem(
         id: 'i1',
         title: 'Task 1',
@@ -194,7 +199,9 @@ void main() {
       repository = RoadmapRepository();
     });
 
-    test('PersonalizedRoadmap calculates overall progress and identifies next task', () {
+    test(
+        'PersonalizedRoadmap calculates overall progress and identifies next task',
+        () {
       const item1 = RoadmapItem(
         id: 'i1',
         title: 'Python Functions',
@@ -246,7 +253,8 @@ void main() {
       expect(roadmap.findItemById('i1')?.title, equals('Python Functions'));
     });
 
-    test('RoadmapRepository saves, loads, and updates personalized roadmap', () async {
+    test('RoadmapRepository saves, loads, and updates personalized roadmap',
+        () async {
       const item1 = RoadmapItem(
         id: 'task_01',
         title: 'Git Version Control',
@@ -285,17 +293,23 @@ void main() {
       final loaded = await repository.loadPersonalizedRoadmap();
       expect(loaded, isNotNull);
       expect(loaded!.id, equals('rm_101'));
-      expect(loaded.phases.first.items.first.title, equals('Git Version Control'));
-      expect(loaded.phases.first.items.first.status, equals(RoadmapItemStatus.notStarted));
+      expect(
+          loaded.phases.first.items.first.title, equals('Git Version Control'));
+      expect(loaded.phases.first.items.first.status,
+          equals(RoadmapItemStatus.notStarted));
 
       // Update status to completed
-      await repository.updateRoadmapItemStatus('task_01', RoadmapItemStatus.completed);
+      await repository.updateRoadmapItemStatus(
+          'task_01', RoadmapItemStatus.completed);
       final updated = await repository.loadPersonalizedRoadmap();
-      expect(updated!.phases.first.items.first.status, equals(RoadmapItemStatus.completed));
+      expect(updated!.phases.first.items.first.status,
+          equals(RoadmapItemStatus.completed));
       expect(updated.overallProgress, equals(100.0));
     });
 
-    test('Backward Compatibility: Legacy UserGoalProfile remains completely functional', () async {
+    test(
+        'Backward Compatibility: Legacy UserGoalProfile remains completely functional',
+        () async {
       const legacyProfile = UserGoalProfile(
         year: StudentYear.thirdYear,
         goal: CareerGoal.softwarePlacement,

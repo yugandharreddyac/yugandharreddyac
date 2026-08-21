@@ -56,7 +56,8 @@ class InMemoryDocumentRepository implements DocumentRepository {
   @override
   Future<void> saveDocument(DocumentIndex index) async {
     // Evict oldest if exceeding session cache limit
-    if (_store.length >= _maxCachedDocuments && !_store.containsKey(index.documentId)) {
+    if (_store.length >= _maxCachedDocuments &&
+        !_store.containsKey(index.documentId)) {
       final oldestKey = _store.keys.first;
       _store.remove(oldestKey);
     }

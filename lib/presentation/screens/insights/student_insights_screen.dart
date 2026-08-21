@@ -16,8 +16,10 @@ class StudentInsightsScreen extends StatelessWidget {
     const amberWarning = Color(0xFFD97706);
     final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
     final textPrimary = isDark ? Colors.white : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
-    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+    final textSubtitle =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final borderColor =
+        isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
 
     final profile = roadmapProvider.profile;
     final insights = roadmapProvider.getStudentInsights();
@@ -50,7 +52,9 @@ class StudentInsightsScreen extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isDark ? const Color(0xFF4338CA) : const Color(0xFFBFDBFE),
+                  color: isDark
+                      ? const Color(0xFF4338CA)
+                      : const Color(0xFFBFDBFE),
                 ),
               ),
               child: Column(
@@ -64,7 +68,8 @@ class StudentInsightsScreen extends StatelessWidget {
                           color: royalBlue,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(profile?.goal.icon ?? Icons.school_rounded, color: Colors.white, size: 22),
+                        child: Icon(profile?.goal.icon ?? Icons.school_rounded,
+                            color: Colors.white, size: 22),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -72,7 +77,8 @@ class StudentInsightsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              profile?.goal.title ?? 'Software Engineering Target',
+                              profile?.goal.title ??
+                                  'Software Engineering Target',
                               style: GoogleFonts.inter(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -95,7 +101,10 @@ class StudentInsightsScreen extends StatelessWidget {
                   const SizedBox(height: 18),
                   Text(
                     'Overall Roadmap Completion',
-                    style: GoogleFonts.inter(fontSize: 13, color: textSubtitle, fontWeight: FontWeight.w600),
+                    style: GoogleFonts.inter(
+                        fontSize: 13,
+                        color: textSubtitle,
+                        fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -106,7 +115,9 @@ class StudentInsightsScreen extends StatelessWidget {
                         style: GoogleFonts.inter(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: insights.overallPercentage > 0 ? emeraldGreen : royalBlue,
+                          color: insights.overallPercentage > 0
+                              ? emeraldGreen
+                              : royalBlue,
                         ),
                       ),
                     ],
@@ -117,9 +128,13 @@ class StudentInsightsScreen extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: insights.overallPercentage / 100.0,
                       minHeight: 10,
-                      backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFCBD5E1),
+                      backgroundColor: isDark
+                          ? Colors.black.withAlpha(64)
+                          : const Color(0xFFCBD5E1),
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        insights.overallPercentage > 0 ? emeraldGreen : royalBlue,
+                        insights.overallPercentage > 0
+                            ? emeraldGreen
+                            : royalBlue,
                       ),
                     ),
                   ),
@@ -132,7 +147,10 @@ class StudentInsightsScreen extends StatelessWidget {
             // Empirical Topic Breakdown Grid
             Text(
               'Topic Progress Breakdown',
-              style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary),
+              style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary),
             ),
             const SizedBox(height: 12),
 
@@ -178,7 +196,10 @@ class StudentInsightsScreen extends StatelessWidget {
             // Stage-by-Stage Completion Progress
             Text(
               '4-Stage Completion Insights',
-              style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary),
+              style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary),
             ),
             const SizedBox(height: 14),
 

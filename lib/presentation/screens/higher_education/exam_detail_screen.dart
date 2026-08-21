@@ -31,8 +31,10 @@ class ExamDetailScreen extends StatelessWidget {
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF3F6FB);
     final cardColor = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE5E7EB);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF111827);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
 
     const royalBlue = Color(0xFF2563EB);
     const emeraldGreen = Color(0xFF10B981);
@@ -79,25 +81,33 @@ class ExamDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.white.withAlpha(40),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     exam.category.toUpperCase(),
-                    style: GoogleFonts.inter(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   exam.title,
-                  style: GoogleFonts.inter(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   exam.subtitle,
-                  style: GoogleFonts.inter(color: Colors.white.withAlpha(220), fontSize: 14),
+                  style: GoogleFonts.inter(
+                      color: Colors.white.withAlpha(220), fontSize: 14),
                 ),
               ],
             ),
@@ -112,15 +122,19 @@ class ExamDetailScreen extends StatelessWidget {
             title: '📖 Overview & Eligibility Criteria',
             textPrimary: textPrimary,
             children: [
-              Text(exam.overview, style: GoogleFonts.inter(fontSize: 14, color: textSubtitle, height: 1.5)),
+              Text(exam.overview,
+                  style: GoogleFonts.inter(
+                      fontSize: 14, color: textSubtitle, height: 1.5)),
               const SizedBox(height: 14),
               _buildSubHeading('Eligibility Criteria', textPrimary),
               const SizedBox(height: 4),
-              Text(exam.eligibilityCriteria, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+              Text(exam.eligibilityCriteria,
+                  style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
               const SizedBox(height: 14),
               _buildSubHeading('Who Should Apply', textPrimary),
               const SizedBox(height: 4),
-              Text(exam.whoShouldApply, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+              Text(exam.whoShouldApply,
+                  style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
             ],
           ),
 
@@ -135,7 +149,8 @@ class ExamDetailScreen extends StatelessWidget {
             children: [
               _buildSubHeading('Exam Pattern', textPrimary),
               const SizedBox(height: 4),
-              Text(exam.examPattern, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+              Text(exam.examPattern,
+                  style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
               const SizedBox(height: 14),
               _buildSubHeading('Syllabus Core Modules', textPrimary),
               const SizedBox(height: 8),
@@ -144,9 +159,13 @@ class ExamDetailScreen extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.check_circle_outline_rounded, color: emeraldGreen, size: 18),
+                        const Icon(Icons.check_circle_outline_rounded,
+                            color: emeraldGreen, size: 18),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(topic, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle))),
+                        Expanded(
+                            child: Text(topic,
+                                style: GoogleFonts.inter(
+                                    fontSize: 13, color: textSubtitle))),
                       ],
                     ),
                   )),
@@ -167,17 +186,24 @@ class ExamDetailScreen extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+                        color: isDark
+                            ? const Color(0xFF0F172A)
+                            : const Color(0xFFF8FAFC),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: borderColor),
                       ),
-                      child: Text(step, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: textPrimary)),
+                      child: Text(step,
+                          style: GoogleFonts.inter(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: textPrimary)),
                     ),
                   )),
               const SizedBox(height: 12),
               _buildSubHeading('Success Strategy', textPrimary),
               const SizedBox(height: 4),
-              Text(exam.successStrategy, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+              Text(exam.successStrategy,
+                  style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
             ],
           ),
 
@@ -194,9 +220,15 @@ class ExamDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Row(
                       children: [
-                        const Icon(Icons.menu_book_rounded, color: royalBlue, size: 18),
+                        const Icon(Icons.menu_book_rounded,
+                            color: royalBlue, size: 18),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(book, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: textPrimary))),
+                        Expanded(
+                            child: Text(book,
+                                style: GoogleFonts.inter(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: textPrimary))),
                       ],
                     ),
                   )),
@@ -218,9 +250,12 @@ class ExamDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Row(
                       children: [
-                        const Icon(Icons.play_circle_fill_rounded, color: Colors.redAccent, size: 18),
+                        const Icon(Icons.play_circle_fill_rounded,
+                            color: Colors.redAccent, size: 18),
                         const SizedBox(width: 8),
-                        Text(ch, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+                        Text(ch,
+                            style: GoogleFonts.inter(
+                                fontSize: 13, color: textSubtitle)),
                       ],
                     ),
                   )),
@@ -229,20 +264,27 @@ class ExamDetailScreen extends StatelessWidget {
               const SizedBox(height: 8),
               ...exam.officialWebsites.map((url) => Container(
                     margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 10),
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+                      color: isDark
+                          ? const Color(0xFF0F172A)
+                          : const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.language_rounded, color: royalBlue, size: 18),
+                        const Icon(Icons.language_rounded,
+                            color: royalBlue, size: 18),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
                             url,
-                            style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: royalBlue),
+                            style: GoogleFonts.inter(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: royalBlue),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -251,14 +293,17 @@ class ExamDetailScreen extends StatelessWidget {
                         ElevatedButton.icon(
                           onPressed: () => _launchUrl(url),
                           icon: const Icon(Icons.open_in_new_rounded, size: 14),
-                          label: const Text('Open Official Website', style: TextStyle(fontSize: 11)),
+                          label: const Text('Open Official Website',
+                              style: TextStyle(fontSize: 11)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: royalBlue,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
                           ),
                         ),
                       ],
@@ -278,23 +323,38 @@ class ExamDetailScreen extends StatelessWidget {
             children: [
               _buildSubHeading('Expected Salary Range', textPrimary),
               const SizedBox(height: 4),
-              Text(exam.salaryRange, style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: emeraldGreen)),
+              Text(exam.salaryRange,
+                  style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: emeraldGreen)),
               const SizedBox(height: 14),
               _buildSubHeading('Career Opportunities', textPrimary),
               const SizedBox(height: 4),
-              Text(exam.careerOpportunities, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+              Text(exam.careerOpportunities,
+                  style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
               if (exam.topInstitutes.isNotEmpty) ...[
                 const SizedBox(height: 14),
-                _buildSubHeading('Top Participating Institutes / Universities', textPrimary),
+                _buildSubHeading(
+                    'Top Participating Institutes / Universities', textPrimary),
                 const SizedBox(height: 6),
                 Wrap(
                   spacing: 6,
                   runSpacing: 6,
-                  children: exam.topInstitutes.map((inst) => Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(color: royalBlue.withAlpha(20), borderRadius: BorderRadius.circular(8)),
-                        child: Text(inst, style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: royalBlue)),
-                      )).toList(),
+                  children: exam.topInstitutes
+                      .map((inst) => Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                                color: royalBlue.withAlpha(20),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Text(inst,
+                                style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: royalBlue)),
+                          ))
+                      .toList(),
                 ),
               ],
             ],
@@ -314,10 +374,18 @@ class ExamDetailScreen extends StatelessWidget {
                 const SizedBox(height: 6),
                 ...exam.latestNotifications.map((notif) => ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.notifications_active_rounded, color: Colors.orangeAccent, size: 20),
-                      title: Text(notif.title, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold, color: textPrimary)),
-                      subtitle: Text('Date: ${notif.date}', style: GoogleFonts.inter(fontSize: 11, color: textSubtitle)),
-                      trailing: const Icon(Icons.open_in_new_rounded, size: 16, color: royalBlue),
+                      leading: const Icon(Icons.notifications_active_rounded,
+                          color: Colors.orangeAccent, size: 20),
+                      title: Text(notif.title,
+                          style: GoogleFonts.inter(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: textPrimary)),
+                      subtitle: Text('Date: ${notif.date}',
+                          style: GoogleFonts.inter(
+                              fontSize: 11, color: textSubtitle)),
+                      trailing: const Icon(Icons.open_in_new_rounded,
+                          size: 16, color: royalBlue),
                       onTap: () => _launchUrl(notif.url),
                     )),
                 const SizedBox(height: 14),
@@ -325,11 +393,17 @@ class ExamDetailScreen extends StatelessWidget {
               _buildSubHeading('Frequently Asked Questions', textPrimary),
               const SizedBox(height: 6),
               ...exam.faqs.map((faq) => ExpansionTile(
-                    title: Text(faq.question, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold, color: textPrimary)),
+                    title: Text(faq.question,
+                        style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: textPrimary)),
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(12),
-                        child: Text(faq.answer, style: GoogleFonts.inter(fontSize: 13, color: textSubtitle)),
+                        child: Text(faq.answer,
+                            style: GoogleFonts.inter(
+                                fontSize: 13, color: textSubtitle)),
                       ),
                     ],
                   )),
@@ -345,15 +419,20 @@ class ExamDetailScreen extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${exam.title} Preparation Guide downloaded for offline reading!')),
+                  SnackBar(
+                      content: Text(
+                          '${exam.title} Preparation Guide downloaded for offline reading!')),
                 );
               },
               icon: const Icon(Icons.download_rounded, size: 20),
-              label: Text('Download Complete Syllabus PDF ➔', style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16)),
+              label: Text('Download Complete Syllabus PDF ➔',
+                  style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold, fontSize: 16)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: royalBlue,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
               ),
             ),
           ),
@@ -381,7 +460,11 @@ class ExamDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: textPrimary)),
+          Text(title,
+              style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: textPrimary)),
           const SizedBox(height: 14),
           ...children,
         ],
@@ -390,6 +473,8 @@ class ExamDetailScreen extends StatelessWidget {
   }
 
   Widget _buildSubHeading(String text, Color textPrimary) {
-    return Text(text, style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary));
+    return Text(text,
+        style: GoogleFonts.inter(
+            fontSize: 14, fontWeight: FontWeight.bold, color: textPrimary));
   }
 }

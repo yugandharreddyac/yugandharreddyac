@@ -11,7 +11,8 @@ import 'package:csse_study_hub/data/repositories/pdf_repository.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Phase 12 — Production Content & Release Candidate Validation Tests', () {
+  group('Phase 12 — Production Content & Release Candidate Validation Tests',
+      () {
     final catalog = AcademicResourceCatalog.allAcademicResources;
 
     test('1. Production Catalog Metadata Audit & Non-Empty Descriptions', () {
@@ -38,9 +39,18 @@ void main() {
       }
     });
 
-    test('3. Copyright Safety Tier Compliance (external_copyrighted vs hosted)', () {
+    test('3. Copyright Safety Tier Compliance (external_copyrighted vs hosted)',
+        () {
       for (final res in catalog) {
-        expect(res.copyrightTier, isIn(['created_by_cssed', 'open_licensed', 'public_domain', 'officially_provided', 'external_copyrighted']));
+        expect(
+            res.copyrightTier,
+            isIn([
+              'created_by_cssed',
+              'open_licensed',
+              'public_domain',
+              'officially_provided',
+              'external_copyrighted'
+            ]));
         if (res.isExternalCopyrighted) {
           expect(res.isDownloadable, isFalse);
           expect(res.storageUrl.startsWith('https://'), isTrue);
@@ -48,9 +58,12 @@ void main() {
       }
     });
 
-    test('4. Availability Status Classification (available vs coming_soon)', () {
-      final availableCount = catalog.where((r) => r.availabilityStatus == 'available').length;
-      final comingSoonCount = catalog.where((r) => r.availabilityStatus == 'coming_soon').length;
+    test('4. Availability Status Classification (available vs coming_soon)',
+        () {
+      final availableCount =
+          catalog.where((r) => r.availabilityStatus == 'available').length;
+      final comingSoonCount =
+          catalog.where((r) => r.availabilityStatus == 'coming_soon').length;
 
       expect(availableCount, greaterThan(0));
       expect(comingSoonCount, greaterThan(0));
@@ -59,10 +72,12 @@ void main() {
     test('5. PdfRepository Duplicate Resource ID & Malformed Scheme Audit', () {
       final pdfRepo = PdfRepository();
       final validationErrors = pdfRepo.validateDocumentUrls(catalog);
-      expect(validationErrors, isEmpty, reason: 'Catalog must contain 0 scheme errors and 0 duplicate IDs');
+      expect(validationErrors, isEmpty,
+          reason: 'Catalog must contain 0 scheme errors and 0 duplicate IDs');
     });
 
-    test('6. Global Search Index Engine Integration with Production Resources', () {
+    test('6. Global Search Index Engine Integration with Production Resources',
+        () {
       final searchEngine = SearchIndexEngine();
       searchEngine.buildIndex(MockData.subjects, catalog);
 
@@ -77,7 +92,8 @@ void main() {
 
     test('7. R2StorageHelper & AppConfig Production Settings Verification', () {
       AppConfig.environment = AppEnvironment.prod;
-      expect(AppConfig.cdnBaseUrl, equals('https://cdn.csse-study-hub.org/academic'));
+      expect(AppConfig.cdnBaseUrl,
+          equals('https://cdn.csse-study-hub.org/academic'));
 
       final path = R2StorageHelper.buildR2StoragePath(
         yearId: 'year_1',
@@ -87,27 +103,40 @@ void main() {
         documentType: 'notes',
         fileName: 'c_syntax.pdf',
       );
-      expect(path, equals('academic/year_1/sem_1_1/cs1104/unit_1/notes/c_syntax.pdf'));
+      expect(path,
+          equals('academic/year_1/sem_1_1/cs1104/unit_1/notes/c_syntax.pdf'));
     });
 
-    test('8. Secret Credentials Scan: Zero hardcoded secrets in source files', () {
+    test('8. Secret Credentials Scan: Zero hardcoded secrets in source files',
+        () {
       final libDir = Directory('lib');
-      final files = libDir.listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'));
-      final secretPattern = RegExp(r'(r2_access_key|r2_secret_key|aws_secret_access_key|private_key|api_secret)\s*=\s*["\x27][^"\x27]+["\x27]', caseSensitive: false);
+      final files = libDir
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'));
+      final secretPattern = RegExp(
+          r'(r2_access_key|r2_secret_key|aws_secret_access_key|private_key|api_secret)\s*=\s*["\x27][^"\x27]+["\x27]',
+          caseSensitive: false);
 
       for (final file in files) {
         final content = file.readAsStringSync();
-        expect(secretPattern.hasMatch(content), isFalse, reason: 'File ${file.path} contains forbidden hardcoded secret credentials!');
+        expect(secretPattern.hasMatch(content), isFalse,
+            reason:
+                'File ${file.path} contains forbidden hardcoded secret credentials!');
       }
     });
 
-    test('9. Academic Hierarchy Integrity Verification (4 Years, 8 Semesters, 30 Subjects)', () {
+    test(
+        '9. Academic Hierarchy Integrity Verification (4 Years, 8 Semesters, 30 Subjects)',
+        () {
       expect(MockData.years.length, equals(4));
       expect(MockData.semesters.length, equals(8));
       expect(MockData.subjects.length, greaterThanOrEqualTo(30));
     });
 
-    test('10. Non-Academic Educational Hubs Structural Integrity Verification (72 Topics)', () {
+    test(
+        '10. Non-Academic Educational Hubs Structural Integrity Verification (72 Topics)',
+        () {
       final allHubs = NonAcademicData.allHubs;
       expect(allHubs.length, equals(6));
 

@@ -7,7 +7,7 @@ void main() {
 
   test('Run Baseline Audit for Phase 7', () {
     final hubs = NonAcademicData.allHubs;
-    
+
     print('====================================================');
     print('PHASE 7 BASELINE EDUCATIONAL CONTENT AUDIT REPORT');
     print('====================================================\n');
@@ -21,7 +21,7 @@ void main() {
     int invalidUrlsCount = 0;
     List<String> topicsBelow60 = [];
     List<String> topicsBelow80 = [];
-    
+
     Map<String, List<double>> hubScores = {};
 
     for (final hub in hubs) {
@@ -32,7 +32,8 @@ void main() {
       print('----------------------------------------------------');
 
       for (final cat in hub.categories) {
-        print('  Category: ${cat.title} (${cat.id}) | Topics: ${cat.topics.length}');
+        print(
+            '  Category: ${cat.title} (${cat.id}) | Topics: ${cat.topics.length}');
         for (final topic in cat.topics) {
           grandTotalTopics++;
 
@@ -61,7 +62,10 @@ void main() {
 
           // C. Examples / Demonstration (15)
           double exampleScore = 0;
-          final hasVideoOrNotes = topic.resources.any((r) => r.type == HierarchyResourceType.notes || r.type == HierarchyResourceType.video || r.type == HierarchyResourceType.pdf);
+          final hasVideoOrNotes = topic.resources.any((r) =>
+              r.type == HierarchyResourceType.notes ||
+              r.type == HierarchyResourceType.video ||
+              r.type == HierarchyResourceType.pdf);
           if (hasVideoOrNotes && topic.subtopics.isNotEmpty) {
             exampleScore = 15;
           } else if (hasVideoOrNotes) {
@@ -72,8 +76,17 @@ void main() {
 
           // D. Practice (15)
           double practiceScore = 0;
-          final practiceResCount = topic.resources.where((r) => r.type == HierarchyResourceType.practice).length +
-              topic.subtopics.fold(0, (acc, s) => acc + s.resources.where((r) => r.type == HierarchyResourceType.practice).length);
+          final practiceResCount = topic.resources
+                  .where((r) => r.type == HierarchyResourceType.practice)
+                  .length +
+              topic.subtopics.fold(
+                  0,
+                  (acc, s) =>
+                      acc +
+                      s.resources
+                          .where(
+                              (r) => r.type == HierarchyResourceType.practice)
+                          .length);
           if (practiceResCount >= 2) {
             practiceScore = 15;
           } else if (practiceResCount == 1) {
@@ -83,17 +96,32 @@ void main() {
           // E. Practical Application (10)
           double applicationScore = 0;
           final descLower = topic.description.toLowerCase();
-          if (descLower.contains('build') || descLower.contains('real-world') || descLower.contains('production') || descLower.contains('architecture') || descLower.contains('application') || descLower.contains('system')) {
+          if (descLower.contains('build') ||
+              descLower.contains('real-world') ||
+              descLower.contains('production') ||
+              descLower.contains('architecture') ||
+              descLower.contains('application') ||
+              descLower.contains('system')) {
             applicationScore = 10;
           } else if (descLen > 50) {
             applicationScore = 5;
           }
 
           // F. Project / Build (10)
-          bool projectApplies = hub.id == 'projects' || topic.level == LearningLevel.projects || descLower.contains('project');
+          bool projectApplies = hub.id == 'projects' ||
+              topic.level == LearningLevel.projects ||
+              descLower.contains('project');
           double projectScore = 0;
-          final projResCount = topic.resources.where((r) => r.type == HierarchyResourceType.project).length +
-              topic.subtopics.fold(0, (acc, s) => acc + s.resources.where((r) => r.type == HierarchyResourceType.project).length);
+          final projResCount = topic.resources
+                  .where((r) => r.type == HierarchyResourceType.project)
+                  .length +
+              topic.subtopics.fold(
+                  0,
+                  (acc, s) =>
+                      acc +
+                      s.resources
+                          .where((r) => r.type == HierarchyResourceType.project)
+                          .length);
           if (projResCount >= 1) {
             projectScore = 10;
           } else if (projectApplies) {
@@ -104,7 +132,8 @@ void main() {
 
           // G. Resources (10)
           double resourceScore = 0;
-          final totalResForTopic = topic.resources.length + topic.subtopics.fold(0, (acc, s) => acc + s.resources.length);
+          final totalResForTopic = topic.resources.length +
+              topic.subtopics.fold(0, (acc, s) => acc + s.resources.length);
           if (totalResForTopic >= 3) {
             resourceScore = 10;
           } else if (totalResForTopic >= 1) {
@@ -113,7 +142,14 @@ void main() {
 
           // H. Career / Exam / Startup Relevance (5)
           double careerScore = 0;
-          if (hub.id == 'placement' || hub.id == 'higher_education' || hub.id == 'entrepreneurship' || descLower.contains('career') || descLower.contains('interview') || descLower.contains('gate') || descLower.contains('resume') || descLower.contains('startup')) {
+          if (hub.id == 'placement' ||
+              hub.id == 'higher_education' ||
+              hub.id == 'entrepreneurship' ||
+              descLower.contains('career') ||
+              descLower.contains('interview') ||
+              descLower.contains('gate') ||
+              descLower.contains('resume') ||
+              descLower.contains('startup')) {
             careerScore = 5;
           } else {
             careerScore = 2;
@@ -121,7 +157,13 @@ void main() {
 
           // Total calculation
           double maxPoints = 90;
-          double earnedPoints = conceptScore + progressionScore + exampleScore + practiceScore + applicationScore + resourceScore + careerScore;
+          double earnedPoints = conceptScore +
+              progressionScore +
+              exampleScore +
+              practiceScore +
+              applicationScore +
+              resourceScore +
+              careerScore;
           if (projectScore != -1) {
             maxPoints = 100;
             earnedPoints += projectScore;
@@ -131,18 +173,23 @@ void main() {
           hubScores[hub.id]!.add(depthPercent);
 
           if (depthPercent < 60) {
-            topicsBelow60.add('[${hub.id}] ${cat.title} > ${topic.title} (${depthPercent.toStringAsFixed(1)}%)');
+            topicsBelow60.add(
+                '[${hub.id}] ${cat.title} > ${topic.title} (${depthPercent.toStringAsFixed(1)}%)');
           }
           if (depthPercent < 80) {
-            topicsBelow80.add('[${hub.id}] ${cat.title} > ${topic.title} (${depthPercent.toStringAsFixed(1)}%)');
+            topicsBelow80.add(
+                '[${hub.id}] ${cat.title} > ${topic.title} (${depthPercent.toStringAsFixed(1)}%)');
           }
 
           // Resource & URL audit
           for (final res in topic.resources) {
             totalResources++;
-            if (res.type == HierarchyResourceType.practice) practiceResourcesCount++;
-            if (res.type == HierarchyResourceType.project) projectResourcesCount++;
-            if (!res.url.startsWith('https://') && !res.url.startsWith('http://')) {
+            if (res.type == HierarchyResourceType.practice)
+              practiceResourcesCount++;
+            if (res.type == HierarchyResourceType.project)
+              projectResourcesCount++;
+            if (!res.url.startsWith('https://') &&
+                !res.url.startsWith('http://')) {
               invalidUrlsCount++;
             }
             if (uniqueUrls.contains(res.url)) {
@@ -155,9 +202,12 @@ void main() {
           for (final sub in topic.subtopics) {
             for (final res in sub.resources) {
               totalResources++;
-              if (res.type == HierarchyResourceType.practice) practiceResourcesCount++;
-              if (res.type == HierarchyResourceType.project) projectResourcesCount++;
-              if (!res.url.startsWith('https://') && !res.url.startsWith('http://')) {
+              if (res.type == HierarchyResourceType.practice)
+                practiceResourcesCount++;
+              if (res.type == HierarchyResourceType.project)
+                projectResourcesCount++;
+              if (!res.url.startsWith('https://') &&
+                  !res.url.startsWith('http://')) {
                 invalidUrlsCount++;
               }
               if (uniqueUrls.contains(res.url)) {
@@ -178,17 +228,20 @@ void main() {
     int totalTopicCount = 0;
 
     hubScores.forEach((hubId, scores) {
-      final avg = scores.isEmpty ? 0.0 : scores.reduce((a, b) => a + b) / scores.length;
+      final avg =
+          scores.isEmpty ? 0.0 : scores.reduce((a, b) => a + b) / scores.length;
       final gte80 = scores.where((s) => s >= 80).length;
       final range6079 = scores.where((s) => s >= 60 && s < 80).length;
       final lt60 = scores.where((s) => s < 60).length;
       sumAllDepths += scores.reduce((a, b) => a + b);
       totalTopicCount += scores.length;
 
-      print('Hub: $hubId | Topics: ${scores.length} | Avg Depth: ${avg.toStringAsFixed(1)}% | >=80%: $gte80 | 60-79%: $range6079 | <60%: $lt60');
+      print(
+          'Hub: $hubId | Topics: ${scores.length} | Avg Depth: ${avg.toStringAsFixed(1)}% | >=80%: $gte80 | 60-79%: $range6079 | <60%: $lt60');
     });
 
-    final grandAvgDepth = totalTopicCount == 0 ? 0.0 : sumAllDepths / totalTopicCount;
+    final grandAvgDepth =
+        totalTopicCount == 0 ? 0.0 : sumAllDepths / totalTopicCount;
     print('\nOVERALL BASELINE STATS:');
     print('Total Topics: $grandTotalTopics');
     print('Overall Content Depth Avg: ${grandAvgDepth.toStringAsFixed(1)}%');

@@ -58,7 +58,8 @@ class LearningPhaseModel {
 
 class SkillMatrixModel {
   final String skillName;
-  final String category; // 'Core CS', 'Programming Language', 'Tool', 'Framework', 'Database'
+  final String
+      category; // 'Core CS', 'Programming Language', 'Tool', 'Framework', 'Database'
   final String level; // 'Beginner', 'Intermediate', 'Advanced', 'Expert'
   final String importance; // 'Mandatory', 'Recommended', 'Optional'
   final String description;
@@ -123,9 +124,11 @@ class ChecklistItemModel {
 class BeyondAcademicsResourceModel {
   final String id;
   final String title;
-  final String provider; // e.g., 'MDN', 'freeCodeCamp', 'GeeksforGeeks', 'roadmap.sh', 'Official Docs'
+  final String
+      provider; // e.g., 'MDN', 'freeCodeCamp', 'GeeksforGeeks', 'roadmap.sh', 'Official Docs'
   final String url;
-  final String resourceType; // 'OfficialDoc', 'Tutorial', 'Course', 'YouTube', 'GitHub', 'Roadmap', 'Practice', 'Certification'
+  final String
+      resourceType; // 'OfficialDoc', 'Tutorial', 'Course', 'YouTube', 'GitHub', 'Roadmap', 'Practice', 'Certification'
   final String description;
   final String relatedTopic;
   final String difficulty;
@@ -169,7 +172,8 @@ class BeyondAcademicsResourceModel {
       isOfficial: json['isOfficial'] as bool? ?? true,
       lastVerified: json['lastVerified'] ?? '2026-08-08',
       isTimeSensitive: json['isTimeSensitive'] as bool? ?? false,
-      verificationNote: json['verificationNote'] ?? 'Official educational portal verified by UniDocs.',
+      verificationNote: json['verificationNote'] ??
+          'Official educational portal verified by UniDocs.',
       sourceType: ContentSource.values.firstWhere(
         (e) => e.toString() == 'ContentSource.${json['sourceType']}',
         orElse: () => ContentSource.official,
@@ -296,7 +300,8 @@ class CodingLanguageModel {
 class DsaTopicModel {
   final String id;
   final String topicName;
-  final String category; // 'Arrays', 'Strings', 'LinkedList', 'Stack', 'Queue', 'Trees', 'Graphs', 'DP', 'Greedy'
+  final String
+      category; // 'Arrays', 'Strings', 'LinkedList', 'Stack', 'Queue', 'Trees', 'Graphs', 'DP', 'Greedy'
   final String definition;
   final String intuition;
   final String approach;
@@ -389,7 +394,8 @@ class IndustryProjectModel {
   final List<String> interviewQuestions;
   final List<String> possibleImprovements;
   final String? githubUrl;
-  final String difficulty; // 'Beginner', 'Intermediate', 'Advanced', 'Major Project', 'Industry-style'
+  final String
+      difficulty; // 'Beginner', 'Intermediate', 'Advanced', 'Major Project', 'Industry-style'
 
   const IndustryProjectModel({
     required this.id,
@@ -431,13 +437,15 @@ class IndustryProjectModel {
       databaseRequirements: json['databaseRequirements'] ?? '',
       apiRequirements: json['apiRequirements'] ?? '',
       folderStructure: json['folderStructure'] ?? '',
-      implementationRoadmap: List<String>.from(json['implementationRoadmap'] ?? []),
+      implementationRoadmap:
+          List<String>.from(json['implementationRoadmap'] ?? []),
       testingRequirements: json['testingRequirements'] ?? '',
       deploymentRequirements: json['deploymentRequirements'] ?? '',
       readmeRequirements: json['readmeRequirements'] ?? '',
       resumeDescription: json['resumeDescription'] ?? '',
       interviewQuestions: List<String>.from(json['interviewQuestions'] ?? []),
-      possibleImprovements: List<String>.from(json['possibleImprovements'] ?? []),
+      possibleImprovements:
+          List<String>.from(json['possibleImprovements'] ?? []),
       githubUrl: json['githubUrl'],
       difficulty: json['difficulty'] ?? 'Intermediate',
     );
@@ -472,7 +480,8 @@ class IndustryProjectModel {
 class PlacementModuleModel {
   final String id;
   final String title;
-  final String moduleCategory; // 'Placement Roadmap', 'DSA Prep', 'Core CS', 'Aptitude', 'Reasoning', 'Verbal', 'Coding Tests', 'Technical Interviews', 'HR Interviews', 'Resume Prep', 'Mock Interviews', 'Company Prep', 'Interview Experiences', 'Placement Checklist'
+  final String
+      moduleCategory; // 'Placement Roadmap', 'DSA Prep', 'Core CS', 'Aptitude', 'Reasoning', 'Verbal', 'Coding Tests', 'Technical Interviews', 'HR Interviews', 'Resume Prep', 'Mock Interviews', 'Company Prep', 'Interview Experiences', 'Placement Checklist'
   final List<String> concepts;
   final List<String> interviewQuestions;
   final List<String> codingQuestions;
@@ -522,7 +531,8 @@ class PlacementModuleModel {
 class HigherEducationTopicModel {
   final String id;
   final String title;
-  final String category; // 'M.Tech', 'MS', 'MBA', 'PhD', 'Research', 'International', 'GATE', 'GRE', 'IELTS/TOEFL', 'Scholarships', 'Research Internships', 'SOP Guidance', 'LOR Guidance', 'Paper Guidance', 'Profile Building'
+  final String
+      category; // 'M.Tech', 'MS', 'MBA', 'PhD', 'Research', 'International', 'GATE', 'GRE', 'IELTS/TOEFL', 'Scholarships', 'Research Internships', 'SOP Guidance', 'LOR Guidance', 'Paper Guidance', 'Profile Building'
   final String degreeType;
   final String country;
   final List<String> admissionRequirements;
@@ -553,13 +563,15 @@ class HigherEducationTopicModel {
       category: json['category'] ?? 'M.Tech',
       degreeType: json['degreeType'] ?? 'M.Tech / MS',
       country: json['country'] ?? 'India & Global',
-      admissionRequirements: List<String>.from(json['admissionRequirements'] ?? []),
+      admissionRequirements:
+          List<String>.from(json['admissionRequirements'] ?? []),
       sopGuidance: json['sopGuidance'] ?? '',
       lorGuidance: json['lorGuidance'] ?? '',
       entranceExams: List<String>.from(json['entranceExams'] ?? []),
       scholarships: List<String>.from(json['scholarships'] ?? []),
       officialSources: (json['officialSources'] as List<dynamic>?)
-              ?.map((e) => BeyondAcademicsResourceModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) => BeyondAcademicsResourceModel.fromJson(
+                  Map<String, dynamic>.from(e)))
               .toList() ??
           [],
     );
@@ -645,12 +657,14 @@ class EmergingTechDetailModel {
       whyItMatters: json['whyItMatters'] ?? '',
       prerequisites: List<String>.from(json['prerequisites'] ?? []),
       coreConcepts: List<String>.from(json['coreConcepts'] ?? []),
-      programmingLanguages: List<String>.from(json['programmingLanguages'] ?? []),
+      programmingLanguages:
+          List<String>.from(json['programmingLanguages'] ?? []),
       mathematics: json['mathematics'] ?? '',
       tools: List<String>.from(json['tools'] ?? []),
       frameworks: List<String>.from(json['frameworks'] ?? []),
       learningPhases: (json['learningPhases'] as List<dynamic>?)
-              ?.map((e) => LearningPhaseModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) =>
+                  LearningPhaseModel.fromJson(Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       handsOnExercises: List<String>.from(json['handsOnExercises'] ?? []),
@@ -658,23 +672,28 @@ class EmergingTechDetailModel {
       portfolioIdeas: List<String>.from(json['portfolioIdeas'] ?? []),
       interviewQuestions: List<String>.from(json['interviewQuestions'] ?? []),
       careerRoles: List<String>.from(json['careerRoles'] ?? []),
-      industryApplications: List<String>.from(json['industryApplications'] ?? []),
+      industryApplications:
+          List<String>.from(json['industryApplications'] ?? []),
       commonMistakes: List<String>.from(json['commonMistakes'] ?? []),
       futureDirection: json['futureDirection'] ?? '',
       officialResources: (json['officialResources'] as List<dynamic>?)
-              ?.map((e) => BeyondAcademicsResourceModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) => BeyondAcademicsResourceModel.fromJson(
+                  Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       githubRepos: (json['githubRepos'] as List<dynamic>?)
-              ?.map((e) => BeyondAcademicsResourceModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) => BeyondAcademicsResourceModel.fromJson(
+                  Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       youtubeResources: (json['youtubeResources'] as List<dynamic>?)
-              ?.map((e) => BeyondAcademicsResourceModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) => BeyondAcademicsResourceModel.fromJson(
+                  Map<String, dynamic>.from(e)))
               .toList() ??
           [],
       roadmapResources: (json['roadmapResources'] as List<dynamic>?)
-              ?.map((e) => BeyondAcademicsResourceModel.fromJson(Map<String, dynamic>.from(e)))
+              ?.map((e) => BeyondAcademicsResourceModel.fromJson(
+                  Map<String, dynamic>.from(e)))
               .toList() ??
           [],
     );

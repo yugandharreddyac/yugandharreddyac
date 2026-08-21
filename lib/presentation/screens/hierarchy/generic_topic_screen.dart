@@ -52,7 +52,9 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
               yearId: 'non_academic',
               semesterId: 'non_academic',
               resourceType: widget.level?.displayName ?? 'Topic',
-              storageUrl: widget.topic.resources.isNotEmpty ? widget.topic.resources.first.url : '',
+              storageUrl: widget.topic.resources.isNotEmpty
+                  ? widget.topic.resources.first.url
+                  : '',
               fileSizeBytes: 0,
               lastUpdated: DateTime.now(),
             ),
@@ -73,8 +75,10 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     final bgColor = isDark ? AppColors.backgroundDark : const Color(0xFFF8FAFC);
-    final textPrimary = isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
-    final textSubtitle = isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
+    final textPrimary =
+        isDark ? AppColors.textPrimaryDark : const Color(0xFF0F172A);
+    final textSubtitle =
+        isDark ? AppColors.textSecondaryDark : const Color(0xFF64748B);
     final cardBg = isDark ? AppColors.cardDark : Colors.white;
     final borderColor = isDark ? AppColors.borderDark : const Color(0xFFE2E8F0);
 
@@ -86,7 +90,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
       roadmapProvider = context.watch<RoadmapProvider>();
       progress = roadmapProvider.getProgressForTopic(widget.topic.id);
     } catch (_) {}
-    final isBookmarked = roadmapProvider?.isTopicBookmarked(widget.topic.id) ?? false;
+    final isBookmarked =
+        roadmapProvider?.isTopicBookmarked(widget.topic.id) ?? false;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -116,7 +121,9 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
         actions: [
           IconButton(
             icon: Icon(
-              isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+              isBookmarked
+                  ? Icons.bookmark_rounded
+                  : Icons.bookmark_outline_rounded,
               color: isBookmarked ? royalBlue : textSubtitle,
             ),
             tooltip: isBookmarked ? 'Remove Bookmark' : 'Bookmark Topic',
@@ -142,8 +149,9 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                 const SizedBox(height: 16),
 
                 if (roadmapProvider != null)
-                  _buildActiveLearningBanner(context, roadmapProvider, isDark, royalBlue, textPrimary),
-                  
+                  _buildActiveLearningBanner(
+                      context, roadmapProvider, isDark, royalBlue, textPrimary),
+
                 const SizedBox(height: 16),
 
                 // Topic Banner Card
@@ -173,7 +181,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                               color: royalBlue.withAlpha(20),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(widget.topic.icon, color: royalBlue, size: 24),
+                            child: Icon(widget.topic.icon,
+                                color: royalBlue, size: 24),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -214,32 +223,50 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      
+
                       // STATUS & PROGRESS
                       if (progress != null) ...[
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
-                                color: progress.isFullyCompleted ? const Color(0xFF10B981) : (progress.isInProgress ? royalBlue : textSubtitle.withAlpha(50)),
+                                color: progress.isFullyCompleted
+                                    ? const Color(0xFF10B981)
+                                    : (progress.isInProgress
+                                        ? royalBlue
+                                        : textSubtitle.withAlpha(50)),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                progress.isFullyCompleted ? 'COMPLETED' : (progress.isInProgress ? 'IN PROGRESS' : 'NOT STARTED'),
-                                style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: progress.isFullyCompleted || progress.isInProgress ? Colors.white : textPrimary),
+                                progress.isFullyCompleted
+                                    ? 'COMPLETED'
+                                    : (progress.isInProgress
+                                        ? 'IN PROGRESS'
+                                        : 'NOT STARTED'),
+                                style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: progress.isFullyCompleted ||
+                                            progress.isInProgress
+                                        ? Colors.white
+                                        : textPrimary),
                               ),
                             ),
                             const Spacer(),
                             Text(
                               '${progress.completedCount} / 4 Activities',
-                              style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: textSubtitle),
+                              style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: textSubtitle),
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
                       ],
-                      
+
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
@@ -286,7 +313,7 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                           ],
                         ),
                       ),
-                      
+
                       // NEXT ACTION (If Completed)
                       if (progress != null && progress.isFullyCompleted) ...[
                         const SizedBox(height: 16),
@@ -301,7 +328,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.next_plan_rounded, color: Color(0xFF10B981), size: 20),
+                              const Icon(Icons.next_plan_rounded,
+                                  color: Color(0xFF10B981), size: 20),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: Column(
@@ -353,7 +381,7 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                 ),
 
                 const SizedBox(height: 24),
-                
+
                 Consumer<RoadmapProvider>(
                   builder: (context, provider, child) {
                     final skills = provider.getSkillsForTopic(widget.topic.id);
@@ -372,31 +400,41 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                         ),
                         const SizedBox(height: 12),
                         ...skills.map((s) => Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          decoration: BoxDecoration(
-                            color: cardBg,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: borderColor),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(s.skillName, style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: textPrimary)),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: royalBlue.withAlpha(isDark ? 30 : 15),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  s.level.name.toUpperCase(),
-                                  style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: royalBlue),
-                                ),
+                              margin: const EdgeInsets.only(bottom: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              decoration: BoxDecoration(
+                                color: cardBg,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: borderColor),
                               ),
-                            ],
-                          ),
-                        )),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(s.skillName,
+                                      style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                          color: textPrimary)),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          royalBlue.withAlpha(isDark ? 30 : 15),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      s.level.name.toUpperCase(),
+                                      style: GoogleFonts.inter(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: royalBlue),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
                         const SizedBox(height: 24),
                       ],
                     );
@@ -430,7 +468,10 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                         textSubtitle: textSubtitle,
                         royalBlue: royalBlue,
                         isDark: isDark,
-                      ).animate().fadeIn(delay: (index * 40).ms).slideX(begin: 0.03, end: 0);
+                      )
+                          .animate()
+                          .fadeIn(delay: (index * 40).ms)
+                          .slideX(begin: 0.03, end: 0);
                     },
                   ),
                   const SizedBox(height: 24),
@@ -462,16 +503,31 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                         textPrimary: textPrimary,
                         textSubtitle: textSubtitle,
                         isDark: isDark,
-                      ).animate().fadeIn(delay: (index * 50).ms).slideY(begin: 0.04, end: 0);
+                      )
+                          .animate()
+                          .fadeIn(delay: (index * 50).ms)
+                          .slideY(begin: 0.04, end: 0);
                     },
                   ),
                 ],
 
                 if (!widget.topic.hasSubtopics && !widget.topic.hasResources)
-                  _buildEmptyResourceState(isDark, cardBg, borderColor, textPrimary, textSubtitle),
-                  
-                if (roadmapProvider != null && roadmapProvider.getProgressForTopic(widget.topic.id).isFullyCompleted)
-                  _buildNextTopicSection(context, roadmapProvider, isDark, cardBg, borderColor, royalBlue, textPrimary, textSubtitle),
+                  _buildEmptyResourceState(
+                      isDark, cardBg, borderColor, textPrimary, textSubtitle),
+
+                if (roadmapProvider != null &&
+                    roadmapProvider
+                        .getProgressForTopic(widget.topic.id)
+                        .isFullyCompleted)
+                  _buildNextTopicSection(
+                      context,
+                      roadmapProvider,
+                      isDark,
+                      cardBg,
+                      borderColor,
+                      royalBlue,
+                      textPrimary,
+                      textSubtitle),
               ],
             ),
           ),
@@ -485,19 +541,24 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
       final roadmapProvider = context.read<RoadmapProvider>();
       final goal = roadmapProvider.profile?.goal;
       if (goal != null) {
-         return '\n\nCAREER CONNECTION\nThis topic directly contributes to your chosen goal: ${goal.title}.';
+        return '\n\nCAREER CONNECTION\nThis topic directly contributes to your chosen goal: ${goal.title}.';
       }
     } catch (_) {}
     return '';
   }
 
-  Widget _buildActiveLearningBanner(BuildContext context, RoadmapProvider provider, bool isDark, Color royalBlue, Color textPrimary) {
+  Widget _buildActiveLearningBanner(
+      BuildContext context,
+      RoadmapProvider provider,
+      bool isDark,
+      Color royalBlue,
+      Color textPrimary) {
     final progress = provider.getProgressForTopic(widget.topic.id);
-    
+
     String stateLabel = 'NOT STARTED';
     Color stateColor = Colors.grey;
     String nextAction = 'LEARN';
-    
+
     if (progress.isFullyCompleted) {
       stateLabel = 'COMPLETED ✓';
       stateColor = Colors.green;
@@ -532,32 +593,48 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
             children: [
               Text(
                 'Status: $stateLabel',
-                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: stateColor),
+                style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: stateColor),
               ),
               const SizedBox(height: 4),
               Text(
                 'Next Action: $nextAction',
-                style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: textPrimary),
+                style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: textPrimary),
               ),
             ],
           ),
           if (progress.isInProgress)
             ElevatedButton(
-              onPressed: () {},
+              onPressed: null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: stateColor,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
                 elevation: 0,
               ),
-              child: const Text('CONTINUE →', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text('CONTINUE →',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
         ],
       ),
     );
   }
 
-  Widget _buildNextTopicSection(BuildContext context, RoadmapProvider provider, bool isDark, Color cardBg, Color borderColor, Color royalBlue, Color textPrimary, Color textSubtitle) {
+  Widget _buildNextTopicSection(
+      BuildContext context,
+      RoadmapProvider provider,
+      bool isDark,
+      Color cardBg,
+      Color borderColor,
+      Color royalBlue,
+      Color textPrimary,
+      Color textSubtitle) {
     final nextTopicId = provider.getNextRecommendedTopicId(widget.topic.id);
     if (nextTopicId == null) return const SizedBox.shrink();
 
@@ -577,13 +654,26 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.check_circle_rounded, color: Colors.green, size: 40),
+            const Icon(Icons.check_circle_rounded,
+                color: Colors.green, size: 40),
             const SizedBox(height: 12),
-            Text('TOPIC COMPLETED ✓', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green)),
+            Text('TOPIC COMPLETED ✓',
+                style: GoogleFonts.inter(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green)),
             const SizedBox(height: 8),
-            Text('NEXT RECOMMENDED TOPIC', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: textSubtitle)),
+            Text('NEXT RECOMMENDED TOPIC',
+                style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: textSubtitle)),
             const SizedBox(height: 4),
-            Text(nextTopicMatch.topic.title, style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold, color: textPrimary)),
+            Text(nextTopicMatch.topic.title,
+                style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: textPrimary)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
@@ -594,7 +684,10 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                       topic: nextTopicMatch.topic,
                       hub: nextTopicMatch.hub,
                       category: nextTopicMatch.category,
-                      breadcrumbTrail: [nextTopicMatch.hub.title, nextTopicMatch.category.title],
+                      breadcrumbTrail: [
+                        nextTopicMatch.hub.title,
+                        nextTopicMatch.category.title
+                      ],
                     ),
                   ),
                 );
@@ -602,10 +695,13 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: royalBlue,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
               ),
-              child: const Text('CONTINUE TO NEXT →', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text('CONTINUE TO NEXT →',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ],
         ),
@@ -711,10 +807,22 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  if (subtopic.hasSubtopics) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      '${subtopic.subtopics.length} subtopic${subtopic.subtopics.length == 1 ? '' : 's'} available',
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: royalBlue,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
+            const Icon(Icons.arrow_forward_ios_rounded,
+                size: 16, color: Colors.grey),
           ],
         ),
       ),
@@ -738,7 +846,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
       bookmarkProvider = context.watch<BookmarkProvider>();
     } catch (_) {}
 
-    final bool isBookmarked = bookmarkProvider?.isBookmarked(resource.id) ?? false;
+    final bool isBookmarked =
+        bookmarkProvider?.isBookmarked(resource.id) ?? false;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -776,7 +885,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: resColor.withAlpha(18),
                             borderRadius: BorderRadius.circular(6),
@@ -835,7 +945,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                       title: resource.title,
                       description: resource.description,
                       subjectId: widget.hub.id,
-                      subjectName: '${widget.hub.title} › ${widget.category.title}',
+                      subjectName:
+                          '${widget.hub.title} › ${widget.category.title}',
                       yearId: 'non_academic',
                       semesterId: 'non_academic',
                       resourceType: resource.type.displayName,
@@ -846,11 +957,14 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
                     context.read<BookmarkProvider>().toggleBookmark(resModel);
                   },
                   icon: Icon(
-                    isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+                    isBookmarked
+                        ? Icons.bookmark_rounded
+                        : Icons.bookmark_outline_rounded,
                     color: isBookmarked ? resColor : Colors.grey,
                     size: 22,
                   ),
-                  tooltip: isBookmarked ? 'Remove Bookmark' : 'Bookmark Resource',
+                  tooltip:
+                      isBookmarked ? 'Remove Bookmark' : 'Bookmark Resource',
                 ),
             ],
           ),
@@ -892,10 +1006,14 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
   String _getActionTextForResource(HierarchyResourceModel resource) {
     final url = resource.url.toLowerCase();
     if (url.contains('leetcode.com')) return 'PRACTICE ON LEETCODE →';
-    if (url.contains('geeksforgeeks.org') && resource.type == HierarchyResourceType.practice) return 'PRACTICE ON GEEKSFORGEEKS →';
+    if (url.contains('geeksforgeeks.org') &&
+        resource.type == HierarchyResourceType.practice)
+      return 'PRACTICE ON GEEKSFORGEEKS →';
     if (url.contains('github.com')) return 'VIEW GITHUB REPOSITORY →';
-    if (resource.type == HierarchyResourceType.notes) return 'OPEN CONCEPT DOCS →';
-    if (resource.type == HierarchyResourceType.video) return 'WATCH VIDEO TUTORIAL →';
+    if (resource.type == HierarchyResourceType.notes)
+      return 'OPEN CONCEPT DOCS →';
+    if (resource.type == HierarchyResourceType.video)
+      return 'WATCH VIDEO TUTORIAL →';
     return 'LEARN ONLINE →';
   }
 
@@ -967,7 +1085,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: (progress.isFullyCompleted ? emeraldGreen : royalBlue).withAlpha(20),
+                  color: (progress.isFullyCompleted ? emeraldGreen : royalBlue)
+                      .withAlpha(20),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -987,7 +1106,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
             child: LinearProgressIndicator(
               value: progress.percentage / 100.0,
               minHeight: 6,
-              backgroundColor: isDark ? Colors.black.withAlpha(64) : const Color(0xFFE2E8F0),
+              backgroundColor:
+                  isDark ? Colors.black.withAlpha(64) : const Color(0xFFE2E8F0),
               valueColor: AlwaysStoppedAnimation<Color>(
                 progress.isFullyCompleted ? emeraldGreen : royalBlue,
               ),
@@ -1107,7 +1227,8 @@ class _GenericTopicScreenState extends State<GenericTopicScreen> {
       ),
       child: Column(
         children: [
-          Icon(Icons.folder_open_rounded, size: 48, color: textSubtitle.withAlpha(150)),
+          Icon(Icons.folder_open_rounded,
+              size: 48, color: textSubtitle.withAlpha(150)),
           const SizedBox(height: 12),
           Text(
             'No learning resources added yet',

@@ -4,7 +4,8 @@ class ProjectModel {
   final String id;
   final String title;
   final String description;
-  final String category; // Mini, Major, AI, Flutter, Web Development, Python, Java, DevOps, Cybersecurity
+  final String
+      category; // Mini, Major, AI, Flutter, Web Development, Python, Java, DevOps, Cybersecurity
   final String difficulty; // Beginner, Intermediate, Advanced, Industry Level
   final String estimatedDuration;
   final String problemStatement;
@@ -93,13 +94,16 @@ class ProjectModel {
       requiredSkills: List<String>.from(json['requiredSkills'] ?? []),
       technologies: List<String>.from(json['technologies'] ?? []),
       whyTheseTechnologies: json['whyTheseTechnologies'] ?? '',
-      systemArchitecture: json['systemArchitecture'] ?? json['architectureNotes'] ?? '',
-      majorModules: List<String>.from(json['majorModules'] ?? json['keyFeatures'] ?? []),
+      systemArchitecture:
+          json['systemArchitecture'] ?? json['architectureNotes'] ?? '',
+      majorModules:
+          List<String>.from(json['majorModules'] ?? json['keyFeatures'] ?? []),
       databaseDesign: json['databaseDesign'] ?? '',
       apiRequirements: json['apiRequirements'] ?? '',
       folderStructure: json['folderStructure'] ?? '',
       developmentPhases: List<String>.from(json['developmentPhases'] ?? []),
-      implementationRoadmap: List<String>.from(json['implementationRoadmap'] ?? []),
+      implementationRoadmap:
+          List<String>.from(json['implementationRoadmap'] ?? []),
       testingStrategy: json['testingStrategy'] ?? '',
       securityConsiderations: json['securityConsiderations'] ?? '',
       deploymentStrategy: json['deploymentStrategy'] ?? '',
@@ -107,8 +111,10 @@ class ProjectModel {
       githubRepoStructure: json['githubRepoStructure'] ?? '',
       resumeDescription: json['resumeDescription'] ?? '',
       interviewQuestions: List<String>.from(json['interviewQuestions'] ?? []),
-      possibleImprovements: List<String>.from(json['possibleImprovements'] ?? []),
-      advancedVersionIdeas: List<String>.from(json['advancedVersionIdeas'] ?? []),
+      possibleImprovements:
+          List<String>.from(json['possibleImprovements'] ?? []),
+      advancedVersionIdeas:
+          List<String>.from(json['advancedVersionIdeas'] ?? []),
       sourceCodeUrl: json['sourceCodeUrl'] ?? '',
       githubUrl: json['githubUrl'] ?? '',
       learningOutcome: json['learningOutcome'] ?? '',

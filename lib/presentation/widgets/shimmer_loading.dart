@@ -22,8 +22,11 @@ class ShimmerListLoading extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 14),
       itemBuilder: (_, __) {
         return Shimmer.fromColors(
-          baseColor: isDark ? AppColors.shimmerBaseDark : AppColors.shimmerBaseLight,
-          highlightColor: isDark ? AppColors.shimmerHighlightDark : AppColors.shimmerHighlightLight,
+          baseColor:
+              isDark ? AppColors.shimmerBaseDark : AppColors.shimmerBaseLight,
+          highlightColor: isDark
+              ? AppColors.shimmerHighlightDark
+              : AppColors.shimmerHighlightLight,
           child: Container(
             height: itemHeight,
             decoration: BoxDecoration(

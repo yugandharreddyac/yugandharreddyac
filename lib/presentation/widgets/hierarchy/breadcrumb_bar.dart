@@ -24,7 +24,8 @@ class BreadcrumbBar extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final textColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
+    final textColor =
+        isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B);
     final activeTextColor = isDark ? Colors.white : const Color(0xFF1E293B);
 
     return Container(

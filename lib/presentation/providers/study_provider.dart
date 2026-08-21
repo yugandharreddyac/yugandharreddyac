@@ -117,7 +117,8 @@ class StudyProvider extends ChangeNotifier {
     _setState(ViewState.loading);
     _selectedResourceType = resourceType ?? '';
     try {
-      _resources = await repository.getResources(subjectId, resourceType: resourceType);
+      _resources =
+          await repository.getResources(subjectId, resourceType: resourceType);
       if (_resources.isEmpty) {
         _setState(ViewState.empty);
       } else {
@@ -276,7 +277,8 @@ class StudyProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> saveTextbookChapter(String subjectId, TextbookChapterModel chapter) async {
+  Future<void> saveTextbookChapter(
+      String subjectId, TextbookChapterModel chapter) async {
     try {
       await repository.saveTextbookChapter(subjectId, chapter);
       await fetchTextbookChapters(subjectId);
@@ -296,7 +298,8 @@ class StudyProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> reorderTextbookChapters(String subjectId, List<TextbookChapterModel> chapters) async {
+  Future<void> reorderTextbookChapters(
+      String subjectId, List<TextbookChapterModel> chapters) async {
     try {
       await repository.reorderTextbookChapters(subjectId, chapters);
       _textbookChapters = chapters;

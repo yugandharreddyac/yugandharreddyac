@@ -34,7 +34,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     if (Navigator.canPop(context)) {
                       Navigator.pop(context);
                     } else {
-                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.home, (route) => false);
                     }
                   },
                 )

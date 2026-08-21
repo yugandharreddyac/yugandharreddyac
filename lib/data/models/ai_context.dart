@@ -54,12 +54,19 @@ class StudentContext {
   factory StudentContext.fromMap(Map<String, dynamic> map) {
     return StudentContext(
       academicStage: map['academicStage']?.toString() ?? '',
-      careerGoals: (map['careerGoals'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
+      careerGoals: (map['careerGoals'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
       primaryCareerDirection: map['primaryCareerDirection']?.toString() ?? '',
       primaryLanguage: map['primaryLanguage']?.toString() ?? '',
       overallSkillLevel: map['overallSkillLevel']?.toString() ?? '',
-      weaknesses: (map['weaknesses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
-      dailyLearningMinutes: (map['dailyLearningMinutes'] as num?)?.toInt() ?? 60,
+      weaknesses: (map['weaknesses'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
+      dailyLearningMinutes:
+          (map['dailyLearningMinutes'] as num?)?.toInt() ?? 60,
       targetTimeline: map['targetTimeline']?.toString() ?? '',
     );
   }
@@ -109,7 +116,11 @@ class RoadmapContext {
 
     final allItems = roadmap.allItems;
     final completedCount = allItems.where((i) => i.isCompleted).length;
-    final actionable = allItems.where((i) => !i.isLocked && !i.isCompleted).take(3).map((i) => i.title).toList();
+    final actionable = allItems
+        .where((i) => !i.isLocked && !i.isCompleted)
+        .take(3)
+        .map((i) => i.title)
+        .toList();
 
     return RoadmapContext(
       roadmapTitle: roadmap.title,
@@ -147,10 +158,18 @@ class RoadmapContext {
       totalPhases: (map['totalPhases'] as num?)?.toInt() ?? 0,
       completedTasksCount: (map['completedTasksCount'] as num?)?.toInt() ?? 0,
       totalTasksCount: (map['totalTasksCount'] as num?)?.toInt() ?? 0,
-      overallProgressPercentage: (map['overallProgressPercentage'] as num?)?.toDouble() ?? 0.0,
-      nextActionableTasks: (map['nextActionableTasks'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
-      prioritizedWeaknesses: (map['prioritizedWeaknesses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
-      recommendedDailyMinutes: (map['recommendedDailyMinutes'] as num?)?.toInt() ?? 60,
+      overallProgressPercentage:
+          (map['overallProgressPercentage'] as num?)?.toDouble() ?? 0.0,
+      nextActionableTasks: (map['nextActionableTasks'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
+      prioritizedWeaknesses: (map['prioritizedWeaknesses'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
+      recommendedDailyMinutes:
+          (map['recommendedDailyMinutes'] as num?)?.toInt() ?? 60,
     );
   }
 }
@@ -258,9 +277,15 @@ class AiContext {
 
   factory AiContext.fromMap(Map<String, dynamic> map) {
     return AiContext(
-      student: map['student'] != null ? StudentContext.fromMap(map['student'] as Map<String, dynamic>) : null,
-      roadmap: map['roadmap'] != null ? RoadmapContext.fromMap(map['roadmap'] as Map<String, dynamic>) : null,
-      learning: map['learning'] != null ? LearningContext.fromMap(map['learning'] as Map<String, dynamic>) : null,
+      student: map['student'] != null
+          ? StudentContext.fromMap(map['student'] as Map<String, dynamic>)
+          : null,
+      roadmap: map['roadmap'] != null
+          ? RoadmapContext.fromMap(map['roadmap'] as Map<String, dynamic>)
+          : null,
+      learning: map['learning'] != null
+          ? LearningContext.fromMap(map['learning'] as Map<String, dynamic>)
+          : null,
       unidocsResources: (map['unidocsResources'] as List<dynamic>?)
               ?.whereType<Map<String, dynamic>>()
               .map((r) => AiResourceReference.fromMap(r))
@@ -272,7 +297,9 @@ class AiContext {
               .toList() ??
           const [],
       systemInstructions: map['systemInstructions']?.toString(),
-      precedenceRules: (map['precedenceRules'] as List<dynamic>?)?.map((e) => e.toString()).toList() ??
+      precedenceRules: (map['precedenceRules'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
           const [
             '1. Explicit user query always guides the primary task.',
             '2. UniDocs verified resources take precedence for CSE curriculum and hub topics.',
@@ -285,5 +312,6 @@ class AiContext {
 
   String toJson() => json.encode(toMap());
 
-  factory AiContext.fromJson(String source) => AiContext.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AiContext.fromJson(String source) =>
+      AiContext.fromMap(json.decode(source) as Map<String, dynamic>);
 }

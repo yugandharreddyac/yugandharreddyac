@@ -13,12 +13,14 @@ void main() {
 
   setUp(() {
     firebaseDataSource = FirebaseDataSource();
-    projectRepository = ProjectRepository(firebaseDataSource: firebaseDataSource);
+    projectRepository =
+        ProjectRepository(firebaseDataSource: firebaseDataSource);
     projectProvider = ProjectProvider(projectRepository);
   });
 
   group('Project Hub Unit Tests', () {
-    test('getProjects returns projects across multiple difficulty levels', () async {
+    test('getProjects returns projects across multiple difficulty levels',
+        () async {
       final projects = await projectRepository.getProjects();
       expect(projects, isNotEmpty);
       expect(projects.any((p) => p.difficulty == 'Beginner'), isTrue);
@@ -41,7 +43,8 @@ void main() {
 
       final cat = projectProvider.categories.firstWhere((c) => c != 'All');
       projectProvider.selectCategory(cat);
-      expect(projectProvider.filteredProjects.every((p) => p.category == cat), isTrue);
+      expect(projectProvider.filteredProjects.every((p) => p.category == cat),
+          isTrue);
     });
 
     test('SearchIndexEngine indexes Project Hub blueprints', () async {
@@ -56,7 +59,9 @@ void main() {
 
       expect(engine.isIndexed, isTrue);
       final queryResult = engine.search('Study Hub');
-      expect(queryResult.matchingItems.any((i) => i.title.contains('Study Hub')), isTrue);
+      expect(
+          queryResult.matchingItems.any((i) => i.title.contains('Study Hub')),
+          isTrue);
     });
   });
 }

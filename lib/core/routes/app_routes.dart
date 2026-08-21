@@ -96,7 +96,7 @@ class AppRoutes {
 
       case login:
         return _buildPageRoute(const LoginScreen(), routeSettings);
-        
+
       case signup:
         return _buildPageRoute(const SignUpScreen(), routeSettings);
 
@@ -141,11 +141,14 @@ class AppRoutes {
         );
 
       case pdfViewer:
-        final resource = routeSettings.arguments is ResourceModel ? routeSettings.arguments as ResourceModel : null;
+        final resource = routeSettings.arguments is ResourceModel
+            ? routeSettings.arguments as ResourceModel
+            : null;
         if (resource == null) {
           return _buildPageRoute(const HomeScreen(), routeSettings);
         }
-        return _buildPageRoute(PdfViewerScreen(resource: resource), routeSettings);
+        return _buildPageRoute(
+            PdfViewerScreen(resource: resource), routeSettings);
 
       case search:
         return _buildPageRoute(const SearchScreen(), routeSettings);
@@ -198,15 +201,20 @@ class AppRoutes {
           routeSettings,
         );
 
-
       case careerHub:
-        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.emergingTechHub), routeSettings);
+        return _buildPageRoute(
+            const GenericHubScreen(hub: NonAcademicData.emergingTechHub),
+            routeSettings);
 
       case codingHub:
-        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.codingHub), routeSettings);
+        return _buildPageRoute(
+            const GenericHubScreen(hub: NonAcademicData.codingHub),
+            routeSettings);
 
       case placementHub:
-        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.placementHub), routeSettings);
+        return _buildPageRoute(
+            const GenericHubScreen(hub: NonAcademicData.placementHub),
+            routeSettings);
 
       case quizHub:
         final args = routeSettings.arguments as Map<String, dynamic>?;
@@ -216,19 +224,27 @@ class AppRoutes {
         );
 
       case projectHub:
-        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.projectsHub), routeSettings);
+        return _buildPageRoute(
+            const GenericHubScreen(hub: NonAcademicData.projectsHub),
+            routeSettings);
 
       case higherEducationHub:
-        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.higherEducationHub), routeSettings);
+        return _buildPageRoute(
+            const GenericHubScreen(hub: NonAcademicData.higherEducationHub),
+            routeSettings);
 
       case entrepreneurshipHub:
-        return _buildPageRoute(const GenericHubScreen(hub: NonAcademicData.entrepreneurshipHub), routeSettings);
+        return _buildPageRoute(
+            const GenericHubScreen(hub: NonAcademicData.entrepreneurshipHub),
+            routeSettings);
 
       case topicDetail:
         final args = routeSettings.arguments is Map<String, dynamic>
             ? routeSettings.arguments as Map<String, dynamic>
             : null;
-        if (args == null || args['topic'] == null || args['topic'] is! TextbookTopicModel) {
+        if (args == null ||
+            args['topic'] == null ||
+            args['topic'] is! TextbookTopicModel) {
           return _buildPageRoute(const HomeScreen(), routeSettings);
         }
         return _buildPageRoute(
@@ -251,7 +267,9 @@ class AppRoutes {
         final initialProfile = routeSettings.arguments is PersonalizedProfile
             ? routeSettings.arguments as PersonalizedProfile
             : null;
-        return _buildPageRoute(PersonalizedWizardScreen(initialProfile: initialProfile), routeSettings);
+        return _buildPageRoute(
+            PersonalizedWizardScreen(initialProfile: initialProfile),
+            routeSettings);
 
       case savedTopics:
         return _buildPageRoute(const SavedTopicsScreen(), routeSettings);
@@ -262,13 +280,13 @@ class AppRoutes {
       // Phase 5 Career Screens
       case careerDashboard:
         return _buildPageRoute(const CareerDashboardScreen(), routeSettings);
-        
+
       case careerSkills:
         return _buildPageRoute(const CareerSkillsScreen(), routeSettings);
-        
+
       case projectPortfolio:
         return _buildPageRoute(const ProjectPortfolioScreen(), routeSettings);
-        
+
       case resumeReadiness:
         return _buildPageRoute(const ResumeReadinessScreen(), routeSettings);
 
@@ -311,8 +329,10 @@ class AppRoutes {
         const end = Offset.zero;
         const curve = Curves.easeOutCubic;
 
-        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        final fadeTween = Tween<double>(begin: 0.0, end: 1.0).chain(CurveTween(curve: curve));
+        final tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final fadeTween =
+            Tween<double>(begin: 0.0, end: 1.0).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

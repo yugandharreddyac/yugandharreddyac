@@ -75,17 +75,31 @@ Widget _createAuditedApp({
       ChangeNotifierProvider(create: (_) => AuthProvider(firebase)),
       ChangeNotifierProvider(create: (_) => ProfileProvider(firebase)),
       ChangeNotifierProvider(create: (_) => RecentProvider(localStorage)),
-      ChangeNotifierProvider(create: (_) => CareerProvider(CareerRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => CodingProvider(CodingRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => PlacementProvider(PlacementRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => ProjectProvider(ProjectRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => HigherEducationProvider(HigherEducationRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              CareerProvider(CareerRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              CodingProvider(CodingRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => PlacementProvider(
+              PlacementRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) =>
+              ProjectProvider(ProjectRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => HigherEducationProvider(
+              HigherEducationRepository(firebaseDataSource: firebase))),
       ChangeNotifierProvider(create: (_) => UniByteProvider()),
-      ChangeNotifierProvider(create: (_) => AdminProvider(repository: AdminRepository(firebaseDataSource: firebase))),
-      ChangeNotifierProvider(create: (_) => HierarchyProvider(NonAcademicRepository())),
+      ChangeNotifierProvider(
+          create: (_) => AdminProvider(
+              repository: AdminRepository(firebaseDataSource: firebase))),
+      ChangeNotifierProvider(
+          create: (_) => HierarchyProvider(NonAcademicRepository())),
       ChangeNotifierProvider(create: (_) => RoadmapProvider()),
       ChangeNotifierProvider(create: (_) => QuizProvider()),
-      ChangeNotifierProvider(create: (_) => DocumentProcessingProvider(repository: docRepo)),
+      ChangeNotifierProvider(
+          create: (_) => DocumentProcessingProvider(repository: docRepo)),
       ChangeNotifierProvider(
         create: (_) {
           final aiProv = UniDocsAiProvider(
@@ -123,9 +137,11 @@ void main() {
       firebase = FirebaseDataSource();
     });
 
-    testWidgets('1. AppRoutes.years generates YearScreen and displays all 4 academic years',
+    testWidgets(
+        '1. AppRoutes.years generates YearScreen and displays all 4 academic years',
         (tester) async {
-      final route = AppRoutes.generateRoute(const RouteSettings(name: AppRoutes.years));
+      final route =
+          AppRoutes.generateRoute(const RouteSettings(name: AppRoutes.years));
       expect(route, isNotNull);
 
       await tester.pumpWidget(
@@ -144,7 +160,8 @@ void main() {
       expect(find.text('4th Year'), findsOneWidget);
     });
 
-    testWidgets('2. End-to-end Academic Curriculum Navigation Hierarchy', (tester) async {
+    testWidgets('2. End-to-end Academic Curriculum Navigation Hierarchy',
+        (tester) async {
       // Step A: YearScreen
       await tester.pumpWidget(
         _createAuditedApp(
@@ -174,7 +191,8 @@ void main() {
         _createAuditedApp(
           localStorage: localStorage,
           firebase: firebase,
-          home: const SubjectScreen(semesterId: 'sem_1', semesterTitle: 'Semester 1'),
+          home: const SubjectScreen(
+              semesterId: 'sem_1', semesterTitle: 'Semester 1'),
         ),
       );
       await tester.pumpAndSettle();
@@ -198,7 +216,8 @@ void main() {
       expect(find.text('Previous Papers'), findsOneWidget);
     });
 
-    testWidgets('3. Back navigation: Root HomeScreen has NO back button, detail screens have back arrow',
+    testWidgets(
+        '3. Back navigation: Root HomeScreen has NO back button, detail screens have back arrow',
         (tester) async {
       // HomeScreen has NO Back button
       await tester.pumpWidget(
@@ -220,19 +239,27 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.byIcon(Icons.forum_outlined), findsOneWidget); // Chat history in actions
-      expect(find.byIcon(Icons.add_circle_outline_rounded), findsOneWidget); // New chat in actions
+      expect(find.byIcon(Icons.forum_outlined),
+          findsOneWidget); // Chat history in actions
+      expect(find.byIcon(Icons.add_circle_outline_rounded),
+          findsOneWidget); // New chat in actions
     });
 
-    testWidgets('4. AI Backend Configuration is wired to AppConfig.aiBackendUrl', (tester) async {
-      expect(AppConfig.aiBackendUrl, contains('https://us-central1-csse-study-hub-prod.cloudfunctions.net/aiGenerate'));
+    testWidgets(
+        '4. AI Backend Configuration is wired to AppConfig.aiBackendUrl',
+        (tester) async {
+      expect(
+          AppConfig.aiBackendUrl,
+          contains(
+              'https://us-central1-csse-study-hub-prod.cloudfunctions.net/aiGenerate'));
       final provider = GeminiProvider(backendUrl: AppConfig.aiBackendUrl);
       expect(provider.backendUrl, AppConfig.aiBackendUrl);
       expect(provider.providerId, 'gemini_cloud');
       expect(provider.displayName, contains('Gemini'));
     });
 
-    testWidgets('5. Home Screen Viewport Stress Test (320px, 360px, 390px, 412px, 768px, 1200px)',
+    testWidgets(
+        '5. Home Screen Viewport Stress Test (320px, 360px, 390px, 412px, 768px, 1200px)',
         (tester) async {
       final viewports = [
         const Size(320, 640),
@@ -259,7 +286,8 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(HomeScreen), findsOneWidget);
-        expect(tester.takeException(), isNull, reason: 'Zero overflow on viewport: $size');
+        expect(tester.takeException(), isNull,
+            reason: 'Zero overflow on viewport: $size');
       }
     });
   });

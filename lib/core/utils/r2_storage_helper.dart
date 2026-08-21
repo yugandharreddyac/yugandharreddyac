@@ -18,7 +18,8 @@ class R2StorageHelper {
     final cleanSubject = _sanitize(subjectCode);
     final cleanUnit = _sanitize(unitId);
     final cleanType = _sanitize(documentType);
-    final cleanFile = fileName.toLowerCase().endsWith('.pdf') ? fileName : '$fileName.pdf';
+    final cleanFile =
+        fileName.toLowerCase().endsWith('.pdf') ? fileName : '$fileName.pdf';
 
     return 'academic/$cleanYear/$cleanSem/$cleanSubject/$cleanUnit/$cleanType/$cleanFile';
   }
@@ -26,8 +27,10 @@ class R2StorageHelper {
   /// Build complete production HTTPS CDN URL for a given R2 storage key path
   static String buildCdnUrl(String storagePath, {String? customCdnBaseUrl}) {
     final baseUrl = customCdnBaseUrl ?? AppConfig.cdnBaseUrl;
-    final cleanPath = storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
-    final pathWithoutAcademic = cleanPath.startsWith('academic/') ? cleanPath.substring(9) : cleanPath;
+    final cleanPath =
+        storagePath.startsWith('/') ? storagePath.substring(1) : storagePath;
+    final pathWithoutAcademic =
+        cleanPath.startsWith('academic/') ? cleanPath.substring(9) : cleanPath;
     return '$baseUrl/$pathWithoutAcademic';
   }
 

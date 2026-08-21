@@ -23,12 +23,18 @@ void main() {
       firebaseDataSource: firebaseDataSource,
       localStorageDataSource: localStorage,
     );
-    final careerRepository = CareerRepository(firebaseDataSource: firebaseDataSource);
-    final codingRepository = CodingRepository(firebaseDataSource: firebaseDataSource);
-    final placementRepository = PlacementRepository(firebaseDataSource: firebaseDataSource);
-    final projectRepository = ProjectRepository(firebaseDataSource: firebaseDataSource);
-    final higherEducationRepository = HigherEducationRepository(firebaseDataSource: firebaseDataSource);
-    final adminRepository = AdminRepository(firebaseDataSource: firebaseDataSource);
+    final careerRepository =
+        CareerRepository(firebaseDataSource: firebaseDataSource);
+    final codingRepository =
+        CodingRepository(firebaseDataSource: firebaseDataSource);
+    final placementRepository =
+        PlacementRepository(firebaseDataSource: firebaseDataSource);
+    final projectRepository =
+        ProjectRepository(firebaseDataSource: firebaseDataSource);
+    final higherEducationRepository =
+        HigherEducationRepository(firebaseDataSource: firebaseDataSource);
+    final adminRepository =
+        AdminRepository(firebaseDataSource: firebaseDataSource);
 
     await tester.pumpWidget(
       CSSEStudyHubApp(

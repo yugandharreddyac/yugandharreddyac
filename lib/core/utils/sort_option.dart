@@ -29,7 +29,8 @@ extension SortOptionExtension on SortOption {
 }
 
 class ResourceSorter {
-  static List<ResourceModel> sort(List<ResourceModel> resources, SortOption option) {
+  static List<ResourceModel> sort(
+      List<ResourceModel> resources, SortOption option) {
     final list = List<ResourceModel>.from(resources);
     switch (option) {
       case SortOption.newest:
@@ -39,7 +40,8 @@ class ResourceSorter {
         list.sort((a, b) => a.lastUpdated.compareTo(b.lastUpdated));
         break;
       case SortOption.alphabetical:
-        list.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+        list.sort(
+            (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
         break;
       case SortOption.largest:
         list.sort((a, b) => b.fileSizeBytes.compareTo(a.fileSizeBytes));

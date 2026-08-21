@@ -29,10 +29,10 @@ class QuizProvider extends ChangeNotifier {
   List<QuizCategoryInfo> get categories => _categories;
   List<QuizQuestionModel> get currentQuestions => _currentQuestions;
   int get currentQuestionIndex => _currentQuestionIndex;
-  QuizQuestionModel? get currentQuestion =>
-      _currentQuestions.isNotEmpty && _currentQuestionIndex < _currentQuestions.length
-          ? _currentQuestions[_currentQuestionIndex]
-          : null;
+  QuizQuestionModel? get currentQuestion => _currentQuestions.isNotEmpty &&
+          _currentQuestionIndex < _currentQuestions.length
+      ? _currentQuestions[_currentQuestionIndex]
+      : null;
   Map<int, int?> get userAnswers => _userAnswers;
   Set<int> get markedForReview => _markedForReview;
   QuizMode get currentMode => _currentMode;
@@ -42,7 +42,8 @@ class QuizProvider extends ChangeNotifier {
   int get remainingSeconds => _remainingSeconds;
   int get elapsedSeconds => _elapsedSeconds;
   bool get isTimerActive => _isTimerActive;
-  bool get isCurrentMarkedForReview => _markedForReview.contains(_currentQuestionIndex);
+  bool get isCurrentMarkedForReview =>
+      _markedForReview.contains(_currentQuestionIndex);
   int? get currentSelectedOption => _userAnswers[_currentQuestionIndex];
 
   void init() {

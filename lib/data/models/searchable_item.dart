@@ -6,7 +6,8 @@ import 'career_model.dart';
 
 class SearchableItem {
   final String id;
-  final String category; // 'Subject', 'Textbook Chapter', 'Textbook Section', 'Textbook Topic', 'Notes', 'Previous Paper', 'Syllabus', 'Career Path'
+  final String
+      category; // 'Subject', 'Textbook Chapter', 'Textbook Section', 'Textbook Topic', 'Notes', 'Previous Paper', 'Syllabus', 'Career Path'
   final String title;
   final String subtitle;
   final String subjectName;
@@ -85,14 +86,18 @@ class SearchableItem {
     }
 
     // Tier 2: Prefix Match (Score = 85)
-    if (tLower.startsWith(q) || sCodeLower.startsWith(q) || sNameLower.startsWith(q)) {
+    if (tLower.startsWith(q) ||
+        sCodeLower.startsWith(q) ||
+        sNameLower.startsWith(q)) {
       return 85;
     }
 
     // Tier 3: CS Abbreviation expansion match (Score = 80)
     final expansions = FuzzyMatcher.expandAbbreviations(q);
     for (final exp in expansions) {
-      if (tLower.contains(exp) || sNameLower.contains(exp) || sCodeLower.contains(exp)) {
+      if (tLower.contains(exp) ||
+          sNameLower.contains(exp) ||
+          sCodeLower.contains(exp)) {
         return 80;
       }
       for (final kw in keywords) {
@@ -101,16 +106,34 @@ class SearchableItem {
     }
 
     // Hardcoded high-priority abbreviations for backwards compatibility
-    if (q == 'c' && (sCodeLower == 'cs1104' || sNameLower.contains('c programming') || sNameLower.contains('using c'))) return 80;
-    if (q == 'os' && (sNameLower.contains('operating system') || sCodeLower.contains('1105') || sCodeLower.contains('2105'))) return 80;
-    if (q == 'dbms' && (sNameLower.contains('database') || sNameLower.contains('dbms'))) return 80;
-    if (q == 'dld' && (sNameLower.contains('digital logic') || sCodeLower == 'cs1204')) return 80;
-    if (q == 'coa' && (sNameLower.contains('organization') || sNameLower.contains('architecture'))) return 80;
-    if (q == 'ai' && (sNameLower.contains('artificial intelligence') || sNameLower.contains('ai'))) return 80;
-    if (q == 'ml' && (sNameLower.contains('machine learning') || sNameLower.contains('ml'))) return 80;
+    if (q == 'c' &&
+        (sCodeLower == 'cs1104' ||
+            sNameLower.contains('c programming') ||
+            sNameLower.contains('using c'))) return 80;
+    if (q == 'os' &&
+        (sNameLower.contains('operating system') ||
+            sCodeLower.contains('1105') ||
+            sCodeLower.contains('2105'))) return 80;
+    if (q == 'dbms' &&
+        (sNameLower.contains('database') || sNameLower.contains('dbms')))
+      return 80;
+    if (q == 'dld' &&
+        (sNameLower.contains('digital logic') || sCodeLower == 'cs1204'))
+      return 80;
+    if (q == 'coa' &&
+        (sNameLower.contains('organization') ||
+            sNameLower.contains('architecture'))) return 80;
+    if (q == 'ai' &&
+        (sNameLower.contains('artificial intelligence') ||
+            sNameLower.contains('ai'))) return 80;
+    if (q == 'ml' &&
+        (sNameLower.contains('machine learning') || sNameLower.contains('ml')))
+      return 80;
 
     // Tier 4: Direct Substring Match in title, subjectName or category (Score = 65)
-    if (tLower.contains(q) || sNameLower.contains(q) || category.toLowerCase().contains(q)) {
+    if (tLower.contains(q) ||
+        sNameLower.contains(q) ||
+        category.toLowerCase().contains(q)) {
       return 65;
     }
 
@@ -118,7 +141,8 @@ class SearchableItem {
     for (final kw in keywords) {
       if (kw.trim().isEmpty) continue;
       final kwLower = kw.toLowerCase();
-      if (kwLower.contains(q) || (kwLower.length >= 3 && q.contains(kwLower))) return 50;
+      if (kwLower.contains(q) || (kwLower.length >= 3 && q.contains(kwLower)))
+        return 50;
     }
 
     for (final topic in syllabusTopics) {
@@ -138,7 +162,9 @@ class SearchableItem {
     }
 
     // Tier 6: Substring match in subtitle (Score = 40)
-    if (subtitle.toLowerCase().contains(q) || semester.toLowerCase().contains(q) || year.toLowerCase().contains(q)) {
+    if (subtitle.toLowerCase().contains(q) ||
+        semester.toLowerCase().contains(q) ||
+        year.toLowerCase().contains(q)) {
       return 40;
     }
 
@@ -148,7 +174,8 @@ class SearchableItem {
       if (FuzzyMatcher.isFuzzyMatch(q, subjectName, threshold: 0.70)) return 25;
 
       for (final kw in keywords) {
-        if (kw.length >= 3 && FuzzyMatcher.isFuzzyMatch(q, kw, threshold: 0.72)) {
+        if (kw.length >= 3 &&
+            FuzzyMatcher.isFuzzyMatch(q, kw, threshold: 0.72)) {
           return 25;
         }
       }
